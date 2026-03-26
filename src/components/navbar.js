@@ -32,13 +32,13 @@ export function Navbar() {
                 zIndex: 40,
                 transition: "all 0.3s ease",
                 background: "#090E1A",
-                padding: scrolled ? "14px 0" : "20px 0",
+                padding: scrolled ? "14px 4vw" : "20px 4vw",
                 borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
             }}>
                 <div style={{
                     maxWidth: 1320,
                     margin: "0 auto",
-                    padding: "0 60px 0 120px",
+                    width: "100%",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",

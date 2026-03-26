@@ -5,12 +5,12 @@ import { ArrowUpRight, Facebook, Instagram, MessageCircle } from "lucide-react";
 
 export function Footer() {
     return (
-      <footer style={{ background: "#0b1a2e", color: "#fff", padding: "120px 60px 60px 120px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+      <footer style={{ background: "#0b1a2e", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
         {/* Section 2: Main Footer Grid */}
         <section>
-          <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 80 }}>
+          <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "1.2fr 1fr 1.2fr 1.2fr", gap: 32 }}>
             {/* Column 1: Logo & Vision */}
-            <div style={{ maxWidth: 320 }}>
+            <div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 32 }}>
                 <img 
                   src="/asset/stanch_tech logo.png" 
@@ -33,21 +33,25 @@ export function Footer() {
                 Nigeria's premier partner for marine engine salvaging, diagnostic precision, and global logistics support.
               </p>
               <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
-                <a href="#" style={{ color: "#fff", opacity: 0.6, transition: "opacity 0.3s" }} onMouseOver={(e) => e.currentTarget.style.opacity = "1"} onMouseOut={(e) => e.currentTarget.style.opacity = "0.6"}>
-                  <Facebook size={20} />
+                <a href="#" style={{ color: "#1877F2", transition: "transform 0.3s ease", display: "inline-flex" }} onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"} onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}>
+                  <Facebook size={24} fill="#1877F2" strokeWidth={0} />
                 </a>
-                <a href="#" style={{ color: "#fff", opacity: 0.6, transition: "opacity 0.3s" }} onMouseOver={(e) => e.currentTarget.style.opacity = "1"} onMouseOut={(e) => e.currentTarget.style.opacity = "0.6"}>
-                  <Instagram size={20} />
+                <a href="#" style={{ color: "#E1306C", transition: "transform 0.3s ease", display: "inline-flex" }} onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"} onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}>
+                  <Instagram size={24} />
                 </a>
-                <a href="https://wa.me/2348037340959" style={{ color: "#fff", opacity: 0.6, transition: "opacity 0.3s" }} onMouseOver={(e) => e.currentTarget.style.opacity = "1"} onMouseOut={(e) => e.currentTarget.style.opacity = "0.6"}>
-                  <MessageCircle size={20} />
+                <a href="https://wa.me/2348037340959" style={{ color: "#25D366", transition: "transform 0.3s ease", display: "inline-flex" }} onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"} onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                  </svg>
                 </a>
               </div>
             </div>
 
             {/* Column 2: Navigation */}
-            <div style={{ paddingTop: 32 }}>
-              <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", marginBottom: 32 }}>Navigation</p>
+            <div>
+              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Navigation</p>
+              </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {["Home", "Shop", "Services", "About"].map((link) => (
                   <Link key={link} href={`/${link === "Home" ? "" : link.toLowerCase()}`} style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8 }} className="footer-link">
@@ -58,8 +62,10 @@ export function Footer() {
             </div>
 
             {/* Column 3: Contact Us */}
-            <div style={{ paddingTop: 32 }}>
-              <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", marginBottom: 32 }}>Contact Us</p>
+            <div>
+              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Contact Us</p>
+              </div>
               <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 20, lineHeight: 1.6 }}>
                 <p>
                   Km16 PHC - ABA Express Way,<br />
@@ -77,8 +83,10 @@ export function Footer() {
             </div>
 
             {/* Column 4: Emergency Support */}
-            <div style={{ paddingTop: 32 }}>
-              <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", marginBottom: 32 }}>Emergency Support</p>
+            <div>
+              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Emergency Support</p>
+              </div>
               <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 24 }}>
                 <p style={{ lineHeight: 1.6 }}>
                   Standby emergency services available. Every call is treated with urgency.

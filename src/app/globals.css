@@ -23,7 +23,7 @@
 }
 
 .responsive-subtitle {
-  font-size: clamp(16px, 4vw, 20px) !important;
+  font-size: 22px !important;
   line-height: 1.6 !important;
 }
 
@@ -281,4 +281,27 @@ p {
   color: #0b1a2e;
   border-color: #fff;
   transform: translateY(-50%) scale(1.1);
+}
+
+/* ── Footer Grid ── */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.5fr 1.5fr;
+  gap: 40px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
 }

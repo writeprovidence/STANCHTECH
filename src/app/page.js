@@ -50,7 +50,7 @@ export default function HomePage() {
         overflow: "hidden",
       }}>
         {/* Dark overlay */}
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.38)", zIndex: 1 }} />
+        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.15)", zIndex: 1 }} />
         
         {/* Background image slider */}
         {HERO_SLIDES.map((slide, index) => (
@@ -81,8 +81,10 @@ export default function HomePage() {
                 style={{
                   position: "absolute",
                   width: "100%",
-                  fontSize: "clamp(24px, 5vw, 48px)",
-                  fontWeight: 900,
+                  padding: "0 12vw",
+                  boxSizing: "border-box",
+                  fontSize: 34,
+                  fontWeight: 400,
                   lineHeight: 1.15,
                   letterSpacing: "-0.03em",
                   fontFamily: "var(--font-sans, system-ui, sans-serif)",
@@ -164,15 +166,15 @@ export default function HomePage() {
 
       {/* ─── MARINE CONTROL ─── */}
       <section className="section-pad" style={{ background: "#0b1a2e", color: "#fff" }}>
-        <div className="two-col-grid" style={{ gridTemplateColumns: "1.1fr 1fr", gap: 120 }}>
+        <div className="two-col-grid" style={{ gridTemplateColumns: "1.1fr 1fr", gap: 60 }}>
           {/* Text LEFT */}
           <div style={{ maxWidth: 540 }}>
-            <h2 style={{ fontSize: 48, fontWeight: 900, lineHeight: 1.05, marginBottom: 20, letterSpacing: "-0.03em" }}>
+            <h2 style={{ fontSize: 48, fontWeight: 700, lineHeight: 1.05, marginBottom: 20, letterSpacing: "-0.03em" }}>
               Marine Control, Monitoring,<br />
               Navigation &amp; Communication<br />
               Systems.
             </h2>
-            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: 16, lineHeight: 1.55, marginBottom: 44 }}>
+            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: 22, lineHeight: 1.55, marginBottom: 44 }}>
               Precision Control and advanced marine systems maintenance to ensure your vessels run safely and efficiently.
             </p>
             <Link
@@ -185,7 +187,7 @@ export default function HomePage() {
           {/* Image RIGHT - Vessel Exterior & Diverse Team */}
           <div style={{ 
             width: "100%", 
-            height: 520, 
+            height: 380, 
             borderRadius: 8, 
             overflow: "hidden",
             boxShadow: "0 24px 64px rgba(0,0,0,0.3)"
@@ -201,11 +203,11 @@ export default function HomePage() {
 
       {/* ─── MARINE VESSEL INSPECTION ─── */}
       <section className="section-pad" style={{ background: "#96C3E4", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gridTemplateColumns: "1fr 1.1fr", gap: 120 }}>
+        <div className="two-col-grid" style={{ gridTemplateColumns: "1fr 1.1fr", gap: 60 }}>
           {/* Image LEFT - Vessel Presentation */}
           <div style={{ 
             width: "100%", 
-            height: 520, 
+            height: 380, 
             borderRadius: 8, 
             overflow: "hidden",
             boxShadow: "0 24px 64px rgba(0,0,0,0.15)"
@@ -218,11 +220,11 @@ export default function HomePage() {
           </div>
           {/* Text RIGHT */}
           <div style={{ maxWidth: 620 }}>
-            <h2 style={{ fontSize: 48, fontWeight: 900, lineHeight: 1.05, marginBottom: 20, letterSpacing: "-0.03em" }}>
+            <h2 style={{ fontSize: 48, fontWeight: 700, lineHeight: 1.05, marginBottom: 20, letterSpacing: "-0.03em" }}>
               Marine Vessel Inspection,<br />
               Maintenance &amp; Repairs.
             </h2>
-            <p style={{ color: "rgba(11,26,46,0.8)", fontSize: 16, lineHeight: 1.55, marginBottom: 44 }}>
+            <p style={{ color: "rgba(11,26,46,0.72)", fontSize: 22, lineHeight: 1.55, marginBottom: 44 }}>
               Comprehensive sea vessel maintenance and through-life support for all specialized marine operations, ensuring reliability and safety at all times.
             </p>
             <Link
@@ -237,15 +239,15 @@ export default function HomePage() {
 
       {/* ─── SPARES & SUPPORT ─── */}
       <section className="section-pad" style={{ background: "#fafafa", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gridTemplateColumns: "1.1fr 1fr", gap: 120 }}>
+        <div className="two-col-grid" style={{ gridTemplateColumns: "1.1fr 1fr", gap: 60 }}>
           {/* Text LEFT */}
           <div style={{ maxWidth: 620 }}>
-            <h2 style={{ fontSize: 48, fontWeight: 900, lineHeight: 1.05, marginBottom: 20, letterSpacing: "-0.03em" }}>
-              Spares &amp; Support for<br />
-              marine and industrial<br />
+            <h2 style={{ fontSize: 48, fontWeight: 700, lineHeight: 1.05, marginBottom: 20, letterSpacing: "-0.03em" }}>
+              Spares &amp; Support for marine<br />
+              and industrial<br />
               systems.
             </h2>
-            <p style={{ color: "rgba(11,26,46,0.72)", fontSize: 16, lineHeight: 1.55, marginBottom: 44 }}>
+            <p style={{ color: "rgba(11,26,46,0.72)", fontSize: 22, lineHeight: 1.55, marginBottom: 44 }}>
               Premium quality spares and expert technical support for marine and industrial operations. Direct sales and installation.
             </p>
             <Link
@@ -258,7 +260,7 @@ export default function HomePage() {
           {/* Image RIGHT - Industrial Spares Mastery */}
           <div style={{ 
             width: "100%", 
-            height: 520, 
+            height: 380, 
             borderRadius: 8, 
             overflow: "hidden",
             boxShadow: "0 24px 64px rgba(0,0,0,0.12)"
@@ -312,14 +314,13 @@ export default function HomePage() {
           <div className="product-item-card" style={{ 
             backgroundImage: 'url("/asset/card 1.png")', 
             backgroundSize: "cover", 
-            position: "relative",
+            position: "relative"
           }}>
             {/* Left Image Area */}
-            <div style={{ flex: 1.1, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
-              <img src="/asset/spare_parts/part 1.png" alt="CT Series Spare Part" style={{ maxWidth: "88%", maxHeight: "88%", objectFit: "contain", filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.15))" }} />
+            <div style={{ flex: "0 0 292px", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
             </div>
             {/* Right Specs Area */}
-            <div style={{ flex: 1, padding: "25px 44px 75px", color: "#fff", display: "flex", flexDirection: "column" }}>
+            <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 75px", color: "#fff", display: "flex", flexDirection: "column" }}>
               <h3 style={{ fontSize: 28, fontWeight: 900, marginBottom: 12, letterSpacing: "-0.02em" }}>Precision Marine Turbo</h3>
               <p style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 28 }}>ST-ENGINEERING SERIES</p>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 40px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
@@ -337,14 +338,13 @@ export default function HomePage() {
           <div className="product-item-card" style={{ 
             backgroundImage: 'url("/asset/card 2.png")', 
             backgroundSize: "cover", 
-            position: "relative",
+            position: "relative"
           }}>
             {/* Left Image Area */}
-            <div style={{ flex: 1.1, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
-              <img src="/asset/spare_parts/part2.png" alt="HX Series Spare Part" style={{ maxWidth: "88%", maxHeight: "88%", objectFit: "contain", filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.15))" }} />
+            <div style={{ flex: "0 0 292px", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
             </div>
             {/* Right Specs Area */}
-            <div style={{ flex: 1, padding: "25px 44px 75px", color: "#fff", display: "flex", flexDirection: "column" }}>
+            <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 75px", color: "#fff", display: "flex", flexDirection: "column" }}>
               <h3 style={{ fontSize: 28, fontWeight: 900, marginBottom: 12, letterSpacing: "-0.02em" }}>Advanced Fuel Injector</h3>
               <p style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 28 }}>ST-PRECISION SERIES</p>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 40px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
