@@ -6,7 +6,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, In
 const HERO_SLIDES = [
   {
     image: "/asset/about_image/low hour engine.jpeg",
-    heading: <>A Low Hour Engine that has been extensively salvaged by the <br className="hide-mobile" />effects of Marine Age.</>
+    heading: <>A Low Hour Engine that has been extensively<br className="hide-mobile" /> salvaged by the effects of Marine Age.</>
   },
   {
     image: "/asset/hero/marine_vessel_black.png",
