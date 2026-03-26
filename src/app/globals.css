@@ -1,0 +1,284 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b1a2e;
+  --primary: #2563eb;
+  --navy: #0b1a2e;
+  --light-blue: #9bbcd1;
+  --font-serif: "EB Garamond", Georgia, serif;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--navy);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+/* ── Responsive Font Sizes ── */
+.responsive-title {
+  font-size: clamp(32px, 8vw, 56px) !important;
+  line-height: 1.1 !important;
+}
+
+.responsive-subtitle {
+  font-size: clamp(16px, 4vw, 20px) !important;
+  line-height: 1.6 !important;
+}
+
+@media (max-width: 640px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Darker Grotesque', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+a,
+span,
+p {
+  font-family: 'Darker Grotesque', system-ui, sans-serif !important;
+}
+
+/* ── Two-column responsive grid ── */
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px; /* Increased from 60 to allow more breathing room */
+  align-items: center;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .two-col-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .two-col-grid .reverse-mobile {
+    order: -1;
+  }
+}
+
+/* ── Product cards grid ── */
+.products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* ── Product card inner layout ── */
+.product-item-card {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  border-radius: 24px;
+  min-height: 380px;
+}
+
+@media (max-width: 640px) {
+  .product-item-card {
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0;
+  }
+  /* Remove flex area split and force full width */
+  .product-item-card > div {
+    flex: none !important;
+    width: 100% !important;
+    padding: 32px 24px !important; /* Unified smaller padding for mobile */
+  }
+}
+
+/* ── Section padding ── */
+.section-pad {
+  padding: 120px 60px 120px 80px;
+}
+
+@media (max-width: 900px) {
+  .section-pad {
+    padding: 60px 24px;
+  }
+}
+
+/* ── Aspect ratio image wrapper ── */
+.img-aspect-43 {
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.img-aspect-43 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── HQ Section ── */
+.hq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .hq-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+/* ── Featured Products header ── */
+.fp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 32px;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .section-header-flex {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* ── Utility ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Hero Buttons ── */
+.hero-btn-primary {
+  background: #155DFC;
+  color: #fff;
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  border: 1.5px solid transparent;
+  font-family: 'Darker Grotesque', sans-serif;
+}
+.hero-btn-primary:hover {
+  background: #fff;
+  color: #155DFC;
+  border-color: #155DFC;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(21,93,252,0.25);
+}
+
+.hero-btn-secondary {
+  background: #fff;
+  color: #0b1a2e;
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  border: 1.5px solid #fff;
+  font-family: 'Darker Grotesque', sans-serif;
+}
+.hero-btn-secondary:hover {
+  background: transparent;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(255,255,255,0.15);
+}
+
+/* ── Slider Arrows ── */
+.slider-arrow {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  transform: translateY(-50%);
+}
+
+.slider-arrow:hover {
+  background: #fff;
+  color: #0b1a2e;
+  border-color: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
