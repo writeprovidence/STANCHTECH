@@ -18,7 +18,7 @@ export function Navbar() {
 
     const navLinks = [
         { name: "About", href: "/about" },
-        { name: "Services", href: "/services" },
+        { name: "Contact", href: "/contact" },
         { name: "Shop", href: "/shop" },
     ];
 
@@ -29,15 +29,16 @@ export function Navbar() {
                 top: 0,
                 left: 0,
                 right: 0,
+                width: "100%",
+                borderRadius: 0,
                 zIndex: 40,
                 transition: "all 0.3s ease",
                 background: "#090E1A",
-                padding: scrolled ? "14px 4vw" : "20px 4vw",
+                padding: scrolled ? "6px 4vw" : "10px 4vw",
                 borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
+                boxShadow: scrolled ? "none" : "0 12px 40px rgba(0,0,0,0.3)",
             }}>
                 <div style={{
-                    maxWidth: 1320,
-                    margin: "0 auto",
                     width: "100%",
                     display: "flex",
                     alignItems: "center",
@@ -66,19 +67,20 @@ export function Navbar() {
                     </div>
 
                     {/* MIDDLE: Desktop Nav Links - Absolute center approach */}
-                    <div style={{ display: "flex", alignItems: "center", gap: 36 }} className="desktop-nav">
+                    <div style={{ display: "flex", alignItems: "center", gap: 40 }} className="desktop-nav">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
                                 style={{
-                                    fontSize: 15,
-                                    fontWeight: 700,
+                                    fontSize: 14,
                                     letterSpacing: "0.1em",
                                     textTransform: "uppercase",
                                     color: "#fff",
                                     textDecoration: "none",
                                     transition: "color 0.2s",
+                                    fontFamily: "'Bai Jamjuree', sans-serif",
+                                    fontWeight: 700,
                                 }}
                                 onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.8)"}
                                 onMouseLeave={e => e.target.style.color = "#fff"}
@@ -98,14 +100,15 @@ export function Navbar() {
                                 color: "#fff",
                                 border: "none",
                                 padding: "6px 0",
-                                fontSize: 15,
-                                fontWeight: 800,
+                                fontSize: 14,
                                 letterSpacing: "0.1em",
                                 textTransform: "uppercase",
                                 textDecoration: "none",
                                 display: "inline-block",
                                 transition: "all 0.2s ease",
                                 marginRight: 24,
+                                fontFamily: "'Bai Jamjuree', sans-serif",
+                                fontWeight: 700,
                             }}
                             onMouseEnter={e => {
                                 e.target.style.opacity = "0.7";
@@ -171,6 +174,7 @@ export function Navbar() {
                                         color: "#fff",
                                         textDecoration: "none",
                                         fontSize: 18,
+                                        fontFamily: "'Bai Jamjuree', sans-serif",
                                         fontWeight: 700,
                                         padding: "14px 0",
                                         borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -181,26 +185,6 @@ export function Navbar() {
                                 </Link>
                             ))}
                         </div>
-
-                        <Link
-                            href="/contact"
-                            onClick={() => setMobileMenuOpen(false)}
-                            style={{
-                                marginTop: 28,
-                                background: "#fff",
-                                color: "#0b1a2e",
-                                padding: "12px 0",
-                                fontSize: 10,
-                                fontWeight: 800,
-                                letterSpacing: "0.12em",
-                                textTransform: "uppercase",
-                                textDecoration: "none",
-                                textAlign: "center",
-                                display: "block",
-                            }}
-                        >
-                            Get in touch
-                        </Link>
                     </div>
                 </>
             )}

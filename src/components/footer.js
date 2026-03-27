@@ -8,9 +8,9 @@ export function Footer() {
       <footer style={{ background: "#0b1a2e", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
         {/* Section 2: Main Footer Grid */}
         <section>
-          <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 32 }}>
+          <div className="footer-grid">
             {/* Column 1: Logo & Vision */}
-            <div>
+            <div className="footer-col">
               <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 32 }}>
                 <img 
                   src="/asset/stanch_tech logo.png" 
@@ -48,7 +48,7 @@ export function Footer() {
             </div>
 
             {/* Column 2: Navigation */}
-            <div style={{ paddingLeft: 60 }}>
+            <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Navigation</p>
               </div>
@@ -62,17 +62,17 @@ export function Footer() {
             </div>
 
             {/* Column 3: Contact Us */}
-            <div>
-              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
+            <div style={{ textAlign: "center" }} className="footer-col">
+              <div style={{ height: 82, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 32 }}>
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Contact Us</p>
               </div>
-              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 20, lineHeight: 1.6 }}>
+              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 20, lineHeight: 1.6, alignItems: "center" }}>
                 <p>
                   Km16 PHC - ABA Express Way,<br />
                   Adjacent Dubi, Port Harcourt,<br />
                   Rivers State, Nigeria
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
                   <p style={{ color: "#fff" }}>stanchtechltd@gmail.com</p>
                   <p>+234 (0) 705 962 3727</p>
                   <p>+234 (0) 803 734 0959</p>
@@ -83,16 +83,17 @@ export function Footer() {
             </div>
 
             {/* Column 4: Emergency Support */}
-            <div>
+            <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Emergency Support</p>
               </div>
-              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 24 }}>
+              <div className="footer-content-col" style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 24 }}>
                 <p style={{ lineHeight: 1.6 }}>
                   Standby emergency services available. Every call is treated with urgency.
                 </p>
                 <Link 
                   href="tel:+2347059623727" 
+                  className="hero-btn-secondary"
                   style={{ 
                     display: "flex", 
                     alignItems: "center", 
