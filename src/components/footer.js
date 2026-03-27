@@ -53,8 +53,8 @@ export function Footer() {
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Navigation</p>
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {["Home", "Shop", "Services", "About"].map((link) => (
-                  <Link key={link} href={`/${link === "Home" ? "" : link.toLowerCase()}`} style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8 }} className="footer-link">
+                {["About", "Shop", "Contact"].map((link) => (
+                  <Link key={link} href={`/${link.toLowerCase()}`} style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8 }} className="footer-link">
                     {link}
                   </Link>
                 ))}

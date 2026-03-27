@@ -17,10 +17,9 @@ export function Navbar() {
     }, []);
 
     const navLinks = [
-        { name: "Home", href: "/" },
-        { name: "Shop", href: "/shop" },
-        { name: "Services", href: "/#services" },
         { name: "About", href: "/about" },
+        { name: "Shop", href: "/shop" },
+        { name: "Contact", href: "/contact" },
     ];
 
     return (
@@ -69,49 +68,57 @@ export function Navbar() {
 
 
 
-                    {/* MIDDLE: Desktop Nav Links - Absolute center approach */}
-                    <div style={{ display: "flex", flex: 2, alignItems: "center", justifyContent: "center", gap: 40 }} className="desktop-nav">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                style={{
-                                    fontSize: 14,
-                                    letterSpacing: "0.1em",
-                                    textTransform: "uppercase",
-                                    color: "#fff",
-                                    textDecoration: "none",
-                                    transition: "color 0.2s",
-                                    fontFamily: "'Bai Jamjuree', sans-serif",
-                                    fontWeight: 700,
-                                }}
-                                onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.8)"}
-                                onMouseLeave={e => e.target.style.color = "#fff"}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                    </div>
+                    {/* RIGHT: Combined Nav Links + CTA + Mobile Toggle */}
+                    <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 32 }}>
+                        {/* Desktop links grouped here on the right */}
+                        <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 32, marginRight: 20 }}>
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    style={{
+                                        fontSize: 14,
+                                        letterSpacing: "0.1em",
+                                        textTransform: "uppercase",
+                                        color: "#fff",
+                                        textDecoration: "none",
+                                        transition: "color 0.2s",
+                                        fontFamily: "'Bai Jamjuree', sans-serif",
+                                        fontWeight: 700,
+                                    }}
+                                    onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.8)"}
+                                    onMouseLeave={e => e.target.style.color = "#fff"}
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
+                        </div>
 
-                    {/* RIGHT: CTA + Mobile Toggle */}
-                    <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 12 }}>
                         <Link
                             href="/contact"
                             className="desktop-nav"
                             style={{
                                 background: "transparent",
                                 color: "#fff",
-                                border: "none",
-                                padding: "6px 0",
-                                fontSize: 14,
-                                letterSpacing: "0.1em",
+                                border: "1px solid #fff",
+                                padding: "8px 24px",
+                                borderRadius: "0px",
+                                fontSize: 13,
+                                letterSpacing: "0.15em",
                                 textTransform: "uppercase",
                                 textDecoration: "none",
                                 display: "inline-block",
                                 transition: "all 0.2s ease",
-                                marginRight: 24,
                                 fontFamily: "'Bai Jamjuree', sans-serif",
-                                fontWeight: 700,
+                                fontWeight: 900,
+                            }}
+                            onMouseEnter={e => {
+                                e.target.style.background = "#fff";
+                                e.target.style.color = "#000";
+                            }}
+                            onMouseLeave={e => {
+                                e.target.style.background = "transparent";
+                                e.target.style.color = "#fff";
                             }}
                         >
                             Sign in
