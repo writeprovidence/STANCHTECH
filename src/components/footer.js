@@ -53,8 +53,8 @@ export function Footer() {
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Navigation</p>
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {["Home", "Shop", "Services", "About"].map((link) => (
-                  <Link key={link} href={`/${link === "Home" ? "" : link.toLowerCase()}`} style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8 }} className="footer-link">
+                {["About", "Shop", "Contact"].map((link) => (
+                  <Link key={link} href={`/${link.toLowerCase()}`} style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8 }} className="footer-link">
                     {link}
                   </Link>
                 ))}
@@ -62,17 +62,17 @@ export function Footer() {
             </div>
 
             {/* Column 3: Contact Us */}
-            <div style={{ textAlign: "center" }} className="footer-col">
-              <div style={{ height: 82, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 32 }}>
+            <div className="footer-col">
+              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Contact Us</p>
               </div>
-              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 20, lineHeight: 1.6, alignItems: "center" }}>
+              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 20, lineHeight: 1.6 }}>
                 <p>
                   Km16 PHC - ABA Express Way,<br />
                   Adjacent Dubi, Port Harcourt,<br />
                   Rivers State, Nigeria
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <p style={{ color: "#fff" }}>stanchtechltd@gmail.com</p>
                   <p>+234 (0) 705 962 3727</p>
                   <p>+234 (0) 803 734 0959</p>

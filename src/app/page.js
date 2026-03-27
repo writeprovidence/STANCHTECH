@@ -162,12 +162,12 @@ export default function HomePage() {
 
       {/* ─── MARINE CONTROL ─── */}
       <section className="section-pad" style={{ background: "#0b1a2e", color: "#fff" }}>
-        <div className="two-col-grid" style={{ gap: 60 }}>
+        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
           {/* Text LEFT */}
-          <div style={{ maxWidth: 540 }}>
-            <h2 className="section-heading" style={{ marginBottom: 20 }}>
-              Marine Control, Monitoring,
-              Navigation &amp; Communication
+          <div style={{ maxWidth: 740 }}>
+            <h2 className="section-heading" style={{ fontSize: "90px !important", fontWeight: "900 !important", marginBottom: 20, lineHeight: 1.05, letterSpacing: "-0.04em !important", fontFamily: "'Bai Jamjuree', sans-serif" }}>
+              Marine Control, Monitoring, <br/>
+              Navigation &amp; Communication <br/>
               Systems.
             </h2>
             <p className="section-body" style={{ color: "rgba(255,255,255,0.72)", marginBottom: 44 }}>
@@ -183,10 +183,11 @@ export default function HomePage() {
           {/* Image RIGHT - Vessel Exterior & Diverse Team */}
           <div style={{ 
             width: "100%", 
-            height: 380, 
-            borderRadius: 8, 
+            height: 580, 
+            borderRadius: 12, 
+            marginTop: -80,
             overflow: "hidden",
-            boxShadow: "0 24px 64px rgba(0,0,0,0.3)"
+            boxShadow: "0 24px 64px rgba(0,0,0,0.2)"
           }}>
             <img 
               src="/asset/services_image/diverse_vessel_technical.png" 
@@ -199,14 +200,15 @@ export default function HomePage() {
 
       {/* ─── MARINE VESSEL INSPECTION ─── */}
       <section className="section-pad" style={{ background: "#96C3E4", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gap: 60 }}>
+        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
           {/* Image LEFT - Vessel Presentation */}
           <div style={{ 
             width: "100%", 
-            height: 380, 
-            borderRadius: 8, 
+            height: 580, 
+            borderRadius: 12, 
+            marginTop: -80,
             overflow: "hidden",
-            boxShadow: "0 24px 64px rgba(0,0,0,0.15)"
+            boxShadow: "0 24px 64px rgba(0,0,0,0.2)"
           }}>
             <img 
               src="/asset/vessel_image.jpg" 
@@ -215,10 +217,9 @@ export default function HomePage() {
             />
           </div>
           {/* Text RIGHT */}
-          <div style={{ maxWidth: 620 }}>
-            <h2 className="section-heading" style={{ marginBottom: 20 }}>
-              Marine Vessel Inspection,<br />
-              Maintenance &amp; Repairs.
+          <div style={{ maxWidth: 740 }}>
+            <h2 className="section-heading" style={{ fontSize: "90px !important", fontWeight: "900 !important", marginBottom: 20, lineHeight: 1.05, letterSpacing: "-0.04em !important", fontFamily: "'Bai Jamjuree', sans-serif" }}>
+              Marine Vessel Inspection, Maintenance &amp; Repairs.
             </h2>
             <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44 }}>
               Comprehensive sea vessel maintenance and through-life support for all specialized marine operations, ensuring reliability and safety at all times.
@@ -235,10 +236,10 @@ export default function HomePage() {
 
       {/* ─── SPARES & SUPPORT ─── */}
       <section className="section-pad" style={{ background: "#fafafa", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1320 }}>
+        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
           {/* Text LEFT */}
-          <div style={{ maxWidth: 620 }}>
-            <h2 className="section-heading" style={{ marginBottom: 20 }}>
+          <div style={{ maxWidth: 740 }}>
+            <h2 className="section-heading" style={{ fontSize: "90px !important", fontWeight: "900 !important", marginBottom: 20, lineHeight: 1.05, letterSpacing: "-0.04em !important", fontFamily: "'Bai Jamjuree', sans-serif" }}>
               Spares &amp; Support<br />
               for marine and industrial<br />
               systems.
@@ -256,10 +257,11 @@ export default function HomePage() {
           {/* Image RIGHT - Industrial Spares Mastery */}
           <div style={{ 
             width: "100%", 
-            height: 380, 
-            borderRadius: 8, 
+            height: 580, 
+            borderRadius: 12, 
+            marginTop: -80,
             overflow: "hidden",
-            boxShadow: "0 24px 64px rgba(0,0,0,0.12)"
+            boxShadow: "0 24px 64px rgba(0,0,0,0.2)"
           }}>
             <img 
               src="/asset/hero/marine_spares.png" 
