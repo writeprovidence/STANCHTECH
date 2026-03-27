@@ -346,8 +346,8 @@ export default function HomePage() {
                 Trust in Precision
               </span>
               <h2 className="responsive-title" style={{ fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, textTransform: "none", marginBottom: 28 }}>
-                The Voice of our <br />
-                global <span style={{ fontStyle: "italic", fontWeight: 300, color: "#c8d0da", fontFamily: "var(--font-serif, Georgia, serif)" }}>partnership network.</span>
+                Built on Trust, Driven by <br />
+                <span style={{ fontStyle: "italic", fontWeight: 300, color: "#c8d0da", fontFamily: "var(--font-serif, Georgia, serif)" }}>Engineering Excellence.</span>
               </h2>
               <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.65)", fontWeight: 700, marginBottom: 40 }}>
                 Our commitment to excellence is reflected in the success stories and technical milestones achieved alongside our partners.
