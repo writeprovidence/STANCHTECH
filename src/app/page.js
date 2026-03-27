@@ -162,10 +162,10 @@ export default function HomePage() {
 
       {/* ─── MARINE CONTROL ─── */}
       <section className="section-pad" style={{ background: "#0b1a2e", color: "#fff" }}>
-        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
+        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1320 }}>
           {/* Text LEFT */}
-          <div style={{ maxWidth: 740 }}>
-            <h2 className="massive-headline">
+          <div style={{ maxWidth: 540 }}>
+            <h2 className="section-heading" style={{ marginBottom: 20 }}>
               Marine Control, Monitoring, <br/>
               Navigation &amp; Communication <br/>
               Systems.
@@ -181,7 +181,13 @@ export default function HomePage() {
             </Link>
           </div>
           {/* Image RIGHT - Vessel Exterior & Diverse Team */}
-          <div className="adaptive-image-container">
+          <div style={{ 
+            width: "100%", 
+            height: 380, 
+            borderRadius: 8, 
+            overflow: "hidden",
+            boxShadow: "0 24px 64px rgba(0,0,0,0.3)"
+          }} className="adaptive-image-container">
             <img 
               src="/asset/services_image/diverse_vessel_technical.png" 
               alt="Marine Technical Services on Vessel" 
@@ -193,9 +199,15 @@ export default function HomePage() {
 
       {/* ─── MARINE VESSEL INSPECTION ─── */}
       <section className="section-pad" style={{ background: "#96C3E4", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
+        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1320 }}>
           {/* Image LEFT - Vessel Presentation */}
-          <div className="adaptive-image-container">
+          <div style={{ 
+            width: "100%", 
+            height: 380, 
+            borderRadius: 8, 
+            overflow: "hidden",
+            boxShadow: "0 24px 64px rgba(0,0,0,0.15)"
+          }} className="adaptive-image-container">
             <img 
               src="/asset/vessel_image.jpg" 
               alt="Marine Vessel Inspection" 
@@ -203,8 +215,8 @@ export default function HomePage() {
             />
           </div>
           {/* Text RIGHT */}
-          <div style={{ maxWidth: 740 }}>
-            <h2 className="massive-headline">
+          <div style={{ maxWidth: 620 }}>
+            <h2 className="section-heading" style={{ marginBottom: 20 }}>
               Marine Vessel Inspection, Maintenance &amp; Repairs.
             </h2>
             <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44 }}>
@@ -222,10 +234,10 @@ export default function HomePage() {
 
       {/* ─── SPARES & SUPPORT ─── */}
       <section className="section-pad" style={{ background: "#fafafa", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
+        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1320 }}>
           {/* Text LEFT */}
-          <div style={{ maxWidth: 740 }}>
-            <h2 className="massive-headline">
+          <div style={{ maxWidth: 620 }}>
+            <h2 className="section-heading" style={{ marginBottom: 20 }}>
               Spares &amp; Support<br />
               for marine and industrial<br />
               systems.
@@ -241,7 +253,13 @@ export default function HomePage() {
             </Link>
           </div>
           {/* Image RIGHT - Industrial Spares Mastery */}
-          <div className="adaptive-image-container">
+          <div style={{ 
+            width: "100%", 
+            height: 380, 
+            borderRadius: 8, 
+            overflow: "hidden",
+            boxShadow: "0 24px 64px rgba(0,0,0,0.12)"
+          }} className="adaptive-image-container">
             <img 
               src="/asset/hero/marine_spares.png" 
               alt="Professional Marine and Industrial Spares" 
