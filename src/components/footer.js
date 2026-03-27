@@ -8,17 +8,17 @@ export function Footer() {
       <footer style={{ background: "#0b1a2e", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
         {/* Section 2: Main Footer Grid */}
         <section>
-          <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "1.2fr 1fr 1.2fr 1.2fr", gap: 32 }}>
+          <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 32 }}>
             {/* Column 1: Logo & Vision */}
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 32 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 32 }}>
                 <img 
                   src="/asset/stanch_tech logo.png" 
                   alt="Stanch Tech" 
-                  style={{ height: 82, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)" }} 
+                  style={{ height: 82, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: -4 }} 
                 />
                 <span style={{
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: 900,
                   letterSpacing: "0.04em",
                   color: "#fff",
@@ -26,7 +26,7 @@ export function Footer() {
                   lineHeight: 1,
                   fontFamily: "'Inter', sans-serif"
                 }}>
-                  STANCH TECH
+                  STANCHTECH
                 </span>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, marginBottom: 32 }}>
@@ -48,7 +48,7 @@ export function Footer() {
             </div>
 
             {/* Column 2: Navigation */}
-            <div>
+            <div style={{ paddingLeft: 60 }}>
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Navigation</p>
               </div>

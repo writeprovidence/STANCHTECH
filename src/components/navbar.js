@@ -45,14 +45,14 @@ export function Navbar() {
                 }}>
                     {/* LEFT: Logo - flex-1 for centering middle */}
                     <div style={{ flex: 1, display: "flex", justifyContent: "flex-start" }}>
-                        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+                        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 0, textDecoration: "none" }}>
                             <img
                                 src="/asset/stanch_tech%20logo.png"
                                 alt="STANCH TECH"
-                                style={{ height: 52, width: "auto", objectFit: "contain" }}
+                                style={{ height: 52, width: "auto", objectFit: "contain", marginRight: -2, filter: "brightness(0) invert(1)" }}
                             />
                             <span style={{
-                                fontSize: 22,
+                                fontSize: 16,
                                 fontWeight: 900,
                                 letterSpacing: "0.04em",
                                 color: "#fff",
@@ -60,7 +60,7 @@ export function Navbar() {
                                 lineHeight: 1,
                                 fontFamily: "'Inter', sans-serif"
                             }}>
-                                STANCH TECH
+                                STANCHTECH
                             </span>
                         </Link>
                     </div>

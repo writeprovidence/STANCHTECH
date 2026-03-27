@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const HERO_SLIDES = [
   {
@@ -18,7 +19,7 @@ const HERO_SLIDES = [
   },
   {
     image: "/asset/hero/marine_spares.png",
-    heading: <>Spares &amp; Technical Support for marine <br className="hide-mobile" />and industrial systems.</>
+    heading: <>Spares &amp; Support for marine and<br className="hide-mobile" /> industrial systems.</>
   }
 ];
 
@@ -74,7 +75,7 @@ export default function HomePage() {
 
         {/* Content */}
         <div style={{ position: "relative", zIndex: 2, textAlign: "center", padding: "0 24px", maxWidth: 900, width: "100%", transform: "translateY(120px)" }}>
-          <div style={{ position: "relative", height: 100, marginBottom: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ position: "relative", height: 100, marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center" }}>
             {HERO_SLIDES.map((slide, index) => (
               <h1 
                 key={index}
@@ -83,11 +84,11 @@ export default function HomePage() {
                   width: "100%",
                   padding: "0 12vw",
                   boxSizing: "border-box",
-                  fontSize: 34,
-                  fontWeight: 400,
-                  lineHeight: 1.15,
-                  letterSpacing: "-0.03em",
-                  fontFamily: "var(--font-sans, system-ui, sans-serif)",
+                  fontSize: "19px !important",
+                  fontWeight: "500 !important",
+                  lineHeight: "1.6 !important",
+                  letterSpacing: "0.05em !important",
+                  fontFamily: "'Inter', sans-serif !important",
                   opacity: index === currentSlide ? 1 : 0,
                   transition: "opacity 0.8s ease-in-out",
                   pointerEvents: index === currentSlide ? "auto" : "none"
@@ -102,7 +103,7 @@ export default function HomePage() {
               href="/contact"
               className="hero-btn-primary"
             >
-              Request Service <ArrowUpRight size={18} strokeWidth={2} />
+              Request Service
             </Link>
             <Link
               href="/shop"
@@ -170,8 +171,8 @@ export default function HomePage() {
           {/* Text LEFT */}
           <div style={{ maxWidth: 540 }}>
             <h2 style={{ fontSize: 48, fontWeight: 700, lineHeight: 1.05, marginBottom: 20, letterSpacing: "-0.03em" }}>
-              Marine Control, Monitoring,<br />
-              Navigation &amp; Communication<br />
+              Marine Control, Monitoring,
+              Navigation &amp; Communication
               Systems.
             </h2>
             <p style={{ color: "rgba(255,255,255,0.72)", fontSize: 22, lineHeight: 1.55, marginBottom: 44 }}>
@@ -203,7 +204,7 @@ export default function HomePage() {
 
       {/* ─── MARINE VESSEL INSPECTION ─── */}
       <section className="section-pad" style={{ background: "#96C3E4", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gridTemplateColumns: "1fr 1.1fr", gap: 60 }}>
+        <div className="two-col-grid" style={{ gridTemplateColumns: "1.1fr 1fr", gap: 60 }}>
           {/* Image LEFT - Vessel Presentation */}
           <div style={{ 
             width: "100%", 
@@ -215,7 +216,7 @@ export default function HomePage() {
             <img 
               src="/asset/vessel_image.jpg" 
               alt="Marine Vessel Inspection" 
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "bottom", display: "block" }} 
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 60%", display: "block" }} 
             />
           </div>
           {/* Text RIGHT */}
@@ -239,13 +240,12 @@ export default function HomePage() {
 
       {/* ─── SPARES & SUPPORT ─── */}
       <section className="section-pad" style={{ background: "#fafafa", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gridTemplateColumns: "1.1fr 1fr", gap: 60 }}>
+        <div className="two-col-grid" style={{ gridTemplateColumns: "1.1fr 1fr", gap: 60, maxWidth: 1420 }}>
           {/* Text LEFT */}
           <div style={{ maxWidth: 620 }}>
             <h2 style={{ fontSize: 48, fontWeight: 700, lineHeight: 1.05, marginBottom: 20, letterSpacing: "-0.03em" }}>
-              Spares &amp; Support for marine<br />
-              and industrial<br />
-              systems.
+              Spares &amp; Support for marine and<br />
+              industrial systems.
             </h2>
             <p style={{ color: "rgba(11,26,46,0.72)", fontSize: 22, lineHeight: 1.55, marginBottom: 44 }}>
               Premium quality spares and expert technical support for marine and industrial operations. Direct sales and installation.
@@ -282,7 +282,7 @@ export default function HomePage() {
         position: "relative"
       }}>
         {/* Header */}
-        <div className="fp-header section-header-flex" style={{ maxWidth: 1400, margin: "0 auto 80px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+        <div className="fp-header section-header-flex" style={{ maxWidth: 1400, margin: "0 auto 80px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", paddingTop: 20 }}>
           <div style={{ maxWidth: 880 }}>
             <h2 className="responsive-title" style={{ fontWeight: 900, letterSpacing: "-0.03em", textTransform: "none", lineHeight: 1.05, marginBottom: 20 }}>
               Featured products
@@ -317,16 +317,15 @@ export default function HomePage() {
             position: "relative"
           }}>
             {/* Left Image Area */}
-            <div style={{ flex: "0 0 292px", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
+            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
             </div>
             {/* Right Specs Area */}
-            <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 75px", color: "#fff", display: "flex", flexDirection: "column" }}>
-              <h3 style={{ fontSize: 28, fontWeight: 900, marginBottom: 12, letterSpacing: "-0.02em" }}>Precision Marine Turbo</h3>
-              <p style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 28 }}>ST-ENGINEERING SERIES</p>
-              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 40px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
-                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)" }}>• High-Pressure Performance</li>
-                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)" }}>• Saltwater Corrosion Resistant</li>
-                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)" }}>• 24-Month Active Warranty</li>
+            <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 124px 55px 24px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
+              <h3 style={{ fontSize: 28, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em" }}>Precision Marine Turbo</h3>
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
+                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left" }}>• High-Pressure Performance</li>
+                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left" }}>• Saltwater Corrosion Resistant</li>
+                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left" }}>• 24-Month Active Warranty</li>
               </ul>
               <Link href="/shop" className="hero-btn-secondary" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", fontSize: 12 }}>
                 Explore Product <ArrowUpRight size={14} strokeWidth={2.5} />
@@ -341,16 +340,15 @@ export default function HomePage() {
             position: "relative"
           }}>
             {/* Left Image Area */}
-            <div style={{ flex: "0 0 292px", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
+            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
             </div>
             {/* Right Specs Area */}
-            <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 75px", color: "#fff", display: "flex", flexDirection: "column" }}>
-              <h3 style={{ fontSize: 28, fontWeight: 900, marginBottom: 12, letterSpacing: "-0.02em" }}>Advanced Fuel Injector</h3>
-              <p style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 28 }}>ST-PRECISION SERIES</p>
-              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 40px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
-                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)" }}>• Ultra-Fine Fuel Atomization</li>
-                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)" }}>• OEM Grade Compatibility</li>
-                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)" }}>• Optimized Fuel Efficiency</li>
+            <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 124px 55px 24px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
+              <h3 style={{ fontSize: 28, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em" }}>Advanced Fuel Injector</h3>
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
+                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left" }}>• Ultra-Fine Fuel Atomization</li>
+                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left" }}>• OEM Grade Compatibility</li>
+                <li style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left" }}>• Optimized Fuel Efficiency</li>
               </ul>
               <Link href="/shop" className="hero-btn-secondary" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", fontSize: 12 }}>
                 Explore Product <ArrowUpRight size={14} strokeWidth={2.5} />
@@ -404,17 +402,25 @@ export default function HomePage() {
               { name: "Sarah Ahmed", initial: "S", quote: "The diagnostic precision with their systems reduced our downtime by over 35%. A truly professional team that understands marine logistics." },
               { name: "Mike Odunsi", initial: "M", quote: "From inspection to final installation, the experience was seamless. Their technical team provides real peace of mind for our offshore assets." }
             ].map((t, idx) => (
-              <div key={idx} style={{ 
-                background: "#fff", 
-                padding: "44px", 
-                borderRadius: 24, 
-                border: "1px solid #e2e8f0", 
-                display: "flex", 
-                flexDirection: "column", 
-                justifyContent: "space-between",
-                minHeight: 380,
-                boxShadow: "none"
-              }}>
+              <motion.div 
+                key={idx} 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: idx * 0.2, ease: "easeOut" }}
+                style={{ 
+                  background: "#fff", 
+                  padding: "44px", 
+                  borderRadius: 24, 
+                  border: "1px solid #e2e8f0", 
+                  display: "flex", 
+                  flexDirection: "column", 
+                  justifyContent: "space-between",
+                  minHeight: 380,
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.03)"
+                }}
+                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.08)" }}
+              >
                 <div>
                   <div style={{ display: "flex", gap: 4, marginBottom: 20 }}>
                     {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="#fbbf24" stroke="#fbbf24" />)}
@@ -429,7 +435,7 @@ export default function HomePage() {
                   </div>
                   <p style={{ fontSize: 20, fontWeight: 900, color: "#0b1a2e" }}>{t.name}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
