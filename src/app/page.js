@@ -161,8 +161,8 @@ export default function HomePage() {
       </section>
 
       {/* ─── MARINE CONTROL ─── */}
-      <section className="section-pad" style={{ background: "#0b1a2e", color: "#fff", overflow: "hidden" }}>
-        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400, gridTemplateColumns: "1fr 1.25fr" }}>
+      <section className="section-pad marine-control-font-fix" style={{ background: "#0b1a2e", color: "#fff", overflow: "hidden" }}>
+        <div className="two-col-grid marine-control-inner-grid" style={{ gap: 60 }}>
           {/* Text LEFT */}
           <div style={{ maxWidth: 740 }}>
             <h2 className="massive-headline" style={{ lineHeight: 1.25, letterSpacing: "0.03em", marginBottom: "64px" }}>

@@ -147,6 +147,16 @@ p {
   margin: 0 auto;
 }
 
+.marine-control-inner-grid {
+  grid-template-columns: 1fr 1.15fr !important;
+  max-width: 1400px !important;
+}
+
+.marine-control-font-fix h2 {
+  font-size: 85px !important;
+  line-height: 1.05 !important;
+}
+
 /* ── Responsive Section Heading (h2) ── */
 .section-heading {
   font-size: clamp(28px, 4vw, 48px);
