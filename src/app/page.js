@@ -161,8 +161,8 @@ export default function HomePage() {
       </section>
 
       {/* ─── MARINE CONTROL ─── */}
-      <section className="section-pad" style={{ background: "#0b1a2e", color: "#fff" }}>
-        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
+      <section className="section-pad" style={{ background: "#0b1a2e", color: "#fff", overflow: "hidden" }}>
+        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1700, gridTemplateColumns: "1fr 1.8fr" }}>
           {/* Text LEFT */}
           <div style={{ maxWidth: 740 }}>
             <h2 className="massive-headline" style={{ lineHeight: 1.25, letterSpacing: "0.03em", marginBottom: "64px" }}>
@@ -222,13 +222,11 @@ export default function HomePage() {
 
       {/* ─── SPARES & SUPPORT ─── */}
       <section className="section-pad" style={{ background: "#fafafa", color: "#0b1a2e" }}>
-        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
+        <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400, gridTemplateColumns: "1.1fr 1.15fr" }}>
           {/* Text LEFT */}
-          <div style={{ maxWidth: 740 }}>
+          <div style={{ maxWidth: 840 }}>
             <h2 className="massive-headline" style={{ lineHeight: 1.25, letterSpacing: "0.03em", marginBottom: "64px" }}>
-              Spares &amp; Support<br />
-              for marine and industrial<br />
-              systems.
+              Spares &amp; Support for marine and industrial systems.
             </h2>
             <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45 }}>
               Premium quality spares and expert technical support for marine and industrial operations this include sales and installation.
