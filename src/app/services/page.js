@@ -40,7 +40,7 @@ export default function ServicesPage() {
             description: "Ensuring accurate performance, reliability, and safety at sea.",
         },
         {
-            title: "Marine Vessel Inspection, Maintenance & Repairs",
+            title: "Vessel Inspection, Maintenance & Repairs",
             image: "/asset/services_image/Marine Vessel.png",
             items: [
                 "Hull systems",

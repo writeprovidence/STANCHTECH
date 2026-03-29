@@ -54,7 +54,12 @@ export function Footer() {
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {["About", "Shop", "Contact"].map((link) => (
-                  <Link key={link} href={`/${link.toLowerCase()}`} style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8 }} className="footer-link">
+                  <Link 
+                    key={link} 
+                    href={link === "Contact" ? "/contact" : "#"} 
+                    style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8 }} 
+                    className="footer-link"
+                  >
                     {link}
                   </Link>
                 ))}
@@ -92,7 +97,7 @@ export function Footer() {
                   Standby emergency services available. Every call is treated with urgency.
                 </p>
                 <Link 
-                  href="tel:+2347059623727" 
+                  href="/contact" 
                   className="hero-btn-secondary"
                   style={{ 
                     display: "flex", 

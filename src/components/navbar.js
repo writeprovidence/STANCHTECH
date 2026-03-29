@@ -17,8 +17,8 @@ export function Navbar() {
     }, []);
 
     const navLinks = [
-        { name: "About", href: "/about" },
-        { name: "Shop", href: "/shop" },
+        { name: "About", href: "#" },
+        { name: "Shop", href: "#" },
         { name: "Contact", href: "/contact" },
     ];
 
@@ -100,8 +100,8 @@ export function Navbar() {
                             style={{
                                 background: "transparent",
                                 color: "#fff",
-                                border: "0.8px solid rgba(255,255,255,0.4)",
-                                padding: "8px 42px",
+                                border: "0.5px solid rgba(255,255,255,0.3)",
+                                padding: "6px 24px",
                                 borderRadius: "0px",
                                 fontSize: 13,
                                 letterSpacing: "0.12em",

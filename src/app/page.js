@@ -100,7 +100,7 @@ export default function HomePage() {
               Request Service
             </Link>
             <Link
-              href="/shop"
+              href="#"
               className="hero-btn-secondary"
               style={{ border: "2.5px solid #ffffff !important", borderColor: "#ffffff !important" }}
             >
@@ -205,7 +205,7 @@ export default function HomePage() {
           {/* Text RIGHT */}
           <div style={{ maxWidth: 740 }}>
             <h2 className="massive-headline">
-              Marine Vessel Inspection, Maintenance &amp; Repairs.
+              Vessel Inspection, Maintenance &amp; Repairs.
             </h2>
             <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44 }}>
               Comprehensive sea vessel maintenance and through-life support for all specialized marine operations, ensuring reliability and safety at all times.
@@ -234,7 +234,7 @@ export default function HomePage() {
               Premium quality spares and expert technical support for marine and industrial operations this include sales and installation.
             </p>
             <Link
-              href="/shop"
+              href="#"
               className="hero-btn-primary"
             >
               View Inventory <ArrowUpRight size={18} strokeWidth={2} />
@@ -272,7 +272,7 @@ export default function HomePage() {
           </div>
           {/* Button aligned to the RIGHT within the 1400px container */}
           <Link
-            href="/shop"
+            href="#"
             className="hero-btn-secondary responsive-btn-center"
             style={{ 
               background: "transparent", 
@@ -290,12 +290,17 @@ export default function HomePage() {
         <div className="products-grid" style={{ maxWidth: 1400, margin: "0 auto", gap: 32, position: "relative" }}>
           {/* Card 1 */}
           <div className="product-item-card" style={{ 
-            backgroundImage: 'url("/asset/card 1.png")', 
-            backgroundSize: "cover", 
-            position: "relative"
+            position: "relative",
+            background: "#fff",
+            overflow: "hidden"
           }}>
-            {/* Left Image Area */}
-            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
+            {/* Left Image Area (The 'White Card') */}
+            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "#fff" }}>
+              <img 
+                src="/asset/spare_parts/part2.png" 
+                alt="Precision Marine Turbo" 
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              />
             </div>
             {/* Right Specs Area */}
             <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
@@ -305,7 +310,7 @@ export default function HomePage() {
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap" }}>• Saltwater Corrosion Resistant</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap" }}>• 24-Month Active Warranty</li>
               </ul>
-              <Link href="/shop" className="hero-btn-secondary" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", fontSize: 13, whiteSpace: "nowrap" }}>
+              <Link href="#" className="hero-btn-secondary" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", fontSize: 13, whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
               </Link>
             </div>
@@ -313,12 +318,17 @@ export default function HomePage() {
 
           {/* Card 2 */}
           <div className="product-item-card" style={{ 
-            backgroundImage: 'url("/asset/card 2.png")', 
-            backgroundSize: "cover", 
-            position: "relative"
+            position: "relative",
+            background: "#fff",
+            overflow: "hidden"
           }}>
-            {/* Left Image Area */}
-            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "20px 40px 60px", background: "#fff" }}>
+            {/* Left Image Area (The 'White Card') */}
+            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "#fff" }}>
+              <img 
+                src="/asset/spare_parts/Part3.png" 
+                alt="Advanced Fuel Injector" 
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              />
             </div>
             {/* Right Specs Area */}
             <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
@@ -328,7 +338,7 @@ export default function HomePage() {
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap" }}>• OEM Grade Compatibility</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap" }}>• Optimized Fuel Efficiency</li>
               </ul>
-              <Link href="/shop" className="hero-btn-secondary" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", fontSize: 13, whiteSpace: "nowrap" }}>
+              <Link href="#" className="hero-btn-secondary" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", fontSize: 13, whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
               </Link>
             </div>

@@ -8,7 +8,7 @@ const faqs = [
     {
         id: "01",
         question: "How can I get in touch with the team?",
-        answer: "You can reach us via our contact form, email us at stanchtechltd@gmail.com, or call our customer support lines for immediate assistance. We are available on WhatsApp and WeChat as well."
+        answer: "You can reach us via email at stanchtechltd@gmail.com, or call our customer support lines for immediate assistance. We are available on WhatsApp and WeChat as well."
     },
     {
         id: "02",
@@ -53,7 +53,7 @@ export default function ContactPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "17px", color: "#334155", fontWeight: 500, lineHeight: 1.6, maxWidth: "480px", marginTop: "80px", marginBottom: "32px" }}
+                            style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "20px", color: "#334155", fontWeight: 500, lineHeight: 1.4, maxWidth: "480px", marginTop: "40px", marginBottom: "32px" }}
                         >
                             Collaborate with us to provide dependable marine and industrial maintenance services, ensuring optimal performance, reduced downtime, and expert support for your operations.
                         </motion.p>
@@ -99,7 +99,7 @@ export default function ContactPage() {
                                     OUR HQ.
                                 </h2>
                             </div>
-                            <p style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "22px", color: "#64748b", fontWeight: 700, lineHeight: 1.6, marginBottom: "48px", maxWidth: "420px" }}>
+                            <p style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "22px", color: "#64748b", fontWeight: 500, lineHeight: 1.3, marginBottom: "48px", maxWidth: "420px" }}>
                                 Km16 PHC - ABA Express Way,<br />
                                 Adjacent Dubi, Port harcourt,<br />
                                 Rivers state, Nigeria
