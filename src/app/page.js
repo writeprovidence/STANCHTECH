@@ -165,12 +165,12 @@ export default function HomePage() {
         <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
           {/* Text LEFT */}
           <div style={{ maxWidth: 740 }}>
-            <h2 className="massive-headline">
+            <h2 className="massive-headline" style={{ lineHeight: 1.25, letterSpacing: "0.03em", marginBottom: "64px" }}>
               Marine Control, Monitoring, <br/>
               Navigation &amp; Communication <br/>
               Systems.
             </h2>
-            <p className="section-body" style={{ color: "rgba(255,255,255,0.72)", marginBottom: 44 }}>
+            <p className="section-body" style={{ color: "rgba(255,255,255,0.72)", marginBottom: 44, lineHeight: 1.45 }}>
               Precision Control and advanced marine systems maintenance to ensure your vessels run safely and efficiently.
             </p>
             <Link
@@ -204,10 +204,10 @@ export default function HomePage() {
           </div>
           {/* Text RIGHT */}
           <div style={{ maxWidth: 740 }}>
-            <h2 className="massive-headline">
+            <h2 className="massive-headline" style={{ lineHeight: 1.25, letterSpacing: "0.03em", marginBottom: "64px" }}>
               Vessel Inspection, Maintenance &amp; Repairs.
             </h2>
-            <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44 }}>
+            <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45 }}>
               Comprehensive sea vessel maintenance and through-life support for all specialized marine operations, ensuring reliability and safety at all times.
             </p>
             <Link
@@ -225,12 +225,12 @@ export default function HomePage() {
         <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400 }}>
           {/* Text LEFT */}
           <div style={{ maxWidth: 740 }}>
-            <h2 className="massive-headline">
+            <h2 className="massive-headline" style={{ lineHeight: 1.25, letterSpacing: "0.03em", marginBottom: "64px" }}>
               Spares &amp; Support<br />
               for marine and industrial<br />
               systems.
             </h2>
-            <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44 }}>
+            <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45 }}>
               Premium quality spares and expert technical support for marine and industrial operations this include sales and installation.
             </p>
             <Link
