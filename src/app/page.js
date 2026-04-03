@@ -190,7 +190,7 @@ export default function HomePage() {
             {/* Text LEFT */}
             <div style={{ maxWidth: 1000 }}>
               <h2 style={{ 
-                fontSize: "65px", 
+                fontSize: "clamp(32px, 8vw, 65px)", 
                 fontWeight: 900, 
                 lineHeight: 1.05, 
                 letterSpacing: "-0.03em", 
@@ -229,7 +229,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── MARINE VESSEL INSPECTION ─── */}
-      <section style={{ background: "#FFFFFF", color: "#0b1a2e", height: "884px", display: "flex", alignItems: "center", padding: "0 5%" }}>
+      <section style={{ background: "#FFFFFF", color: "#0b1a2e", minHeight: "884px", display: "flex", alignItems: "center", padding: "120px 5%" }}>
         <div className="two-col-grid" style={{ gap: 60, alignItems: "center", maxWidth: 1400, gridTemplateColumns: "1.15fr 1fr" }}>
           {/* Image LEFT - Vessel Presentation */}
           <div style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
@@ -242,7 +242,7 @@ export default function HomePage() {
           {/* Text RIGHT */}
           <div style={{ maxWidth: 740 }}>
             <h2 style={{ 
-              fontSize: "65px", 
+              fontSize: "clamp(32px, 8vw, 65px)", 
               fontWeight: 900,
               fontFamily: "'Neue Machina', sans-serif",
               lineHeight: 1.05, 
@@ -270,12 +270,12 @@ export default function HomePage() {
       </section>
 
       {/* ─── SPARES & SUPPORT ─── */}
-      <section style={{ background: "rgba(194, 217, 234, 0.34)", color: "#0b1a2e", height: "903px", display: "flex", alignItems: "center", padding: "0 5%" }}>
+      <section style={{ background: "rgba(194, 217, 234, 0.34)", color: "#0b1a2e", minHeight: "903px", display: "flex", alignItems: "center", padding: "120px 5%" }}>
         <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400, gridTemplateColumns: "1.1fr 1.15fr" }}>
           {/* Text LEFT */}
           <div style={{ maxWidth: 840 }}>
             <h2 style={{ 
-              fontSize: "65px", 
+              fontSize: "clamp(32px, 8vw, 65px)", 
               fontWeight: 900,
               fontFamily: "'Neue Machina', sans-serif",
               lineHeight: 1.05, 
@@ -323,10 +323,10 @@ export default function HomePage() {
         {/* Header */}
         <div className="fp-header section-header-flex" style={{ maxWidth: 1400, margin: "0 auto 40px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", paddingTop: 0 }}>
           <div style={{ maxWidth: 880 }}>
-            <h2 className="responsive-title" style={{ fontWeight: 900, letterSpacing: "-0.03em", textTransform: "none", lineHeight: 1.05, marginBottom: 8 }}>
+            <h2 className="responsive-title" style={{ fontSize: "clamp(28px, 6vw, 42px)", fontWeight: 900, letterSpacing: "-0.03em", textTransform: "none", lineHeight: 1.05, marginBottom: 8 }}>
               Featured products
             </h2>
-            <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.72)", fontWeight: 700, fontFamily: "'Darker Grotesque', sans-serif" }}>
+            <p className="responsive-subtitle" style={{ fontSize: "clamp(16px, 4vw, 20px)", color: "rgba(11,26,46,0.72)", fontWeight: 700, fontFamily: "'Darker Grotesque', sans-serif" }}>
               Our products help to reduce downtime and ensure operations run smoothly.
             </p>
           </div>
