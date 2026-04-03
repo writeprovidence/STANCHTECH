@@ -18,11 +18,11 @@ export default function AboutPage() {
                 <div className="container mx-auto relative z-20">
                     <div className="max-w-4xl">
                         <span className="text-blue-400 font-black uppercase tracking-[0.6em] text-xs mb-8 inline-block animate-fade-in">Our Journey Since 2018</span>
-                        <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] mb-16">
+                        <h1 style={{ fontSize: "clamp(64px, 12vw, 160px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.8, marginBottom: "64px", fontFamily: "'Neue Machina', sans-serif" }}>
                             BUILT ON <br />
-                            <span className="italic font-serif text-blue-500">EXCELLENCE.</span>
+                            <span style={{ color: "#3b82f6", fontStyle: "italic" }}>EXCELLENCE.</span>
                         </h1>
-                        <p className="text-xl md:text-2xl font-medium text-slate-400 leading-relaxed max-w-2xl">
+                        <p style={{ fontSize: "clamp(20px, 2.5vw, 24px)", fontWeight: 500, color: "#94a3b8", lineHeight: 1.6, maxWidth: "640px", fontFamily: "'Darker Grotesque', sans-serif" }}>
                             Redefining specialized marine and industrial maintenance with a steadfast commitment to honesty and technical mastery.
                         </p>
                     </div>
@@ -46,12 +46,12 @@ export default function AboutPage() {
                         <div className="space-y-12">
                             <div className="space-y-4">
                                 <span className="text-blue-600 font-bold uppercase tracking-widest text-xs">Our Heritage</span>
-                                <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9]">
+                                <h2 style={{ fontSize: "clamp(48px, 8vw, 84px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.9, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e" }}>
                                     ROBUST <br />
-                                    <span className="italic font-serif text-blue-600">EXPERIENCE.</span>
+                                    <span style={{ color: "#2563eb", fontStyle: "italic" }}>EXPERIENCE.</span>
                                 </h2>
                             </div>
-                            <div className="space-y-8 text-xl font-medium text-slate-500 leading-relaxed">
+                            <div style={{ fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 500, color: "#64748b", lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif", display: "flex", flexDirection: "column", gap: "32px" }}>
                                 <p>
                                     Established in 2018, STANCH TECH emerged with a mission to redefine specialized maintenance. From our beginnings to becoming a leading solutions provider, we've remained steadfast in our commitment to exceptional delivery.
                                 </p>
@@ -61,10 +61,11 @@ export default function AboutPage() {
                             </div>
                             <Link
                                 href="/services"
-                                className="inline-flex items-center gap-6 bg-slate-900 text-white px-12 py-6 rounded-full font-black text-xl hover:bg-blue-600 transition-all group"
+                                className="hero-btn-primary"
+                                style={{ padding: "20px 48px", borderRadius: "100px" }}
                             >
                                 View Our Services
-                                <ArrowRight className="w-8 h-8 group-hover:translate-x-3 transition-transform" />
+                                <ArrowRight className="w-8 h-8" />
                             </Link>
                         </div>
                         <div className="relative">
@@ -90,11 +91,11 @@ export default function AboutPage() {
                         <div className="py-48 lg:pr-24 border-b lg:border-b-0 lg:border-r border-slate-200">
                             <div className="max-w-xl space-y-12">
                                 <span className="font-black uppercase tracking-[0.6em] text-xs text-blue-600">Our Mission</span>
-                                <h3 className="text-5xl md:text-6xl font-black tracking-tighter uppercase leading-[0.85]">
+                                <h3 style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 0.85, textTransform: "uppercase", fontFamily: "'Neue Machina', sans-serif" }}>
                                     Trusted <br />
-                                    Global <span className="italic font-serif text-blue-600 opacity-80 not-uppercase">Partner.</span>
+                                    Global <span style={{ color: "#2563eb", opacity: 0.8, textTransform: "none", fontStyle: "italic" }}>Partner.</span>
                                 </h3>
-                                <p className="text-2xl md:text-3xl font-medium text-slate-600 leading-tight italic font-serif">
+                                <p style={{ fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 500, color: "#475569", lineHeight: 1.2, fontStyle: "italic", fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     "To become a recognized leader for reliability and technical excellence, recognized for proactive solutions that minimize risk."
                                 </p>
                             </div>
@@ -104,11 +105,11 @@ export default function AboutPage() {
                         <div className="py-48 lg:pl-24">
                             <div className="max-w-xl space-y-12">
                                 <span className="font-black uppercase tracking-[0.6em] text-xs text-blue-600">Our Vision</span>
-                                <h3 className="text-5xl md:text-6xl font-black tracking-tighter uppercase leading-[0.85]">
+                                <h3 style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 0.85, textTransform: "uppercase", fontFamily: "'Neue Machina', sans-serif" }}>
                                     Precision <br />
-                                    Without <span className="italic font-serif text-blue-600 opacity-80 not-uppercase">Limits.</span>
+                                    Without <span style={{ color: "#2563eb", opacity: 0.8, textTransform: "none", fontStyle: "italic" }}>Limits.</span>
                                 </h3>
-                                <p className="text-xl md:text-2xl font-medium text-slate-500 leading-relaxed">
+                                <p style={{ fontSize: "clamp(18px, 2.2vw, 22px)", fontWeight: 500, color: "#64748b", lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     To deliver cost-effective, high-quality products without compromising industry standards, guided by the satisfaction of those we serve.
                                 </p>
                             </div>
@@ -122,7 +123,7 @@ export default function AboutPage() {
                 <div className="container mx-auto px-6">
                     <div className="text-center max-w-3xl mx-auto mb-32 space-y-8">
                         <span className="text-blue-600 font-black uppercase tracking-widest text-xs">Core Values</span>
-                        <h2 className="text-6xl font-black tracking-tight leading-none italic font-serif">What drives us forward.</h2>
+                        <h2 style={{ fontSize: "clamp(48px, 8vw, 72px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1, fontStyle: "italic", fontFamily: "'Neue Machina', sans-serif" }}>What drives us forward.</h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
@@ -134,8 +135,8 @@ export default function AboutPage() {
                                     </div>
                                 </div>
                                 <div className="space-y-4">
-                                    <h4 className="text-3xl font-black tracking-tight">{v.title}</h4>
-                                    <p className="text-slate-500 font-bold text-sm uppercase tracking-widest leading-relaxed">
+                                    <h4 style={{ fontSize: "28px", fontWeight: 900, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>{v.title}</h4>
+                                    <p style={{ fontSize: "14px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "#64748b", fontFamily: "'Darker Grotesque', sans-serif" }}>
                                         {v.description}
                                     </p>
                                 </div>
@@ -151,18 +152,19 @@ export default function AboutPage() {
                     <div className="flex flex-col lg:flex-row gap-24 items-start mb-40">
                         <div className="lg:sticky lg:top-32 max-w-xl space-y-10">
                             <span className="text-blue-400 font-black uppercase tracking-widest text-xs">The Experts</span>
-                            <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85]">
-                                OUR <span className="italic font-serif text-blue-500">TEAM.</span>
+                            <h2 style={{ fontSize: "clamp(56px, 10vw, 96px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.85, fontFamily: "'Neue Machina', sans-serif" }}>
+                                OUR <span style={{ color: "#3b82f6", fontStyle: "italic" }}>TEAM.</span>
                             </h2>
-                            <p className="text-xl text-slate-400 font-medium leading-relaxed">
+                            <p style={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.6, color: "#94a3b8", fontFamily: "'Darker Grotesque', sans-serif" }}>
                                 Our strength lies in our people. STANCH TECH is powered by highly trained engineers and technicians, selected for their technical competence and field experience.
                             </p>
-                            <Link
+                             <Link
                                 href="/contact"
-                                className="inline-flex items-center gap-4 bg-blue-600 text-white px-12 py-6 rounded-full font-black text-xl hover:bg-blue-700 transition-all shadow-2xl hover:shadow-blue-600/30 group"
+                                className="hero-btn-primary"
+                                style={{ background: "#2563eb", padding: "20px 48px", borderRadius: "100px" }}
                             >
                                 Contact Our Team
-                                <ArrowRight className="w-8 h-8 group-hover:translate-x-3 transition-transform" />
+                                <ArrowRight className="w-8 h-8" />
                             </Link>
                         </div>
 
@@ -185,7 +187,7 @@ export default function AboutPage() {
                     </div>
 
                     <div className="max-w-4xl text-left border-t border-white/10 pt-24">
-                        <p className="text-2xl font-medium text-slate-300 leading-relaxed mb-8">
+                        <p style={{ fontSize: "clamp(20px, 3vw, 24px)", fontWeight: 500, color: "#cbd5e1", lineHeight: 1.6, marginBottom: "32px", fontFamily: "'Darker Grotesque', sans-serif" }}>
                             Our technicians are more than service providers; they are trusted partners. With extensive experience across multiple machinery brands, our team provides the same level of care and precision across entire systems.
                         </p>
                         <div className="h-1 w-24 bg-blue-600" />
