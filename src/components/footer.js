@@ -5,7 +5,7 @@ import { ArrowUpRight, Facebook, Instagram, MessageCircle } from "lucide-react";
 
 export function Footer() {
     return (
-      <footer style={{ background: "#0b1a2e", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+      <footer style={{ background: "#0B1A2E", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
         {/* Section 2: Main Footer Grid */}
         <section>
           <div className="footer-grid">
@@ -13,7 +13,7 @@ export function Footer() {
             <div className="footer-col">
               <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 32 }}>
                 <img 
-                  src="/asset/stanch_tech logo.png" 
+                  src="/asset/Landing page_image/stanch_tech logo.png" 
                   alt="Stanch Tech" 
                   style={{ height: 82, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: -4 }} 
                 />
@@ -29,7 +29,7 @@ export function Footer() {
                   STANCHTECH
                 </span>
               </div>
-              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, marginBottom: 32 }}>
+              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, marginBottom: 32, fontFamily: "'Darker Grotesque', sans-serif" }}>
                 Nigeria's premier partner for marine engine salvaging, diagnostic precision, and global logistics support.
               </p>
               <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
@@ -50,14 +50,14 @@ export function Footer() {
             {/* Column 2: Navigation */}
             <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Navigation</p>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Navigation</p>
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {["About", "Shop", "Contact"].map((link) => (
                   <Link 
                     key={link} 
-                    href={link === "Contact" ? "/contact" : "#"} 
-                    style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8 }} 
+                    href={link === "Contact" ? "/contact" : link === "About" ? "/about" : "/shop"} 
+                    style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8, fontFamily: "'Darker Grotesque', sans-serif" }} 
                     className="footer-link"
                   >
                     {link}
@@ -69,20 +69,20 @@ export function Footer() {
             {/* Column 3: Contact Us */}
             <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Contact Us</p>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Contact Us</p>
               </div>
               <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 20, lineHeight: 1.6 }}>
-                <p>
+                <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                   Km16 PHC - ABA Express Way,<br />
                   Adjacent Dubi, Port Harcourt,<br />
                   Rivers State, Nigeria
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <p style={{ color: "#fff" }}>stanchtechltd@gmail.com</p>
-                  <p>+234 (0) 705 962 3727</p>
-                  <p>+234 (0) 803 734 0959</p>
-                  <p>+234 (0) 808 529 0298</p>
-                  <p style={{ marginTop: 10, color: "#fff" }}>WeChat ID: wxid_jh8kewt3w34u22</p>
+                  <p style={{ color: "#fff", fontFamily: "'Darker Grotesque', sans-serif" }}>stanchtechltd@gmail.com</p>
+                  <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>+234 (0) 705 962 3727</p>
+                  <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>+234 (0) 803 734 0959</p>
+                  <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>+234 (0) 808 529 0298</p>
+                  <p style={{ marginTop: 10, color: "#fff", fontFamily: "'Darker Grotesque', sans-serif" }}>WeChat ID: wxid_jh8kewt3w34u22</p>
                 </div>
               </div>
             </div>
@@ -90,15 +90,15 @@ export function Footer() {
             {/* Column 4: Emergency Support */}
             <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0 }}>Emergency Support</p>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Emergency Support</p>
               </div>
               <div className="footer-content-col" style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 24 }}>
-                <p style={{ lineHeight: 1.6 }}>
+                <p style={{ lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>
                   Standby emergency services available. Every call is treated with urgency.
                 </p>
                 <Link 
                   href="/contact" 
-                  className="hero-btn-secondary"
+                  className="hero-btn-secondary no-caps"
                   style={{ 
                     display: "flex", 
                     alignItems: "center", 
@@ -111,7 +111,8 @@ export function Footer() {
                     textDecoration: "none",
                     fontSize: 16,
                     fontWeight: 700,
-                    transition: "all 0.3s ease"
+                    transition: "all 0.3s ease",
+                    fontFamily: "'Darker Grotesque', sans-serif"
                   }}
                   onMouseOver={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "#fff"; }}
                   onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
@@ -123,11 +124,11 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div style={{ maxWidth: 1320, margin: "80px auto 0", paddingTop: 40, borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 500 }}>
-            <p>&copy; {new Date().getFullYear()} Stanch Tech. All rights reserved.</p>
+          <div style={{ maxWidth: 1320, margin: "80px auto 0", paddingTop: 40, borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif" }}>
+            <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>&copy; {new Date().getFullYear()} Stanch Tech. All rights reserved.</p>
             <div style={{ display: "flex", gap: 40 }}>
-              <span style={{ cursor: "pointer" }}>Privacy Policy</span>
-              <span style={{ cursor: "pointer" }}>Terms of Service</span>
+              <span style={{ cursor: "pointer", fontFamily: "'Darker Grotesque', sans-serif" }}>Privacy Policy</span>
+              <span style={{ cursor: "pointer", fontFamily: "'Darker Grotesque', sans-serif" }}>Terms of Service</span>
             </div>
           </div>
         </section>

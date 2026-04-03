@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Neue Machina';
+  src: url('https://cdn.jsdelivr.net/gh/Yone95/yone95.github.io/fonts/NeueMachina-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Machina';
+  src: url('https://cdn.jsdelivr.net/gh/Yone95/yone95.github.io/fonts/NeueMachina-Ultrabold.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #0b1a2e;
@@ -18,6 +34,8 @@
 
 /* ── Responsive Font Sizes ── */
 .responsive-title {
+  font-family: 'Neue Machina', sans-serif !important;
+  font-weight: 900 !important;
   font-size: clamp(32px, 8vw, 56px) !important;
   line-height: 1.1 !important;
 }
@@ -58,7 +76,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Darker Grotesque', sans-serif;
+  font-family: 'Neue Machina', sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -73,14 +91,14 @@ h6,
 button,
 a,
 p {
-  font-family: 'Darker Grotesque', system-ui, sans-serif;
+  font-family: 'Neue Machina', system-ui, sans-serif;
 }
 
 /* ── Hero Headline ── */
 .hero-headline {
-  font-family: 'Bai Jamjuree', sans-serif !important;
-  font-size: clamp(38px, 6vw, 80px) !important;
-  font-weight: 500 !important;
+  font-family: 'Neue Machina', sans-serif !important;
+  font-size: clamp(28px, 5.5vw, 72px) !important;
+  font-weight: 700 !important;
   line-height: 1.05 !important;
   letter-spacing: -0.03em !important;
   margin-bottom: 24px !important;
@@ -155,12 +173,13 @@ p {
 .marine-control-font-fix h2 {
   font-size: 85px !important;
   line-height: 1.05 !important;
+  font-weight: 900 !important;
 }
 
 /* ── Responsive Section Heading (h2) ── */
 .section-heading {
   font-size: clamp(28px, 4vw, 48px);
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1.05;
   letter-spacing: -0.03em !important;
 }
@@ -300,6 +319,10 @@ p {
 }
 
 /* ── Utility ── */
+.hero-btn-secondary.no-caps {
+  text-transform: none !important;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -317,19 +340,19 @@ p {
   background: #155DFC;
   color: #fff;
   padding: 14px 32px;
-  font-size: 15px;
-  font-weight: 900;
+  font-size: 15px !important;
+  font-weight: 900 !important;
   letter-spacing: 0.08em;
   border-radius: 4px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  text-transform: none;
+  text-transform: uppercase !important;
   white-space: nowrap;
   transition: all 0.25s ease;
   border: 1.5px solid transparent;
-  font-family: 'Darker Grotesque', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 .hero-btn-primary:hover {
   background: #fff;
@@ -345,13 +368,15 @@ p {
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.85);
   border-radius: 4px;
-  font-weight: 900;
-  text-transform: none;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
   display: inline-flex;
   align-items: center;
   gap: 12px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 .hero-btn-secondary:hover {
   background: white;
@@ -449,7 +474,7 @@ p {
   font-weight: 900 !important;
   line-height: 1.15;
   letter-spacing: 0.02em;
-  font-family: 'Bai Jamjuree', sans-serif !important;
+  font-family: 'Neue Machina', sans-serif !important;
   margin-bottom: 32px;
 }
 

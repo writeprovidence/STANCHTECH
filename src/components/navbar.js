@@ -17,8 +17,8 @@ export function Navbar() {
     }, []);
 
     const navLinks = [
-        { name: "About", href: "#" },
-        { name: "Shop", href: "#" },
+        { name: "About", href: "/about" },
+        { name: "Shop", href: "/shop" },
         { name: "Contact", href: "/contact" },
     ];
 
@@ -48,7 +48,7 @@ export function Navbar() {
                     <div style={{ flex: 1, display: "flex", justifyContent: "flex-start" }}>
                         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 0, textDecoration: "none" }}>
                             <img
-                                src="/asset/stanch_tech%20logo.png"
+                                src="/asset/Landing page_image/stanch_tech logo.png"
                                 alt="STANCH TECH"
                                 style={{ height: 52, width: "auto", objectFit: "contain", marginRight: -2, filter: "brightness(0) invert(1)" }}
                             />
@@ -59,7 +59,7 @@ export function Navbar() {
                                 color: "#fff",
                                 textTransform: "uppercase",
                                 lineHeight: 1,
-                                fontFamily: "'Inter', sans-serif"
+                                fontFamily: "'Neue Machina', sans-serif"
                             }}>
                                 STANCHTECH
                             </span>
@@ -83,7 +83,7 @@ export function Navbar() {
                                         color: "#fff",
                                         textDecoration: "none",
                                         transition: "color 0.2s",
-                                        fontFamily: "'Bai Jamjuree', sans-serif",
+                                        fontFamily: "'Neue Machina', sans-serif",
                                         fontWeight: 700,
                                     }}
                                     onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.8)"}
@@ -103,13 +103,13 @@ export function Navbar() {
                                 border: "0.5px solid rgba(255,255,255,0.3)",
                                 padding: "6px 24px",
                                 borderRadius: "0px",
-                                fontSize: 13,
-                                letterSpacing: "0.12em",
+                                fontSize: 14,
+                                letterSpacing: "0.05em",
                                 textTransform: "uppercase",
                                 textDecoration: "none",
                                 display: "inline-block",
                                 transition: "all 0.2s ease",
-                                fontFamily: "'Bai Jamjuree', sans-serif",
+                                fontFamily: "'Neue Machina', sans-serif",
                                 fontWeight: 900,
                             }}
                             onMouseEnter={e => {
@@ -121,7 +121,7 @@ export function Navbar() {
                                 e.target.style.color = "#fff";
                             }}
                         >
-                            Sign in
+                            Login
                         </Link>
  
                         {/* Mobile menu button */}
@@ -178,8 +178,9 @@ export function Navbar() {
                                         color: "#fff",
                                         textDecoration: "none",
                                         fontSize: 18,
-                                        fontFamily: "'Bai Jamjuree', sans-serif",
+                                        fontFamily: "'Neue Machina', sans-serif",
                                         fontWeight: 700,
+                                        letterSpacing: "0.05em",
                                         padding: "14px 0",
                                         borderBottom: "1px solid rgba(255,255,255,0.08)",
                                         display: "block",
