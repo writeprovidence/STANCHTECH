@@ -109,10 +109,7 @@ export function Footer() {
                     borderRadius: 8, 
                     color: "#fff", 
                     textDecoration: "none",
-                    fontSize: 16,
-                    fontWeight: 700,
-                    transition: "all 0.3s ease",
-                    fontFamily: "'Darker Grotesque', sans-serif"
+                    transition: "all 0.3s ease"
                   }}
                   onMouseOver={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "#fff"; }}
                   onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}

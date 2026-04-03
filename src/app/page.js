@@ -10,7 +10,7 @@ const HERO_SLIDES = [
     heading: <></>
   },
   {
-    image: "/asset/Landing page_image/marine_vessel_black.png",
+    image: "/asset/Landing page_image/vessel.png",
     heading: <></>
   },
   {
@@ -61,8 +61,13 @@ export default function HomePage() {
         overflow: "hidden",
       }}>
         {/* Dark overlay */}
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 1 }} />
-        
+        <div style={{ 
+          position: "absolute", 
+          inset: 0, 
+          background: currentSlide === 0 ? "rgba(0,0,0,0.65)" : "rgba(0,0,0,0.45)", 
+          transition: "background 0.9s ease-in-out",
+          zIndex: 1 
+        }} />
         {/* Background image slider — z-index overlay: active always visible, exit fades out on top */}
         {HERO_SLIDES.map((slide, index) => {
           const isCurrent = index === currentSlide;
@@ -370,7 +375,7 @@ export default function HomePage() {
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Saltwater Corrosion Resistant</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• 24-Month Active Warranty</li>
               </ul>
-              <Link href="#" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", fontSize: 13, whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>
+              <Link href="#" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
               </Link>
             </div>
@@ -398,7 +403,7 @@ export default function HomePage() {
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• OEM Grade Compatibility</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Optimized Fuel Efficiency</li>
               </ul>
-              <Link href="#" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", fontSize: 13, whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>
+              <Link href="#" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
               </Link>
             </div>
@@ -459,14 +464,14 @@ export default function HomePage() {
                 role: "Technical Manager", 
                 company: "Felz Marine services", 
                 initial: "A", 
-                quote: "The diagnostic precision with their systems reduced our downtime by over 35%. A truly professional team that understands marine logistics." 
+                quote: "Their diagnostic precision and routine maintenance programs reduced our engine downtime by over 35%. A truly professional team that understands heavy machinery maintenance." 
               },
               { 
                 name: "Andy", 
                 role: "MD/CEO", 
                 company: "Gelose Marine Services Ltd", 
                 initial: "A", 
-                quote: "From inspection to final installation, the experience was seamless. Their technical team provides real peace of mind for our offshore assets." 
+                quote: "From basic routine maintenance to complex engine overhauls, the experience was seamless. Their technical team consistently ensures our engines run at peak efficiency." 
               }
             ].map((t, idx) => (
               <motion.div 
