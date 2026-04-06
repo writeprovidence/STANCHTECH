@@ -118,7 +118,7 @@ export default function AboutPage() {
                     </h1>
                     <p style={{ 
                         fontSize: "24px", 
-                        fontWeight: 600, 
+                        fontWeight: 300, 
                         fontFamily: "'Darker Grotesque', sans-serif",
                         maxWidth: "900px",
                         margin: "0 auto",
@@ -135,7 +135,7 @@ export default function AboutPage() {
             {/* MISSION STATEMENTS & STATS */}
             <section style={{ 
                 background: "rgba(132, 185, 224, 0.34)", 
-                padding: "120px 5%",
+                padding: "120px 10vw",
                 minHeight: "810px",
                 display: "flex",
                 flexDirection: "column",
@@ -145,7 +145,7 @@ export default function AboutPage() {
                 <div className="container mx-auto">
                     <p style={{ 
                         fontSize: "32px", 
-                        fontWeight: 700, 
+                        fontWeight: 500, 
                         fontFamily: "'Darker Grotesque', sans-serif",
                         textAlign: "center",
                         maxWidth: "1200px",
@@ -159,44 +159,45 @@ export default function AboutPage() {
                         life and minimize operational risk.
                     </p>
                     
-                    <div className="flex flex-wrap justify-center gap-6 max-w-[1200px] mx-auto items-center px-4">
-                        <div className="flex flex-col items-center group w-full max-w-[381px]">
-                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center" style={{ 
+                    <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-[1400px] mx-auto items-start">
+                        {/* Static Boxes with map or literal */}
+                        <div className="flex flex-col items-center group w-full">
+                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center px-2" style={{ 
                                 backgroundImage: 'url("/asset/about_image/founded.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[clamp(24px,6vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>2018</span>
-                                <p className="absolute bottom-[28%] text-[clamp(14px,3vw,18px)] font-bold text-[#0b1a2e] w-[80%]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <span className="absolute top-[28%] text-[clamp(18px,4vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>2018</span>
+                                <p className="absolute bottom-[28%] text-[clamp(10px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Founded in Port Harcourt, Nigeria
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex flex-col items-center group w-full max-w-[381px]">
-                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center" style={{ 
+                        <div className="flex flex-col items-center group w-full">
+                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center px-2" style={{ 
                                 backgroundImage: 'url("/asset/about_image/team.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[clamp(24px,6vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>50+</span>
-                                <p className="absolute bottom-[28%] text-[clamp(14px,3vw,18px)] font-bold text-[#0b1a2e] w-[80%]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <span className="absolute top-[28%] text-[clamp(18px,4vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>50+</span>
+                                <p className="absolute bottom-[28%] text-[clamp(10px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Specialized Technical Staff
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex flex-col items-center group w-full max-w-[381px]">
-                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center" style={{ 
+                        <div className="flex flex-col items-center group w-full">
+                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center px-2" style={{ 
                                 backgroundImage: 'url("/asset/about_image/partners.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[clamp(24px,6vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>15+</span>
-                                <p className="absolute bottom-[28%] text-[clamp(14px,3vw,18px)] font-bold text-[#0b1a2e] w-[80%]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <span className="absolute top-[28%] text-[clamp(18px,4vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>15+</span>
+                                <p className="absolute bottom-[28%] text-[clamp(10px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Global Technical Partners
                                 </p>
                             </div>
@@ -210,7 +211,7 @@ export default function AboutPage() {
                 backgroundImage: 'url("/asset/about_image/our values.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                padding: "140px 5%",
+                padding: "140px 10vw",
                 position: "relative"
             }}>
                 <div className="container mx-auto relative z-10">
@@ -239,7 +240,7 @@ export default function AboutPage() {
             </section>
 
             {/* OUR SERVICES */}
-            <section style={{ padding: "80px 5% 140px", background: "#F8FAFC" }}>
+            <section style={{ padding: "80px 10vw 140px", background: "#F8FAFC" }}>
                 <div className="container mx-auto">
                     <div style={{ marginBottom: "64px" }}>
                         <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", color: "#0b1a2e" }}>Our Services</h2>
@@ -263,7 +264,7 @@ export default function AboutPage() {
             </section>
 
             {/* OUR TEAM */}
-            <section style={{ padding: "140px 5%", background: "rgba(150, 195, 228, 0.25)" }}>
+            <section style={{ padding: "140px 10vw", background: "rgba(150, 195, 228, 0.25)" }}>
                 <div className="container mx-auto">
                     <div style={{ marginBottom: "80px" }}>
                         <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", color: "#0b1a2e", lineHeight: 1, marginBottom: "24px" }}>Our Team</h2>
@@ -291,7 +292,7 @@ export default function AboutPage() {
             </section>
 
             {/* PARTNERS */}
-            <section style={{ padding: "120px 5%", background: "#ffffff" }}>
+            <section style={{ padding: "120px 10vw", background: "#ffffff" }}>
                 <div className="container mx-auto text-left">
                     <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", color: "#0b1a2e", marginBottom: "12px" }}>Our Partners</h2>
                     <p style={{ marginBottom: "80px", color: "#64748b", fontWeight: 700, fontSize: "20px", fontFamily: "'Darker Grotesque', sans-serif" }}>Our partners in delivering reliable marine and industrial maintenance solutions.</p>
@@ -305,7 +306,7 @@ export default function AboutPage() {
             {/* FAQ SECTION */}
             <section style={{ 
                 background: "rgba(150, 195, 228, 0.25)",
-                padding: "140px 5%",
+                padding: "140px 10vw",
                 height: "835px"
             }}>
                 <div className="container mx-auto flex flex-col lg:flex-row gap-24">

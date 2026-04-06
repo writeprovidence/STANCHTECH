@@ -97,7 +97,7 @@ export default function HomePage() {
         {/* Content */}
         <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 2, textAlign: "center", padding: "0 24px", maxWidth: 900, width: "100%" }}>
           {/* Static big headline */}
-          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em", lineHeight: 0.9 }}>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Next-Level Marine &amp;</span>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Industrial Maintenance</span>
           </h1>

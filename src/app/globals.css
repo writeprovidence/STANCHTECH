@@ -84,7 +84,7 @@ p {
 .hero-headline {
   font-family: 'Space Grotesk', 'Inter', sans-serif !important;
   font-size: clamp(28px, 5.5vw, 72px) !important;
-  font-weight: 300 !important;
+  font-weight: 900 !important;
   line-height: 1.05 !important;
   letter-spacing: -0.03em !important;
   margin-bottom: 24px !important;
