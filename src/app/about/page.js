@@ -135,8 +135,8 @@ export default function AboutPage() {
             {/* MISSION STATEMENTS & STATS */}
             <section style={{ 
                 background: "rgba(132, 185, 224, 0.34)", 
-                padding: "120px 10vw",
-                minHeight: "810px",
+                padding: "64px 10vw 120px",
+                minHeight: "auto",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -159,45 +159,44 @@ export default function AboutPage() {
                         life and minimize operational risk.
                     </p>
                     
-                    <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-[1400px] mx-auto items-start">
-                        {/* Static Boxes with map or literal */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-12 max-w-[1250px] mx-auto items-start">
                         <div className="flex flex-col items-center group w-full">
-                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center px-2" style={{ 
+                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4" style={{ 
                                 backgroundImage: 'url("/asset/about_image/founded.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[clamp(18px,4vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>2018</span>
-                                <p className="absolute bottom-[28%] text-[clamp(10px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>2018</span>
+                                <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Founded in Port Harcourt, Nigeria
                                 </p>
                             </div>
                         </div>
 
                         <div className="flex flex-col items-center group w-full">
-                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center px-2" style={{ 
+                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4" style={{ 
                                 backgroundImage: 'url("/asset/about_image/team.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[clamp(18px,4vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>50+</span>
-                                <p className="absolute bottom-[28%] text-[clamp(10px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>50+</span>
+                                <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Specialized Technical Staff
                                 </p>
                             </div>
                         </div>
 
                         <div className="flex flex-col items-center group w-full">
-                            <div className="relative w-full aspect-[381/265] flex flex-col justify-center items-center text-center px-2" style={{ 
+                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4" style={{ 
                                 backgroundImage: 'url("/asset/about_image/partners.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[clamp(18px,4vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>15+</span>
-                                <p className="absolute bottom-[28%] text-[clamp(10px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>15+</span>
+                                <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Global Technical Partners
                                 </p>
                             </div>
@@ -273,7 +272,7 @@ export default function AboutPage() {
                         </p>
                     </div>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
                             "/asset/about_image/team 4.png",
                             "/asset/about_image/team_picture 1.jpeg",

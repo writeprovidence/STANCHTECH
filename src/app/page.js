@@ -52,8 +52,8 @@ export default function HomePage() {
       {/* ─── HERO ─── */}
       <section style={{
         position: "relative",
-        height: "95vh",
-        minHeight: 700,
+        height: "85vh",
+        minHeight: 650,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -64,9 +64,9 @@ export default function HomePage() {
         <div style={{ 
           position: "absolute", 
           inset: 0, 
-          background: currentSlide === 0 ? "rgba(0,0,0,0.65)" : "rgba(0,0,0,0.45)", 
+          background: "rgba(0,0,0,0.65)", 
           transition: "background 0.9s ease-in-out",
-          zIndex: 1 
+          zIndex: 5
         }} />
         {/* Background image slider — z-index overlay: active always visible, exit fades out on top */}
         {HERO_SLIDES.map((slide, index) => {
@@ -95,9 +95,9 @@ export default function HomePage() {
         })}
 
         {/* Content */}
-        <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 2, textAlign: "center", padding: "0 24px", maxWidth: 900, width: "100%" }}>
+        <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px", maxWidth: 900, width: "100%" }}>
           {/* Static big headline */}
-          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em", lineHeight: 0.9 }}>
+          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.01em", lineHeight: 0.9 }}>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Next-Level Marine &amp;</span>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Industrial Maintenance</span>
           </h1>
@@ -155,7 +155,7 @@ export default function HomePage() {
           onClick={prevSlide}
           aria-label="Previous slide"
           className="slider-arrow"
-          style={{ position: "absolute", left: 28, top: "50%", zIndex: 3 }}
+          style={{ position: "absolute", left: 28, top: "50%", zIndex: 12 }}
         >
           <ChevronLeft size={24} strokeWidth={2.5} />
         </button>
@@ -163,7 +163,7 @@ export default function HomePage() {
           onClick={nextSlide}
           aria-label="Next slide"
           className="slider-arrow"
-          style={{ position: "absolute", right: 28, top: "50%", zIndex: 3 }}
+          style={{ position: "absolute", right: 28, top: "50%", zIndex: 12 }}
         >
           <ChevronRight size={24} strokeWidth={2.5} />
         </button>
