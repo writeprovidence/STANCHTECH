@@ -30,7 +30,7 @@ export function Footer() {
                 </span>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, marginBottom: 32, fontFamily: "'Darker Grotesque', sans-serif" }}>
-                Nigeria's premier partner for marine engine salvaging, diagnostic precision, and global logistics support.
+                Nigeria's premier partner for marine engine salvaging, diagnostic precision, and technical maintenance solutions.
               </p>
               <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
                 <a href="#" style={{ color: "#1877F2", transition: "transform 0.3s ease", display: "inline-flex" }} onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"} onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}>

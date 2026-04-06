@@ -97,13 +97,13 @@ export default function HomePage() {
         {/* Content */}
         <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px", maxWidth: 900, width: "100%" }}>
           {/* Static big headline */}
-          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.01em", lineHeight: 0.9 }}>
+          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 800, fontFamily: "'Neue Machina', sans-serif", letterSpacing: "-0.01em", lineHeight: 0.9 }}>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Next-Level Marine &amp;</span>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Industrial Maintenance</span>
           </h1>
           <p className="hero-description" style={{
             color: "rgba(255,255,255,0.9)",
-            fontFamily: "'Space Grotesk', sans-serif",
+            fontFamily: "'Neue Machina', sans-serif",
             fontSize: "clamp(18px, 1.8vw, 22px)",
             maxWidth: 700,
             lineHeight: 1.6,
@@ -180,7 +180,7 @@ export default function HomePage() {
       }}>
         {/* ─── CORE BUSINESS AREAS ─── */}
         <div style={{ textAlign: "center", padding: "0 5% 100px" }}>
-          <h2 className="responsive-title" style={{ fontWeight: 900, marginBottom: 14, letterSpacing: "-0.02em", color: "#0b1a2e", fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h2 className="responsive-title" style={{ fontWeight: 900, marginBottom: 14, letterSpacing: "-0.02em", color: "#0b1a2e", fontFamily: "'Neue Machina', sans-serif" }}>
             Core Business Areas
           </h2>
           <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.78)", maxWidth: 840, margin: "0 auto", fontFamily: "'Darker Grotesque', sans-serif" }}>
@@ -203,7 +203,7 @@ export default function HomePage() {
                 display: "flex",
                 flexDirection: "column",
                 marginBottom: "32px",
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: "'Neue Machina', sans-serif",
                 color: "#0b1a2e"
               }}>
                 <span>Cummins</span>
@@ -249,7 +249,7 @@ export default function HomePage() {
             <h2 style={{ 
               fontSize: "clamp(32px, 8vw, 65px)", 
               fontWeight: 900,
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Neue Machina', sans-serif",
               lineHeight: 1.05, 
               letterSpacing: "-0.04em", 
               textTransform: "uppercase",
@@ -282,7 +282,7 @@ export default function HomePage() {
             <h2 style={{ 
               fontSize: "clamp(32px, 8vw, 65px)", 
               fontWeight: 900,
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Neue Machina', sans-serif",
               lineHeight: 1.05, 
               letterSpacing: "-0.04em", 
               textTransform: "uppercase",
@@ -369,7 +369,7 @@ export default function HomePage() {
             </div>
             {/* Right Specs Area */}
             <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Space Grotesk', sans-serif" }}>Precision Marine Turbo</h3>
+              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>Precision Marine Turbo</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• High-Pressure Performance</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Saltwater Corrosion Resistant</li>
@@ -397,7 +397,7 @@ export default function HomePage() {
             </div>
             {/* Right Specs Area */}
             <div style={{ flex: 1, background: "#105C7A", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Space Grotesk', sans-serif" }}>Advanced Fuel Injector</h3>
+              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>Advanced Fuel Injector</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Ultra-Fine Fuel Atomization</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• OEM Grade Compatibility</li>

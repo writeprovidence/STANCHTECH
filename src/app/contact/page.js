@@ -146,7 +146,7 @@ export default function ContactPage() {
                             initial={{ opacity: 0, y: -20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "70px", fontWeight: 900, lineHeight: 0.85, color: "#0b1a2e", textAlign: "left" }}
+                            style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "70px", fontWeight: 900, lineHeight: 0.85, color: "#0b1a2e", textAlign: "left" }}
                         >
                             Frequently Asked Questions
                         </motion.h2>

@@ -109,7 +109,7 @@ export default function AboutPage() {
                     <h1 style={{ 
                         fontSize: "clamp(64px, 12vw, 150px)", 
                         fontWeight: 900, 
-                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontFamily: "'Neue Machina', sans-serif",
                         lineHeight: 0.85,
                         letterSpacing: "-0.04em",
                         marginBottom: "40px"
@@ -167,7 +167,7 @@ export default function AboutPage() {
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>2018</span>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>2018</span>
                                 <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Founded in Port Harcourt, Nigeria
                                 </p>
@@ -181,7 +181,7 @@ export default function AboutPage() {
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>50+</span>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>50+</span>
                                 <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Specialized Technical Staff
                                 </p>
@@ -195,7 +195,7 @@ export default function AboutPage() {
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>15+</span>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>15+</span>
                                 <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Global Technical Partners
                                 </p>
@@ -217,7 +217,7 @@ export default function AboutPage() {
                     <h2 style={{ 
                         fontSize: "35px", 
                         fontWeight: 900, 
-                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontFamily: "'Neue Machina', sans-serif",
                         marginBottom: "80px",
                         color: "#fff"
                     }}>Our Values</h2>
@@ -229,7 +229,7 @@ export default function AboutPage() {
                                     <img src={v.icon} alt={v.title} className="w-full h-full object-contain" />
                                 </div>
                                 <div className="space-y-4">
-                                    <h4 style={{ fontSize: "18px", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", color: "#fff" }}>{v.title}</h4>
+                                    <h4 style={{ fontSize: "18px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#fff" }}>{v.title}</h4>
                                     <p style={{ fontSize: "16px", fontWeight: 500, color: "rgba(255,255,255,0.7)", lineHeight: 1.4, fontFamily: "'Darker Grotesque', sans-serif" }}>{v.description}</p>
                                 </div>
                             </div>
@@ -242,7 +242,7 @@ export default function AboutPage() {
             <section style={{ padding: "80px 10vw 140px", background: "#F8FAFC" }}>
                 <div className="container mx-auto">
                     <div style={{ marginBottom: "64px" }}>
-                        <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", color: "#0b1a2e" }}>Our Services</h2>
+                        <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e" }}>Our Services</h2>
                         <p style={{ fontSize: "20px", color: "#64748b", fontWeight: 600, fontFamily: "'Darker Grotesque', sans-serif", marginTop: "10px", lineHeight: 1.5 }}>Delivering reliable marine and industrial solutions with quality, efficiency,<br/>and expert support</p>
                     </div>
                     
@@ -253,7 +253,7 @@ export default function AboutPage() {
                                     <img src={s.img} alt={s.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                                 </div>
                                 <div style={{ height: "260px", padding: "36px 40px", display: "flex", flexDirection: "column", justifyContent: "center", overflow: "hidden" }}>
-                                    <h4 style={{ fontSize: "20px", fontWeight: 900, color: "#0b1a2e", textTransform: "uppercase", marginBottom: "16px", fontFamily: "'Space Grotesk', sans-serif", lineHeight: 1.2 }}>{s.title}</h4>
+                                    <h4 style={{ fontSize: "20px", fontWeight: 900, color: "#0b1a2e", textTransform: "uppercase", marginBottom: "16px", fontFamily: "'Neue Machina', sans-serif", lineHeight: 1.2 }}>{s.title}</h4>
                                     <p style={{ fontSize: "17px", color: "#64748b", fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif", lineHeight: 1.5 }}>{s.desc}</p>
                                 </div>
                             </div>
@@ -266,7 +266,7 @@ export default function AboutPage() {
             <section style={{ padding: "140px 10vw", background: "rgba(150, 195, 228, 0.25)" }}>
                 <div className="container mx-auto">
                     <div style={{ marginBottom: "80px" }}>
-                        <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", color: "#0b1a2e", lineHeight: 1, marginBottom: "24px" }}>Our Team</h2>
+                        <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", lineHeight: 1, marginBottom: "24px" }}>Our Team</h2>
                         <p style={{ maxWidth: "800px", fontSize: "22px", color: "#64748b", fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif", lineHeight: 1.4 }}>
                             Our strength lies in our people. STANCH TECH is powered by highly trained engineers and technicians, selected for their technical competence and field experience.
                         </p>
@@ -293,7 +293,7 @@ export default function AboutPage() {
             {/* PARTNERS */}
             <section style={{ padding: "120px 10vw", background: "#ffffff" }}>
                 <div className="container mx-auto text-left">
-                    <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", color: "#0b1a2e", marginBottom: "12px" }}>Our Partners</h2>
+                    <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", marginBottom: "12px" }}>Our Partners</h2>
                     <p style={{ marginBottom: "80px", color: "#64748b", fontWeight: 700, fontSize: "20px", fontFamily: "'Darker Grotesque', sans-serif" }}>Our partners in delivering reliable marine and industrial maintenance solutions.</p>
                     
                     <div className="flex flex-wrap justify-start items-center gap-24">
@@ -310,7 +310,7 @@ export default function AboutPage() {
             }}>
                 <div className="container mx-auto flex flex-col lg:flex-row gap-24">
                     <div className="lg:w-1/3">
-                        <h2 style={{ fontSize: "70px", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif", color: "#0b1a2e", lineHeight: 0.85 }}>
+                        <h2 style={{ fontSize: "70px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", lineHeight: 0.85 }}>
                             Frequently Asked Questions
                         </h2>
                     </div>
