@@ -97,17 +97,17 @@ export default function HomePage() {
         {/* Content */}
         <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 2, textAlign: "center", padding: "0 24px", maxWidth: 900, width: "100%" }}>
           {/* Static big headline */}
-          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 500, fontFamily: "'Neue Machina', sans-serif" }}>
+          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 900, fontFamily: "'Space Grotesk', sans-serif" }}>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Next-Level Marine &amp;</span>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Industrial Maintenance</span>
           </h1>
           <p className="hero-description" style={{
             color: "rgba(255,255,255,0.9)",
-            fontFamily: "'Neue Machina', sans-serif",
+            fontFamily: "'Space Grotesk', sans-serif",
             fontSize: "clamp(18px, 1.8vw, 22px)",
             maxWidth: 700,
             lineHeight: 1.6,
-            fontWeight: 500,
+            fontWeight: 300,
           }}>
             Maintenance is not just about fixing problems, it’s about<br className="hide-mobile" /> preventing them before they occur.
           </p>
@@ -180,7 +180,7 @@ export default function HomePage() {
       }}>
         {/* ─── CORE BUSINESS AREAS ─── */}
         <div style={{ textAlign: "center", padding: "0 5% 100px" }}>
-          <h2 className="responsive-title" style={{ fontWeight: 900, marginBottom: 14, letterSpacing: "-0.01em", color: "#0b1a2e" }}>
+          <h2 className="responsive-title" style={{ fontWeight: 900, marginBottom: 14, letterSpacing: "-0.02em", color: "#0b1a2e", fontFamily: "'Space Grotesk', sans-serif" }}>
             Core Business Areas
           </h2>
           <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.78)", maxWidth: 840, margin: "0 auto", fontFamily: "'Darker Grotesque', sans-serif" }}>
@@ -193,17 +193,17 @@ export default function HomePage() {
         <div style={{ overflow: "hidden", padding: "0 5%" }}>
           <div className="two-col-grid marine-control-inner-grid" style={{ gap: 60, alignItems: "center" }}>
             {/* Text LEFT */}
-            <div style={{ maxWidth: 1000 }}>
+            <div className="order-2 lg:order-1" style={{ maxWidth: 1000 }}>
               <h2 style={{ 
                 fontSize: "clamp(32px, 8vw, 65px)", 
                 fontWeight: 900, 
                 lineHeight: 1.05, 
-                letterSpacing: "-0.03em", 
+                letterSpacing: "-0.04em", 
                 textTransform: "uppercase",
                 display: "flex",
                 flexDirection: "column",
                 marginBottom: "32px",
-                fontFamily: "'Neue Machina', sans-serif",
+                fontFamily: "'Space Grotesk', sans-serif",
                 color: "#0b1a2e"
               }}>
                 <span>Cummins</span>
@@ -222,7 +222,7 @@ export default function HomePage() {
               </Link>
             </div>
             {/* Image RIGHT */}
-            <div style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
+            <div className="order-1 lg:order-2" style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
               <img 
                 src="/asset/Landing page_image/Cummins.png" 
                 alt="Cummins Engines Maintenance" 
@@ -249,9 +249,9 @@ export default function HomePage() {
             <h2 style={{ 
               fontSize: "clamp(32px, 8vw, 65px)", 
               fontWeight: 900,
-              fontFamily: "'Neue Machina', sans-serif",
+              fontFamily: "'Space Grotesk', sans-serif",
               lineHeight: 1.05, 
-              letterSpacing: "-0.03em", 
+              letterSpacing: "-0.04em", 
               textTransform: "uppercase",
               marginBottom: "64px",
               display: "flex",
@@ -278,13 +278,13 @@ export default function HomePage() {
       <section style={{ background: "rgba(194, 217, 234, 0.34)", color: "#0b1a2e", minHeight: "903px", display: "flex", alignItems: "center", padding: "120px 5%" }}>
         <div className="two-col-grid" style={{ gap: 60, maxWidth: 1400, gridTemplateColumns: "1.1fr 1.15fr" }}>
           {/* Text LEFT */}
-          <div style={{ maxWidth: 840 }}>
+          <div className="order-2 lg:order-1" style={{ maxWidth: 840 }}>
             <h2 style={{ 
               fontSize: "clamp(32px, 8vw, 65px)", 
               fontWeight: 900,
-              fontFamily: "'Neue Machina', sans-serif",
+              fontFamily: "'Space Grotesk', sans-serif",
               lineHeight: 1.05, 
-              letterSpacing: "-0.03em", 
+              letterSpacing: "-0.04em", 
               textTransform: "uppercase",
               marginBottom: "64px",
               display: "flex",
@@ -306,7 +306,7 @@ export default function HomePage() {
             </Link>
           </div>
           {/* Image RIGHT - Industrial Spares Mastery */}
-          <div style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
+          <div className="order-1 lg:order-2" style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
             <img 
               src="/asset/Landing page_image/marine_spares.png" 
               alt="Professional Marine and Industrial Spares" 
@@ -369,7 +369,7 @@ export default function HomePage() {
             </div>
             {/* Right Specs Area */}
             <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>Precision Marine Turbo</h3>
+              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Space Grotesk', sans-serif" }}>Precision Marine Turbo</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• High-Pressure Performance</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Saltwater Corrosion Resistant</li>
@@ -397,7 +397,7 @@ export default function HomePage() {
             </div>
             {/* Right Specs Area */}
             <div style={{ flex: 1, background: "#105C7A", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>Advanced Fuel Injector</h3>
+              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Space Grotesk', sans-serif" }}>Advanced Fuel Injector</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Ultra-Fine Fuel Atomization</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• OEM Grade Compatibility</li>

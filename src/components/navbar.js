@@ -17,8 +17,9 @@ export function Navbar() {
     }, []);
 
     const navLinks = [
+        { name: "Home", href: "/" },
         { name: "About", href: "/about" },
-        { name: "Shop", href: "/shop" },
+        { name: "Shop", href: "#" },
         { name: "Contact", href: "/contact" },
     ];
 
@@ -59,7 +60,7 @@ export function Navbar() {
                                 color: "#fff",
                                 textTransform: "uppercase",
                                 lineHeight: 1,
-                                fontFamily: "'Neue Machina', sans-serif"
+                                fontFamily: "'Space Grotesk', sans-serif"
                             }}>
                                 STANCHTECH
                             </span>
@@ -68,14 +69,16 @@ export function Navbar() {
 
 
 
-                    {/* RIGHT: Combined Nav Links + CTA + Mobile Toggle */}
                     <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 32 }}>
                         {/* Desktop links grouped here on the right */}
-                        <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 32, marginRight: 20 }}>
+                        <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 32 }}>
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
                                     href={link.href}
+                                    onClick={(e) => {
+                                        if (link.href === "#") e.preventDefault();
+                                    }}
                                     style={{
                                         fontSize: 14,
                                         letterSpacing: "0.1em",
@@ -83,7 +86,7 @@ export function Navbar() {
                                         color: "#fff",
                                         textDecoration: "none",
                                         transition: "color 0.2s",
-                                        fontFamily: "'Neue Machina', sans-serif",
+                                        fontFamily: "'Space Grotesk', sans-serif",
                                         fontWeight: 700,
                                     }}
                                     onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.8)"}
@@ -93,36 +96,6 @@ export function Navbar() {
                                 </Link>
                             ))}
                         </div>
-
-                        <Link
-                            href="/contact"
-                            className="desktop-nav"
-                            style={{
-                                background: "transparent",
-                                color: "#fff",
-                                border: "0.5px solid rgba(255,255,255,0.3)",
-                                padding: "6px 24px",
-                                borderRadius: "0px",
-                                fontSize: 14,
-                                letterSpacing: "0.05em",
-                                textTransform: "uppercase",
-                                textDecoration: "none",
-                                display: "inline-block",
-                                transition: "all 0.2s ease",
-                                fontFamily: "'Neue Machina', sans-serif",
-                                fontWeight: 900,
-                            }}
-                            onMouseEnter={e => {
-                                e.target.style.background = "#fff";
-                                e.target.style.color = "#000";
-                            }}
-                            onMouseLeave={e => {
-                                e.target.style.background = "transparent";
-                                e.target.style.color = "#fff";
-                            }}
-                        >
-                            Login
-                        </Link>
  
                         {/* Mobile menu button */}
                         <button
@@ -173,12 +146,18 @@ export function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    onClick={() => setMobileMenuOpen(false)}
+                                    onClick={(e) => {
+                                        if (link.href === "#") {
+                                            e.preventDefault();
+                                        } else {
+                                            setMobileMenuOpen(false);
+                                        }
+                                    }}
                                     style={{
                                         color: "#fff",
                                         textDecoration: "none",
                                         fontSize: 18,
-                                        fontFamily: "'Neue Machina', sans-serif",
+                                        fontFamily: "'Space Grotesk', sans-serif",
                                         fontWeight: 700,
                                         letterSpacing: "0.05em",
                                         padding: "14px 0",

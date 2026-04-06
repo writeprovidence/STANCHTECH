@@ -5,7 +5,7 @@ import { ArrowUpRight, Facebook, Instagram, MessageCircle } from "lucide-react";
 
 export function Footer() {
     return (
-      <footer style={{ background: "#0B1A2E", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+      <footer style={{ background: "#060D17", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
         {/* Section 2: Main Footer Grid */}
         <section>
           <div className="footer-grid">
@@ -53,11 +53,12 @@ export function Footer() {
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Navigation</p>
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {["About", "Shop", "Contact"].map((link) => (
+                {["Home", "About", "Shop", "Contact"].map((link) => (
                   <Link 
                     key={link} 
-                    href={link === "Contact" ? "/contact" : link === "About" ? "/about" : "/shop"} 
-                    style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8, fontFamily: "'Darker Grotesque', sans-serif" }} 
+                    href={link === "Home" ? "/"  : link === "Contact" ? "/contact" : link === "About" ? "/about" : "#"} 
+                    onClick={(e) => link === "Shop" ? e.preventDefault() : undefined}
+                    style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8, fontFamily: "'Darker Grotesque', sans-serif", cursor: link === "Shop" ? "default" : "pointer" }} 
                     className="footer-link"
                   >
                     {link}

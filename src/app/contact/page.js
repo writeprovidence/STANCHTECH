@@ -34,18 +34,18 @@ export default function ContactPage() {
         <div className="bg-white min-h-screen pt-[160px]">
             {/* --- HERO SECTION --- */}
             <section className="relative overflow-hidden" style={{ backgroundColor: "rgba(150, 195, 228, 0.5)", paddingTop: "180px", paddingBottom: "180px" }}>
-                <div className="container mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12" style={{ paddingLeft: "60px", paddingRight: "60px" }}>
-                    <div className="md:w-1/2 z-10" style={{ paddingLeft: "16px" }}>
+                <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-12 px-8 md:px-[100px]">
+                    <div className="md:w-1/2 z-10 text-center md:text-left">
                         <motion.h1 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="mb-4"
-                            style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "64px", fontWeight: 700, lineHeight: 1.0, letterSpacing: "-0.02em" }}
+                            style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "clamp(42px, 10vw, 64px)", fontWeight: 700, lineHeight: 1.0, letterSpacing: "-0.02em" }}
                         >
-                            <span style={{ display: "block", color: "#0b1a2e", marginBottom: "2px", whiteSpace: "nowrap" }}>
+                            <span style={{ display: "inline-block", color: "#0b1a2e", marginBottom: "2px" }}>
                                 <span style={{ color: "#105C7A", fontWeight: 900 }}>Contact</span> Our experts to
                             </span>
-                            <span style={{ display: "block", color: "#0b1a2e" }}>
+                            <span style={{ display: "inline-block", color: "#0b1a2e" }}>
                                 start working together
                             </span>
                         </motion.h1>
@@ -64,7 +64,7 @@ export default function ContactPage() {
                             initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                             animate={{ opacity: 1, scale: 1, rotate: 0 }}
                             transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
-                            src="/asset/contact_image.png" 
+                            src="/asset/Contact_image/contact_image.png" 
                             alt="Contact Us" 
                             className="w-full h-auto object-contain drop-shadow-2xl"
                         />
@@ -78,10 +78,10 @@ export default function ContactPage() {
 
             {/* --- OFFICE & MAP SECTION --- */}
             <section className="bg-[#fafafc] relative overflow-hidden" style={{ paddingTop: "140px", paddingBottom: "140px", minHeight: "800px" }}>
-                <div className="container mx-auto max-w-7xl flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10" style={{ paddingLeft: "60px", paddingRight: "60px" }}>
+                <div className="container mx-auto max-w-6xl flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10 px-8 md:px-[100px]">
                     
                     {/* Office Info Side */}
-                    <div className="lg:w-1/2" style={{ paddingLeft: "16px" }}>
+                    <div className="lg:w-1/2">
                         <motion.div 
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -140,8 +140,8 @@ export default function ContactPage() {
 
             {/* --- FAQ SECTION --- */}
             <section style={{ backgroundColor: "rgba(150, 195, 228, 0.25)", padding: "128px 0" }}>
-                <div className="container mx-auto max-w-7xl flex flex-col lg:flex-row gap-16 lg:gap-24" style={{ paddingLeft: "60px", paddingRight: "60px" }}>
-                    <div className="lg:w-1/3" style={{ paddingLeft: "16px" }}>
+                <div className="container mx-auto max-w-6xl flex flex-col lg:flex-row gap-16 lg:gap-24 px-8 md:px-[100px]">
+                    <div className="lg:w-1/3">
                         <motion.h2 
                             initial={{ opacity: 0, y: -20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -203,7 +203,7 @@ export default function ContactPage() {
                         className="w-full"
                     >
                         <img 
-                            src="/asset/ship.jpg" 
+                            src="/asset/Contact_image/ship.jpg" 
                             alt="Stanch Tech Marine Excellence" 
                             className="w-full h-auto object-cover block"
                             style={{ marginTop: "-8%" }}
