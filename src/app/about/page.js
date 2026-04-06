@@ -107,26 +107,28 @@ export default function AboutPage() {
                 <div style={{ position: "absolute", inset: 0, background: "rgba(11,26,46,0.55)" }} />
                 <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px" }}>
                     <h1 style={{ 
-                        fontSize: "clamp(64px, 12vw, 150px)", 
+                        fontSize: "clamp(48px, 10vw, 130px)", 
                         fontWeight: 900, 
                         fontFamily: "'Neue Machina', sans-serif",
-                        lineHeight: 0.85,
+                        lineHeight: 0.9,
                         letterSpacing: "-0.04em",
-                        marginBottom: "40px"
+                        marginBottom: "32px",
+                        padding: "0 10px"
                     }}>
-                        BUILT ON<br/>EXCELLENCE
+                        BUILT ON<br className="sm:block hidden"/> EXCELLENCE
                     </h1>
                     <p style={{ 
-                        fontSize: "24px", 
+                        fontSize: "clamp(18px, 4vw, 24px)", 
                         fontWeight: 300, 
                         fontFamily: "'Darker Grotesque', sans-serif",
                         maxWidth: "900px",
                         margin: "0 auto",
-                        lineHeight: 1.25,
-                        opacity: 0.95
+                        lineHeight: 1.4,
+                        opacity: 0.95,
+                        padding: "0 10px"
                     }}>
-                        STANCHTECH is a dependable marine and industrial maintenance solutions provider,<br/>
-                        built on a foundation of honesty, open-mindedness,<br/>
+                        STANCHTECH is a dependable marine and industrial maintenance solutions provider, 
+                        built on a foundation of honesty, open-mindedness, 
                         and exceptional service delivery.
                     </p>
                 </div>
@@ -306,11 +308,11 @@ export default function AboutPage() {
             <section style={{ 
                 background: "rgba(150, 195, 228, 0.25)",
                 padding: "140px 10vw",
-                height: "835px"
+                minHeight: "835px"
             }}>
-                <div className="container mx-auto flex flex-col lg:flex-row gap-24">
+                <div className="container mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24">
                     <div className="lg:w-1/3">
-                        <h2 style={{ fontSize: "70px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", lineHeight: 0.85 }}>
+                        <h2 style={{ fontSize: "clamp(42px, 8vw, 70px)", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", lineHeight: 1.0 }}>
                             Frequently Asked Questions
                         </h2>
                     </div>
