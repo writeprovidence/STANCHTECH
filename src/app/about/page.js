@@ -1,144 +1,229 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Wrench, Clock, Users, Anchor, CheckCircle } from "lucide-react";
+import { 
+  Plus, Minus, ChevronRight, Globe, Award, Zap, ArrowRight 
+} from "lucide-react";
 
 export default function AboutPage() {
+    const [activeFaq, setActiveFaq] = useState(0);
+
+    const stats = [
+        { label: "Founded", value: "2018" },
+        { label: "Technical staff", value: "50+" },
+        { label: "Global partners", value: "12+" }
+    ];
+
     const values = [
-        { icon: <ShieldCheck className="w-8 h-8 text-blue-600" />, title: "Integrity & Honesty", description: "We do business transparently and responsibly." },
-        { icon: <Wrench className="w-8 h-8 text-blue-600" />, title: "Technical Excellence", description: "Deep expertise across all makes and models of equipment." },
-        { icon: <Anchor className="w-8 h-8 text-blue-600" />, title: "Dependability", description: "Clients rely on us in routine operations and critical moments." },
-        { icon: <Clock className="w-8 h-8 text-blue-600" />, title: "Proactive Maintenance", description: "We prevent failures before they disrupt operations." },
-        { icon: <Users className="w-8 h-8 text-blue-600" />, title: "Customer Partnership", description: "We build lasting relationships, not just complete jobs." },
-        { icon: <CheckCircle className="w-8 h-8 text-blue-600" />, title: "Safety & Compliance", description: "We prioritize regulatory standards and operational safety at all times." }
+        { icon: "/asset/about_image/Integrity & Honesty.png", title: "Integrity & Honesty", description: "We do business transparently and responsibly." },
+        { icon: "/asset/about_image/Technical Excellence.png", title: "Technical Excellence", description: "We apply deep expertise across all makes and models of equipment." },
+        { icon: "/asset/about_image/Safety & Compliance.png", title: "Safety & Compliance", description: "We prevent failures before they disrupt operations." },
+        { icon: "/asset/about_image/Proactive Maintenance.png", title: "Proactive Maintenance", description: "We build lasting relationships, not just complete jobs." },
+        { icon: "/asset/about_image/Customer Partnership.png", title: "Customer Partnership", description: "We prioritize regulatory standards and operational safety at all times." },
+        { icon: "/asset/about_image/Dependability.png", title: "Dependability", description: "Our clients can rely on us in routine operations and critical moments." }
+    ];
+
+    const services = [
+        { 
+            title: "Cummins Engine Maintenance", 
+            img: "/asset/about_image/Cummins Engine Maintenance.png",
+            desc: "Expert repair and routine maintenance for high-performance units."
+        },
+        { 
+            title: "Vessel Inspection & Repairs", 
+            img: "/asset/about_image/Vessel Inspection, Maintenance & Repairs.png",
+            desc: "Comprehensive technical inspections and onboard maintenance services."
+        },
+        { 
+            title: "Genuine Spares Supply", 
+            img: "/asset/about_image/Sales of Genuine Cummins Engine Spares parts.png",
+            desc: "Sales of authentic Cummins and industrial spare parts."
+        },
+        { 
+            title: "Structural Welding", 
+            img: "/asset/about_image/Structural Welding.png",
+            desc: "Specialized maintenance for critical maritime and industrial structures."
+        },
+        { 
+            title: "Hydraulic System Support", 
+            img: "/asset/Landing page_image/marine_control_black.png",
+            desc: "Specialized maintenance for critical hydraulic and control systems."
+        },
+        { 
+            title: "Technical Support", 
+            img: "/asset/about_image/Team1.png",
+            desc: "24/7 technical advisory and remote diagnostic services."
+        }
+    ];
+
+    const faqs = [
+        { q: "How can I get in touch with stanch tech?", a: "You can reach us through our contact forms, direct email, or 24/7 technical support hotline for urgent maritime issues." },
+        { q: "Is your technical service available 24/7 ?", a: "Yes, we provide round-the-clock emergency maintenance and technical consultancy across global time zones." },
+        { q: "What brands of engines do you provide services for?", a: "While we specialize in Cummins engines, our team is trained and experienced across all major marine engine brands." },
+        { q: "In which countries are stanch tech services available ?", a: "We operate globally, providing both field technicians for on-site repairs and remote technical support." }
     ];
 
     return (
-        <div className="bg-white">
-            {/* Hero Section - Maximum Whitespace */}
-            <section className="relative px-6 pt-56 pb-40 overflow-hidden bg-slate-950 text-white">
-                <div className="container mx-auto relative z-20">
-                    <div className="max-w-4xl">
-                        <span className="text-blue-400 font-black uppercase tracking-[0.6em] text-xs mb-8 inline-block animate-fade-in">Our Journey Since 2018</span>
-                        <h1 style={{ fontSize: "clamp(64px, 12vw, 160px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.8, marginBottom: "64px", fontFamily: "'Neue Machina', sans-serif" }}>
-                            BUILT ON <br />
-                            <span style={{ color: "#3b82f6", fontStyle: "italic" }}>EXCELLENCE.</span>
-                        </h1>
-                        <p style={{ fontSize: "clamp(20px, 2.5vw, 24px)", fontWeight: 500, color: "#94a3b8", lineHeight: 1.6, maxWidth: "640px", fontFamily: "'Darker Grotesque', sans-serif" }}>
-                            Redefining specialized marine and industrial maintenance with a steadfast commitment to honesty and technical mastery.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Subtle Background mask */}
-                <div className="absolute top-0 right-0 bottom-0 w-[60vw] z-10 opacity-20 hidden lg:block">
-                    <img
-                        src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1600&auto=format&fit=crop"
-                        alt="Shipyard"
-                        className="w-full h-full object-cover"
-                        style={{ maskImage: 'linear-gradient(to right, transparent, black)' }}
-                    />
-                </div>
-            </section>
-
-            {/* Origin Story - Clean Whitespace */}
-            <section className="py-48 container mx-auto px-6">
-                <div className="max-w-6xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
-                        <div className="space-y-12">
-                            <div className="space-y-4">
-                                <span className="text-blue-600 font-bold uppercase tracking-widest text-xs">Our Heritage</span>
-                                <h2 style={{ fontSize: "clamp(48px, 8vw, 84px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.9, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e" }}>
-                                    ROBUST <br />
-                                    <span style={{ color: "#2563eb", fontStyle: "italic" }}>EXPERIENCE.</span>
-                                </h2>
-                            </div>
-                            <div style={{ fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 500, color: "#64748b", lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif", display: "flex", flexDirection: "column", gap: "32px" }}>
-                                <p>
-                                    Established in 2018, STANCH TECH emerged with a mission to redefine specialized maintenance. From our beginnings to becoming a leading solutions provider, we've remained steadfast in our commitment to exceptional delivery.
-                                </p>
-                                <p>
-                                    Our technical expertise keeps the most demanding operations running efficiently across marine, shipping, mining, and power generation sectors.
-                                </p>
-                            </div>
-                            <Link
-                                href="/services"
-                                className="hero-btn-primary"
-                                style={{ padding: "20px 48px", borderRadius: "100px" }}
-                            >
-                                View Our Services
-                                <ArrowRight className="w-8 h-8" />
-                            </Link>
-                        </div>
-                        <div className="relative">
-                            <div className="rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] transform hover:scale-[1.02] transition-transform duration-700">
-                                <img
-                                    src="/asset/about_image/low hour engine.jpeg"
-                                    alt="Technical Excellence"
-                                    className="w-full h-auto aspect-[4/5] object-cover"
-                                />
-                            </div>
-                            {/* Decorative element */}
-                            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-50 -z-10 rounded-full" />
-                        </div>
-                    </div>
+        <div className="bg-white overflow-x-hidden" style={{ fontSmooth: "antialiased" }}>
+            
+            {/* HERO SECTION */}
+            <section style={{ 
+                height: "80vh", 
+                minHeight: "700px",
+                position: "relative",
+                backgroundImage: 'url("/asset/about_image/built on excellence.png")',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                color: "#fff",
+                padding: "0 24px"
+            }}>
+                <div style={{ position: "absolute", inset: 0, background: "rgba(11,26,46,0.55)" }} />
+                <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px" }}>
+                    <h1 style={{ 
+                        fontSize: "clamp(64px, 12vw, 150px)", 
+                        fontWeight: 900, 
+                        fontFamily: "'Neue Machina', sans-serif",
+                        lineHeight: 0.85,
+                        letterSpacing: "-0.04em",
+                        marginBottom: "40px"
+                    }}>
+                        BUILT ON<br/>EXCELLENCE
+                    </h1>
+                    <p style={{ 
+                        fontSize: "24px", 
+                        fontWeight: 600, 
+                        fontFamily: "'Darker Grotesque', sans-serif",
+                        maxWidth: "900px",
+                        margin: "0 auto",
+                        lineHeight: 1.25,
+                        opacity: 0.95
+                    }}>
+                        STANCHTECH is a dependable marine and industrial maintenance solutions provider,<br/>
+                        built on a foundation of honesty, open-mindedness,<br/>
+                        and exceptional service delivery.
+                    </p>
                 </div>
             </section>
 
-            {/* Mission & Vision - Impactful Split Layout */}
-            <section className="bg-slate-50 border-y border-slate-100">
-                <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2">
-                        {/* Mission Block */}
-                        <div className="py-48 lg:pr-24 border-b lg:border-b-0 lg:border-r border-slate-200">
-                            <div className="max-w-xl space-y-12">
-                                <span className="font-black uppercase tracking-[0.6em] text-xs text-blue-600">Our Mission</span>
-                                <h3 style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 0.85, textTransform: "uppercase", fontFamily: "'Neue Machina', sans-serif" }}>
-                                    Trusted <br />
-                                    Global <span style={{ color: "#2563eb", opacity: 0.8, textTransform: "none", fontStyle: "italic" }}>Partner.</span>
-                                </h3>
-                                <p style={{ fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 500, color: "#475569", lineHeight: 1.2, fontStyle: "italic", fontFamily: "'Darker Grotesque', sans-serif" }}>
-                                    "To become a recognized leader for reliability and technical excellence, recognized for proactive solutions that minimize risk."
-                                </p>
+            {/* MISSION STATEMENTS & STATS */}
+            <section style={{ 
+                background: "rgba(132, 185, 224, 0.34)", 
+                padding: "120px 5%",
+                minHeight: "810px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+                <div className="container mx-auto">
+                    <p style={{ 
+                        fontSize: "32px", 
+                        fontWeight: 700, 
+                        fontFamily: "'Darker Grotesque', sans-serif",
+                        textAlign: "center",
+                        maxWidth: "1200px",
+                        margin: "0 auto 100px",
+                        color: "#0b1a2e",
+                        lineHeight: 1.15
+                    }}>
+                        Our mission to become a trusted global partner in<br/>
+                        marine and industrial maintenance, recognized for reliability,<br/>
+                        technical excellence, and proactive service solutions that extend equipment<br/>
+                        life and minimize operational risk.
+                    </p>
+                    
+                    <div className="flex flex-wrap justify-center gap-4 max-w-[1200px] mx-auto items-start">
+                        <div className="flex flex-col items-center group">
+                            <div style={{ 
+                                width: "381px", 
+                                height: "265px", 
+                                backgroundImage: 'url("/asset/about_image/Founded.png")',
+                                backgroundSize: "contain",
+                                backgroundRepeat: "no-repeat",
+                                backgroundPosition: "center",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}>
+                                <span style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", marginTop: "-110px" }}>2018</span>
                             </div>
+                            <p style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Darker Grotesque', sans-serif", color: "#0b1a2e", marginTop: "-85px" }}>
+                                Founded in Port Harcourt, Nigeria
+                            </p>
                         </div>
 
-                        {/* Vision Block */}
-                        <div className="py-48 lg:pl-24">
-                            <div className="max-w-xl space-y-12">
-                                <span className="font-black uppercase tracking-[0.6em] text-xs text-blue-600">Our Vision</span>
-                                <h3 style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 0.85, textTransform: "uppercase", fontFamily: "'Neue Machina', sans-serif" }}>
-                                    Precision <br />
-                                    Without <span style={{ color: "#2563eb", opacity: 0.8, textTransform: "none", fontStyle: "italic" }}>Limits.</span>
-                                </h3>
-                                <p style={{ fontSize: "clamp(18px, 2.2vw, 22px)", fontWeight: 500, color: "#64748b", lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>
-                                    To deliver cost-effective, high-quality products without compromising industry standards, guided by the satisfaction of those we serve.
-                                </p>
+                        <div className="flex flex-col items-center group">
+                            <div style={{ 
+                                width: "381px", 
+                                height: "265px", 
+                                backgroundImage: 'url("/asset/about_image/team.png")',
+                                backgroundSize: "contain",
+                                backgroundRepeat: "no-repeat",
+                                backgroundPosition: "center",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}>
+                                <span style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", marginTop: "-110px" }}>50+</span>
                             </div>
+                            <p style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Darker Grotesque', sans-serif", color: "#0b1a2e", marginTop: "-85px" }}>
+                                Specialized Technical Staff
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col items-center group">
+                            <div style={{ 
+                                width: "381px", 
+                                height: "265px", 
+                                backgroundImage: 'url("/asset/about_image/partners.png")',
+                                backgroundSize: "contain",
+                                backgroundRepeat: "no-repeat",
+                                backgroundPosition: "center",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}>
+                                <span style={{ fontSize: "35px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", marginTop: "-110px" }}>15+</span>
+                            </div>
+                            <p style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Darker Grotesque', sans-serif", color: "#0b1a2e", marginTop: "-85px" }}>
+                                Global Technical Partners
+                            </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Values - Grid with Breathable Spacing */}
-            <section className="py-48 bg-white">
-                <div className="container mx-auto px-6">
-                    <div className="text-center max-w-3xl mx-auto mb-32 space-y-8">
-                        <span className="text-blue-600 font-black uppercase tracking-widest text-xs">Core Values</span>
-                        <h2 style={{ fontSize: "clamp(48px, 8vw, 72px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1, fontStyle: "italic", fontFamily: "'Neue Machina', sans-serif" }}>What drives us forward.</h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+            {/* CORE VALUES */}
+            <section style={{ 
+                backgroundImage: 'url("/asset/about_image/our values.png")',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                padding: "140px 5%",
+                position: "relative"
+            }}>
+                <div className="container mx-auto relative z-10">
+                    <h2 style={{ 
+                        fontSize: "35px", 
+                        fontWeight: 900, 
+                        fontFamily: "'Neue Machina', sans-serif",
+                        marginBottom: "80px",
+                        color: "#fff"
+                    }}>Our Values</h2>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-24 gap-y-20">
                         {values.map((v, i) => (
-                            <div key={i} className="group space-y-8 p-12 rounded-[3rem] border border-transparent hover:border-slate-100 hover:bg-slate-50/50 transition-all duration-500">
-                                <div className="bg-blue-50 w-24 h-24 rounded-[2rem] flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:scale-110 transition-all duration-500">
-                                    <div className="group-hover:text-white transition-colors">
-                                        {v.icon}
-                                    </div>
+                            <div key={i} className="group flex flex-col gap-6 transition-all duration-500 hover:translate-y--2">
+                                <div style={{ height: "64px", width: "64px" }}>
+                                    <img src={v.icon} alt={v.title} className="w-full h-full object-contain" />
                                 </div>
                                 <div className="space-y-4">
-                                    <h4 style={{ fontSize: "28px", fontWeight: 900, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>{v.title}</h4>
-                                    <p style={{ fontSize: "14px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "#64748b", fontFamily: "'Darker Grotesque', sans-serif" }}>
-                                        {v.description}
-                                    </p>
+                                    <h4 style={{ fontSize: "18px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#fff" }}>{v.title}</h4>
+                                    <p style={{ fontSize: "16px", fontWeight: 500, color: "rgba(255,255,255,0.7)", lineHeight: 1.4, fontFamily: "'Darker Grotesque', sans-serif" }}>{v.description}</p>
                                 </div>
                             </div>
                         ))}
@@ -146,55 +231,130 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Team Section - Cinematic & Spacious */}
-            <section className="py-56 bg-slate-950 text-white overflow-hidden">
-                <div className="container mx-auto px-6">
-                    <div className="flex flex-col lg:flex-row gap-24 items-start mb-40">
-                        <div className="lg:sticky lg:top-32 max-w-xl space-y-10">
-                            <span className="text-blue-400 font-black uppercase tracking-widest text-xs">The Experts</span>
-                            <h2 style={{ fontSize: "clamp(56px, 10vw, 96px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.85, fontFamily: "'Neue Machina', sans-serif" }}>
-                                OUR <span style={{ color: "#3b82f6", fontStyle: "italic" }}>TEAM.</span>
-                            </h2>
-                            <p style={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.6, color: "#94a3b8", fontFamily: "'Darker Grotesque', sans-serif" }}>
-                                Our strength lies in our people. STANCH TECH is powered by highly trained engineers and technicians, selected for their technical competence and field experience.
-                            </p>
-                             <Link
-                                href="/contact"
-                                className="hero-btn-primary"
-                                style={{ background: "#2563eb", padding: "20px 48px", borderRadius: "100px" }}
-                            >
-                                Contact Our Team
-                                <ArrowRight className="w-8 h-8" />
-                            </Link>
-                        </div>
-
-                        <div className="flex-1 space-y-12">
-                            <div className="aspect-[16/10] rounded-[3rem] overflow-hidden group">
-                                <img
-                                    src="/asset/team_picture 1.jpeg"
-                                    alt="STANCH TECH Team"
-                                    className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-[2s]"
-                                />
-                            </div>
-                            <div className="aspect-[16/10] rounded-[3rem] overflow-hidden group">
-                                <img
-                                    src="/asset/team_picture2.jpeg"
-                                    alt="STANCH TECH Team"
-                                    className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-[2s]"
-                                />
-                            </div>
-                        </div>
+            {/* OUR SERVICES */}
+            <section style={{ padding: "140px 5%", background: "#F8FAFC" }}>
+                <div className="container mx-auto">
+                    <div className="mb-24">
+                        <h2 style={{ fontSize: "64px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e" }}>Our Services</h2>
+                        <p style={{ fontSize: "20px", color: "#64748b", fontWeight: 600, fontFamily: "'Darker Grotesque', sans-serif", marginTop: "16px" }}>Technical solutions designed for marine and industrial durability.</p>
                     </div>
-
-                    <div className="max-w-4xl text-left border-t border-white/10 pt-24">
-                        <p style={{ fontSize: "clamp(20px, 3vw, 24px)", fontWeight: 500, color: "#cbd5e1", lineHeight: 1.6, marginBottom: "32px", fontFamily: "'Darker Grotesque', sans-serif" }}>
-                            Our technicians are more than service providers; they are trusted partners. With extensive experience across multiple machinery brands, our team provides the same level of care and precision across entire systems.
-                        </p>
-                        <div className="h-1 w-24 bg-blue-600" />
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                        {services.map((s, i) => (
+                            <div key={i} className="group bg-white rounded-3xl overflow-hidden border border-slate-100 transition-all hover:shadow-2xl">
+                                <div style={{ height: "320px", overflow: "hidden" }}>
+                                    <img src={s.img} alt={s.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                                </div>
+                                <div style={{ padding: "40px" }}>
+                                    <h4 style={{ fontSize: "20px", fontWeight: 900, color: "#0b1a2e", textTransform: "uppercase", marginBottom: "16px", fontFamily: "'Neue Machina', sans-serif" }}>{s.title}</h4>
+                                    <p style={{ fontSize: "18px", color: "#64748b", fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif", lineHeight: 1.4 }}>{s.desc}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
+
+            {/* OUR TEAM */}
+            <section style={{ padding: "140px 5%", background: "#fff" }}>
+                <div className="container mx-auto">
+                    <div className="mb-24">
+                        <h2 style={{ fontSize: "64px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", lineHeight: 1, marginBottom: "24px" }}>Our Team</h2>
+                        <p style={{ maxWidth: "800px", fontSize: "22px", color: "#64748b", fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif", lineHeight: 1.4 }}>
+                            Our team is built on excellence, consisting of highly trained engineers and technicians selected for technical mastery and experience across multiple machinery brands.
+                        </p>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+                        {[
+                            "/asset/about_image/Team1.png", 
+                            "/asset/about_image/team 2.png", 
+                            "/asset/about_image/team 3.png", 
+                            "/asset/about_image/team 4.png", 
+                            "/asset/about_image/team_picture 1.jpeg", 
+                            "/asset/about_image/team_picture2.jpeg"
+                        ].map((img, i) => (
+                            <div key={i} style={{ aspectRatio: "1/1", borderRadius: "24px", overflow: "hidden" }}>
+                                <img src={img} 
+                                     alt="Team action" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* PARTNERS */}
+            <section style={{ padding: "120px 5%", background: "#F1F5F9" }}>
+                <div className="container mx-auto text-center">
+                    <h2 style={{ fontSize: "28px", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", marginBottom: "12px" }}>Our Partners</h2>
+                    <p style={{ marginBottom: "80px", color: "#64748b", fontWeight: 700, fontSize: "20px", fontFamily: "'Darker Grotesque', sans-serif" }}>Facilitating reliable maritime and industrial maintenance solutions.</p>
+                    
+                    <div className="flex flex-wrap justify-center items-center gap-24">
+                        <img src="/asset/about_image/partners.png" alt="Collaborative Partners" className="h-20 w-auto object-contain opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700" />
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQ SECTION */}
+            <section style={{ padding: "140px 5%", background: "#fff" }}>
+                <div className="container mx-auto flex flex-col lg:flex-row gap-24">
+                    <div className="lg:w-1/3">
+                        <h2 style={{ fontSize: "clamp(56px, 8vw, 96px)", fontWeight: 900, fontFamily: "'Neue Machina', sans-serif", color: "#0b1a2e", lineHeight: 0.85 }}>
+                            Frequently Asked Questions
+                        </h2>
+                    </div>
+                    <div className="lg:w-2/3 space-y-12">
+                        {faqs.map((f, i) => (
+                            <div key={i} style={{ borderBottom: "2px solid rgba(11,26,46,0.05)", paddingBottom: "40px" }}>
+                                <button 
+                                    onClick={() => setActiveFaq(activeFaq === i ? -1 : i)}
+                                    className="w-full flex justify-between items-center text-left"
+                                >
+                                    <span style={{ fontSize: "24px", fontWeight: 900, color: "#0b1a2e", fontFamily: "'Neue Machina', sans-serif" }}>{f.q}</span>
+                                    {activeFaq === i ? <Minus size={24} /> : <Plus size={24} />}
+                                </button>
+                                {activeFaq === i && (
+                                    <div style={{ marginTop: "32px" }}>
+                                        <p style={{ fontSize: "22px", color: "#64748b", fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif", lineHeight: 1.4 }}>{f.a}</p>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* FOOTER */}
+            <footer style={{ background: "#060D17", color: "#fff", padding: "140px 5%" }}>
+                <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-20">
+                    <div className="space-y-10">
+                        <img src="/asset/Landing page_image/stanch_tech logo.png" alt="Logo" className="h-12 w-auto invert" />
+                        <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "16px", lineHeight: 1.5 }}>Redefining specialized marine and industrial maintenance excellence globally since 2018.</p>
+                    </div>
+                    <div className="space-y-10">
+                        <h4 style={{ fontWeight: 900, fontSize: "20px", fontFamily: "'Neue Machina', sans-serif" }}>Links</h4>
+                        <ul className="space-y-6 text-slate-500 font-bold text-lg">
+                            <li><Link href="/">Home</Link></li>
+                            <li><Link href="/about">About Us</Link></li>
+                            <li><Link href="/services">Our Services</Link></li>
+                            <li><Link href="/contact">Contact</Link></li>
+                        </ul>
+                    </div>
+                    <div className="space-y-10">
+                        <h4 style={{ fontWeight: 900, fontSize: "20px", fontFamily: "'Neue Machina', sans-serif" }}>Contact Us</h4>
+                        <ul className="space-y-6 text-slate-500 font-bold text-lg">
+                            <li>Lagos State, Nigeria</li>
+                            <li>+234 810 522 6265</li>
+                            <li>support@stanch-tech.com</li>
+                        </ul>
+                    </div>
+                    <div className="space-y-10">
+                        <h4 style={{ fontWeight: 900, fontSize: "20px", fontFamily: "'Neue Machina', sans-serif" }}>24/7 Support</h4>
+                        <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "16px", lineHeight: 1.5 }}>For emergency engine repairs or technical guidance, our team is available round the clock.</p>
+                        <button style={{ background: "#2563eb", padding: "16px 32px", borderRadius: "100px", fontWeight: 900, fontSize: "14px", letterSpacing: "0.1em" }}>CONTACT NOW</button>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }
-
