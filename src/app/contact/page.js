@@ -66,7 +66,7 @@ export default function ContactPage() {
                             transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
                             src="/asset/Contact_image/contact_image.png" 
                             alt="Contact Us" 
-                            className="w-full h-auto object-contain drop-shadow-2xl"
+                            className="w-full h-auto object-contain drop-shadow-2xl md:translate-x-12"
                         />
                         {/* Decorative floating chat bubbles (if desired to match the vibe) */}
                         <div className="absolute -top-10 -right-4 w-12 h-12 bg-blue-500 rounded-2xl flex items-center justify-center text-white shadow-lg animate-bounce duration-[3000ms] opacity-60">
