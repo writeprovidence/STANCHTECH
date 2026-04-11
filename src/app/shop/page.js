@@ -135,10 +135,10 @@ export default function ShopPage() {
             {/* --- LANDING HERO (IMAGE 1) --- */}
             {/* --- LANDING HERO --- */}
             <section 
-                style={{ background: "#fff", height: "820px", paddingLeft: "12vw", paddingRight: "12vw" }} 
-                className="hidden md:flex items-center justify-between relative overflow-hidden border-b border-gray-100"
+                style={{ background: "#fff", paddingLeft: "10vw", paddingRight: "10vw" }} 
+                className="min-h-[820px] md:h-[820px] flex flex-col-reverse md:flex-row items-center justify-center gap-10 md:gap-[10vw] relative overflow-hidden border-b border-gray-100 py-20 md:py-0"
             >
-                <div style={{ color: "#090E1A" }} className="flex flex-col justify-center items-start text-left z-20 flex-shrink-0 w-full md:w-auto">
+                <div style={{ color: "#090E1A" }} className="flex flex-col justify-center items-start text-left z-20 flex-shrink-0 w-full md:w-auto mt-12 md:mt-0">
                     <h1 style={{ lineHeight: "0.85", fontFamily: "'Darker Grotesque', sans-serif", fontWeight: 900 }} className="flex flex-col tracking-tighter text-5xl sm:text-7xl lg:text-[84px]">
                         <span>Precision</span>
                         <span className="text-blue-600">Marine Turbo</span>
@@ -155,7 +155,7 @@ export default function ShopPage() {
                     </button>
                 </div>
                 
-                <div className="w-full md:w-[35%] h-[300px] md:h-[80%] flex items-center justify-center z-10 mt-12 md:mt-0">
+                <div className="w-full md:w-[35%] h-auto md:h-[80%] flex items-center justify-center z-10">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -165,7 +165,7 @@ export default function ShopPage() {
                         <img 
                             src="/asset/spare_parts/part2.png" 
                             alt="Marine Turbo" 
-                            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+                            style={{ width: "100%", height: "auto", maxWidth: "450px", objectFit: "contain" }}
                             className="relative z-10"
                         />
                     </motion.div>
@@ -174,20 +174,20 @@ export default function ShopPage() {
 
             {/* --- CATEGORIES ROW --- */}
             <section 
-                style={{ background: "#F0F7FF", height: "672px", paddingLeft: "12vw", paddingRight: "12vw" }} 
-                className="hidden md:flex items-center"
+                style={{ background: "#F0F7FF", paddingLeft: "10vw", paddingRight: "10vw" }} 
+                className="min-h-[700px] md:h-[672px] flex items-center py-32 md:py-0 w-full"
             >
-                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-20 md:gap-32 lg:gap-64">
+                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-[15vw] justify-items-center items-center">
                     {/* Fuel Injector */}
-                    <div className="flex flex-col items-start text-left group w-fit">
-                        <div className="h-48 md:h-60 mb-6 flex items-center justify-end w-full group-hover:translate-x-4 transition-transform duration-700">
+                    <div className="flex flex-col items-start text-left group w-full md:w-fit">
+                        <div className="h-40 md:h-60 mb-8 flex items-center justify-end w-full group-hover:translate-x-4 transition-transform duration-700">
                             <img 
                                 src="/asset/spare_parts/Part3.png" 
                                 alt="Fuel Injector" 
                                 className="h-full w-auto object-contain object-right transform translate-x-8" 
                             />
                         </div>
-                        <h3 style={{ fontSize: "clamp(32px, 4vw, 42px)", fontFamily: "'Darker Grotesque', sans-serif", lineHeight: "1", marginBottom: "40px", fontWeight: 900 }} className="text-gray-900 whitespace-nowrap">Fuel Injector</h3>
+                        <h3 style={{ fontSize: "clamp(28px, 6vw, 42px)", fontFamily: "'Darker Grotesque', sans-serif", lineHeight: "1", marginBottom: "32px", fontWeight: 900 }} className="text-gray-900 whitespace-nowrap">Fuel Injector</h3>
                         <button 
                             onClick={() => setShowCatalogue(true)}
                             style={{ fontSize: "20px", fontFamily: "'Darker Grotesque', sans-serif" }}
@@ -198,19 +198,19 @@ export default function ShopPage() {
                     </div>
 
                     {/* Marine Turbo */}
-                    <div className="flex flex-col items-start text-left group w-fit">
-                        <div className="h-48 md:h-60 mb-6 flex items-center justify-end w-full group-hover:translate-x-4 transition-transform duration-700">
+                    <div className="flex flex-col items-start text-left group w-full md:w-fit">
+                        <div className="h-40 md:h-60 mb-8 flex items-center justify-end w-full group-hover:translate-x-4 transition-transform duration-700">
                             <img 
                                 src="/asset/spare_parts/part2.png" 
                                 alt="Marine Turbo" 
                                 className="h-full w-auto object-contain object-right transform translate-x-8" 
                             />
                         </div>
-                        <h3 style={{ fontSize: "clamp(32px, 4vw, 42px)", fontFamily: "'Darker Grotesque', sans-serif", lineHeight: "1", marginBottom: "40px", fontWeight: 900 }} className="text-gray-900 whitespace-nowrap">Marine Turbo</h3>
+                        <h3 style={{ fontSize: "clamp(28px, 6vw, 42px)", fontFamily: "'Darker Grotesque', sans-serif", lineHeight: "1", marginBottom: "32px", fontWeight: 900 }} className="text-gray-900 whitespace-nowrap">Marine Turbo</h3>
                         <button 
                             onClick={() => setShowCatalogue(true)}
                             style={{ fontSize: "20px", fontFamily: "'Darker Grotesque', sans-serif" }}
-                            className="font-bold text-gray-900 uppercase tracking-[0.15em] border-b-2 border-gray-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-all w-fit"
+                            className="font-bold text-gray-900 uppercase tracking-[0.15em] border-b-2 border-gray-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-all w-fit mb-12 md:mb-0"
                         >
                             view more
                         </button>
@@ -220,19 +220,19 @@ export default function ShopPage() {
 
 
             {/* --- TOP PICKS FOR YOU --- */}
-            <section id="top-picks-section" style={{ background: "#fff", paddingBottom: "100px", paddingLeft: "12vw", paddingRight: "12vw", paddingTop: "127px" }} className="flex flex-col items-center">
+            <section id="top-picks-section" style={{ background: "#fff", paddingBottom: "100px", paddingLeft: "10vw", paddingRight: "10vw", paddingTop: "127px" }} className="flex flex-col items-center">
                 <div className="container mx-auto w-full">
                     <div className="text-center flex flex-col items-center" style={{ marginBottom: "120px" }}>
                         <h2 className="text-4xl md:text-5xl font-900 text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.02em", marginBottom: "25px" }}>Top Picks For You</h2>
                         <p className="text-gray-500 font-medium leading-relaxed max-w-2xl text-center" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "20px" }}>Find specific recommendations for your specific operations that ensures high quality value.</p>
                     </div>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20" style={{ marginBottom: "129.52px" }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 justify-items-center" style={{ marginBottom: "129.52px" }}>
                         {landingTopPicks.map((product, index) => {
                             const displayNames = ["Fuel Injector", "Marine Turbo", "Engine Controller", "Fuel Injector"];
                             return (
-                                <Link href={`/shop/${product.id}`} key={index} className="group flex flex-col items-start text-left">
-                                    <div className="aspect-square mb-10 w-[85%] flex items-center justify-start transition-transform duration-700 group-hover:translate-x-3">
+                                <Link href={`/shop/${product.id}`} key={index} className="group flex flex-col items-center text-center">
+                                    <div className="aspect-square mb-10 w-[85%] flex items-center justify-center transition-transform duration-700 group-hover:scale-105">
                                         <img 
                                             src={product.image} 
                                             alt={displayNames[index]} 
