@@ -57,7 +57,7 @@ export function Navbar() {
 
     const navLinks = [
         { name: "HOME", href: "/" },
-        { name: "SHOP", href: "/shop" },
+        { name: "SHOP", href: "/shop?view=catalogue", target: "_blank" },
         { name: "ABOUT", href: "/about" },
         { name: "CONTACT", href: "/contact" },
     ];
@@ -120,6 +120,7 @@ export function Navbar() {
                             <Link
                                 key={link.name}
                                 href={link.href}
+                                target={link.target}
                                 style={{
                                     fontSize: 13,
                                     fontWeight: 800,

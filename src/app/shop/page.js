@@ -1,13 +1,25 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { PRODUCTS } from "@/data/products";
 import { Filter, ChevronRight, ChevronDown, ChevronUp, Star, Plus, Minus, Search, X, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function ShopPage() {
+function ShopContent() {
+    const searchParams = useSearchParams();
+    const view = searchParams.get('view');
+    
     const [showCatalogue, setShowCatalogue] = useState(true);
+
+    useEffect(() => {
+        if (view === 'catalogue') {
+            setShowCatalogue(true);
+        } else if (view === 'landing') {
+            setShowCatalogue(false);
+        }
+    }, [view]);
     const [activeFaq, setActiveFaq] = useState(null);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -90,7 +102,7 @@ export default function ShopPage() {
                     <div className="relative z-10 text-center w-full max-w-4xl px-6">
                         <h1 className="text-6xl md:text-7xl font-black text-white mb-8" style={{ fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.04em" }}>Explore Spares</h1>
                         <div className="flex items-center justify-center gap-3 text-sm font-bold uppercase tracking-[0.2em]">
-                            <button onClick={() => setShowCatalogue(false)} className="text-white hover:text-blue-400 transition-colors" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>Home</button>
+                            <Link href="/shop?view=landing" className="text-white hover:text-blue-400 transition-colors" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>Home</Link>
                             <ChevronRight size={14} className="text-blue-400" />
                             <span className="text-white/60" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>Shop</span>
                         </div>
@@ -414,5 +426,13 @@ export default function ShopPage() {
                 </div>
             </section>
         </div>
+    );
+}
+
+export default function ShopPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ShopContent />
+        </Suspense>
     );
 }

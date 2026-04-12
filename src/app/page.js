@@ -116,7 +116,7 @@ export default function HomePage() {
             <Link href="/contact" className="hero-btn-primary">
               Request Service
             </Link>
-            <Link href="/shop" className="hero-btn-secondary" style={{ border: "2.5px solid #ffffff !important", borderColor: "#ffffff !important" }}>
+            <Link href="/shop?view=catalogue" target="_blank" className="hero-btn-secondary" style={{ border: "2.5px solid #ffffff !important", borderColor: "#ffffff !important" }}>
               View Inventory <ArrowUpRight size={18} strokeWidth={2} />
             </Link>
           </div>
@@ -282,7 +282,8 @@ export default function HomePage() {
               We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems.
             </p>
             <Link
-              href="/shop"
+              href="/shop?view=catalogue"
+              target="_blank"
               className="hero-btn-primary"
             >
               View Inventory <ArrowUpRight size={18} strokeWidth={2} />
@@ -320,7 +321,8 @@ export default function HomePage() {
           </div>
           {/* Button aligned to the RIGHT within the 1400px container */}
           <Link
-            href="/shop"
+            href="/shop?view=catalogue"
+            target="_blank"
             className="hero-btn-secondary responsive-btn-center no-caps"
             style={{ 
               background: "transparent", 
