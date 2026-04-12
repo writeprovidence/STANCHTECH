@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { PRODUCTS } from "@/data/products";
 
 const HERO_SLIDES = [
   {
@@ -68,7 +69,7 @@ export default function HomePage() {
           transition: "background 0.9s ease-in-out",
           zIndex: 5
         }} />
-        {/* Background image slider — z-index overlay: active always visible, exit fades out on top */}
+        {/* Background image slider */}
         {HERO_SLIDES.map((slide, index) => {
           const isCurrent = index === currentSlide;
           const isExit    = index === exitSlide;
@@ -96,7 +97,6 @@ export default function HomePage() {
 
         {/* Content */}
         <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px", maxWidth: 900, width: "100%" }}>
-          {/* Static big headline */}
           <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 800, fontFamily: "'Neue Machina', sans-serif", letterSpacing: "-0.01em", lineHeight: 0.9 }}>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Next-Level Marine &amp;</span>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Industrial Maintenance</span>
@@ -109,26 +109,19 @@ export default function HomePage() {
             lineHeight: 1.6,
             fontWeight: 300,
           }}>
-            Maintenance is not just about fixing problems, it’s about<br className="hide-mobile" /> preventing them before they occur.
+            Maintenance is not just about fixing problems, it's about<br className="hide-mobile" /> preventing them before they occur.
           </p>
 
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link
-              href="/contact"
-              className="hero-btn-primary"
-            >
+            <Link href="/contact" className="hero-btn-primary">
               Request Service
             </Link>
-            <Link
-              href="#"
-              className="hero-btn-secondary"
-              style={{ border: "2.5px solid #ffffff !important", borderColor: "#ffffff !important" }}
-            >
+            <Link href="/shop" className="hero-btn-secondary" style={{ border: "2.5px solid #ffffff !important", borderColor: "#ffffff !important" }}>
               View Inventory <ArrowUpRight size={18} strokeWidth={2} />
             </Link>
           </div>
 
-          {/* Dots as thin boxes */}
+          {/* Dots */}
           <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 44 }}>
             {HERO_SLIDES.map((_, index) => (
               <button
@@ -150,21 +143,11 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Arrows as sophisticated boxes */}
-        <button
-          onClick={prevSlide}
-          aria-label="Previous slide"
-          className="slider-arrow"
-          style={{ position: "absolute", left: 28, top: "50%", zIndex: 12 }}
-        >
+        {/* Arrows */}
+        <button onClick={prevSlide} aria-label="Previous slide" className="slider-arrow" style={{ position: "absolute", left: 28, top: "50%", zIndex: 12 }}>
           <ChevronLeft size={24} strokeWidth={2.5} />
         </button>
-        <button
-          onClick={nextSlide}
-          aria-label="Next slide"
-          className="slider-arrow"
-          style={{ position: "absolute", right: 28, top: "50%", zIndex: 12 }}
-        >
+        <button onClick={nextSlide} aria-label="Next slide" className="slider-arrow" style={{ position: "absolute", right: 28, top: "50%", zIndex: 12 }}>
           <ChevronRight size={24} strokeWidth={2.5} />
         </button>
       </section>
@@ -299,7 +282,7 @@ export default function HomePage() {
               We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems.
             </p>
             <Link
-              href="#"
+              href="/shop"
               className="hero-btn-primary"
             >
               View Inventory <ArrowUpRight size={18} strokeWidth={2} />
@@ -337,7 +320,7 @@ export default function HomePage() {
           </div>
           {/* Button aligned to the RIGHT within the 1400px container */}
           <Link
-            href="#"
+            href="/shop"
             className="hero-btn-secondary responsive-btn-center no-caps"
             style={{ 
               background: "transparent", 
@@ -362,20 +345,20 @@ export default function HomePage() {
             {/* Left Image Area (The 'White Card') */}
             <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "transparent" }}>
               <img 
-                src="/asset/spare_parts/part2.png" 
-                alt="Precision Marine Turbo" 
+                src={PRODUCTS[1].image} 
+                alt={PRODUCTS[1].name} 
                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
               />
             </div>
             {/* Right Specs Area */}
             <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>Precision Marine Turbo</h3>
+              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>{PRODUCTS[1].name}</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• High-Pressure Performance</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Saltwater Corrosion Resistant</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• 24-Month Active Warranty</li>
               </ul>
-              <Link href="#" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
+              <Link href={`/shop/${PRODUCTS[1].id}`} className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
               </Link>
             </div>
@@ -390,20 +373,20 @@ export default function HomePage() {
             {/* Left Image Area (The 'White Card') */}
             <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "transparent" }}>
               <img 
-                src="/asset/spare_parts/Part3.png" 
-                alt="Advanced Fuel Injector" 
+                src={PRODUCTS[0].image} 
+                alt={PRODUCTS[0].name} 
                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
               />
             </div>
             {/* Right Specs Area */}
             <div style={{ flex: 1, background: "#105C7A", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>Advanced Fuel Injector</h3>
+              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>{PRODUCTS[0].name}</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Ultra-Fine Fuel Atomization</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• OEM Grade Compatibility</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Optimized Fuel Efficiency</li>
               </ul>
-              <Link href="#" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
+              <Link href={`/shop/${PRODUCTS[0].id}`} className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
               </Link>
             </div>

@@ -11,23 +11,25 @@ export function Footer() {
           <div className="footer-grid">
             {/* Column 1: Logo & Vision */}
             <div className="footer-col">
-              <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 32 }}>
-                <img 
-                  src="/asset/Landing page_image/stanch_tech logo.png" 
-                  alt="Stanch Tech" 
-                  style={{ height: 82, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: -4 }} 
-                />
-                <span style={{
-                  fontSize: 16,
-                  fontWeight: 900,
-                  letterSpacing: "0.04em",
-                  color: "#fff",
-                  textTransform: "uppercase",
-                  lineHeight: 1,
-                  fontFamily: "'Inter', sans-serif"
-                }}>
-                  STANCHTECH
-                </span>
+              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+                  <img 
+                    src="/asset/Landing page_image/stanch_tech logo.png" 
+                    alt="Stanch Tech" 
+                    style={{ height: 65, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: 10 }} 
+                  />
+                  <span style={{
+                    fontSize: 16,
+                    fontWeight: 900,
+                    letterSpacing: "0.04em",
+                    color: "#fff",
+                    textTransform: "uppercase",
+                    lineHeight: 1,
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    STANCHTECH
+                  </span>
+                </div>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, marginBottom: 32, fontFamily: "'Darker Grotesque', sans-serif" }}>
                 Nigeria's premier partner for marine engine salvaging, diagnostic precision, and technical maintenance solutions.
@@ -53,12 +55,11 @@ export function Footer() {
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Navigation</p>
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {["Home", "About", "Shop", "Contact"].map((link) => (
+                {["HOME", "ABOUT", "SHOP", "CONTACT"].map((link) => (
                   <Link 
                     key={link} 
-                    href={link === "Home" ? "/"  : link === "Contact" ? "/contact" : link === "About" ? "/about" : "#"} 
-                    onClick={(e) => link === "Shop" ? e.preventDefault() : undefined}
-                    style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8, fontFamily: "'Darker Grotesque', sans-serif", cursor: link === "Shop" ? "default" : "pointer" }} 
+                    href={link === "HOME" ? "/"  : link === "CONTACT" ? "/contact" : link === "ABOUT" ? "/about" : "/shop"} 
+                    style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8, fontFamily: "'Darker Grotesque', sans-serif" }} 
                     className="footer-link"
                   >
                     {link}

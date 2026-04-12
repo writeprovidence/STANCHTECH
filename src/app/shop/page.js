@@ -1,22 +1,58 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { PRODUCTS } from "@/data/products";
-import { Filter, ChevronRight, ChevronDown, ChevronUp, Star, Plus, Minus } from "lucide-react";
+import { Filter, ChevronRight, ChevronDown, ChevronUp, Star, Plus, Minus, Search, X, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ShopPage() {
-    const [showCatalogue, setShowCatalogue] = useState(false);
+    const [showCatalogue, setShowCatalogue] = useState(true);
     const [activeFaq, setActiveFaq] = useState(null);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [selectedFilters, setSelectedFilters] = useState([]);
 
-    const shopProducts = Array(16).fill(null).map((_, i) => ({
-        id: i + 1,
-        name: "Advanced Fuel Injector",
-        price: 25000,
-        currency: "NGN.",
-        image: "/asset/spare_parts/Part3.png"
-    }));
+    // Auto-scroll to top when catalogue is shown
+    useEffect(() => {
+        if (showCatalogue) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [showCatalogue]);
+
+    const toggleFilter = (filter) => {
+        setSelectedFilters(prev => 
+            prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
+        );
+    };
+
+    // Filter products based on selected categories, price, and condition
+    const filteredProducts = PRODUCTS.filter(product => {
+        if (selectedFilters.length === 0) return true;
+        
+        const categoryFilters = ["Fuel Injectors", "Turbos", "Controllers", "Filters", "Hardware"];
+        const priceFilters = ["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"];
+        const conditionFilters = ["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"];
+
+        const activeCategoryFilters = selectedFilters.filter(f => categoryFilters.includes(f));
+        const activePriceFilters = selectedFilters.filter(f => priceFilters.includes(f));
+        const activeConditionFilters = selectedFilters.filter(f => conditionFilters.includes(f));
+
+        const matchesCategory = activeCategoryFilters.length === 0 || activeCategoryFilters.includes(product.category);
+        
+        const matchesPrice = activePriceFilters.length === 0 || activePriceFilters.some(f => {
+            if (f === "Under 50k NGN") return product.price < 50000;
+            if (f === "50k - 200k NGN") return product.price >= 50000 && product.price <= 200000;
+            if (f === "200k - 500k NGN") return product.price > 200000 && product.price <= 500000;
+            if (f === "Over 500k NGN") return product.price > 500000;
+            return false;
+        });
+
+        const matchesCondition = activeConditionFilters.length === 0 || activeConditionFilters.includes(product.condition);
+
+        return matchesCategory && matchesPrice && matchesCondition;
+    });
+
+    const shopProducts = filteredProducts;
 
     const faqs = [
         {
@@ -46,18 +82,13 @@ export default function ShopPage() {
     if (showCatalogue) {
         return (
             <div className="bg-white min-h-screen pt-20">
-                {/* --- CATALOGUE HEADER --- */}
                 <section className="relative h-[320px] flex flex-col items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 z-0">
-                        <img 
-                            src="/asset/about_image/built on excellence.png" 
-                            alt="Shop Background" 
-                            className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-[#0b1a2e]/60 backdrop-blur-[2px]" />
+                        <img src="/asset/shop_image/spare_background.png" alt="Shop Background" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-[#0b1a2e]/40" />
                     </div>
-                    <div className="relative z-10 text-center">
-                        <h1 className="text-6xl font-900 text-white mb-4" style={{ fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.04em" }}>Explore Spares</h1>
+                    <div className="relative z-10 text-center w-full max-w-4xl px-6">
+                        <h1 className="text-6xl md:text-7xl font-black text-white mb-8" style={{ fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.04em" }}>Explore Spares</h1>
                         <div className="flex items-center justify-center gap-3 text-sm font-bold uppercase tracking-[0.2em]">
                             <button onClick={() => setShowCatalogue(false)} className="text-white hover:text-blue-400 transition-colors" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>Home</button>
                             <ChevronRight size={14} className="text-blue-400" />
@@ -66,65 +97,114 @@ export default function ShopPage() {
                     </div>
                 </section>
 
-                {/* --- FILTER BAR --- */}
-                <div className="border-b border-gray-100 bg-white">
-                    <div className="container mx-auto px-10 md:px-24 py-8 flex justify-between items-center">
-                        <div className="flex items-center gap-8">
-                            <button className="flex items-center gap-3 text-gray-900 hover:text-blue-600 transition-colors">
-                                <Filter size={18} />
-                                <span className="uppercase text-xs font-900 tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Filter</span>
-                            </button>
-                            <div className="h-6 w-[1px] bg-gray-200"></div>
-                            <span className="text-gray-400 font-bold" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "18px" }}>Showing 1-16 of 32 results</span>
-                        </div>
-                        <div className="hidden md:block">
-                            <select className="bg-transparent border-none text-sm font-bold uppercase tracking-widest focus:ring-0 cursor-pointer" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>
-                                <option>Default Sorting</option>
-                                <option>Price: Low to High</option>
-                                <option>Price: High to Low</option>
-                            </select>
+                <div style={{ background: "#fff", paddingLeft: "100px", paddingRight: "100px", paddingTop: "32px", paddingBottom: "32px" }}>
+                    <div style={{ background: "#F0F7FF" }} className="border border-gray-100 rounded-xl overflow-hidden w-full">
+                        <div style={{ paddingLeft: "40px", paddingRight: "40px" }}>
+                            <motion.div onClick={() => setIsFilterOpen(!isFilterOpen)} className="flex gap-4 h-[60px] cursor-pointer transition-all border-b border-gray-100/50" style={{ paddingTop: "18px" }}>
+                                <div className="w-8 h-8 rounded-full border border-black/40 flex items-center justify-center">
+                                    {isFilterOpen ? <X size={16} className="text-gray-900" /> : <SlidersHorizontal size={14} className="text-gray-900" />}
+                                </div>
+                                <span className="font-black uppercase tracking-widest text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px", marginTop: "8px" }}>
+                                    {isFilterOpen ? "Collapse Filters" : "Filter"} 
+                                    <span className="ml-2 font-medium text-gray-500">({shopProducts.length} {shopProducts.length === 1 ? "product" : "products"})</span>
+                                </span>
+                            </motion.div>
+
+                            <AnimatePresence>
+                                {isFilterOpen && (
+                                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden" style={{ background: "#F0F7FF" }}>
+                                        <div style={{ padding: "50px 0px 80px 0px" }}>
+                                            <div className="flex justify-between items-center" style={{ marginBottom: "50px" }}>
+                                                <div className="flex items-center gap-8">
+                                                    <h3 className="font-black text-xs uppercase tracking-[0.2em] text-gray-400" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Refine Search</h3>
+                                                    <button onClick={() => setSelectedFilters([])} className="text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors underline underline-offset-4" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Clear All</button>
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-2 md:grid-cols-3 gap-16">
+                                                <div>
+                                                    <h4 className="font-black text-xs uppercase tracking-[0.2em] text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", marginBottom: "15px" }}>Part Type</h4>
+                                                    <div className="flex flex-col gap-5">
+                                                        {["Fuel Injectors", "Turbos", "Controllers", "Filters", "Hardware"].map(cat => (
+                                                            <label key={cat} className="flex items-center gap-3 cursor-pointer group">
+                                                                <input type="checkbox" className="hidden" checked={selectedFilters.includes(cat)} onChange={() => toggleFilter(cat)} />
+                                                                <div className={`w-5 h-5 border rounded flex items-center justify-center transition-all ${selectedFilters.includes(cat) ? 'border-blue-600 bg-blue-50' : 'border-gray-300 group-hover:border-blue-600'}`}>
+                                                                    <div className={`w-2.5 h-2.5 bg-blue-600 rounded-sm transition-all ${selectedFilters.includes(cat) ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+                                                                </div>
+                                                                <span className={`text-sm font-medium transition-colors ${selectedFilters.includes(cat) ? 'text-black' : 'text-gray-600 group-hover:text-black'}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{cat}</span>
+                                                            </label>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-black text-xs uppercase tracking-[0.2em] text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", marginBottom: "15px" }}>Price Range</h4>
+                                                    <div className="flex flex-col gap-5">
+                                                        {["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"].map(range => (
+                                                            <label key={range} className="flex items-center gap-3 cursor-pointer group">
+                                                                <input type="checkbox" className="hidden" checked={selectedFilters.includes(range)} onChange={() => toggleFilter(range)} />
+                                                                <div className={`w-5 h-5 border rounded flex items-center justify-center transition-all ${selectedFilters.includes(range) ? 'border-blue-600 bg-blue-50' : 'border-gray-300 group-hover:border-blue-600'}`}>
+                                                                    <div className={`w-2.5 h-2.5 bg-blue-600 rounded-sm transition-all ${selectedFilters.includes(range) ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+                                                                </div>
+                                                                <span className={`text-sm font-medium transition-colors ${selectedFilters.includes(range) ? 'text-black' : 'text-gray-600 group-hover:text-black'}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{range}</span>
+                                                            </label>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-black text-xs uppercase tracking-[0.2em] text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", marginBottom: "15px" }}>Condition</h4>
+                                                    <div className="flex flex-col gap-5">
+                                                        {["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"].map(cond => (
+                                                            <label key={cond} className="flex items-center gap-3 cursor-pointer group">
+                                                                <input type="checkbox" className="hidden" checked={selectedFilters.includes(cond)} onChange={() => toggleFilter(cond)} />
+                                                                <div className={`w-5 h-5 border rounded flex items-center justify-center transition-all ${selectedFilters.includes(cond) ? 'border-blue-600 bg-blue-50' : 'border-gray-300 group-hover:border-blue-600'}`}>
+                                                                    <div className={`w-2.5 h-2.5 bg-blue-600 rounded-sm transition-all ${selectedFilters.includes(cond) ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
+                                                                </div>
+                                                                <span className={`text-sm font-medium transition-colors ${selectedFilters.includes(cond) ? 'text-black' : 'text-gray-600 group-hover:text-black'}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{cond}</span>
+                                                            </label>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="mt-16 flex justify-end">
+                                                <button onClick={() => setIsFilterOpen(false)} className="bg-[#0b1a2e] text-white py-4 rounded font-black uppercase tracking-widest text-xs hover:bg-blue-700 transition-colors" style={{ paddingLeft: "12px", paddingRight: "12px", fontFamily: "'Darker Grotesque', sans-serif" }}>Apply Filters</button>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </div>
                 </div>
 
-                {/* --- PRODUCT GRID --- */}
-                <div className="bg-white pb-24">
-                    <div className="container mx-auto px-10 md:px-24 py-16">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-24">
-                            {shopProducts.map((product, index) => (
-                                <Link href={`/shop/${product.id}`} key={index} className="group flex flex-col items-center text-center">
-                                    <div className="aspect-square mb-10 w-full flex items-center justify-center transition-transform duration-700 group-hover:scale-110">
-                                        <img 
-                                            src={product.image} 
-                                            alt={product.name} 
-                                            className="w-full h-full object-contain drop-shadow-xl"
-                                        />
-                                    </div>
-                                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-[0.2em] mb-4 group-hover:text-blue-600 transition-colors" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "14px" }}>
-                                        {product.name}
-                                    </h3>
-                                    <p className="text-2xl font-900 text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
-                                        {product.currency} {product.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                                    </p>
-                                </Link>
-                            ))}
-                        </div>
+                <div style={{ height: isFilterOpen ? "60px" : "138px", background: "#fff" }} className="transition-all duration-500" />
 
-                        {/* Pagination */}
-                        <div className="mt-32 flex justify-center items-center gap-4">
-                            <button className="w-12 h-12 flex items-center justify-center rounded-lg bg-[#0b1a2e] text-white font-bold text-sm shadow-lg shadow-blue-100/20 hover:bg-blue-600 transition-all font-sans">
-                                1
-                            </button>
-                            {[2, 3].map(page => (
-                                <button key={page} className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-50 text-gray-400 font-bold text-sm hover:bg-gray-100 transition-all font-sans">
-                                    {page}
-                                </button>
-                            ))}
-                            <button className="px-8 h-12 flex items-center justify-center rounded-lg bg-gray-50 text-gray-900 font-bold text-xs uppercase tracking-widest hover:bg-gray-100 transition-all" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
-                                Next
-                            </button>
-                        </div>
+                <div style={{ paddingLeft: "100px", paddingRight: "100px", paddingBottom: "100px", background: "#fff" }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ columnGap: "32px", rowGap: "48px" }}>
+                        {shopProducts.map((product, index) => (
+                            <Link href={`/shop/${product.id}`} key={index} className="group flex flex-col items-center text-center border border-gray-100 rounded-xl pt-10 px-8 pb-16 transition-all duration-500 hover:border-blue-200 hover:shadow-2xl hover:shadow-blue-500/5 hover:-translate-y-1 bg-white w-full" style={{ maxWidth: "360px" }}>
+                                <div className="flex items-center justify-center transition-transform duration-700 group-hover:scale-105" style={{ width: "85%", aspectRatio: "1/1", margin: "0 auto 20px auto" }}>
+                                    <img 
+                                        src={product.image} 
+                                        alt={product.name} 
+                                        className="w-full h-full object-contain drop-shadow-xl" 
+                                        style={{ padding: product.name.includes("Turbo") ? "24px" : "0px" }}
+                                    />
+                                </div>
+                                <div className="flex flex-col items-start text-left">
+                                    <h3 className="uppercase tracking-[0.1em] transition-colors group-hover:text-blue-600" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "14px", fontWeight: 500, color: "#94A3B8", marginBottom: "8px" }}>{product.name}</h3>
+                                    <p style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px", fontWeight: 900, color: "#000", marginBottom: "15px" }}>{product.currency} {product.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                                </div>
+                            </Link>
+                        ))}
                     </div>
+                    <div style={{ height: "118px" }} />
+                    <div className="flex justify-center items-center gap-4">
+                        <button className="w-12 h-12 flex items-center justify-center rounded-lg bg-[#0b1a2e] text-white font-bold text-sm shadow-lg shadow-blue-100/20 hover:bg-blue-600 transition-all font-sans">1</button>
+                        {[2, 3].map(page => (
+                            <button key={page} className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-50 text-gray-400 font-bold text-sm hover:bg-gray-100 transition-all font-sans">{page}</button>
+                        ))}
+                        <button className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-50 text-gray-900 hover:bg-gray-100 transition-all"><ChevronRight size={16} /></button>
+                    </div>
+                    <div style={{ height: "100px" }} />
                 </div>
             </div>
         );
@@ -189,7 +269,7 @@ export default function ShopPage() {
                         </div>
                         <h3 style={{ fontSize: "clamp(28px, 6vw, 42px)", fontFamily: "'Darker Grotesque', sans-serif", lineHeight: "1", marginBottom: "32px", fontWeight: 900 }} className="text-gray-900 whitespace-nowrap">Fuel Injector</h3>
                         <button 
-                            onClick={() => setShowCatalogue(true)}
+                            onClick={() => { setShowCatalogue(true); window.scrollTo(0, 0); }}
                             style={{ fontSize: "20px", fontFamily: "'Darker Grotesque', sans-serif" }}
                             className="font-bold text-gray-900 uppercase tracking-[0.15em] border-b-2 border-gray-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-all w-fit"
                         >
@@ -208,7 +288,7 @@ export default function ShopPage() {
                         </div>
                         <h3 style={{ fontSize: "clamp(28px, 6vw, 42px)", fontFamily: "'Darker Grotesque', sans-serif", lineHeight: "1", marginBottom: "32px", fontWeight: 900 }} className="text-gray-900 whitespace-nowrap">Marine Turbo</h3>
                         <button 
-                            onClick={() => setShowCatalogue(true)}
+                            onClick={() => { setShowCatalogue(true); window.scrollTo(0, 0); }}
                             style={{ fontSize: "20px", fontFamily: "'Darker Grotesque', sans-serif" }}
                             className="font-bold text-gray-900 uppercase tracking-[0.15em] border-b-2 border-gray-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-all w-fit mb-12 md:mb-0"
                         >
@@ -229,18 +309,17 @@ export default function ShopPage() {
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 justify-items-center" style={{ marginBottom: "129.52px" }}>
                         {landingTopPicks.map((product, index) => {
-                            const displayNames = ["Fuel Injector", "Marine Turbo", "Engine Controller", "Fuel Injector"];
                             return (
                                 <Link href={`/shop/${product.id}`} key={index} className="group flex flex-col items-center text-center">
                                     <div className="aspect-square mb-10 w-[85%] flex items-center justify-center transition-transform duration-700 group-hover:scale-105">
                                         <img 
                                             src={product.image} 
-                                            alt={displayNames[index]} 
+                                            alt={product.name} 
                                             className="w-full h-full object-contain drop-shadow-2xl mix-blend-multiply"
                                         />
                                     </div>
                                     <h3 className="uppercase tracking-[0.1em] transition-colors whitespace-nowrap" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px", fontWeight: 500, color: "#94A3B8", marginBottom: "8px" }}>
-                                        {displayNames[index]}
+                                        {product.name}
                                     </h3>
                                     <p style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "20px", fontWeight: 900, color: "#000" }}>
                                         {product.currency} {product.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
@@ -252,7 +331,7 @@ export default function ShopPage() {
 
                     <div className="flex justify-center">
                         <button 
-                            onClick={() => setShowCatalogue(true)}
+                            onClick={() => { setShowCatalogue(true); window.scrollTo(0, 0); }}
                             className="inline-block text-xs font-bold text-gray-900 uppercase tracking-[0.3em] border-b-2 border-gray-900 pb-2 hover:text-blue-600 hover:border-blue-600 transition-all font-sans"
                             style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}
                         >
