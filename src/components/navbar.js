@@ -74,7 +74,7 @@ export function Navbar() {
                 zIndex: 100,
                 transition: "all 0.3s ease",
                 background: "#090E1A",
-                padding: "0 6vw",
+                padding: "0 4vw",
                 display: "flex",
                 alignItems: "center",
                 borderBottom: "1px solid rgba(255,255,255,0.1)",
