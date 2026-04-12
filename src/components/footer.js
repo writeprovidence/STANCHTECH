@@ -16,7 +16,7 @@ export function Footer() {
                   <img 
                     src="/asset/Landing page_image/stanch_tech logo.png" 
                     alt="Stanch Tech" 
-                    style={{ height: 65, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: 10 }} 
+                    style={{ height: 65, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: 4 }} 
                   />
                   <span style={{
                     fontSize: 16,

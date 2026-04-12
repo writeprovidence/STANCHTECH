@@ -96,7 +96,7 @@ export function Navbar() {
                                     height: 55, 
                                     width: "auto", 
                                     objectFit: "contain", 
-                                    marginRight: 10,
+                                    marginRight: 4,
                                     filter: "brightness(0) invert(1)"
                                 }}
                             />
