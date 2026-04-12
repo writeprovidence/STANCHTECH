@@ -360,7 +360,7 @@ export default function HomePage() {
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Saltwater Corrosion Resistant</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• 24-Month Active Warranty</li>
               </ul>
-              <Link href={`/shop/${PRODUCTS[1].id}`} className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
+              <Link href={`/shop/${PRODUCTS[1].id}`} target="_blank" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
               </Link>
             </div>
@@ -388,7 +388,7 @@ export default function HomePage() {
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• OEM Grade Compatibility</li>
                 <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Optimized Fuel Efficiency</li>
               </ul>
-              <Link href={`/shop/${PRODUCTS[0].id}`} className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
+              <Link href={`/shop/${PRODUCTS[0].id}`} target="_blank" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
               </Link>
             </div>
