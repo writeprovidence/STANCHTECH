@@ -70,6 +70,7 @@ export default function CheckoutPage() {
     }
 
     return (
+        <div>
             {/* --- HERO SECTION --- */}
             <section className="relative h-[320px] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
@@ -98,6 +99,14 @@ export default function CheckoutPage() {
                         <h2 className="text-3xl font-900 text-gray-900 mb-10 tracking-tight" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Billing Details</h2>
                         <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-3">
+                                    <label className="text-xs font-900 text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>First Name</label>
+                                    <input 
+                                        type="text" 
+                                        name="firstName"
+                                        required
+                                        value={formData.firstName}
+                                        onChange={handleInputChange}
                                         className="w-full px-6 py-4 border-2 border-gray-100 rounded-xl focus:border-blue-600 outline-none transition-all text-sm font-medium bg-gray-50/30" 
                                     />
                                 </div>
