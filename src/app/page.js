@@ -276,7 +276,7 @@ export default function HomePage() {
               <span>Sales of</span>
               <span>Genuine</span>
               <span>Cummins Engine</span>
-              <span>Spares parts</span>
+              <span>Spares</span>
             </h2>
             <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45, fontFamily: "'Darker Grotesque', sans-serif" }}>
               We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems.
@@ -307,7 +307,7 @@ export default function HomePage() {
         backgroundPosition: "center",
         color: "#0b1a2e", 
         position: "relative",
-        paddingTop: 60
+        paddingTop: 120
       }}>
         {/* Header */}
         <div className="fp-header section-header-flex" style={{ maxWidth: 1400, margin: "0 auto 40px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", paddingTop: 0 }}>
