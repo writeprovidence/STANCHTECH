@@ -16,16 +16,16 @@ export function Footer() {
                   <img 
                     src="/asset/Landing page_image/stanch_tech logo.png" 
                     alt="Stanch Tech" 
-                    style={{ height: 55, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: 4 }} 
+                    style={{ height: 55, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: -2 }} 
                   />
                   <span style={{
                     fontSize: 14,
                     fontWeight: 900,
-                    letterSpacing: "0.04em",
+                    letterSpacing: "0.1em",
                     color: "#fff",
                     textTransform: "uppercase",
                     lineHeight: 1,
-                    fontFamily: "'Inter', sans-serif"
+                    fontFamily: "'Neue Machina', sans-serif"
                   }}>
                     STANCHTECH
                   </span>
