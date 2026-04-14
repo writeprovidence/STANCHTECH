@@ -57,8 +57,12 @@ export function Navbar() {
 
     const navLinks = [
         { name: "HOME", href: "/" },
-        { name: "SHOP", href: "/shop?view=catalogue", target: "_blank" },
         { name: "ABOUT", href: "/about" },
+        { 
+            name: "SHOP", 
+            href: "/shop?view=catalogue", 
+            target: pathname.startsWith("/shop") ? "_self" : "_blank" 
+        },
         { name: "CONTACT", href: "/contact" },
     ];
 

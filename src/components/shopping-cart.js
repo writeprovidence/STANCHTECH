@@ -4,6 +4,7 @@ import { useCart } from "@/context/cart-context";
 import { X, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export function ShoppingCart() {
     const { cartItems, isCartOpen, setIsCartOpen, removeFromCart, cartTotal } = useCart();
@@ -27,7 +28,8 @@ export function ShoppingCart() {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-2xl z-[101] flex flex-col p-8"
+                        className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-2xl z-[101] flex flex-col"
+                        style={{ padding: "32px" }}
                     >
                         <div className="flex items-center justify-between mb-10 border-b border-gray-100 pb-6">
                             <h2 className="text-2xl font-black text-gray-900" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Shopping Cart</h2>
@@ -45,7 +47,13 @@ export function ShoppingCart() {
                                 cartItems.map((item) => (
                                     <div key={item.id} className="flex gap-4 group">
                                         <div className="w-20 h-20 bg-[#E8F3FA] rounded-xl flex items-center justify-center p-4 flex-shrink-0">
-                                            <img src={item.image || "/asset/spare_parts/Part3.png"} alt={item.name} className="w-full h-full object-contain" />
+                                            <Image 
+                                                src={item.image || "/asset/spare_parts/Part3.png"} 
+                                                alt={item.name} 
+                                                width={200}
+                                                height={200}
+                                                className="w-full h-full object-contain" 
+                                            />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <h3 className="font-bold text-gray-900 truncate mb-1">{item.name}</h3>
@@ -67,25 +75,26 @@ export function ShoppingCart() {
                         </div>
 
                         {cartItems.length > 0 && (
-                            <div className="mt-auto pt-8 border-t border-gray-100">
-                                <div className="flex justify-between items-center mb-8">
-                                    <span className="text-sm font-bold text-gray-900 uppercase tracking-widest">Subtotal</span>
-                                    <span className="text-xl font-black text-blue-600" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                            <div className="mt-auto pt-10 border-t border-gray-100">
+                                <div className="flex justify-between items-center mb-6">
+                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Subtotal</span>
+                                    <span className="text-[18px] font-black text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                         NGN {cartTotal.toLocaleString()}
                                     </span>
                                 </div>
-                                <div className="grid grid-cols-1 gap-4">
+                                
+                                <div className="flex items-center gap-4 w-full mt-2">
                                     <Link 
                                         href="/cart"
                                         onClick={() => setIsCartOpen(false)}
-                                        className="w-full py-4 border-2 border-gray-900 rounded-full text-sm font-black uppercase tracking-widest text-center hover:bg-gray-100 transition-all"
+                                        className="flex-1 py-2.5 border border-gray-900 rounded-full text-[12px] font-bold uppercase text-center hover:bg-gray-100 transition-all text-gray-900"
                                     >
                                         View Cart
                                     </Link>
                                     <Link 
                                         href="/checkout" 
                                         onClick={() => setIsCartOpen(false)}
-                                        className="w-full py-4 bg-gray-900 text-white rounded-full text-sm font-black uppercase tracking-widest text-center hover:bg-blue-600 transition-all"
+                                        className="flex-1 py-2.5 bg-gray-900 text-white rounded-full text-[12px] font-bold uppercase text-center hover:bg-blue-600 transition-all shadow-md"
                                     >
                                         Checkout
                                     </Link>
