@@ -117,20 +117,10 @@ export default function ProductDetailPage({ params }) {
 
 
 
-                        <div className="flex flex-wrap items-center gap-8" style={{ marginTop: "96px", marginBottom: "80px" }}>
-                            {/* QUANTITY BOX */}
-                            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-2 justify-center gap-6 bg-gray-50/30 shrink-0" style={{ width: "140px", height: "64px" }}>
-                                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-gray-400 hover:text-blue-600 transition-colors p-2">
-                                    <Minus size={18} />
-                                </button>
-                                <span className="text-xl font-bold text-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{quantity}</span>
-                                <button onClick={() => setQuantity(quantity + 1)} className="text-gray-400 hover:text-blue-600 transition-colors p-2">
-                                    <Plus size={18} />
-                                </button>
-                            </div>
+                        <div className="flex flex-wrap items-center gap-8" style={{ marginTop: "64px", marginBottom: "80px" }}>
                             {/* ADD TO CART BUTTON */}
                             <button 
-                                onClick={() => addToCart({ ...product, quantity })}
+                                onClick={() => addToCart({ ...product, quantity: 1 })}
                                 className="bg-gray-900 text-white font-bold uppercase tracking-[0.1em] hover:bg-blue-600 transition-all rounded-xl shadow-lg shadow-gray-200"
                                 style={{ 
                                     fontFamily: "'Darker Grotesque', sans-serif", 

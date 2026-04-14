@@ -60,7 +60,7 @@ export function Navbar() {
         { name: "ABOUT", href: "/about" },
         { 
             name: "SHOP", 
-            href: "/shop?view=catalogue", 
+            href: "/shop", 
             target: pathname.startsWith("/shop") ? "_self" : "_blank" 
         },
         { name: "CONTACT", href: "/contact" },
