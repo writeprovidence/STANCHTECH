@@ -27,7 +27,25 @@ export default function ProductDetailPage({ params }) {
     const formattedPrice = product.price.toLocaleString(undefined, { minimumFractionDigits: 2 });
 
     return (
-        <div className="bg-white min-h-screen pb-20" style={{ paddingTop: "144px" }}>
+        <div className="bg-white min-h-screen pb-20" style={{ paddingTop: "78px" }}>
+            {/* --- BREADCRUMB BAR --- */}
+            <div style={{ 
+                backgroundColor: '#F9F1E7', 
+                width: '100%', 
+                height: '48px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                paddingLeft: "109.27px", 
+                paddingRight: "109.27px",
+                marginBottom: '80px' 
+            }}>
+                <div className="flex items-center gap-4" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                    <Link href="/shop" className="text-[#9F9F9F] hover:text-black transition-colors font-medium" style={{ fontSize: '18px' }}>Shop</Link>
+                    <div className="h-4 border-l-2 border-[#D1D5DB] mx-4" />
+                    <span className="text-black font-semibold" style={{ fontSize: '18px' }}>{product.name}</span>
+                </div>
+            </div>
+
             <div style={{ paddingLeft: "109.27px", paddingRight: "109.27px" }}>
                 {/* --- PRODUCT MAIN --- */}
                 <section className="w-full flex flex-col lg:flex-row gap-20 items-start">

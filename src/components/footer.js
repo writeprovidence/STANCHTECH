@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Facebook, Instagram, MessageCircle } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+    const pathname = usePathname();
+    const isShopArea = pathname.startsWith('/shop') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders';
+
     return (
       <footer style={{ background: "#060D17", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
         {/* Section 2: Main Footer Grid */}
@@ -12,7 +16,7 @@ export function Footer() {
             {/* Column 1: Logo & Vision */}
             <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+                <Link href="/" target={isShopArea ? "_blank" : "_self"} style={{ display: "flex", alignItems: "center", gap: 0, textDecoration: "none" }}>
                   <img 
                     src="/asset/Landing page_image/stanch_tech logo.png" 
                     alt="Stanch Tech" 
@@ -29,7 +33,7 @@ export function Footer() {
                   }}>
                     STANCHTECH
                   </span>
-                </div>
+                </Link>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, marginBottom: 32, fontFamily: "'Darker Grotesque', sans-serif" }}>
                 Nigeria's premier partner for marine engine salvaging, diagnostic precision, and technical maintenance solutions.
@@ -55,16 +59,32 @@ export function Footer() {
                 <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Navigation</p>
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {["HOME", "ABOUT", "SHOP", "CONTACT"].map((link) => (
-                  <Link 
-                    key={link} 
-                    href={link === "HOME" ? "/"  : link === "CONTACT" ? "/contact" : link === "ABOUT" ? "/about" : "/shop"} 
-                    style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8, fontFamily: "'Darker Grotesque', sans-serif" }} 
-                    className="footer-link"
-                  >
-                    {link}
-                  </Link>
-                ))}
+                {["HOME", "ABOUT", "SHOP", "CONTACT"].map((link) => {
+                  let target = "_self";
+                  if (isShopArea) {
+                      target = link === "SHOP" ? "_self" : "_blank";
+                  } else {
+                      target = link === "SHOP" ? "_blank" : "_self";
+                  }
+                  
+                  return (
+                    <Link 
+                      key={link} 
+                      href={link === "HOME" ? "/"  : link === "CONTACT" ? "/contact" : link === "ABOUT" ? "/about" : "/shop"} 
+                      target={target}
+                      onClick={(e) => {
+                        if (link === "ABOUT" && pathname === "/about") {
+                          e.preventDefault();
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                      }}
+                      style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8, fontFamily: "'Darker Grotesque', sans-serif" }} 
+                      className="footer-link"
+                    >
+                      {link}
+                    </Link>
+                  );
+                })}
               </nav>
             </div>
 
@@ -100,6 +120,7 @@ export function Footer() {
                 </p>
                 <Link 
                   href="/contact" 
+                  target={isShopArea ? "_blank" : "_self"}
                   className="hero-btn-secondary no-caps"
                   style={{ 
                     display: "flex", 

@@ -120,26 +120,39 @@ export function Navbar() {
 
                     {/* CENTER: Navigation Links */}
                     <div className="desktop-nav" style={{ flex: 2, display: "flex", justifyContent: "center", alignItems: "center", gap: 32 }}>
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                target={link.target}
-                                style={{
-                                    fontSize: 13,
-                                    fontWeight: 800,
-                                    color: "#fff",
-                                    textDecoration: "none",
-                                    transition: "color 0.2s",
-                                    fontFamily: "'Neue Machina', sans-serif",
-                                    letterSpacing: "0.15em"
-                                }}
-                                onMouseEnter={e => e.target.style.color = "#2563eb"}
-                                onMouseLeave={e => e.target.style.color = "#fff"}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                        {navLinks.map((link) => {
+                            const isShopArea = pathname.startsWith('/shop') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders';
+                            let target = "_self";
+
+                            if (isShopArea) {
+                                // If already in shop area, stay in it for shop links, but open main site links in new tab
+                                target = link.name === "SHOP" ? "_self" : "_blank";
+                            } else {
+                                // If in main site, navigate normally, but open shop in new tab
+                                target = link.name === "SHOP" ? "_blank" : "_self";
+                            }
+
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    target={target}
+                                    style={{
+                                        fontSize: 13,
+                                        fontWeight: 800,
+                                        color: "#fff",
+                                        textDecoration: "none",
+                                        transition: "color 0.2s",
+                                        fontFamily: "'Neue Machina', sans-serif",
+                                        letterSpacing: "0.15em"
+                                    }}
+                                    onMouseEnter={e => e.target.style.color = "#2563eb"}
+                                    onMouseLeave={e => e.target.style.color = "#fff"}
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
                     </div>
 
                     {/* RIGHT: Utilities */}
@@ -267,22 +280,34 @@ export function Navbar() {
                             </div>
 
                             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-                                {navLinks.map((link) => (
-                                    <Link
-                                        key={link.name}
-                                        href={link.href}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        style={{
-                                            color: "#000",
-                                            textDecoration: "none",
-                                            fontSize: 20,
-                                            fontWeight: 700,
-                                            fontFamily: "'Space Grotesk', sans-serif",
-                                        }}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                ))}
+                                {navLinks.map((link) => {
+                                    const isShopArea = pathname.startsWith('/shop') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders';
+                                    let target = "_self";
+        
+                                    if (isShopArea) {
+                                        target = link.name === "SHOP" ? "_self" : "_blank";
+                                    } else {
+                                        target = link.name === "SHOP" ? "_blank" : "_self";
+                                    }
+
+                                    return (
+                                        <Link
+                                            key={link.name}
+                                            href={link.href}
+                                            target={target}
+                                            onClick={() => setMobileMenuOpen(false)}
+                                            style={{
+                                                color: "#000",
+                                                textDecoration: "none",
+                                                fontSize: 20,
+                                                fontWeight: 700,
+                                                fontFamily: "'Space Grotesk', sans-serif",
+                                            }}
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </div>
                     </>
