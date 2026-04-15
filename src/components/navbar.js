@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X, User, Search, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useRouter, usePathname } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronDown, ArrowRight, PenLine, LogOut, Heart } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
 
 export function Navbar() {
@@ -18,7 +18,28 @@ export function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const { cartCount, setIsCartOpen } = useCart();
-    const { data: session } = useSession();
+    const [userAuth, setUserAuth] = useState(null);
+    const profileMenuRef = useRef(null);
+
+    useEffect(() => {
+        // Initial check for current session
+        const checkUser = async () => {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            if (!error && session) {
+                setUserAuth(session.user);
+            } else {
+                setUserAuth(null);
+            }
+        };
+        checkUser();
+
+        // Listen for auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUserAuth(session?.user ?? null);
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -54,6 +75,18 @@ export function Navbar() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (profileMenuRef.current && !profileMenuRef.current.contains(e.target)) {
+                setProfileMenuOpen(false);
+            }
+        };
+        if (profileMenuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [profileMenuOpen]);
 
     const navLinks = [
         { name: "HOME", href: "/" },
@@ -157,48 +190,81 @@ export function Navbar() {
 
                     {/* RIGHT: Utilities */}
                     <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 24 }}>
-                        {(pathname.startsWith('/shop') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders') && (
+                        {(pathname.startsWith('/shop') || pathname.startsWith('/profile') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders' || pathname === '/login') && (
                                 <>
-                                    {session ? (
-                                        <div className="relative">
-                                            <button 
-                                                onClick={() => setProfileMenuOpen(!profileMenuOpen)} 
-                                                className="flex items-center gap-1 text-white hover:text-blue-600 transition-colors bg-transparent border-none cursor-pointer"
-                                            >
-                                                <User size={20} />
-                                                <ChevronDown size={14} />
-                                            </button>
-                                            
-                                            {profileMenuOpen && (
-                                                <div className="absolute right-0 top-8 w-64 bg-white rounded-xl shadow-2xl py-4 flex flex-col z-50 border border-gray-100 pb-2">
-                                                    <div className="px-6 py-3 border-b border-gray-100 flex items-center gap-3">
-                                                        <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                                                            <User size={16} className="text-gray-500" />
-                                                        </div>
-                                                        <span className="text-sm font-medium text-gray-700 truncate">{session.user?.email}</span>
-                                                    </div>
-                                                    <Link href="/profile" onClick={() => setProfileMenuOpen(false)} className="px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Profile</Link>
-                                                    <Link href="/settings" onClick={() => setProfileMenuOpen(false)} className="px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Settings</Link>
-                                                    <div className="px-4 pt-2">
-                                                        <button 
-                                                            onClick={() => signOut()} 
-                                                            className="w-full text-left px-4 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-sm font-medium text-gray-900 transition-colors"
-                                                        >
-                                                            Sign out
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ) : (
+                                    <div className="relative" ref={profileMenuRef}>
                                         <button 
-                                            onClick={() => signIn('google')} 
-                                            className="text-white hover:text-blue-600 transition-colors bg-transparent border-none cursor-pointer"
-                                            aria-label="Sign In"
+                                            onClick={() => setProfileMenuOpen(!profileMenuOpen)} 
+                                            className="flex items-center gap-1 text-white hover:text-blue-600 transition-colors bg-transparent border-none cursor-pointer"
                                         >
                                             <User size={20} />
+                                            <ChevronDown size={14} />
                                         </button>
-                                    )}
+                                        
+                                        {profileMenuOpen && (
+                                            <div style={{ position: "absolute", right: "-20px", top: "48px", width: "180px", backgroundColor: "white", boxShadow: "0 4px 24px rgba(0,0,0,0.12)", borderRadius: "6px", overflow: "hidden", display: "flex", flexDirection: "column", zIndex: 50, border: "1px solid #e5e7eb", fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                {/* Sign In button — only when logged out */}
+                                                {!userAuth && (
+                                                    <div style={{ padding: "12px 12px 10px 12px" }}>
+                                                        <button 
+                                                            onClick={() => {
+                                                                setProfileMenuOpen(false);
+                                                                router.push("/login");
+                                                            }}
+                                                            style={{ width: "100%", padding: "9px 8px", backgroundColor: "#090E1A", color: "white", fontSize: "13px", fontWeight: "500", borderRadius: "4px", border: "none", cursor: "pointer", textAlign: "center" }}
+                                                            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#161e35"}
+                                                            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#090E1A"}
+                                                        >
+                                                            Sign In
+                                                        </button>
+                                                    </div>
+                                                )}
+                                                {/* Horizontal Divider */}
+                                                <div style={{ height: "1px", backgroundColor: "#e5e7eb", margin: "0" }} />
+                                                {/* Menu Items */}
+                                                <div style={{ display: "flex", flexDirection: "column", padding: "6px 0" }}>
+                                                    <Link 
+                                                        href="/profile" 
+                                                        onClick={() => setProfileMenuOpen(false)} 
+                                                        className="no-underline"
+                                                        style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 16px", fontSize: "13px", fontWeight: "400", color: "#333", width: "100%", boxSizing: "border-box" }}
+                                                        onMouseEnter={e => e.currentTarget.style.backgroundColor = "#dbeafe"}
+                                                        onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
+                                                    >
+                                                        <img src="/asset/navbar%20dropdown/profile.png" alt="Profile" style={{ width: "15px", height: "15px", objectFit: "contain", opacity: 0.6, flexShrink: 0 }} />
+                                                        My Account
+                                                    </Link>
+                                                    <Link 
+                                                        href="/profile/orders" 
+                                                        onClick={() => setProfileMenuOpen(false)} 
+                                                        className="no-underline"
+                                                        style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 16px", fontSize: "13px", fontWeight: "400", color: "#333", width: "100%", boxSizing: "border-box" }}
+                                                        onMouseEnter={e => e.currentTarget.style.backgroundColor = "#dbeafe"}
+                                                        onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
+                                                    >
+                                                        <img src="/asset/navbar%20dropdown/orders.png" alt="Orders" style={{ width: "15px", height: "15px", objectFit: "contain", opacity: 0.6, flexShrink: 0 }} />
+                                                        Orders
+                                                    </Link>
+                                                    {/* LogOut — only when logged in */}
+                                                    {userAuth && (
+                                                        <button 
+                                                            onClick={async () => {
+                                                                await supabase.auth.signOut();
+                                                                setProfileMenuOpen(false);
+                                                                router.push("/shop");
+                                                            }} 
+                                                            style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 16px", fontSize: "13px", fontWeight: "400", color: "#333", width: "100%", boxSizing: "border-box", background: "transparent", border: "none", textAlign: "left", cursor: "pointer" }}
+                                                            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#dbeafe"}
+                                                            onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
+                                                        >
+                                                            <img src="/asset/navbar%20dropdown/Logout.png" alt="LogOut" style={{ width: "15px", height: "15px", objectFit: "contain", opacity: 0.6, flexShrink: 0 }} />
+                                                            LogOut
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                     <button 
                                         onClick={() => setIsSearchOpen(true)}
                                         style={{ background: "none", border: "none", cursor: "pointer", color: "#fff" }} 

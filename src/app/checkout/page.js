@@ -5,11 +5,14 @@ import { useCart } from "@/context/cart-context";
 import Link from "next/link";
 import { ChevronRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function CheckoutPage() {
     const { cartItems, cartTotal, clearCart } = useCart();
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isAuth, setIsAuth] = useState(null);
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -23,6 +26,19 @@ export default function CheckoutPage() {
         email: "",
         additionalInfo: ""
     });
+
+    useEffect(() => {
+        const checkUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                router.push("/login?redirect=/checkout");
+            } else {
+                setIsAuth(true);
+                setFormData(prev => ({ ...prev, email: user.email || "" }));
+            }
+        };
+        checkUser();
+    }, [router]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -54,8 +70,12 @@ export default function CheckoutPage() {
         // Clear cart and redirect
         clearCart();
         setIsSubmitting(false);
-        router.push("/orders");
+        router.push("/profile/orders");
     };
+
+    if (!isAuth) {
+        return <div className="min-h-screen bg-white flex items-center justify-center">Loading...</div>;
+    }
 
     if (cartItems.length === 0 && !isSubmitting) {
         return (

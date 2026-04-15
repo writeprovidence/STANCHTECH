@@ -302,7 +302,7 @@ export default function HomePage() {
 
       {/* ─── FEATURED PRODUCTS ─── */}
       <section className="section-pad" style={{ 
-        backgroundImage: 'url("/asset/product_card.png")', 
+        backgroundImage: 'url("/asset/Landing%20page_image/product_card.png")', 
         backgroundSize: "cover",
         backgroundPosition: "center",
         color: "#0b1a2e", 
