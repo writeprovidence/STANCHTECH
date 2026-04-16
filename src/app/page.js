@@ -341,11 +341,11 @@ export default function HomePage() {
           {/* Card 1 */}
           <div className="product-item-card" style={{ 
             position: "relative",
-            background: "rgba(200, 212, 222, 0.5)",
+            background: "#FFFFFF",
             overflow: "hidden"
           }}>
             {/* Left Image Area (The 'White Card') */}
-            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "transparent" }}>
+            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "#FFFFFF" }}>
               <img 
                 src={PRODUCTS[1].image} 
                 alt={PRODUCTS[1].name} 
@@ -369,11 +369,11 @@ export default function HomePage() {
           {/* Card 2 */}
           <div className="product-item-card" style={{ 
             position: "relative",
-            background: "rgba(200, 212, 222, 0.5)",
+            background: "#FFFFFF",
             overflow: "hidden"
           }}>
             {/* Left Image Area (The 'White Card') */}
-            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "transparent" }}>
+            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "#FFFFFF" }}>
               <img 
                 src={PRODUCTS[0].image} 
                 alt={PRODUCTS[0].name} 
