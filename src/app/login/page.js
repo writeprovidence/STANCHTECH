@@ -12,7 +12,7 @@ function LoginContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") || "/profile";
+  const redirectTo = searchParams.get("next") || "/shop";
 
   useEffect(() => {
     const checkUser = async () => {
