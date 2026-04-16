@@ -49,10 +49,10 @@ export default function ProfileLayout({ children }) {
 
 
   const navItems = [
-    { name: "Profile", path: "/profile", icon: <User size={20} strokeWidth={2.5} /> },
-    { name: "Orders", path: "/profile/orders", icon: <PenLine size={20} strokeWidth={2.5} /> },
-    { name: "Reviews", path: "/profile/reviews", icon: <MessageSquare size={20} strokeWidth={2.5} /> },
-    { name: "Close Account", path: "/profile/close", icon: <XCircle size={20} strokeWidth={2.5} /> },
+    { name: "Profile", path: "/profile", icon: <User size={18} /> },
+    { name: "Orders", path: "/profile/orders", icon: <PenLine size={18} /> },
+    { name: "Reviews", path: "/profile/reviews", icon: <MessageSquare size={18} /> },
+    { name: "Close Account", path: "/profile/close", icon: <XCircle size={18} /> },
   ];
 
   const handleLogout = async () => {
@@ -61,44 +61,47 @@ export default function ProfileLayout({ children }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] pt-24 pb-16 px-4 md:px-12 font-['Space_Grotesk',sans-serif]">
-      <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row gap-8">
+    <div className="min-h-screen bg-[#FBFBFB] font-['Space_Grotesk',sans-serif] pt-[120px] pb-20">
+      
+      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row gap-10 px-4 md:px-12">
         
-        {/* SIDEBAR */}
-        <div className="w-full md:w-[280px] flex flex-col bg-white rounded-md overflow-hidden shrink-0 self-start shadow-sm shadow-gray-100/50">
-            {navItems.map((item) => {
-              const isActive = pathname === item.path;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.path}
-                  className={`flex items-center gap-4 px-6 py-5 text-[12px] font-black no-underline uppercase tracking-widest transition-all duration-200 border-l-4
-                    ${isActive ? "bg-blue-50/50 text-blue-600 border-blue-600" : "text-gray-400 hover:bg-gray-50 border-transparent hover:text-black"}
-                  `}
-                  style={{ fontFamily: "'Neue Machina', sans-serif" }}
-                >
-                  {item.icon}
-                  {item.name}
-                </Link>
-              );
-            })}
+        {/* SIDEBAR (W=270, H=514) */}
+        <div className="w-[270px] h-[514px] flex flex-col bg-white shrink-0 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] self-start sticky top-[100px]">
+            <div className="flex flex-col py-6">
+              {navItems.map((item) => {
+                const isActive = pathname === item.path;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.path}
+                    className={`flex items-center gap-4 px-10 py-5 text-[15px] font-medium no-underline transition-all duration-200
+                      ${isActive ? "bg-[#F5F5F5] text-black" : "text-[#777] hover:bg-gray-50 hover:text-black"}
+                    `}
+                  >
+                    <span className="opacity-80">{item.icon}</span>
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
 
           
-          <div className="border-t border-gray-100 py-2">
+          <div className="mt-auto border-t border-gray-100 py-6">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-4 px-6 py-5 text-[12px] font-black text-gray-400 hover:bg-gray-50 hover:text-red-500 transition-all duration-200 cursor-pointer text-left border-none bg-transparent uppercase tracking-widest border-l-4 border-transparent"
-              style={{ fontFamily: "'Neue Machina', sans-serif" }}
+              className="w-full flex items-center gap-4 px-10 py-5 text-[15px] font-medium text-[#777] hover:bg-gray-50 hover:text-black transition-all duration-200 cursor-pointer text-left border-none bg-transparent"
             >
-              <LogOut size={20} strokeWidth={2.5} />
+              <span className="opacity-80"><LogOut size={18} /></span>
               LogOut
             </button>
           </div>
         </div>
 
         {/* MAIN CONTENT AREA */}
-        <div className="flex-1 flex flex-col gap-8">
-          {children}
+        <div className="flex-1 min-h-[600px]">
+          <div className="max-w-[900px]">
+            {children}
+          </div>
         </div>
         
       </div>

@@ -14,78 +14,81 @@ export default function OrdersPage() {
 
   if (orders.length === 0) {
     return (
-      <div className="bg-white p-8 rounded-md shadow-sm shadow-gray-100/50 min-h-[500px] flex flex-col items-center justify-center text-center">
-        <h2 className="text-[20px] font-bold text-black mb-3">No orders yet</h2>
-        <p className="text-[13px] font-semibold text-gray-500 mb-8 max-w-[300px] mx-auto leading-relaxed">
-          All your orders will be saved here for you to access their state anytime.
+      <div className="bg-white p-12 border border-gray-100/50 shadow-[0_1px_3px_rgba(0,0,0,0.02)] min-h-[500px] flex flex-col items-center justify-center text-center font-['Space_Grotesk',sans-serif]">
+        <div className="w-10 h-10 rounded-full bg-[#f8f9fa] flex items-center justify-center mb-6">
+          <Clock size={20} className="text-[#999]" />
+        </div>
+        <h2 className="text-[15px] font-bold text-[#333] mb-2 uppercase tracking-wide">No orders yet</h2>
+        <p className="text-[13px] font-medium text-[#888] mb-8 max-w-[300px] leading-relaxed">
+          Your order history is currently empty. Shop our inventory to start your journey.
         </p>
         
         <Link 
           href="/shop"
-          className="inline-flex items-center justify-center gap-2 bg-[#2563EB] text-white px-6 py-3 rounded-md text-[13px] font-bold hover:bg-blue-700 transition-colors no-underline"
+          className="text-[13px] font-bold text-black border-b-2 border-black pb-1 hover:opacity-60 transition-opacity no-underline"
         >
-          View Inventory
-          <ArrowUpRight size={16} strokeWidth={2.5} />
+          Explore Shop
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="bg-white p-8 md:p-12 rounded-md shadow-sm shadow-gray-100/50 min-h-[500px]">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-        <div>
-          <h2 className="text-3xl font-900 text-black mb-2 tracking-tighter uppercase" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
-            Order History
-          </h2>
-          <p className="text-[14px] font-semibold text-gray-500 font-['Space_Grotesk',sans-serif]">
-            Track and manage your recent marine and industrial part orders.
-          </p>
+    <div className="flex flex-col gap-6 font-['Space_Grotesk',sans-serif]">
+      {/* HEADER BLOCK */}
+      <div className="bg-white p-10 border border-gray-100/50 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-[15px] font-bold text-[#333] uppercase tracking-widest mb-1">
+              Order History
+            </h2>
+            <p className="text-[13px] font-medium text-[#888]">
+              Manage and track your recent transactions.
+            </p>
+          </div>
+          <span className="text-[12px] font-bold text-[#333] opacity-60">
+            {orders.length} TOTAL
+          </span>
         </div>
-        <span className="text-[12px] font-bold text-blue-600 bg-blue-50 px-4 py-2 rounded-full font-['Space_Grotesk',sans-serif] w-fit">
-          {orders.length} TOTAL {orders.length === 1 ? 'ORDER' : 'ORDERS'}
-        </span>
       </div>
 
-      <div className="space-y-6">
+      {/* ORDERS LIST */}
+      <div className="flex flex-col gap-4 mb-12">
         {orders.map((order, idx) => (
-          <div key={idx} className="border border-gray-100 rounded-xl p-6 md:p-8 hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 bg-white group">
+          <div key={idx} className="bg-white p-8 border border-gray-100/50 shadow-[0_1px_3px_rgba(0,0,0,0.02)] transition-all hover:bg-[#FBFBFB]">
             <div className="flex flex-col lg:flex-row justify-between gap-8">
               <div className="flex gap-6">
-                <div className="w-16 h-16 bg-gray-50 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-blue-50 transition-colors">
-                  <Package className="text-gray-400 group-hover:text-blue-500 transition-colors md:size-30" size={32} />
+                <div className="w-12 h-12 bg-[#F5F5F5] flex items-center justify-center shrink-0">
+                  <Package className="text-[#666]" size={20} />
                 </div>
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="text-lg font-bold text-black font-['Space_Grotesk',sans-serif]">{order.id}</span>
-                    <span className="text-[10px] font-black uppercase px-3 py-1 bg-blue-600 text-white rounded-md tracking-wider">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[14px] font-bold text-black">{order.id}</span>
+                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 bg-[#EEE] text-[#333] rounded-sm tracking-wide">
                       {order.status}
                     </span>
                   </div>
-                  <div className="flex items-center gap-4 text-[13px] font-semibold text-gray-400 font-['Space_Grotesk',sans-serif]">
+                  <div className="flex items-center gap-4 text-[12px] font-medium text-[#888]">
                     <span className="flex items-center gap-1.5">
                       <Clock size={14} />
                       {new Date(order.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                     </span>
-                    <span className="w-1 h-1 bg-gray-200 rounded-full"></span>
-                    <span className="uppercase">{order.items?.length || 0} ITEM{(order.items?.length || 0) === 1 ? '' : 'S'}</span>
+                    <span className="w-px h-3 bg-gray-200"></span>
+                    <span>{order.items?.length || 0} ITEM{(order.items?.length || 0) === 1 ? '' : 'S'}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-row lg:flex-col justify-between items-start lg:items-end gap-2 lg:min-w-[150px] lg:border-l lg:border-gray-50 lg:pl-8">
-                <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest font-['Neue_Machina',sans-serif]">Amount Paid</span>
-                <span className="text-2xl font-900 text-black tracking-tighter font-['Neue_Machina',sans-serif]">
+              <div className="flex flex-row lg:flex-col justify-between items-start lg:items-end gap-2 lg:min-w-[150px]">
+                <span className="text-[10px] font-bold text-[#BBB] uppercase tracking-widest">Amount Paid</span>
+                <span className="text-[18px] font-bold text-black border-b border-gray-100 pb-1 w-full lg:text-right">
                   NGN {order.total.toLocaleString()}
                 </span>
               </div>
               
-              <div className="flex flex-row lg:flex-col gap-3 lg:min-w-[140px]">
-                 <button className="flex-1 lg:w-full py-3 px-4 bg-black text-white text-[11px] font-bold uppercase tracking-widest rounded-md hover:bg-blue-600 transition-colors cursor-pointer border-none font-['Space_Grotesk',sans-serif]">
-                   View Details
-                 </button>
-                 <button className="flex-1 lg:w-full py-3 px-4 bg-gray-50 text-black text-[11px] font-bold uppercase tracking-widest rounded-md hover:bg-gray-100 transition-colors cursor-pointer border border-gray-200 font-['Space_Grotesk',sans-serif]">
-                   Reorder
+              <div className="flex items-center gap-4">
+                 <button className="text-[12px] font-bold text-black hover:opacity-70 transition-opacity bg-transparent border-none cursor-pointer">
+                   Details →
                  </button>
               </div>
             </div>
