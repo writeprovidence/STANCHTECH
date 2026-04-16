@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState("");
   const [newsletters, setNewsletters] = useState(false);
   const router = useRouter();
@@ -77,9 +75,6 @@ export default function LoginPage() {
     }
   };
 
-
-
-
   return (
     <div className="min-h-screen flex items-start justify-center bg-white px-4" style={{ paddingTop: "0px", paddingBottom: "60px" }}>
       <div className="w-full max-w-[420px] flex flex-col items-center relative bg-white" style={{ paddingTop: "20px" }}>
@@ -140,7 +135,6 @@ export default function LoginPage() {
               }}
             />
           </div>
-
 
           <button
             type="submit"
@@ -209,5 +203,17 @@ export default function LoginPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="w-12 h-12 border-4 border-gray-100 border-t-black rounded-full animate-spin"></div>
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }
