@@ -49,10 +49,10 @@ export default function ProfileLayout({ children }) {
 
 
   const navItems = [
-    { name: "Profile", path: "/profile", icon: <User size={18} /> },
-    { name: "Orders", path: "/profile/orders", icon: <PenLine size={18} /> },
-    { name: "Reviews", path: "/profile/reviews", icon: <MessageSquare size={18} /> },
-    { name: "Close Account", path: "/profile/close", icon: <XCircle size={18} /> },
+    { name: "Profile", path: "/profile", icon: <img src="/asset/navbar%20dropdown/profile.png" alt="" style={{ width: "16px", height: "16px", opacity: 0.6 }} /> },
+    { name: "Orders", path: "/profile/orders", icon: <img src="/asset/navbar%20dropdown/orders.png" alt="" style={{ width: "16px", height: "16px", opacity: 0.6 }} /> },
+    { name: "Reviews", path: "/profile/reviews", icon: <MessageSquare size={16} className="opacity-60" /> },
+    { name: "Close Account", path: "/profile/close", icon: <XCircle size={16} className="opacity-60" /> },
   ];
 
   const handleLogout = async () => {
@@ -74,11 +74,11 @@ export default function ProfileLayout({ children }) {
                   <Link
                     key={item.name}
                     href={item.path}
-                    className={`flex items-center gap-4 px-10 py-5 text-[15px] font-medium no-underline transition-all duration-200
+                    className={`flex items-center gap-4 px-10 py-[18px] text-[13px] font-bold no-underline transition-all duration-200
                       ${isActive ? "bg-[#F5F5F5] text-black" : "text-[#777] hover:bg-gray-50 hover:text-black"}
                     `}
                   >
-                    <span className="opacity-80">{item.icon}</span>
+                    <span className={`${isActive ? "opacity-100 brightness-0" : ""}`}>{item.icon}</span>
                     {item.name}
                   </Link>
                 );
@@ -86,12 +86,12 @@ export default function ProfileLayout({ children }) {
             </div>
 
           
-          <div className="mt-auto border-t border-gray-100 py-6">
+          <div className="mt-auto border-t border-gray-100 py-2">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-4 px-10 py-5 text-[15px] font-medium text-[#777] hover:bg-gray-50 hover:text-black transition-all duration-200 cursor-pointer text-left border-none bg-transparent"
+              className="w-full flex items-center gap-4 px-10 py-[18px] text-[13px] font-bold text-[#777] hover:bg-gray-50 hover:text-black transition-all duration-200 cursor-pointer text-left border-none bg-transparent"
             >
-              <span className="opacity-80"><LogOut size={18} /></span>
+              <span className="opacity-60"><img src="/asset/navbar%20dropdown/Logout.png" alt="" style={{ width: "16px", height: "16px" }} /></span>
               LogOut
             </button>
           </div>

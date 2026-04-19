@@ -47,131 +47,174 @@ export default function ProfilePage() {
     localStorage.setItem("stanchtech_addresses", JSON.stringify(updated));
   };
 
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [tempEmail, setTempEmail] = useState(email);
+
+  useEffect(() => {
+    setTempEmail(email);
+  }, [email]);
+
   return (
     <div className="flex flex-col gap-6 font-['Space_Grotesk',sans-serif]">
-      {/* USER INFO BLOCK (Smaller Upper Box) */}
-      <div className="bg-white p-6 border border-gray-100/50 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-        <div className="flex flex-col gap-1">
-          <h2 className="text-[14px] font-bold text-[#333] tracking-wide uppercase">
-            Profile Details
-          </h2>
-          <div className="flex items-center gap-6 mt-2">
-            <div>
-              <p className="text-[11px] font-bold text-[#999] uppercase mb-0.5">Full Name</p>
-              <p className="text-[14px] font-medium text-[#333]">{username || "Stanch User"}</p>
-            </div>
-            <div className="w-px h-8 bg-gray-100" />
-            <div>
-              <p className="text-[11px] font-bold text-[#999] uppercase mb-0.5">Email Address</p>
-              <p className="text-[14px] font-medium text-[#333]">{email || "user@example.com"}</p>
-            </div>
+      {/* EMAIL ADDRESS SECTION */}
+      <div className="bg-white border border-[#EBEBEB] rounded-[4px] overflow-hidden">
+        <div className="p-8 pb-10">
+          <div className="flex justify-between items-start mb-1">
+            <span className="text-[12px] font-bold text-[#828282]">Email Address</span>
+            {!isEditingEmail ? (
+                <button 
+                  onClick={() => setIsEditingEmail(true)}
+                  className="text-[12px] font-bold text-[#155DFC] hover:underline bg-transparent border-none cursor-pointer"
+                >
+                  Edit Address
+                </button>
+            ) : (
+                <button 
+                  onClick={() => setIsEditingEmail(false)}
+                  className="text-[12px] font-bold text-[#155DFC] hover:underline bg-transparent border-none cursor-pointer"
+                >
+                  save
+                </button>
+            )}
+          </div>
+          
+          <div className="mt-4">
+            {!isEditingEmail ? (
+                <p className="text-[14px] text-black font-medium">{email}</p>
+            ) : (
+                <div className="relative">
+                  <input 
+                    type="text"
+                    value={tempEmail}
+                    onChange={(e) => setTempEmail(e.target.value)}
+                    className="w-full border-b border-gray-200 py-2 text-[14px] font-medium focus:border-black outline-none transition-colors"
+                  />
+                </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* ADDRESSES BLOCK */}
-      <div className="bg-white p-10 border border-gray-100/50 shadow-[0_1px_3px_rgba(0,0,0,0.02)] min-h-[400px]">
-        <div className="flex items-center gap-6 mb-8">
-          <h3 className="text-[14px] font-bold text-[#333]">Addresses</h3>
-          {!isAddingAddress && (
-            <button 
-              onClick={() => setIsAddingAddress(true)}
-              className="text-[13px] font-bold text-black hover:opacity-70 transition-opacity bg-transparent border-none cursor-pointer flex items-center gap-1"
-            >
-              + Add
-            </button>
-          )}
-        </div>
+      {/* ADDRESSES SECTION */}
+      <div className="bg-white border border-[#EBEBEB] rounded-[4px] overflow-hidden min-h-[400px] mb-20">
+        <div className="p-8 pb-10">
+          <div className="flex items-center gap-6 mb-8">
+            <h3 className="text-[14px] font-bold text-black">Addresses</h3>
+            {!isAddingAddress && (
+              <button 
+                onClick={() => setIsAddingAddress(true)}
+                className="text-[13px] font-bold text-[#333] hover:opacity-70 transition-opacity bg-transparent border-none cursor-pointer flex items-center gap-1"
+              >
+                + Add
+              </button>
+            )}
+          </div>
 
         {isAddingAddress ? (
-          <form onSubmit={handleAddAddress} className="bg-[#FBFBFB] p-8 border border-gray-100">
-            <div className="flex justify-between items-center mb-6">
-              <h4 className="text-[11px] font-bold uppercase tracking-widest text-black">New Address</h4>
+          <form onSubmit={handleAddAddress} className="mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <input 
+                placeholder="first name"
+                className="w-full h-[45px] px-4 bg-white border border-[#EBEBEB] rounded-[4px] text-[13px] font-medium outline-none focus:border-[#155DFC] transition-colors placeholder:text-[#bdbdbd]"
+              />
+              <input 
+                placeholder="last name"
+                className="w-full h-[45px] px-4 bg-white border border-[#EBEBEB] rounded-[4px] text-[13px] font-medium outline-none focus:border-[#155DFC] transition-colors placeholder:text-[#bdbdbd]"
+              />
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <input 
+                placeholder="Phone number"
+                className="w-full h-[45px] px-4 bg-white border border-[#EBEBEB] rounded-[4px] text-[13px] font-medium outline-none focus:border-[#155DFC] transition-colors placeholder:text-[#bdbdbd]"
+              />
+              <input 
+                placeholder="additional phone number"
+                className="w-full h-[45px] px-4 bg-white border border-[#EBEBEB] rounded-[4px] text-[13px] font-medium outline-none focus:border-[#155DFC] transition-colors placeholder:text-[#bdbdbd]"
+              />
+            </div>
+
+            <input 
+              placeholder="delivery address"
+              className="w-full h-[45px] px-4 bg-white border border-[#EBEBEB] rounded-[4px] text-[13px] font-medium outline-none focus:border-[#155DFC] transition-colors placeholder:text-[#bdbdbd] mb-4"
+            />
+            
+            <input 
+              placeholder="landmark"
+              className="w-full h-[45px] px-4 bg-white border border-[#EBEBEB] rounded-[4px] text-[13px] font-medium outline-none focus:border-[#155DFC] transition-colors placeholder:text-[#bdbdbd] mb-4"
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              <div className="relative">
+                <input 
+                  placeholder="State"
+                  className="w-full h-[45px] px-4 bg-white border border-[#EBEBEB] rounded-[4px] text-[13px] font-medium outline-none focus:border-[#155DFC] transition-colors placeholder:text-[#bdbdbd]"
+                />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-40">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L6 6L11 1" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="relative">
+                <input 
+                  placeholder="Area Council"
+                  className="w-full h-[45px] px-4 bg-white border border-[#EBEBEB] rounded-[4px] text-[13px] font-medium outline-none focus:border-[#155DFC] transition-colors placeholder:text-[#bdbdbd]"
+                />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-40">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L6 6L11 1" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-end mt-10">
               <button 
-                type="button" 
-                onClick={() => setIsAddingAddress(false)}
-                className="text-gray-400 hover:text-black transition-colors bg-transparent border-none cursor-pointer"
+                type="submit"
+                className="w-[153px] py-4 bg-[#155DFC] text-white rounded-[6px] text-[13px] font-bold hover:bg-[#1149c7] transition-colors cursor-pointer border-none shadow-lg shadow-blue-200"
               >
-                <X size={18} />
+                Save
               </button>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-bold uppercase text-[#999]">Label</label>
-                <input 
-                  required
-                  value={newAddress.label}
-                  onChange={e => setNewAddress({...newAddress, label: e.target.value})}
-                  className="w-full h-11 px-4 bg-white border border-gray-200 rounded-sm text-[13px] font-medium outline-none focus:border-black transition-colors"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-bold uppercase text-[#999]">Street Address</label>
-                <input 
-                  required
-                  value={newAddress.street}
-                  onChange={e => setNewAddress({...newAddress, street: e.target.value})}
-                  className="w-full h-11 px-4 bg-white border border-gray-200 rounded-sm text-[13px] font-medium outline-none focus:border-black transition-colors"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-bold uppercase text-[#999]">City</label>
-                <input 
-                  required
-                  value={newAddress.city}
-                  onChange={e => setNewAddress({...newAddress, city: e.target.value})}
-                  className="w-full h-11 px-4 bg-white border border-gray-200 rounded-sm text-[13px] font-medium outline-none focus:border-black transition-colors"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-bold uppercase text-[#999]">State / Province</label>
-                <input 
-                  required
-                  value={newAddress.state}
-                  onChange={e => setNewAddress({...newAddress, state: e.target.value})}
-                  className="w-full h-11 px-4 bg-white border border-gray-200 rounded-sm text-[13px] font-medium outline-none focus:border-black transition-colors"
-                />
-              </div>
-            </div>
-            
-            <button 
-              type="submit"
-              className="mt-8 w-full py-4 bg-black text-white rounded-sm text-[12px] font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors cursor-pointer border-none"
-            >
-              Save Address
-            </button>
           </form>
         ) : addresses.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col gap-4">
             {addresses.map(addr => (
-              <div key={addr.id} className="border border-gray-100 p-6 flex justify-between items-start group hover:border-gray-200 transition-colors bg-white">
-                <div className="flex flex-col gap-2">
-                  <span className="text-[10px] font-bold uppercase px-2 py-0.5 bg-[#F5F5F5] text-[#555] rounded-sm self-start">
-                    {addr.label}
-                  </span>
-                  <div>
-                    <p className="text-[13px] font-bold text-[#333] mb-1">{addr.street}</p>
-                    <p className="text-[12px] font-medium text-[#888]">{addr.city}, {addr.state}</p>
+              <div key={addr.id} className="bg-[#fbfcff] border border-[#EBEBEB] rounded-[4px] p-8 flex justify-between items-start group relative">
+                <div className="flex items-start gap-4">
+                  <Info size={18} className="text-[#9ca3af] mt-1 shrink-0" />
+                  <div className="flex flex-col gap-1 pr-24">
+                     <p className="text-[13.5px] leading-relaxed text-[#555] font-medium">
+                        {addr.street}. {addr.city}, {addr.state}
+                     </p>
                   </div>
                 </div>
-                <button 
-                  onClick={() => deleteAddress(addr.id)}
-                  className="text-gray-300 hover:text-black transition-colors p-2 bg-transparent border-none cursor-pointer"
-                >
-                  <Trash2 size={16} />
-                </button>
+                
+                <div className="flex items-center gap-4">
+                  <button 
+                    onClick={() => {}} // Handle edit
+                    className="text-[12px] font-bold text-[#155DFC] hover:underline bg-transparent border-none cursor-pointer"
+                  >
+                    Edit Address
+                  </button>
+                  <button 
+                    onClick={() => deleteAddress(addr.id)}
+                    className="text-[#ff4d4f] opacity-0 group-hover:opacity-100 transition-opacity bg-transparent border-none cursor-pointer p-1"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="bg-[#F8F9FA] border border-gray-100 rounded-[4px] p-6 flex items-center gap-4">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center">
-              <Info size={18} className="text-[#999]" />
-            </div>
-            <p className="text-[13px] font-medium text-[#666]">No Addresses added</p>
+          <div className="bg-[#fbfcff] border border-[#EBEBEB] rounded-[6px] p-10 flex items-center gap-4">
+            <Info size={20} className="text-[#9ca3af]" />
+            <p className="text-[14px] font-medium text-[#828282]">No Addresses added</p>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
