@@ -107,7 +107,7 @@ export default function CheckoutPage() {
   };
 
   const copyAccountNumber = () => {
-    navigator.clipboard.writeText('9021080395');
+    navigator.clipboard.writeText('1046944476');
     setCopiedAccount(true);
     setTimeout(() => setCopiedAccount(false), 2000);
   };
@@ -251,20 +251,20 @@ export default function CheckoutPage() {
                 )}
               </div>
               <div style={{ width: '100%' }}>
-                <input
-                  {...register('billingFirstName')}
-                  type="text"
-                  placeholder="first name"
-                  className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
-                  style={{ width: '100%', marginBottom: '16px' }}
-                />
-                <input
-                  {...register('billingLastName')}
-                  type="text"
-                  placeholder="last name"
-                  className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
-                  style={{ width: '100%', marginBottom: '16px' }}
-                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
+                  <input
+                    {...register('billingFirstName')}
+                    type="text"
+                    placeholder="first name"
+                    className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white w-full"
+                  />
+                  <input
+                    {...register('billingLastName')}
+                    type="text"
+                    placeholder="last name"
+                    className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white w-full"
+                  />
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
                   <input
                     {...register('billingPhone')}
@@ -338,26 +338,26 @@ export default function CheckoutPage() {
                 <span className="text-[12px] text-[#25252d]">Same as customer address</span>
               </label>
               <div style={{ width: '100%' }}>
-                <input
-                  {...register('shippingFirstName')}
-                  type="text"
-                  readOnly={sameAsBilling}
-                  placeholder="first name"
-                  className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none ${
-                      sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                  }`}
-                  style={{ width: '100%', marginBottom: '16px' }}
-                />
-                <input
-                  {...register('shippingLastName')}
-                  type="text"
-                  readOnly={sameAsBilling}
-                  placeholder="last name"
-                  className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none ${
-                      sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                  }`}
-                  style={{ width: '100%', marginBottom: '16px' }}
-                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
+                  <input
+                    {...register('shippingFirstName')}
+                    type="text"
+                    readOnly={sameAsBilling}
+                    placeholder="first name"
+                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
+                        sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                    }`}
+                  />
+                  <input
+                    {...register('shippingLastName')}
+                    type="text"
+                    readOnly={sameAsBilling}
+                    placeholder="last name"
+                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
+                        sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                    }`}
+                  />
+                </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
                   <input
@@ -628,7 +628,7 @@ export default function CheckoutPage() {
                         <div className="flex justify-between items-center">
                           <div>
                             <div className="text-[10px] text-[#828282] mb-1">Bank Account</div>
-                            <div className="text-[14px] text-black font-medium">9021080395</div>
+                            <div className="text-[14px] text-black font-medium">1046944476</div>
                           </div>
                           <button
                             type="button"
@@ -643,12 +643,12 @@ export default function CheckoutPage() {
                         
                         <div>
                           <div className="text-[10px] text-[#828282] mb-1">Bank Name</div>
-                          <div className="text-[14px] text-black">Zenith Bank</div>
+                          <div className="text-[14px] text-black">FCMB</div>
                         </div>
                         
                         <div>
                           <div className="text-[10px] text-[#828282] mb-1">Recipient Name</div>
-                          <div className="text-[14px] text-black">STANCHTECH LTD</div>
+                          <div className="text-[14px] text-black">STANCH TECH LTD</div>
                         </div>
 
                         <button

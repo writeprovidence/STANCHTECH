@@ -302,7 +302,7 @@ export function Navbar() {
                                                 position: "absolute",
                                                 right: 0,
                                                 top: "42px",
-                                                width: "220px",
+                                                width: "210px",
                                                 backgroundColor: "white",
                                                 boxShadow: "0 8px 32px rgba(0,0,0,0.16)",
                                                 borderRadius: "8px",
@@ -310,8 +310,8 @@ export function Navbar() {
                                                 zIndex: 50,
                                                 border: "1px solid #e5e7eb",
                                             }}>
-                                                <div style={{ padding: "20px" }}>
-                                                    <p style={{ fontSize: 11, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10, fontFamily: "'Space Grotesk', sans-serif" }}>Contact Support</p>
+                                                <div style={{ padding: "12px" }}>
+                                                    <p style={{ fontSize: 9, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16, fontFamily: "'Space Grotesk', sans-serif" }}>Contact Support</p>
                                                     <a
                                                         href="https://wa.me/2348037340959"
                                                         target="_blank"
@@ -320,25 +320,29 @@ export function Navbar() {
                                                         style={{
                                                             display: "flex",
                                                             alignItems: "center",
-                                                            gap: 12,
-                                                            padding: "12px 14px",
-                                                            backgroundColor: "#25D366",
-                                                            borderRadius: "6px",
+                                                            justifyContent: "center",
+                                                            gap: 8,
+                                                            padding: "8px 16px",
+                                                            backgroundColor: "transparent",
+                                                            border: "1px solid #25D366",
+                                                            borderRadius: "8px",
                                                             textDecoration: "none",
-                                                            transition: "background 0.2s",
+                                                            transition: "all 0.2s",
                                                         }}
-                                                        onMouseEnter={e => e.currentTarget.style.backgroundColor = "#1fbd5a"}
-                                                        onMouseLeave={e => e.currentTarget.style.backgroundColor = "#25D366"}
+                                                        onMouseEnter={e => {
+                                                            e.currentTarget.style.backgroundColor = "rgba(37, 211, 102, 0.05)";
+                                                        }}
+                                                        onMouseLeave={e => {
+                                                            e.currentTarget.style.backgroundColor = "transparent";
+                                                        }}
                                                     >
                                                         {/* WhatsApp icon */}
-                                                        <svg width="22" height="22" fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <svg width="20" height="20" fill="#25D366" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                             <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 13.96 2.56 15.78 3.53 17.31L2.24 21.05C2.12 21.4 2.45 21.73 2.8 21.61L6.61 20.37C8.16 21.4 10.01 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17.15 15.34C16.92 15.98 16.03 16.5 15.46 16.59C14.98 16.66 14.33 16.74 12.08 15.8C9.21 14.59 7.35 11.66 7.21 11.47C7.07 11.28 6.05 9.93 6.05 8.52C6.05 7.11 6.77 6.42 7.05 6.13C7.28 5.89 7.66 5.8 8.01 5.8C8.12 5.8 8.22 5.8 8.31 5.85C8.61 6.02 9.08 7.15 9.14 7.29C9.2 7.42 9.27 7.58 9.18 7.74C9.09 7.9 9.01 7.98 8.87 8.14C8.73 8.3 8.6 8.44 8.45 8.62C8.29 8.82 8.12 9.03 8.32 9.38C8.51 9.73 9.18 10.82 10.17 11.69C11.45 12.82 12.47 13.18 12.86 13.34C13.24 13.5 13.68 13.47 13.94 13.19C14.28 12.82 14.68 12.24 15.09 11.66C15.38 11.25 15.75 11.33 16.1 11.46C16.45 11.59 18.25 12.48 18.6 12.65C18.95 12.83 19.18 12.92 19.27 13.07C19.36 13.22 19.36 13.96 19.04 14.86L17.15 15.34Z" />
                                                         </svg>
-                                                        <div>
-                                                            <p style={{ color: "white", fontSize: 13, fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif", margin: 0 }}>Chat on WhatsApp</p>
-                                                            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontFamily: "'Space Grotesk', sans-serif", margin: 0 }}>Usually replies instantly</p>
-                                                        </div>
+                                                        <span style={{ color: "#25D366", fontSize: 13, fontWeight: 600, fontFamily: "'Space Grotesk', sans-serif" }}>WhatsApp</span>
                                                     </a>
+                                                    <p style={{ fontSize: 9, color: "#9ca3af", textAlign: "center", marginTop: 10, fontFamily: "'Space Grotesk', sans-serif" }}>Replies instantly</p>
                                                 </div>
                                             </div>
                                         )}
