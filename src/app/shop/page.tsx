@@ -172,7 +172,7 @@ function ShopContent() {
                                             </div>
                                         </div>
                                         <div className="mt-16 flex justify-end">
-                                            <button onClick={() => setIsFilterOpen(false)} className="bg-[#0b1a2e] text-white py-4 rounded font-black uppercase tracking-widest text-xs hover:bg-blue-700 transition-colors" style={{ paddingLeft: "12px", paddingRight: "12px", fontFamily: "'Darker Grotesque', sans-serif" }}>Apply Filters</button>
+                                            <button onClick={() => setIsFilterOpen(false)} className="bg-[#155DFC] text-white py-4 rounded-[4px] font-black uppercase tracking-widest text-xs hover:bg-white hover:text-[#155DFC] hover:border-[#155DFC] border border-transparent transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(21,93,252,0.25)]" style={{ paddingLeft: "12px", paddingRight: "12px", fontFamily: "'Darker Grotesque', sans-serif" }}>Apply Filters</button>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -205,20 +205,20 @@ function ShopContent() {
                 </div>
                 <div style={{ height: "118px" }} />
                     <div className="flex justify-center items-center gap-4">
-                        <button 
-                            className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-50 text-gray-300 opacity-50 cursor-default transition-all"
+                         <button 
+                            className="w-12 h-12 flex items-center justify-center rounded-[4px] bg-gray-50 text-gray-300 opacity-50 cursor-default transition-all"
                         >
                             <ChevronDown className="rotate-90" size={16} />
                         </button>
 
                         <button 
-                            className="w-12 h-12 flex items-center justify-center rounded-lg font-bold text-sm bg-[#0b1a2e] text-white shadow-lg shadow-blue-100/20 font-sans"
+                            className="w-12 h-12 flex items-center justify-center rounded-[4px] font-bold text-sm bg-[#0b1a2e] text-white shadow-lg shadow-blue-100/20 font-sans"
                         >
                             1
                         </button>
 
                         <button 
-                            className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-50 text-gray-900 transition-all opacity-50 cursor-default"
+                            className="w-12 h-12 flex items-center justify-center rounded-[4px] bg-gray-50 text-gray-900 transition-all opacity-50 cursor-default"
                         >
                             <ChevronRight size={16} />
                         </button>

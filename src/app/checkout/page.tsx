@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Copy, Loader2, Check } from 'lucide-react';
+import { Copy, Loader2, Check, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCart } from "@/context/cart-context";
 import { supabase } from "@/lib/supabase";
@@ -205,7 +205,7 @@ export default function CheckoutPage() {
             
             {!isAuth && (
               <>
-                <div className="bg-[#fff5ea] border border-[#ffe4c7] rounded-[3px] flex items-center justify-start mb-[32px] w-full lg:w-[459px] h-[32px] box-border" style={{ paddingLeft: '32px' }}>
+                <div className="bg-[#fff5ea] border border-[#ffe4c7] rounded-[3px] flex items-center justify-start mb-[48px] w-full lg:w-[459px] h-[32px] box-border" style={{ paddingLeft: '32px' }}>
                   <p className="text-[12px] text-[#25252d]">
                     Already have an account?{' '}
                     <button type="button" className="text-[#7047eb] hover:underline" onClick={() => router.push('/login?next=/checkout')}>
@@ -215,7 +215,7 @@ export default function CheckoutPage() {
                   </p>
                 </div>
 
-                <p className="text-center text-[#484243] text-[14px]" style={{ marginBottom: '20px' }}>OR</p>
+                <p className="text-center text-[#484243] text-[14px]" style={{ marginBottom: '40px', marginTop: '24px' }}>OR</p>
               </>
             )}
 
@@ -223,9 +223,11 @@ export default function CheckoutPage() {
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
                 <h2 className="text-[16px] text-black">Customer email address</h2>
-                <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => router.push('/profile')}>
-                  edit details &gt;
-                </button>
+                {isAuth && (
+                  <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => router.push('/profile')}>
+                    edit details &gt;
+                  </button>
+                )}
               </div>
               <div style={{ width: '100%' }}>
                 <input
@@ -242,9 +244,11 @@ export default function CheckoutPage() {
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
                 <h2 className="text-[16px] text-black">Customer address</h2>
-                <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => router.push('/profile')}>
-                  edit details &gt;
-                </button>
+                {isAuth && (
+                  <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => router.push('/profile')}>
+                    edit details &gt;
+                  </button>
+                )}
               </div>
               <div style={{ width: '100%' }}>
                 <input
@@ -723,7 +727,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={isSubmitting || cartItems.length === 0 || !isFormValid}
-                className="bg-black text-white rounded-[12px] text-[13px] font-semibold hover:bg-black/90 transition-all disabled:bg-[#f2f2f2] disabled:text-[#bdbdbd] disabled:cursor-not-allowed shadow-sm w-full h-[40px] flex justify-center items-center"
+                className="bg-[#155DFC] text-white rounded-[4px] text-[13px] font-semibold hover:bg-white hover:text-[#155DFC] hover:border-[#155DFC] border border-transparent transition-all disabled:bg-[#f2f2f2] disabled:text-[#bdbdbd] disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(21,93,252,0.25)] w-full h-[40px] flex justify-center items-center"
               >
                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "Place Order"}
               </button>

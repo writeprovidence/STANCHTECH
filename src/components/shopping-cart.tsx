@@ -38,51 +38,66 @@ export function ShoppingCart() {
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto pr-4 -mr-4 space-y-8">
+                        <div className="flex-1 overflow-y-auto pr-4 -mr-4 space-y-12">
                             {cartItems.length === 0 ? (
-                                <div className="text-center py-20 text-gray-400 font-bold uppercase tracking-widest text-sm">
-                                    Your cart is empty
+                                <div className="text-center py-20 flex flex-col items-center gap-6">
+                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">Your cart is empty</p>
+                                    <Link 
+                                        href="/shop" 
+                                        onClick={() => setIsCartOpen(false)}
+                                        className="text-blue-600 font-bold uppercase tracking-widest text-xs hover:underline flex items-center gap-2"
+                                        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                                    >
+                                        Return to Shop
+                                    </Link>
                                 </div>
                             ) : (
-                                cartItems.map((item) => (
-                                    <div key={item.id} className="flex gap-4 group">
-                                        <div className="w-20 h-20 bg-[#E8F3FA] rounded-xl flex items-center justify-center p-4 flex-shrink-0">
-                                            <Image 
-                                                src={item.image || "/asset/spare_parts/Part3.png"} 
-                                                alt={item.name} 
-                                                width={200}
-                                                height={200}
-                                                className="w-full h-full object-contain" 
-                                            />
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <h3 className="font-bold text-gray-900 truncate mb-1" style={{ fontSize: '14px' }}>{item.name}</h3>
-                                            <div className="flex items-center justify-between mt-10">
-                                                <div className="flex items-center border border-gray-200 rounded-xl h-11 bg-white shadow-sm ml-2" style={{ width: "fit-content" }}>
-                                                    <button 
-                                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                        className="px-12 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 transition-colors"
-                                                    >
-                                                        <Minus size={18} />
-                                                    </button>
-                                                    <span className="px-4 text-[18px] font-bold text-gray-900 min-w-[48px] text-center" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.quantity}</span>
-                                                    <button 
-                                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                        className="px-12 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 transition-colors"
-                                                    >
-                                                        <Plus size={18} />
-                                                    </button>
-                                                </div>
-                                                <span className="text-[14px] font-black text-gray-900 whitespace-nowrap pr-2">₦ {item.price.toLocaleString()}</span>
+                                cartItems.map((item, idx) => (
+                                    <div key={item.id} className="flex flex-col gap-4" style={{ marginBottom: idx === cartItems.length - 1 ? "0" : "8px" }}>
+                                        <div className="flex gap-4 group">
+                                            <div className="w-20 h-20 bg-[#E8F3FA] rounded-xl flex items-center justify-center p-4 flex-shrink-0">
+                                                <Image 
+                                                    src={item.image || "/asset/spare_parts/Part3.png"} 
+                                                    alt={item.name} 
+                                                    width={200}
+                                                    height={200}
+                                                    className="w-full h-full object-contain" 
+                                                />
                                             </div>
+                                            <div className="flex-1 min-w-0">
+                                                <h3 className="font-bold text-gray-900 truncate mb-1" style={{ fontSize: '14px' }}>{item.name}</h3>
+                                                <div className="flex items-center justify-between mt-6">
+                                                    <div className="flex items-center border border-gray-200 rounded-lg h-11 bg-white shadow-sm overflow-hidden" style={{ width: "fit-content" }}>
+                                                        <button 
+                                                            type="button"
+                                                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                                            className="px-8 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 transition-colors"
+                                                        >
+                                                            <Minus size={14} />
+                                                        </button>
+                                                        <span className="text-[16px] font-bold text-gray-900 min-w-[40px] text-center" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.quantity}</span>
+                                                        <button 
+                                                            type="button"
+                                                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                            className="px-8 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 transition-colors"
+                                                        >
+                                                            <Plus size={14} />
+                                                        </button>
+                                                    </div>
+                                                    <span className="text-[14px] font-black text-gray-900 whitespace-nowrap pr-2">₦ {item.price.toLocaleString()}</span>
+                                                </div>
+                                            </div>
+                                            <button 
+                                                onClick={() => removeFromCart(item.id)}
+                                                className="text-gray-400 hover:text-red-600 transition-colors self-center p-2"
+                                                title="Remove item"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
                                         </div>
-                                        <button 
-                                            onClick={() => removeFromCart(item.id)}
-                                            className="text-gray-400 hover:text-red-600 transition-colors self-center p-2"
-                                            title="Remove item"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
+                                        {idx !== cartItems.length - 1 && (
+                                            <div className="w-full h-px bg-gray-100" style={{ marginTop: "4px" }} />
+                                        )}
                                     </div>
                                 ))
                             )}
@@ -104,15 +119,25 @@ export function ShoppingCart() {
                                 </div>
                                 
                                 <div className="w-full border-t border-gray-200" style={{ paddingTop: "24px" }}>
-                                    <div className="flex justify-center w-full mt-2">
+                                    <div className="flex flex-col gap-4 w-full mt-2">
                                         <Link 
                                             href="/checkout" 
                                             onClick={() => setIsCartOpen(false)}
                                             style={{ height: "44px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
-                                            className="bg-gray-900 text-white rounded-full text-[12px] font-bold uppercase hover:bg-black/90 transition-all shadow-md text-center"
+                                            className="bg-[#155DFC] text-white rounded-[4px] text-[14px] font-bold hover:bg-white hover:text-[#155DFC] hover:border-[#155DFC] border border-transparent transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(21,93,252,0.25)] text-center"
                                         >
-                                            Proceed to Checkout
+                                            Proceed to checkout
                                         </Link>
+                                        <div className="flex justify-center w-full mt-4">
+                                            <Link 
+                                                href="/shop"
+                                                onClick={() => setIsCartOpen(false)}
+                                                className="text-[#016fd0] text-[12px] hover:underline whitespace-nowrap"
+                                                style={{ fontFamily: "Inter, sans-serif" }}
+                                            >
+                                                continue shopping
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
