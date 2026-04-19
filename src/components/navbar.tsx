@@ -20,6 +20,7 @@ export function Navbar() {
     const { cartCount, setIsCartOpen } = useCart();
     const [userAuth, setUserAuth] = useState(null);
     const profileMenuRef = useRef(null);
+    const helpMenuRef = useRef(null);
 
     useEffect(() => {
         // Initial check for current session
@@ -41,6 +42,7 @@ export function Navbar() {
         return () => subscription.unsubscribe();
     }, []);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [helpMenuOpen, setHelpMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
@@ -87,6 +89,18 @@ export function Navbar() {
         }
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [profileMenuOpen]);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (helpMenuRef.current && !helpMenuRef.current.contains(e.target)) {
+                setHelpMenuOpen(false);
+            }
+        };
+        if (helpMenuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [helpMenuOpen]);
 
     const navLinks = [
         { name: "HOME", href: "/" },
@@ -188,7 +202,7 @@ export function Navbar() {
                     </div>
 
                     {/* RIGHT: Utilities */}
-                    <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 24 }}>
+                    <div className="nav-utilities" style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
                         {(pathname.startsWith('/shop') || pathname.startsWith('/profile') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders' || pathname === '/login') && (
                                 <>
                                     <div className="relative" ref={profileMenuRef}>
@@ -271,6 +285,64 @@ export function Navbar() {
                                     >
                                         <Search size={20} />
                                     </button>
+
+                                    {/* Help Dropdown */}
+                                    <div className="relative" ref={helpMenuRef}>
+                                        <button
+                                            onClick={() => setHelpMenuOpen(!helpMenuOpen)}
+                                            style={{ background: "none", border: "none", cursor: "pointer", color: "#fff", display: "flex", alignItems: "center", gap: 4 }}
+                                            className="hover:text-blue-600 transition-colors"
+                                        >
+                                            <span style={{ fontSize: 13, fontWeight: 700, fontFamily: "'Neue Machina', sans-serif", letterSpacing: "0.08em" }}>Help</span>
+                                            <ChevronDown size={13} style={{ transition: "transform 0.2s", transform: helpMenuOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
+                                        </button>
+
+                                        {helpMenuOpen && (
+                                            <div style={{
+                                                position: "absolute",
+                                                right: 0,
+                                                top: "42px",
+                                                width: "220px",
+                                                backgroundColor: "white",
+                                                boxShadow: "0 8px 32px rgba(0,0,0,0.16)",
+                                                borderRadius: "8px",
+                                                overflow: "hidden",
+                                                zIndex: 50,
+                                                border: "1px solid #e5e7eb",
+                                            }}>
+                                                <div style={{ padding: "20px" }}>
+                                                    <p style={{ fontSize: 11, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10, fontFamily: "'Space Grotesk', sans-serif" }}>Contact Support</p>
+                                                    <a
+                                                        href="https://wa.me/2348037340959"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        onClick={() => setHelpMenuOpen(false)}
+                                                        style={{
+                                                            display: "flex",
+                                                            alignItems: "center",
+                                                            gap: 12,
+                                                            padding: "12px 14px",
+                                                            backgroundColor: "#25D366",
+                                                            borderRadius: "6px",
+                                                            textDecoration: "none",
+                                                            transition: "background 0.2s",
+                                                        }}
+                                                        onMouseEnter={e => e.currentTarget.style.backgroundColor = "#1fbd5a"}
+                                                        onMouseLeave={e => e.currentTarget.style.backgroundColor = "#25D366"}
+                                                    >
+                                                        {/* WhatsApp icon */}
+                                                        <svg width="22" height="22" fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 13.96 2.56 15.78 3.53 17.31L2.24 21.05C2.12 21.4 2.45 21.73 2.8 21.61L6.61 20.37C8.16 21.4 10.01 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17.15 15.34C16.92 15.98 16.03 16.5 15.46 16.59C14.98 16.66 14.33 16.74 12.08 15.8C9.21 14.59 7.35 11.66 7.21 11.47C7.07 11.28 6.05 9.93 6.05 8.52C6.05 7.11 6.77 6.42 7.05 6.13C7.28 5.89 7.66 5.8 8.01 5.8C8.12 5.8 8.22 5.8 8.31 5.85C8.61 6.02 9.08 7.15 9.14 7.29C9.2 7.42 9.27 7.58 9.18 7.74C9.09 7.9 9.01 7.98 8.87 8.14C8.73 8.3 8.6 8.44 8.45 8.62C8.29 8.82 8.12 9.03 8.32 9.38C8.51 9.73 9.18 10.82 10.17 11.69C11.45 12.82 12.47 13.18 12.86 13.34C13.24 13.5 13.68 13.47 13.94 13.19C14.28 12.82 14.68 12.24 15.09 11.66C15.38 11.25 15.75 11.33 16.1 11.46C16.45 11.59 18.25 12.48 18.6 12.65C18.95 12.83 19.18 12.92 19.27 13.07C19.36 13.22 19.36 13.96 19.04 14.86L17.15 15.34Z" />
+                                                        </svg>
+                                                        <div>
+                                                            <p style={{ color: "white", fontSize: 13, fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif", margin: 0 }}>Chat on WhatsApp</p>
+                                                            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontFamily: "'Space Grotesk', sans-serif", margin: 0 }}>Usually replies instantly</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                     <button 
                                         onClick={() => setIsCartOpen(true)}
                                         style={{ background: "none", border: "none", cursor: "pointer", color: "#fff", position: "relative" }}
@@ -308,13 +380,13 @@ export function Navbar() {
                                 background: "none", 
                                 border: "none", 
                                 cursor: "pointer", 
-                                color: isHomePage && !scrolled ? "#fff" : "#000", 
+                                color: "#fff", 
                                 padding: 6, 
                                 display: "none" 
                             }}
                             aria-label="Open menu"
                         >
-                            <Menu size={24} />
+                            <Menu size={28} />
                         </button>
                     </div>
                 </div>
@@ -493,6 +565,10 @@ export function Navbar() {
                 @media (max-width: 900px) {
                     .desktop-nav { display: none !important; }
                     .mobile-nav-toggle { display: flex !important; }
+                    .nav-utilities { gap: 12px !important; }
+                }
+                .nav-utilities {
+                    gap: 36px;
                 }
                 .nav-link:hover {
                     color: #2563eb !important;
