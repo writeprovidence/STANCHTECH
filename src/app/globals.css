@@ -62,6 +62,11 @@
   .hide-mobile {
     display: none !important;
   }
+  /* Checkout page safe margin on mobile */
+  main > div {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
 }
 
 
