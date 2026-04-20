@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { User, Package, MessageSquare, XCircle, LogOut, Info } from 'lucide-react';
 import { supabase } from "@/lib/supabase";
-import { useRouter } from 'next/navigation';
+import { Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { NIGERIAN_STATES } from '../checkout/nigeria-data';
 
 interface Address {
@@ -19,8 +20,17 @@ interface Address {
 }
 
 export default function ProfilePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#f5f5f5]" />}>
+      <ProfileContent />
+    </Suspense>
+  );
+}
+
+function ProfileContent() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('profile');
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'profile');
   const [email, setEmail] = useState('');
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [tempEmail, setTempEmail] = useState('');
@@ -438,9 +448,92 @@ export default function ProfilePage() {
               </>
             )}
 
-            {activeTab !== 'profile' && (
-              <div style={{ color: '#6b7280', fontSize: '15px', background: '#fff', border: '1px solid #e5e7eb', padding: '48px', height: '498.75px', boxSizing: 'border-box', borderRadius: '0', overflowY: 'auto' }}>
-                {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} content goes here
+            {activeTab === 'orders' && (
+              <div style={{ minHeight: '498.75px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', height: '24px' }}>
+                  <span style={{ fontSize: '15px', color: '#6b7280', fontWeight: 400 }}>Recent Purchases</span>
+                </div>
+                
+                {(() => {
+                  const orders = JSON.parse(typeof window !== 'undefined' ? localStorage.getItem('orders') || '[]' : '[]');
+                  if (orders.length === 0) {
+                    return (
+                      <div style={{ background: '#fff', border: '1px solid #e5e7eb', padding: '48px', height: '400px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
+                        <Package style={{ width: '48px', height: '48px', color: '#d1d5db' }} strokeWidth={1.5} />
+                        <div style={{ textAlign: 'center' }}>
+                          <p style={{ fontSize: '16px', fontWeight: 500, color: '#111827', marginBottom: '8px' }}>No orders yet</p>
+                          <p style={{ fontSize: '14px', color: '#6b7280' }}>You haven't placed any orders with us yet.</p>
+                        </div>
+                        <button onClick={() => useRouter().push('/shop')} style={{ padding: '10px 24px', background: '#111', color: '#fff', border: 'none', cursor: 'pointer', fontSize: '14px', borderRadius: '4px' }}>
+                          Start Shopping
+                        </button>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {orders.map((order: any, idx: number) => (
+                        <div key={idx} style={{ background: '#fff', border: '1px solid #e5e7eb', padding: '24px', borderRadius: '0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                            <div style={{ width: '60px', height: '60px', background: '#f9fafb', border: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px' }}>
+                              <img src={order.items[0]?.image} alt="" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                            </div>
+                            <div>
+                              <p style={{ fontSize: '14px', fontWeight: 600, color: '#111827', marginBottom: '4px' }}>Order {order.id}</p>
+                              <p style={{ fontSize: '13px', color: '#6b7280' }}>{new Date(order.date).toLocaleDateString()} • {order.items.length} {order.items.length === 1 ? 'item' : 'items'}</p>
+                              <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                                <span style={{ fontSize: '11px', background: '#f3f4f6', padding: '2px 8px', borderRadius: '4px', color: '#4b5563', textTransform: 'uppercase', fontWeight: 600 }}>{order.status}</span>
+                                <span style={{ fontSize: '11px', background: '#eff6ff', padding: '2px 8px', borderRadius: '4px', color: '#2563eb', textTransform: 'uppercase', fontWeight: 600 }}>{order.paymentMethod === 'cod' ? 'Cash' : 'Bank'}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div style={{ textAlign: 'right' }}>
+                            <p style={{ fontSize: '16px', fontWeight: 700, color: '#111827', marginBottom: '8px' }}>₦ {order.total.toLocaleString()}</p>
+                            <button style={{ color: '#2563eb', fontSize: '13px', border: 'none', background: 'transparent', cursor: 'pointer', fontWeight: 500 }}>View Details</button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+
+            {activeTab === 'reviews' && (
+              <div style={{ minHeight: '498.75px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', height: '24px' }}>
+                  <span style={{ fontSize: '15px', color: '#6b7280', fontWeight: 400 }}>My Reviews</span>
+                </div>
+                <div style={{ background: '#fff', border: '1px solid #e5e7eb', padding: '48px', height: '400px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
+                  <MessageSquare style={{ width: '48px', height: '48px', color: '#d1d5db' }} strokeWidth={1.5} />
+                  <div style={{ textAlign: 'center' }}>
+                    <p style={{ fontSize: '16px', fontWeight: 500, color: '#111827', marginBottom: '8px' }}>No reviews yet</p>
+                    <p style={{ fontSize: '14px', color: '#6b7280' }}>You haven't reviewed any products yet.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'close-account' && (
+              <div style={{ minHeight: '498.75px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', height: '24px' }}>
+                  <span style={{ fontSize: '15px', color: '#6b7280', fontWeight: 400 }}>Close Account</span>
+                </div>
+                <div style={{ background: '#fff', border: '1px solid #e5e7eb', padding: '48px', height: '400px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '20px', background: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <XCircle style={{ width: '24px', height: '24px', color: '#ef4444' }} />
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#111827', marginBottom: '8px' }}>Are you sure you want to close your account?</h3>
+                      <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>Closing your account is permanent and will delete all your data, including order history and saved addresses. This action cannot be undone.</p>
+                    </div>
+                  </div>
+                  <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '24px', display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+                    <button style={{ padding: '10px 20px', border: '1px solid #d1d5db', background: '#fff', borderRadius: '4px', fontSize: '14px', cursor: 'pointer' }}>Keep Account</button>
+                    <button style={{ padding: '10px 20px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '14px', cursor: 'pointer' }}>Close My Account</button>
+                  </div>
+                </div>
               </div>
             )}
           </div>

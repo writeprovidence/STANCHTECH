@@ -117,17 +117,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
 
 
-                        <div className="flex flex-wrap items-center gap-8" style={{ marginTop: "64px", marginBottom: "32px" }}>
+                        <div className="flex flex-wrap items-center gap-8" style={{ marginTop: "48px", marginBottom: "32px" }}>
                             {/* ADD TO CART BUTTON */}
                             <button 
                                 onClick={() => addToCart({ ...product, quantity: 1 })}
-                                className="bg-[#155DFC] text-white font-bold uppercase tracking-[0.1em] hover:bg-white hover:text-[#155DFC] hover:border-[#155DFC] border border-transparent transition-all rounded-[4px] hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(21,93,252,0.25)]"
-                                style={{ 
-                                    fontFamily: "'Darker Grotesque', sans-serif", 
-                                    width: "215px", 
-                                    height: "64px", 
-                                    fontSize: "20px" 
-                                }}
+                                className="hero-btn-primary"
                             >
                                 ADD TO CART
                             </button>

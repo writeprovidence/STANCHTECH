@@ -193,7 +193,7 @@ export default function CheckoutPage() {
 
     clearCart();
     setIsSubmitting(false);
-    router.push("/orders");
+    router.push("/profile?tab=orders");
   };
   const formValues = watch();
   const isFormValid = !!(
