@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X, User, Search, ShoppingBag } from "lucide-react";
+import { Menu, X, User, Search, ShoppingBag, Package } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -235,28 +235,62 @@ export function Navbar() {
                                                 {/* Horizontal Divider */}
                                                 <div style={{ height: "1px", backgroundColor: "#e5e7eb", margin: "0" }} />
                                                 {/* Menu Items */}
-                                                <div style={{ display: "flex", flexDirection: "column", padding: "6px 0" }}>
+                                                <div style={{ display: "flex", flexDirection: "column", padding: "8px 0" }}>
                                                     <Link 
-                                                        href="/profile" 
+                                                        href={userAuth ? "/profile" : "/login"} 
                                                         onClick={() => setProfileMenuOpen(false)} 
                                                         className="no-underline"
-                                                        style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 16px", fontSize: "13px", fontWeight: "400", color: "#333", width: "100%", boxSizing: "border-box" }}
-                                                        onMouseEnter={e => e.currentTarget.style.backgroundColor = "#dbeafe"}
-                                                        onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
+                                                        style={{ 
+                                                            display: "flex", 
+                                                            alignItems: "center", 
+                                                            gap: "16px", 
+                                                            padding: "10px 20px", 
+                                                            fontSize: "15px", 
+                                                            fontWeight: "400", 
+                                                            color: "#374151", 
+                                                            width: "100%", 
+                                                            boxSizing: "border-box",
+                                                            fontFamily: "'Neue Machina', sans-serif"
+                                                        }}
+                                                        onMouseEnter={e => {
+                                                            e.currentTarget.style.backgroundColor = "#f5f5f5";
+                                                            e.currentTarget.style.color = "#111";
+                                                        }}
+                                                        onMouseLeave={e => {
+                                                            e.currentTarget.style.backgroundColor = "transparent";
+                                                            e.currentTarget.style.color = "#374151";
+                                                        }}
                                                     >
-                                                        <img src="/asset/navbar%20dropdown/profile.png" alt="Profile" style={{ width: "15px", height: "15px", objectFit: "contain", opacity: 0.6, flexShrink: 0 }} />
-                                                        My Account
+                                                        <User style={{ width: "20px", height: "20px", color: "inherit", flexShrink: 0 }} strokeWidth={1.5} />
+                                                        <span style={{ letterSpacing: "0.02em" }}>My account</span>
                                                     </Link>
                                                     <Link 
-                                                        href="/profile/orders" 
+                                                        href={userAuth ? "/profile?tab=orders" : "/login"} 
                                                         onClick={() => setProfileMenuOpen(false)} 
                                                         className="no-underline"
-                                                        style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 16px", fontSize: "13px", fontWeight: "400", color: "#333", width: "100%", boxSizing: "border-box" }}
-                                                        onMouseEnter={e => e.currentTarget.style.backgroundColor = "#dbeafe"}
-                                                        onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
+                                                        style={{ 
+                                                            display: "flex", 
+                                                            alignItems: "center", 
+                                                            gap: "16px", 
+                                                            padding: "10px 20px", 
+                                                            fontSize: "15px", 
+                                                            fontWeight: "400", 
+                                                            color: "#374151", 
+                                                            width: "100%", 
+                                                            boxSizing: "border-box",
+                                                            fontFamily: "'Neue Machina', sans-serif"
+                                                        }}
+                                                        onMouseEnter={e => {
+                                                            e.currentTarget.style.backgroundColor = "#f5f5f5";
+                                                            e.currentTarget.style.color = "#111";
+                                                        }}
+                                                        onMouseLeave={e => {
+                                                            e.currentTarget.style.backgroundColor = "transparent";
+                                                            e.currentTarget.style.color = "#374151";
+                                                        }}
                                                     >
-                                                        <img src="/asset/navbar%20dropdown/orders.png" alt="Orders" style={{ width: "15px", height: "15px", objectFit: "contain", opacity: 0.6, flexShrink: 0 }} />
-                                                        Orders
+                                                        <Package style={{ width: "20px", height: "20px", color: "inherit", flexShrink: 0 }} strokeWidth={1.5} />
+                                                        <span style={{ letterSpacing: "0.02em" }}>Orders</span>
                                                     </Link>
                                                     {/* LogOut — only when logged in */}
                                                     {userAuth && (
@@ -266,12 +300,33 @@ export function Navbar() {
                                                                 setProfileMenuOpen(false);
                                                                 router.push("/shop");
                                                             }} 
-                                                            style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 16px", fontSize: "13px", fontWeight: "400", color: "#333", width: "100%", boxSizing: "border-box", background: "transparent", border: "none", textAlign: "left", cursor: "pointer" }}
-                                                            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#dbeafe"}
-                                                            onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
+                                                            style={{ 
+                                                                display: "flex", 
+                                                                alignItems: "center", 
+                                                                gap: "16px", 
+                                                                padding: "10px 20px", 
+                                                                fontSize: "15px", 
+                                                                fontWeight: "400", 
+                                                                color: "#374151", 
+                                                                width: "100%", 
+                                                                boxSizing: "border-box", 
+                                                                background: "transparent", 
+                                                                border: "none", 
+                                                                textAlign: "left", 
+                                                                cursor: "pointer",
+                                                                fontFamily: "'Neue Machina', sans-serif"
+                                                            }}
+                                                            onMouseEnter={e => {
+                                                                e.currentTarget.style.backgroundColor = "#f5f5f5";
+                                                                e.currentTarget.style.color = "#111";
+                                                            }}
+                                                            onMouseLeave={e => {
+                                                                e.currentTarget.style.backgroundColor = "transparent";
+                                                                e.currentTarget.style.color = "#374151";
+                                                            }}
                                                         >
-                                                            <img src="/asset/navbar%20dropdown/Logout.png" alt="LogOut" style={{ width: "15px", height: "15px", objectFit: "contain", opacity: 0.6, flexShrink: 0 }} />
-                                                            LogOut
+                                                            <LogOut style={{ width: "20px", height: "20px", color: "inherit", flexShrink: 0 }} strokeWidth={1.5} />
+                                                            <span style={{ letterSpacing: "0.02em" }}>Logout</span>
                                                         </button>
                                                     )}
                                                 </div>

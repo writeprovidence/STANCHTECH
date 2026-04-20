@@ -46,6 +46,8 @@ function ProfileContent() {
     state: '',
     areaCouncil: '',
   });
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -264,8 +266,6 @@ function ProfileContent() {
                         fontSize: '13px',
                         color: '#6b7280',
                         fontWeight: 500,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.04em',
                       }}
                     >
                       Email
@@ -341,8 +341,6 @@ function ProfileContent() {
                           fontSize: '13px',
                           color: '#6b7280',
                           fontWeight: 500,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.04em',
                         }}
                       >
                         Address
@@ -462,9 +460,16 @@ function ProfileContent() {
                     boxSizing: 'border-box'
                   }}
                 >
-                  {/* Internal Title with Demarcating Line */}
-                  <div style={{ padding: '24px 28px', borderBottom: '1px solid #e5e7eb' }}>
-                    <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  {/* Internal Title with Inset Demarcating Line */}
+                  <div style={{ padding: '24px 28px 0 28px' }}>
+                    <span style={{ 
+                      fontSize: '13px', 
+                      color: '#6b7280', 
+                      fontWeight: 500,
+                      display: 'block',
+                      paddingBottom: '16px',
+                      borderBottom: '1px solid #e5e7eb'
+                    }}>
                       Recent Purchases
                     </span>
                   </div>
@@ -531,8 +536,15 @@ function ProfileContent() {
                     boxSizing: 'border-box'
                   }}
                 >
-                  <div style={{ padding: '24px 28px', borderBottom: '1px solid #e5e7eb' }}>
-                    <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  <div style={{ padding: '24px 28px 0 28px' }}>
+                    <span style={{ 
+                      fontSize: '13px', 
+                      color: '#6b7280', 
+                      fontWeight: 500,
+                      display: 'block',
+                      paddingBottom: '16px',
+                      borderBottom: '1px solid #e5e7eb'
+                    }}>
                       My Reviews
                     </span>
                   </div>
@@ -561,8 +573,15 @@ function ProfileContent() {
                     boxSizing: 'border-box'
                   }}
                 >
-                  <div style={{ padding: '24px 28px', borderBottom: '1px solid #e5e7eb' }}>
-                    <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  <div style={{ padding: '24px 28px 0 28px' }}>
+                    <span style={{ 
+                      fontSize: '13px', 
+                      color: '#6b7280', 
+                      fontWeight: 500,
+                      display: 'block',
+                      paddingBottom: '16px',
+                      borderBottom: '1px solid #e5e7eb'
+                    }}>
                       Close Account
                     </span>
                   </div>
@@ -584,20 +603,7 @@ function ProfileContent() {
                         Keep Account
                       </button>
                       <button 
-                        onClick={async (e) => {
-                          const btn = e.currentTarget;
-                          const confirmed = window.confirm("Are you absolutely sure you want to close your account? This will delete your saved data and log you out immediately.");
-                          if (confirmed) {
-                            btn.innerText = "Closing...";
-                            btn.style.opacity = "0.7";
-                            btn.style.pointerEvents = "none";
-                            
-                            localStorage.removeItem("stanchtech_user_address");
-                            localStorage.removeItem("orders");
-                            await supabase.auth.signOut();
-                            window.location.href = "/";
-                          }
-                        }}
+                        onClick={() => setShowDeleteModal(true)}
                         style={{ padding: '10px 20px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '14px', cursor: 'pointer' }}
                       >
                         Close My Account
@@ -610,6 +616,93 @@ function ProfileContent() {
           </div>
         </main>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0,0,0,0.6)',
+          backdropFilter: 'blur(4px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '24px'
+        }}>
+          <div style={{
+            background: '#fff',
+            maxWidth: '500px',
+            width: '100%',
+            padding: '40px',
+            border: '1px solid #111',
+            boxShadow: '24px 24px 0 rgba(0,0,0,0.1)'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{ width: '48px', height: '48px', background: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <XCircle style={{ width: '24px', height: '24px', color: '#ef4444' }} />
+                </div>
+                <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#111', fontFamily: "'Neue Machina', sans-serif", textTransform: 'uppercase', letterSpacing: '-0.02em' }}>
+                  Confirm Deletion
+                </h3>
+              </div>
+              
+              <div style={{ height: '1px', background: '#e5e7eb' }} />
+              
+              <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: '1.6', fontFamily: 'inherit' }}>
+                This is your final confirmation. By clicking "Permanently Delete," you acknowledge that all your account data, order history, and saved preferences will be <span style={{ color: '#ef4444', fontWeight: 700 }}>erased forever</span>.
+              </p>
+
+              <div style={{ display: 'flex', gap: '16px', marginTop: '12px' }}>
+                <button 
+                  onClick={() => setShowDeleteModal(false)}
+                  disabled={isDeleting}
+                  style={{
+                    flex: 1,
+                    padding: '14px',
+                    background: '#fff',
+                    border: '1px solid #000',
+                    color: '#000',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    fontSize: '13px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={async () => {
+                    setIsDeleting(true);
+                    localStorage.removeItem("stanchtech_user_address");
+                    localStorage.removeItem("orders");
+                    await supabase.auth.signOut();
+                    window.location.href = "/";
+                  }}
+                  disabled={isDeleting}
+                  style={{
+                    flex: 1,
+                    padding: '14px',
+                    background: '#ef4444',
+                    border: '1px solid #ef4444',
+                    color: '#fff',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    fontSize: '13px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    opacity: isDeleting ? 0.7 : 1
+                  }}
+                >
+                  {isDeleting ? "Deleting..." : "Permanently Delete"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div style={{ height: '180px', background: '#f5f5f5' }} />
     </div>
