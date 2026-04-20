@@ -126,18 +126,8 @@ export function ShoppingCart() {
                                             style={{ height: "44px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
                                             className="bg-[#155DFC] text-white rounded-[4px] text-[14px] font-bold hover:bg-white hover:text-[#155DFC] hover:border-[#155DFC] border border-transparent transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(21,93,252,0.25)] text-center"
                                         >
-                                            Proceed to checkout
+                                            PROCEED TO CHECKOUT
                                         </Link>
-                                        <div className="flex justify-center w-full mt-4">
-                                            <Link 
-                                                href="/shop"
-                                                onClick={() => setIsCartOpen(false)}
-                                                className="text-[#016fd0] text-[12px] hover:underline whitespace-nowrap"
-                                                style={{ fontFamily: "Inter, sans-serif" }}
-                                            >
-                                                continue shopping
-                                            </Link>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
