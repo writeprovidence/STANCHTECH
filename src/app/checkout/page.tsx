@@ -36,6 +36,7 @@ export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart, setIsCartOpen } = useCart();
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasProfileAddress, setHasProfileAddress] = useState(false);
 
   const { register, handleSubmit, setValue, watch, reset } = useForm<CheckoutFormData>({
     defaultValues: {
@@ -76,16 +77,44 @@ export default function CheckoutPage() {
       const { data: { user } } = await supabase.auth.getUser();
       setIsAuth(!!user);
 
+      // Load from shared address key first (sync with profile)
+      const savedUserAddressStr = localStorage.getItem("stanchtech_user_address");
       const savedProfileStr = localStorage.getItem("stanchtech_checkout_profile");
+      
+      let baseData = {};
       if (savedProfileStr) {
         try {
-          const savedProfile = JSON.parse(savedProfileStr);
-          reset({ ...savedProfile, email: user?.email || savedProfile.email || "", agreeToTerms: false });
+          baseData = JSON.parse(savedProfileStr);
+        } catch (e) {}
+      }
+
+      if (savedUserAddressStr) {
+        setHasProfileAddress(true);
+        try {
+          const addr = JSON.parse(savedUserAddressStr);
+          reset({
+            ...baseData,
+            email: user?.email || (baseData as any).email || "",
+            billingFirstName: addr.firstName,
+            billingLastName: addr.lastName,
+            billingPhone: addr.phone,
+            billingAdditionalPhone: addr.additionalPhone,
+            billingAddress: addr.deliveryAddress,
+            billingLandmark: addr.landmark,
+            billingState: addr.state,
+            billingCity: addr.areaCouncil,
+            agreeToTerms: false
+          });
         } catch (e) {
           if (user) setValue('email', user.email || "");
         }
       } else {
-        if (user) setValue('email', user.email || "");
+        setHasProfileAddress(false);
+        if (savedProfileStr) {
+          reset({ ...baseData as any, email: user?.email || (baseData as any).email || "", agreeToTerms: false });
+        } else {
+          if (user) setValue('email', user.email || "");
+        }
       }
     };
     checkUser();
@@ -132,6 +161,20 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
     await new Promise(resolve => setTimeout(resolve, 2000));
 
+    // Sync billing address back to profile (one address limit)
+    const profileAddress = {
+      firstName: data.billingFirstName,
+      lastName: data.billingLastName,
+      phone: data.billingPhone,
+      additionalPhone: data.billingAdditionalPhone,
+      deliveryAddress: data.billingAddress,
+      landmark: data.billingLandmark,
+      state: data.billingState,
+      areaCouncil: data.billingCity,
+      id: Date.now().toString()
+    };
+    localStorage.setItem("stanchtech_user_address", JSON.stringify(profileAddress));
+
     // Success logic: save the order to localStorage for the orders page
     const newOrder = {
       id: `ORD-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
@@ -150,7 +193,7 @@ export default function CheckoutPage() {
 
     clearCart();
     setIsSubmitting(false);
-    router.push("/profile/orders");
+    router.push("/orders");
   };
   const formValues = watch();
   const isFormValid = !!(
@@ -255,48 +298,76 @@ export default function CheckoutPage() {
                   <input
                     {...register('billingFirstName')}
                     type="text"
+                    readOnly={hasProfileAddress}
+                    onClick={() => hasProfileAddress && router.push('/profile')}
                     placeholder="first name"
-                    className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white w-full"
+                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
+                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                    }`}
                   />
                   <input
                     {...register('billingLastName')}
                     type="text"
+                    readOnly={hasProfileAddress}
+                    onClick={() => hasProfileAddress && router.push('/profile')}
                     placeholder="last name"
-                    className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white w-full"
+                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
+                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                    }`}
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
                   <input
                     {...register('billingPhone')}
                     type="tel"
+                    readOnly={hasProfileAddress}
+                    onClick={() => hasProfileAddress && router.push('/profile')}
                     placeholder="phone number"
-                    className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
+                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
+                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                    }`}
                   />
                   <input
                     {...register('billingAdditionalPhone')}
                     type="tel"
+                    readOnly={hasProfileAddress}
+                    onClick={() => hasProfileAddress && router.push('/profile')}
                     placeholder="additional phone number"
-                    className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
+                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
+                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                    }`}
                   />
                 </div>
                 <input
                     {...register('billingAddress')}
                     type="text"
+                    readOnly={hasProfileAddress}
+                    onClick={() => hasProfileAddress && router.push('/profile')}
                     placeholder="delivery address"
-                    className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
+                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
+                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                    }`}
                     style={{ width: '100%', marginBottom: '16px' }}
                 />
                 <input
                     {...register('billingLandmark')}
                     type="text"
+                    readOnly={hasProfileAddress}
+                    onClick={() => hasProfileAddress && router.push('/profile')}
                     placeholder="landmark"
-                    className="border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
+                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
+                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                    }`}
                     style={{ width: '100%', marginBottom: '16px' }}
                 />
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <select
                         {...register('billingState')}
-                        className="border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
+                        disabled={hasProfileAddress}
+                        onClick={() => hasProfileAddress && router.push('/profile')}
+                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none ${
+                          hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                        }`}
                     >
                         <option value="" disabled>State</option>
                         {Object.keys(NIGERIAN_STATES).map(state => (
@@ -305,7 +376,11 @@ export default function CheckoutPage() {
                     </select>
                     <select
                         {...register('billingCity')}
-                        className="border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
+                        disabled={hasProfileAddress}
+                        onClick={() => hasProfileAddress && router.push('/profile')}
+                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none ${
+                          hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                        }`}
                     >
                         <option value="" disabled>Local council</option>
                         {watch('billingState') && NIGERIAN_STATES[watch('billingState')] ? (

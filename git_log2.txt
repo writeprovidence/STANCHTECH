@@ -1,0 +1,2 @@
+874d4f0 Full Profile UI Synchronization: Implemented side-by-side forms, outlined WhatsApp brand style, and pixel-perfect account sidebar with local assets
+5720862 feat: checkout UI improvements - guest access, OPay coming soon, bank details spacing, form placeholder fixes, mobile phone grid fix
