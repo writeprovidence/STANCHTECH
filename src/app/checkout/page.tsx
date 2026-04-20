@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Copy, Loader2, Check, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCart } from "@/context/cart-context";
-import { supabase } from "@/lib/supabase";
+import { useUser } from "@clerk/nextjs";
 import { svgPaths } from './svg-paths';
 import { NIGERIAN_STATES } from './nigeria-data';
 
@@ -34,6 +34,7 @@ interface CheckoutFormData {
 export default function CheckoutPage() {
   const router = useRouter();
   const { cartItems, cartTotal, clearCart, setIsCartOpen } = useCart();
+  const { isLoaded, isSignedIn, user } = useUser();
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasProfileAddress, setHasProfileAddress] = useState(false);
@@ -70,55 +71,48 @@ export default function CheckoutPage() {
   const [promoExpanded, setPromoExpanded] = useState(false);
   const [copiedAccount, setCopiedAccount] = useState(false);
 
-
-
   useEffect(() => {
-    const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setIsAuth(!!user);
+    if (!isLoaded) return;
+    
+    setIsAuth(isSignedIn);
 
-      // Load from shared address key first (sync with profile)
-      const savedUserAddressStr = localStorage.getItem("stanchtech_user_address");
-      const savedProfileStr = localStorage.getItem("stanchtech_checkout_profile");
-      
-      let baseData = {};
-      if (savedProfileStr) {
-        try {
-          baseData = JSON.parse(savedProfileStr);
-        } catch (e) {}
-      }
+    const savedUserAddressStr = localStorage.getItem("stanchtech_user_address");
+    const savedProfileStr = localStorage.getItem("stanchtech_checkout_profile");
+    
+    let baseData = {};
+    if (savedProfileStr) {
+      try {
+        baseData = JSON.parse(savedProfileStr);
+      } catch (e) {}
+    }
 
-      if (savedUserAddressStr) {
-        setHasProfileAddress(true);
-        try {
-          const addr = JSON.parse(savedUserAddressStr);
-          reset({
-            ...baseData,
-            email: user?.email || (baseData as any).email || "",
-            billingFirstName: addr.firstName,
-            billingLastName: addr.lastName,
-            billingPhone: addr.phone,
-            billingAdditionalPhone: addr.additionalPhone,
-            billingAddress: addr.deliveryAddress,
-            billingLandmark: addr.landmark,
-            billingState: addr.state,
-            billingCity: addr.areaCouncil,
-            agreeToTerms: false
-          });
-        } catch (e) {
-          if (user) setValue('email', user.email || "");
-        }
-      } else {
-        setHasProfileAddress(false);
-        if (savedProfileStr) {
-          reset({ ...baseData as any, email: user?.email || (baseData as any).email || "", agreeToTerms: false });
-        } else {
-          if (user) setValue('email', user.email || "");
-        }
-      }
-    };
-    checkUser();
-  }, [router, setValue, reset]);
+    if (savedUserAddressStr) {
+      setHasProfileAddress(true);
+      try {
+        const addr = JSON.parse(savedUserAddressStr);
+        reset({
+          ...baseData,
+          email: user?.primaryEmailAddress?.emailAddress || (baseData as any).email || "",
+          billingFirstName: addr.firstName,
+          billingLastName: addr.lastName,
+          billingPhone: addr.phone,
+          billingAdditionalPhone: addr.additionalPhone,
+          billingAddress: addr.deliveryAddress,
+          billingLandmark: addr.landmark,
+          billingState: addr.state,
+          billingCity: addr.areaCouncil,
+          agreeToTerms: (baseData as any).agreeToTerms || false,
+        });
+      } catch (e) {}
+    } else {
+      setHasProfileAddress(false);
+      reset({
+        ...baseData,
+        email: user?.primaryEmailAddress?.emailAddress || (baseData as any).email || "",
+        agreeToTerms: (baseData as any).agreeToTerms || false,
+      });
+    }
+  }, [isLoaded, isSignedIn, user, reset]);
 
   const handleSameAsBillingChange = (checked: boolean) => {
     setSameAsBilling(checked);

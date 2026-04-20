@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { User, Package, MessageSquare, XCircle, LogOut, Info } from 'lucide-react';
-import { supabase } from "@/lib/supabase";
+import { useUser, useClerk } from "@clerk/nextjs";
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { NIGERIAN_STATES } from '../checkout/nigeria-data';
@@ -49,23 +49,24 @@ function ProfileContent() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
+
   useEffect(() => {
-    const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+    if (isLoaded) {
       if (user) {
-        setEmail(user.email || '');
-        setTempEmail(user.email || '');
+        setEmail(user.primaryEmailAddress?.emailAddress || '');
+        setTempEmail(user.primaryEmailAddress?.emailAddress || '');
       } else {
         router.push('/login');
       }
-    };
-    fetchUser();
-
+    }
+    
     const saved = localStorage.getItem("stanchtech_user_address");
     if (saved) {
       setUserAddress(JSON.parse(saved));
     }
-  }, [router]);
+  }, [isLoaded, user, router]);
 
   const menuItems = [
     { id: 'profile', label: 'Profile', icon: User },
@@ -206,7 +207,7 @@ function ProfileContent() {
           >
             <button
               onClick={async () => {
-                await supabase.auth.signOut();
+                await signOut();
                 router.push("/shop");
               }}
               style={{
@@ -678,7 +679,7 @@ function ProfileContent() {
                     setIsDeleting(true);
                     localStorage.removeItem("stanchtech_user_address");
                     localStorage.removeItem("orders");
-                    await supabase.auth.signOut();
+                    await signOut();
                     window.location.href = "/";
                   }}
                   disabled={isDeleting}

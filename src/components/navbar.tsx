@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Menu, X, User, Search, ShoppingBag, Package } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useRouter, usePathname } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { useUser, useClerk } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight, PenLine, LogOut, Heart } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
@@ -18,29 +18,10 @@ export function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const { cartCount, setIsCartOpen } = useCart();
-    const [userAuth, setUserAuth] = useState(null);
+    const { isLoaded, isSignedIn, user: userAuth } = useUser();
+    const { signOut } = useClerk();
     const profileMenuRef = useRef(null);
     const helpMenuRef = useRef(null);
-
-    useEffect(() => {
-        // Initial check for current session
-        const checkUser = async () => {
-            const { data: { session }, error } = await supabase.auth.getSession();
-            if (!error && session) {
-                setUserAuth(session.user);
-            } else {
-                setUserAuth(null);
-            }
-        };
-        checkUser();
-
-        // Listen for auth state changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            setUserAuth(session?.user ?? null);
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [helpMenuOpen, setHelpMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -293,10 +274,10 @@ export function Navbar() {
                                                         <span style={{ letterSpacing: "0.02em" }}>Orders</span>
                                                     </Link>
                                                     {/* LogOut — only when logged in */}
-                                                    {userAuth && (
+                                                    {isSignedIn && (
                                                         <button 
                                                             onClick={async () => {
-                                                                await supabase.auth.signOut();
+                                                                await signOut();
                                                                 setProfileMenuOpen(false);
                                                                 router.push("/shop");
                                                             }} 
