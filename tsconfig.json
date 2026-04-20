@@ -38,6 +38,8 @@
   ],
   "exclude": [
     "node_modules",
-    "checkout"
+    "checkout",
+    "account",
+    "old_profile.tsx"
   ]
 }
