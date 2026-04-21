@@ -277,9 +277,8 @@ export function Navbar() {
                                                     {isSignedIn && (
                                                         <button 
                                                             onClick={async () => {
-                                                                await signOut();
+                                                                await signOut({ redirectUrl: "/shop" });
                                                                 setProfileMenuOpen(false);
-                                                                router.push("/shop");
                                                             }} 
                                                             style={{ 
                                                                 display: "flex", 

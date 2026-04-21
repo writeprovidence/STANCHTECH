@@ -56,7 +56,7 @@ export function Footer() {
             {/* Column 2: Navigation */}
             <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Navigation</p>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Quick Links</p>
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {["HOME", "ABOUT", "SHOP", "CONTACT"].map((link) => {

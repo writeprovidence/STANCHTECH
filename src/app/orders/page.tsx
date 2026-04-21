@@ -2,17 +2,23 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useUser, useClerk } from "@clerk/nextjs";
 import { ChevronRight, Package, Box, Clock, CheckCircle2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function OrdersPage() {
-    const { data: session } = useSession();
+    const { isLoaded, isSignedIn, user } = useUser();
+    const router = useRouter();
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
+        if (isLoaded && !isSignedIn) {
+            router.push('/login?next=/orders');
+            return;
+        }
         const savedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
         setOrders(savedOrders);
-    }, []);
+    }, [isLoaded, isSignedIn, router]);
 
     return (
         <div className="bg-white min-h-screen pt-20">

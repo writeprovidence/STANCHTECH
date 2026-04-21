@@ -10,36 +10,14 @@ function LoginContent() {
   const redirectTo = searchParams.get("next") || "/shop";
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-20">
-      {/* LOGO */}
-      <Link href="/" className="flex items-center gap-2 text-black no-underline mb-12">
-        <img
-          src="/asset/Landing page_image/stanch_tech logo.png"
-          alt="STANCH TECH"
-          style={{ 
-            height: "60px", 
-            width: "auto", 
-            objectFit: "contain",
-            filter: "brightness(0)"
-          }}
-        />
-        <span style={{
-          fontSize: "20px",
-          fontWeight: 900,
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          fontFamily: "'Neue Machina', sans-serif",
-          color: "#000"
-        }}>
-          STANCHTECH
-        </span>
-      </Link>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
 
       <SignIn 
         appearance={{
           elements: {
             rootBox: "w-full max-w-[400px]",
             card: "shadow-none border-2 border-black rounded-none",
+            logoBox: "hidden",
             headerTitle: "font-['Neue_Machina'] text-xl uppercase tracking-wider",
             headerSubtitle: "font-['Space_Grotesk'] text-sm text-gray-500",
             formButtonPrimary: "bg-black hover:bg-gray-800 rounded-none h-12 text-sm font-bold uppercase tracking-widest",
@@ -47,11 +25,17 @@ function LoginContent() {
             footerActionLink: "text-blue-600 hover:text-blue-800 font-bold",
             identityPreviewText: "font-bold",
             formFieldLabel: "font-['Space_Grotesk'] text-xs font-bold uppercase text-gray-700",
+            // Hide phone number related elements if they appear
+            formField__phoneNumber: "hidden",
+            phoneInput: "hidden",
+            phoneNumberControl: "hidden",
           }
         }}
         signUpUrl="/login" // Can point to a separate signup, or Clerk will show signup tab
+        path="/login"
         forceRedirectUrl={redirectTo}
       />
+      <div id="clerk-captcha" />
     </div>
   );
 }

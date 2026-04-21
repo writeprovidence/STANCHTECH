@@ -141,10 +141,16 @@ export default function CheckoutPage() {
 
   const onSubmit: SubmitHandler<CheckoutFormData> = async (data) => {
     if (cartItems.length === 0) return;
-    if (!data.agreeToTerms) {
-      alert("Please agree to the terms and conditions");
-      return;
-    }
+
+    // Required field validation (additional phone is optional)
+    if (!data.email) { alert("Email is required."); return; }
+    if (!data.billingFirstName) { alert("First name is required."); return; }
+    if (!data.billingLastName) { alert("Last name is required."); return; }
+    if (!data.billingPhone) { alert("Phone number is required."); return; }
+    if (!data.billingAddress) { alert("Delivery address is required."); return; }
+    if (!data.billingState) { alert("State is required."); return; }
+    if (!data.billingCity) { alert("Area Council is required."); return; }
+    if (!data.agreeToTerms) { alert("Please agree to the terms and conditions"); return; }
 
     if (!isAuth) {
       localStorage.setItem("stanchtech_checkout_profile", JSON.stringify(data));
@@ -234,7 +240,7 @@ export default function CheckoutPage() {
           background-position: right 16px center;
         }
       `}</style>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[1100px] mx-auto" style={{ paddingTop: '40px', paddingBottom: '100px', paddingLeft: '24px', paddingRight: '24px' }}>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[1100px] mx-auto" style={{ paddingTop: '80px', paddingBottom: '100px', paddingLeft: '24px', paddingRight: '24px' }}>
         <div className="flex flex-col lg:grid lg:grid-cols-[minmax(auto,459px)_380px] lg:gap-[160px] gap-12">
           {/* Left Column */}
           <div className="flex flex-col w-full">
@@ -355,34 +361,40 @@ export default function CheckoutPage() {
                     style={{ width: '100%', marginBottom: '16px' }}
                 />
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div style={{ position: 'relative' }}>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>State <span style={{ color: 'red' }}>*</span></label>
                     <select
-                        {...register('billingState')}
+                        {...register('billingState', { required: true })}
                         disabled={hasProfileAddress}
                         onClick={() => hasProfileAddress && router.push('/profile')}
-                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none ${
+                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none w-full ${
                           hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
                         }`}
                     >
-                        <option value="" disabled>State</option>
+                        <option value="" disabled>Select State</option>
                         {Object.keys(NIGERIAN_STATES).map(state => (
                             <option key={state} value={state}>{state}</option>
                         ))}
                     </select>
+                </div>
+                    <div style={{ position: 'relative' }}>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Area Council <span style={{ color: 'red' }}>*</span></label>
                     <select
-                        {...register('billingCity')}
+                        {...register('billingCity', { required: true })}
                         disabled={hasProfileAddress}
                         onClick={() => hasProfileAddress && router.push('/profile')}
-                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none ${
+                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none w-full ${
                           hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
                         }`}
                     >
-                        <option value="" disabled>Local council</option>
+                        <option value="" disabled>Select Area Council</option>
                         {watch('billingState') && NIGERIAN_STATES[watch('billingState')] ? (
                             NIGERIAN_STATES[watch('billingState')].map(lga => (
                                 <option key={lga} value={lga}>{lga}</option>
                             ))
                         ) : null}
                     </select>
+                </div>
                 </div>
               </div>
             </div>

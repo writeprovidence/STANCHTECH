@@ -94,18 +94,13 @@ function ShopContent() {
                     <img src="/asset/shop_image/spare_background.png" alt="Shop Background" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-[#0b1a2e]/40" />
                 </div>
-                <div className="relative z-10 text-center w-full max-w-4xl px-6 pt-12">
-                    <h1 className="text-6xl md:text-7xl font-medium text-white mb-8" style={{ fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.04em" }}>Explore Spares</h1>
-                    <div className="flex items-center justify-center gap-3 text-sm font-bold uppercase tracking-[0.2em]">
-                        <Link href="/" className="text-white hover:text-blue-400 transition-colors" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>Home</Link>
-                        <ChevronRight size={14} className="text-blue-400" />
-                        <span className="text-white/60" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>Shop</span>
-                    </div>
+                <div className="relative z-10 text-center w-full max-w-4xl px-6">
+                    <h1 className="text-6xl md:text-7xl font-medium text-white" style={{ fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.04em" }}>Explore Spares</h1>
                 </div>
             </section>
 
             <div style={{ background: "#F8FAFC", paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "32px", paddingBottom: "32px" }}>
-                <div style={{ background: "#ffffff", borderRadius: "50px" }} className="border border-gray-200 overflow-hidden w-full shadow-sm">
+                <div style={{ background: "#ffffff", borderRadius: "5px" }} className="border border-gray-200 overflow-hidden w-full">
                     <div style={{ paddingLeft: "25px", paddingRight: "40px" }}>
                         <motion.div onClick={() => setIsFilterOpen(!isFilterOpen)} className="flex items-center gap-4 h-[70px] cursor-pointer transition-all border-b border-gray-100/50">
                             <div className="w-10 h-10 rounded-full border border-black/40 flex items-center justify-center">
@@ -187,7 +182,7 @@ function ShopContent() {
             <div className={`transition-all duration-500 ${isFilterOpen ? 'blur-[3px] opacity-70 pointer-events-none' : ''}`} style={{ paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "16px", paddingBottom: "100px", background: "#F8FAFC" }}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ columnGap: "28px", rowGap: "48px" }}>
                     {shopProducts.map((product, index) => (
-                        <Link href={`/shop/${product.id}`} key={index} className="group flex flex-col items-center text-center border border-gray-100/50 shadow-sm rounded-xl px-8 transition-all duration-500 hover:border-blue-200 hover:shadow-2xl hover:shadow-blue-500/5 hover:-translate-y-1 bg-white w-full" style={{ maxWidth: "100%", paddingTop: "34px", paddingBottom: "42px" }}>
+                        <Link href={`/shop/${product.id}`} key={index} className="group flex flex-col items-center text-center border border-gray-200 rounded-[5px] px-8 transition-all duration-500 hover:border-blue-400 hover:-translate-y-1 bg-white w-full" style={{ maxWidth: "100%", paddingTop: "34px", paddingBottom: "42px" }}>
                             <div className="flex items-center justify-center transition-transform duration-700 group-hover:scale-105" style={{ width: "85%", aspectRatio: "1/1", margin: "0 auto 20px auto" }}>
                                 <img 
                                     src={product.image} 
