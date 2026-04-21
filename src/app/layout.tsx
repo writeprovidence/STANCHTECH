@@ -4,7 +4,12 @@ import { ShoppingCart } from "@/components/shopping-cart";
 import { CartProvider } from "@/context/cart-context";
 
 import { ClerkProvider } from '@clerk/nextjs'
+import { Space_Grotesk, Darker_Grotesque, Inter } from 'next/font/google'
 import "./globals.css";
+
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-space-grotesk', display: 'swap' });
+const darkerGrotesque = Darker_Grotesque({ subsets: ['latin'], weight: ['500', '700', '900'], variable: '--font-darker-grotesque', display: 'swap' });
+const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700', '800', '900'], variable: '--font-inter', display: 'swap' });
 
 export const metadata = {
   title: "STANCH TECH | Marine & Industrial Services",
@@ -14,14 +19,8 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          {/* Space Grotesk + Darker Grotesque + Inter — all from Google Fonts, reliable in all browsers */}
-          <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Darker+Grotesque:wght@500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-        </head>
-        <body className="antialiased selection:bg-primary/20 selection:text-primary">
+      <html lang="en" suppressHydrationWarning>
+        <body suppressHydrationWarning className={`${spaceGrotesk.variable} ${darkerGrotesque.variable} ${inter.variable} antialiased selection:bg-primary/20 selection:text-primary`}>
 
             <CartProvider>
               <Navbar />

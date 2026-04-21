@@ -38,7 +38,7 @@
 
 /* ── Responsive Font Sizes ── */
 .responsive-title {
-  font-family: 'Neue Machina', 'Space Grotesk', 'Inter', sans-serif !important;
+  font-family: 'Neue Machina', var(--font-space-grotesk), var(--font-inter), sans-serif !important;
   font-weight: 700 !important;
   font-size: clamp(32px, 8vw, 56px) !important;
   line-height: 1.1 !important;
@@ -85,7 +85,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-family: var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -97,18 +97,18 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Neue Machina', 'Space Grotesk', 'Inter', system-ui, sans-serif !important;
+  font-family: 'Neue Machina', var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif !important;
 }
 
 button,
 a,
 p {
-  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-family: var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif;
 }
 
 /* ── Hero Headline ── */
 .hero-headline {
-  font-family: 'Neue Machina', 'Space Grotesk', 'Inter', sans-serif !important;
+  font-family: 'Neue Machina', var(--font-space-grotesk), var(--font-inter), sans-serif !important;
   font-size: clamp(28px, 5.5vw, 72px) !important;
   font-weight: 800 !important;
   line-height: 1.05 !important;
@@ -163,7 +163,7 @@ p {
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0.05em;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-inter), sans-serif;
   transition: opacity 0.8s ease-in-out;
 }
 
@@ -365,7 +365,7 @@ p {
   white-space: nowrap;
   transition: all 0.25s ease;
   border: 1.5px solid transparent;
-  font-family: 'Darker Grotesque', sans-serif !important;
+  font-family: var(--font-darker-grotesque), sans-serif !important;
 }
 .hero-btn-primary:hover {
   background: #fff;
@@ -389,7 +389,7 @@ p {
   gap: 12px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
-  font-family: 'Darker Grotesque', sans-serif !important;
+  font-family: var(--font-darker-grotesque), sans-serif !important;
 }
 .hero-btn-secondary:hover {
   background: white;
@@ -488,7 +488,7 @@ p {
   font-weight: 700 !important;
   line-height: 1.15;
   letter-spacing: 0.02em;
-  font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+  font-family: var(--font-space-grotesk), var(--font-inter), sans-serif !important;
   margin-bottom: 32px;
 }
 

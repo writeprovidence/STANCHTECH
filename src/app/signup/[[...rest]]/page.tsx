@@ -1,18 +1,12 @@
 "use client";
 
 import React, { Suspense } from "react";
-import { SignIn } from "@clerk/nextjs";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { SignUp } from "@clerk/nextjs";
 
-function LoginContent() {
-  const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("next") || "/shop";
-
+function SignupContent() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
-
-      <SignIn 
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white py-12">
+      <SignUp 
         appearance={{
           elements: {
             rootBox: "w-full max-w-[400px]",
@@ -31,23 +25,22 @@ function LoginContent() {
             phoneNumberControl: "hidden",
           }
         }}
-        signUpUrl="/signup"
-        path="/login"
+        signInUrl="/login"
+        path="/signup"
         routing="path"
-        forceRedirectUrl={redirectTo}
       />
     </div>
   );
 }
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="w-12 h-12 border-4 border-gray-100 border-t-black rounded-full animate-spin"></div>
       </div>
     }>
-      <LoginContent />
+      <SignupContent />
     </Suspense>
   );
 }
