@@ -8,19 +8,15 @@ import { PRODUCTS } from "@/data/products";
 const HERO_SLIDES = [
   {
     image: "/asset/Landing page_image/low hour engine.jpeg",
-    heading: <></>
+    description: "Vessel Inspection, Maintenance & Repairs"
   },
   {
-    image: "/asset/Landing page_image/vessel.png",
-    heading: <></>
+    image: "/asset/Landing page_image/cummin_engine.png",
+    description: "Professional one-stop Cummins Diesel Engine spare parts solution"
   },
   {
-    image: "/asset/Landing page_image/marine_control_black.png",
-    heading: <></>
-  },
-  {
-    image: "/asset/Landing page_image/marine_spares.png",
-    heading: <></>
+    image: "/asset/Landing page_image/support.png",
+    description: "Technical support, prompt after-sales service, fast delivery"
   }
 ];
 
@@ -65,7 +61,7 @@ export default function HomePage() {
         <div style={{ 
           position: "absolute", 
           inset: 0, 
-          background: "rgba(0,0,0,0.65)", 
+          background: "rgba(0,0,0,0.3)", 
           transition: "background 0.9s ease-in-out",
           zIndex: 5
         }} />
@@ -95,8 +91,7 @@ export default function HomePage() {
           );
         })}
 
-        {/* Content */}
-        <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px", maxWidth: 900, width: "100%" }}>
+        <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px", maxWidth: 1000, width: "100%" }}>
           <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 800, fontFamily: "'Neue Machina', sans-serif", letterSpacing: "-0.01em", lineHeight: 0.9 }}>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Next-Level Marine &amp;</span>
             <span style={{ display: "block", whiteSpace: "nowrap" }}>Industrial Maintenance</span>
@@ -105,11 +100,16 @@ export default function HomePage() {
             color: "rgba(255,255,255,0.9)",
             fontFamily: "'Neue Machina', sans-serif",
             fontSize: "clamp(18px, 1.8vw, 22px)",
-            maxWidth: 700,
+            maxWidth: 850,
+            margin: "24px auto 0",
             lineHeight: 1.6,
             fontWeight: 300,
+            minHeight: "120px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
           }}>
-            Maintenance is not just about fixing problems, it's about<br className="hide-mobile" /> preventing them before they occur.
+            {HERO_SLIDES[currentSlide].description}
           </p>
 
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
@@ -290,13 +290,13 @@ export default function HomePage() {
             </Link>
           </div>
           {/* Image RIGHT - Industrial Spares Mastery */}
-          <div className="order-1 lg:order-2" style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
-            <img 
-              src="/asset/Landing page_image/marine_spares.png" 
-              alt="Professional Marine and Industrial Spares" 
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderRadius: "15px" }}
-            />
-          </div>
+            <div className="order-1 lg:order-2" style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
+              <img 
+                src="/asset/Landing page_image/marine_spare.png" 
+                alt="Professional Marine and Industrial Spares" 
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderRadius: "15px" }}
+              />
+            </div>
         </div>
       </section>
 

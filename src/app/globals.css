@@ -109,7 +109,7 @@ p {
 /* ── Hero Headline ── */
 .hero-headline {
   font-family: 'Neue Machina', var(--font-space-grotesk), var(--font-inter), sans-serif !important;
-  font-size: clamp(28px, 5.5vw, 72px) !important;
+  font-size: clamp(28px, 5.5vw, 64px) !important;
   font-weight: 800 !important;
   line-height: 1.05 !important;
   letter-spacing: -0.03em !important;
