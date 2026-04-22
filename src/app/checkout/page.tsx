@@ -33,7 +33,7 @@ interface CheckoutFormData {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cartItems, cartTotal, clearCart, setIsCartOpen } = useCart();
+  const { cartItems, cartCount, cartTotal, clearCart, setIsCartOpen } = useCart();
   const { isLoaded, isSignedIn, user } = useUser();
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -591,7 +591,7 @@ export default function CheckoutPage() {
           {/* Right Column - Order Summary */}
           <div>
             <div className="flex justify-between items-center" style={{ marginBottom: '32px' }}>
-              <h2 className="text-[16px] text-[#25252d]">Order Summary({cartItems.length})</h2>
+              <h2 className="text-[16px] text-[#25252d]">Order Summary({cartCount})</h2>
               <div className="flex items-center gap-3">
                 <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => setIsCartOpen(true)}>
                   edit cart

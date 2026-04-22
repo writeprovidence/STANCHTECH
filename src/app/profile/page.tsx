@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { User, Package, MessageSquare, XCircle, LogOut, Info } from 'lucide-react';
+import { User, Package, MessageSquare, XCircle, LogOut, Info, Loader2 } from 'lucide-react';
 import { useUser, useClerk } from "@clerk/nextjs";
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -50,6 +50,8 @@ function ProfileContent() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, boolean>>({});
   const [shippingErrors, setShippingErrors] = useState<Record<string, boolean>>({});
+  const [orders, setOrders] = useState<any[]>([]);
+  const [hasMounted, setHasMounted] = useState(false);
 
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
@@ -68,6 +70,11 @@ function ProfileContent() {
     if (saved) setUserAddress(JSON.parse(saved));
     const savedShipping = localStorage.getItem("stanchtech_shipping_address");
     if (savedShipping) setShippingAddress(JSON.parse(savedShipping));
+    
+    // Load orders safely on client
+    const savedOrders = localStorage.getItem('orders');
+    if (savedOrders) setOrders(JSON.parse(savedOrders));
+    setHasMounted(true);
   }, [isLoaded, user, router]);
 
   const menuItems = [
@@ -531,7 +538,8 @@ function ProfileContent() {
 
                   <div style={{ padding: '28px', flex: 1, overflowY: 'auto' }}>
                     {(() => {
-                      const orders = JSON.parse(typeof window !== 'undefined' ? localStorage.getItem('orders') || '[]' : '[]');
+                      if (!hasMounted) return <div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Loader2 className="animate-spin" /></div>;
+                      
                       if (orders.length === 0) {
                         return (
                           <div style={{ height: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
@@ -556,10 +564,14 @@ function ProfileContent() {
                                 </div>
                                 <div>
                                   <p style={{ fontSize: '14px', fontWeight: 600, color: '#111827', marginBottom: '4px' }}>Order {order.id}</p>
-                                  <p style={{ fontSize: '13px', color: '#6b7280' }}>{new Date(order.date).toLocaleDateString()} • {order.items.length} {order.items.length === 1 ? 'item' : 'items'}</p>
+                                  <p style={{ fontSize: '13px', color: '#6b7280' }}>
+                                    {new Date(order.date).toLocaleDateString()} • {order.items.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0)} {order.items.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0) === 1 ? 'item' : 'items'}
+                                  </p>
                                   <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
                                     <span style={{ fontSize: '11px', background: '#e5e7eb', padding: '2px 8px', borderRadius: '4px', color: '#4b5563', textTransform: 'uppercase', fontWeight: 600 }}>{order.status}</span>
-                                    <span style={{ fontSize: '11px', background: '#eff6ff', padding: '2px 8px', borderRadius: '4px', color: '#2563eb', textTransform: 'uppercase', fontWeight: 600 }}>{order.paymentMethod === 'cod' ? 'Cash' : 'Bank'}</span>
+                                    <span style={{ fontSize: '11px', background: '#eff6ff', padding: '2px 8px', borderRadius: '4px', color: '#2563eb', fontWeight: 600 }}>
+                                      {order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Direct Bank Transfer'}
+                                    </span>
                                   </div>
                                 </div>
                               </div>
