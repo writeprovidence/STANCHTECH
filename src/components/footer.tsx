@@ -6,7 +6,10 @@ import { usePathname } from "next/navigation";
 
 export function Footer() {
     const pathname = usePathname();
+    const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
     const isShopArea = pathname.startsWith('/shop') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders';
+
+    if (isAuthPage) return null;
 
     return (
       <footer style={{ background: "#060D17", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>

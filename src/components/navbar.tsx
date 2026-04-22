@@ -13,7 +13,10 @@ import { PRODUCTS } from "@/data/products";
 export function Navbar() {
     const router = useRouter();
     const pathname = usePathname();
+    const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
     const isHomePage = pathname === "/";
+
+    if (isAuthPage) return null;
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);

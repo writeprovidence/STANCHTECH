@@ -5,7 +5,7 @@ import { SignUp } from "@clerk/nextjs";
 
 function SignupContent() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white py-12">
+    <div style={{ width: "100%", minHeight: "100vh", backgroundColor: "#ffffff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 16px" }}>
       <SignUp 
         appearance={{
           elements: {

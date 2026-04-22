@@ -10,7 +10,7 @@ function LoginContent() {
   const redirectTo = searchParams.get("next") || "/shop";
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+    <div style={{ width: "100%", minHeight: "100vh", backgroundColor: "#ffffff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 16px" }}>
 
       <SignIn 
         appearance={{
