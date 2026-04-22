@@ -25,7 +25,7 @@ function LoginContent() {
             footerActionLink: "text-blue-600 hover:text-blue-800 font-bold",
             identityPreviewText: "font-bold",
             formFieldLabel: "font-['Space_Grotesk'] text-xs font-bold uppercase text-gray-700",
-            // Hide phone number related elements if they appear
+            // Hide phone number related elements
             formField__phoneNumber: "hidden",
             phoneInput: "hidden",
             phoneNumberControl: "hidden",

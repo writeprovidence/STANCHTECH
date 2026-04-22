@@ -2,6 +2,7 @@
 
 import React, { Suspense } from "react";
 import { SignUp } from "@clerk/nextjs";
+import Link from "next/link";
 
 function SignupContent() {
   return (
@@ -9,8 +10,7 @@ function SignupContent() {
       <SignUp 
         appearance={{
           elements: {
-            rootBox: "w-full max-w-[400px]",
-            card: "shadow-none border-2 border-black rounded-none",
+            card: "shadow-none border-2 border-black rounded-none w-full max-w-[450px]",
             logoBox: "hidden",
             headerTitle: "font-['Neue_Machina'] text-xl uppercase tracking-wider",
             headerSubtitle: "font-['Space_Grotesk'] text-sm text-gray-500",
@@ -19,7 +19,7 @@ function SignupContent() {
             footerActionLink: "text-blue-600 hover:text-blue-800 font-bold",
             identityPreviewText: "font-bold",
             formFieldLabel: "font-['Space_Grotesk'] text-xs font-bold uppercase text-gray-700",
-            // Hide phone number related elements if they appear
+            // Hide phone number related elements
             formField__phoneNumber: "hidden",
             phoneInput: "hidden",
             phoneNumberControl: "hidden",

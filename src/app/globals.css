@@ -544,15 +544,3 @@ p {
   }
 }
 
-/* --- Clerk Custom Overrides --- */
-.cl-phoneInput-container,
-.cl-phoneInput,
-.cl-phoneNumberInput,
-.cl-formField__phoneNumber,
-.cl-formFieldInput--phoneNumber,
-.cl-formFieldLabel--phoneNumber,
-.cl-socialButtonsBlockMain__phoneNumber,
-.cl-dividerRow--phoneNumber,
-.cl-tabButton[data-value='phone'] {
-  display: none !important;
-}
