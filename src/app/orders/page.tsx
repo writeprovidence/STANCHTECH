@@ -74,7 +74,7 @@ export default function OrdersPage() {
                                                     <div className="px-5 py-2 rounded-full bg-blue-50 text-blue-600 text-xs font-900 uppercase tracking-widest" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
                                                         {order.status}
                                                     </div>
-                                                    <span className="text-sm font-bold text-gray-300" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{order.id}</span>
+                                                    <span className="text-sm font-800 text-gray-300" style={{ fontFamily: "'Neue Machina', sans-serif" }}>{order.id}</span>
                                                     {(order.paymentMethod || order.deliveryMethod) && (
                                                         <div className="flex gap-2">
                                                             {order.paymentMethod && (
@@ -90,7 +90,7 @@ export default function OrdersPage() {
                                                         </div>
                                                     )}
                                                 </div>
-                                                <h3 className="text-3xl font-900 text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                                <h3 className="text-3xl font-800 text-gray-900" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
                                                     {order.items.length} {order.items.length === 1 ? 'Part' : 'Parts'} Purchased
                                                 </h3>
                                                 <div className="flex gap-4">
@@ -105,7 +105,7 @@ export default function OrdersPage() {
                                             <div className="flex flex-col justify-between items-end gap-6">
                                                 <div className="text-right">
                                                     <span className="text-sm font-bold text-gray-400 uppercase tracking-widest block mb-2" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Total Amount</span>
-                                                    <span className="text-4xl font-900 text-blue-600 block" style={{ fontFamily: "'Neue Machina', sans-serif" }}>NGN {order.total.toLocaleString()}</span>
+                                                    <span className="text-4xl font-800 text-blue-600 block" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>NGN {order.total.toLocaleString()}</span>
                                                 </div>
                                                 <button className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-gray-900 hover:text-white transition-all">
                                                     View Details

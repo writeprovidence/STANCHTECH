@@ -125,7 +125,7 @@ export function Navbar() {
                     <div style={{ flex: 1, display: "flex", justifyContent: "flex-start" }}>
                         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 0, textDecoration: "none" }}>
                             <img
-                                src="/asset/Landing page_image/stanch_tech logo.png"
+                                src="/asset/Landing_page_image/stanch_tech_logo.png"
                                 alt="STANCH TECH"
                                 style={{ 
                                     height: 55, 
@@ -136,7 +136,7 @@ export function Navbar() {
                                 }}
                             />
                             <span style={{
-                                fontSize: "14px",
+                                fontSize: "16px",
                                 fontWeight: 900,
                                 letterSpacing: "0.1em",
                                 color: "#fff",
@@ -169,7 +169,7 @@ export function Navbar() {
                                     href={link.href}
                                     target={target}
                                     style={{
-                                        fontSize: 13,
+                                        fontSize: 15,
                                         fontWeight: 800,
                                         color: "#fff",
                                         textDecoration: "none",
@@ -199,7 +199,7 @@ export function Navbar() {
                                         </button>
                                         
                                         {profileMenuOpen && (
-                                            <div style={{ position: "absolute", right: "-20px", top: "48px", width: "180px", backgroundColor: "white", boxShadow: "0 4px 24px rgba(0,0,0,0.12)", borderRadius: "6px", overflow: "hidden", display: "flex", flexDirection: "column", zIndex: 50, border: "1px solid #e5e7eb", fontFamily: "'Space Grotesk', sans-serif" }}>
+                                            <div style={{ position: "absolute", right: "-20px", top: "48px", width: "180px", backgroundColor: "white", boxShadow: "0 4px 24px rgba(0,0,0,0.12)", borderRadius: "6px", overflow: "hidden", display: "flex", flexDirection: "column", zIndex: 50, border: "1px solid #e5e7eb", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
                                                 {/* Sign In button — only when logged out */}
                                                 {!userAuth && (
                                                     <div style={{ padding: "12px 12px 10px 12px" }}>
@@ -208,7 +208,7 @@ export function Navbar() {
                                                                 setProfileMenuOpen(false);
                                                                 router.push("/login");
                                                             }}
-                                                            style={{ width: "100%", padding: "9px 8px", backgroundColor: "#090E1A", color: "white", fontSize: "13px", fontWeight: "500", borderRadius: "4px", border: "none", cursor: "pointer", textAlign: "center" }}
+                                                            style={{ width: "100%", padding: "12px 8px", backgroundColor: "#090E1A", color: "white", fontSize: "18px", fontWeight: "900", borderRadius: "4px", border: "none", cursor: "pointer", textAlign: "center" }}
                                                             onMouseEnter={e => e.currentTarget.style.backgroundColor = "#161e35"}
                                                             onMouseLeave={e => e.currentTarget.style.backgroundColor = "#090E1A"}
                                                         >
@@ -229,12 +229,9 @@ export function Navbar() {
                                                             alignItems: "center", 
                                                             gap: "16px", 
                                                             padding: "10px 20px", 
-                                                            fontSize: "15px", 
-                                                            fontWeight: "400", 
-                                                            color: "#374151", 
-                                                            width: "100%", 
-                                                            boxSizing: "border-box",
-                                                            fontFamily: "'Neue Machina', sans-serif"
+                                                            fontFamily: "'Neue Machina', sans-serif",
+                                                            fontSize: "18px",
+                                                            fontWeight: "900"
                                                         }}
                                                         onMouseEnter={e => {
                                                             e.currentTarget.style.backgroundColor = "#f5f5f5";
@@ -246,7 +243,7 @@ export function Navbar() {
                                                         }}
                                                     >
                                                         <User style={{ width: "20px", height: "20px", color: "inherit", flexShrink: 0 }} strokeWidth={1.5} />
-                                                        <span style={{ letterSpacing: "0.02em" }}>My account</span>
+                                                        <span style={{ letterSpacing: "0.02em" }}>My Account</span>
                                                     </Link>
                                                     <Link 
                                                         href={userAuth ? "/profile?tab=orders" : "/login"} 
@@ -257,12 +254,9 @@ export function Navbar() {
                                                             alignItems: "center", 
                                                             gap: "16px", 
                                                             padding: "10px 20px", 
-                                                            fontSize: "15px", 
-                                                            fontWeight: "400", 
-                                                            color: "#374151", 
-                                                            width: "100%", 
-                                                            boxSizing: "border-box",
-                                                            fontFamily: "'Neue Machina', sans-serif"
+                                                            fontFamily: "'Neue Machina', sans-serif",
+                                                            fontSize: "18px",
+                                                            fontWeight: "900"
                                                         }}
                                                         onMouseEnter={e => {
                                                             e.currentTarget.style.backgroundColor = "#f5f5f5";
@@ -288,8 +282,8 @@ export function Navbar() {
                                                                 alignItems: "center", 
                                                                 gap: "16px", 
                                                                 padding: "10px 20px", 
-                                                                fontSize: "15px", 
-                                                                fontWeight: "400", 
+                                                                fontSize: "18px", 
+                                                                fontWeight: "900", 
                                                                 color: "#374151", 
                                                                 width: "100%", 
                                                                 boxSizing: "border-box", 
@@ -349,7 +343,7 @@ export function Navbar() {
                                                 border: "1px solid #e5e7eb",
                                             }}>
                                                 <div style={{ padding: "12px" }}>
-                                                    <p style={{ fontSize: 9, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16, fontFamily: "'Space Grotesk', sans-serif" }}>Contact Support</p>
+                                                    <p style={{ fontSize: 11, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>Contact Support</p>
                                                     <a
                                                         href="https://wa.me/2348037340959"
                                                         target="_blank"
@@ -378,9 +372,9 @@ export function Navbar() {
                                                         <svg width="20" height="20" fill="#25D366" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                             <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 13.96 2.56 15.78 3.53 17.31L2.24 21.05C2.12 21.4 2.45 21.73 2.8 21.61L6.61 20.37C8.16 21.4 10.01 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17.15 15.34C16.92 15.98 16.03 16.5 15.46 16.59C14.98 16.66 14.33 16.74 12.08 15.8C9.21 14.59 7.35 11.66 7.21 11.47C7.07 11.28 6.05 9.93 6.05 8.52C6.05 7.11 6.77 6.42 7.05 6.13C7.28 5.89 7.66 5.8 8.01 5.8C8.12 5.8 8.22 5.8 8.31 5.85C8.61 6.02 9.08 7.15 9.14 7.29C9.2 7.42 9.27 7.58 9.18 7.74C9.09 7.9 9.01 7.98 8.87 8.14C8.73 8.3 8.6 8.44 8.45 8.62C8.29 8.82 8.12 9.03 8.32 9.38C8.51 9.73 9.18 10.82 10.17 11.69C11.45 12.82 12.47 13.18 12.86 13.34C13.24 13.5 13.68 13.47 13.94 13.19C14.28 12.82 14.68 12.24 15.09 11.66C15.38 11.25 15.75 11.33 16.1 11.46C16.45 11.59 18.25 12.48 18.6 12.65C18.95 12.83 19.18 12.92 19.27 13.07C19.36 13.22 19.36 13.96 19.04 14.86L17.15 15.34Z" />
                                                         </svg>
-                                                        <span style={{ color: "#25D366", fontSize: 13, fontWeight: 600, fontFamily: "'Space Grotesk', sans-serif" }}>WhatsApp</span>
+                                                        <span style={{ color: "#25D366", fontSize: 14, fontWeight: 600, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>WhatsApp</span>
                                                     </a>
-                                                    <p style={{ fontSize: 9, color: "#9ca3af", textAlign: "center", marginTop: 10, fontFamily: "'Space Grotesk', sans-serif" }}>Replies instantly</p>
+                                                    <p style={{ fontSize: 12, color: "#6b7280", fontWeight: 500, textAlign: "center", marginTop: 10, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>Replies instantly</p>
                                                 </div>
                                             </div>
                                         )}
@@ -480,7 +474,7 @@ export function Navbar() {
                                                 textDecoration: "none",
                                                 fontSize: 20,
                                                 fontWeight: 700,
-                                                fontFamily: "'Space Grotesk', sans-serif",
+                                                fontFamily: "var(--font-darker-grotesque), sans-serif",
                                             }}
                                         >
                                             {link.name}
@@ -533,7 +527,7 @@ export function Navbar() {
                                 fontWeight: 900, 
                                 letterSpacing: "0.2em", 
                                 marginBottom: "20px",
-                                fontFamily: "'Darker Grotesque', sans-serif" 
+                                fontFamily: "'Neue Machina', sans-serif" 
                             }}>SEARCH INVENTORY</h2>
                             
                             <div style={{ position: "relative" }}>
@@ -543,7 +537,7 @@ export function Navbar() {
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     onKeyDown={handleSearchSubmit}
-                                    placeholder="Type back to search parts..."
+                                    placeholder="Search spares"
                                     style={{
                                         width: "100%",
                                         background: "transparent",
@@ -554,7 +548,7 @@ export function Navbar() {
                                         color: "#fff",
                                         padding: "20px 0",
                                         outline: "none",
-                                        fontFamily: "'Darker Grotesque', sans-serif"
+                                        fontFamily: "var(--font-darker-grotesque), sans-serif"
                                     }}
                                 />
                                 <div style={{ 
@@ -590,8 +584,8 @@ export function Navbar() {
                                                 <img src={product.image} alt="" style={{ width: "32px", height: "32px", objectFit: "contain" }} />
                                             </div>
                                             <div style={{ flex: 1 }}>
-                                                <h3 style={{ color: "#fff", fontSize: "18px", fontWeight: 700, fontFamily: "'Darker Grotesque', sans-serif" }}>{product.name}</h3>
-                                                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "14px", fontFamily: "'Space Grotesk', sans-serif" }}>{product.category} • NGN {product.price.toLocaleString()}</p>
+                                                <h3 style={{ color: "#fff", fontSize: "18px", fontWeight: 700, fontFamily: "'Neue Machina', sans-serif" }}>{product.name}</h3>
+                                                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "14px", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>{product.category} • NGN {product.price.toLocaleString()}</p>
                                             </div>
                                         </div>
                                     ))}

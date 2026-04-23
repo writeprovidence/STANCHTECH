@@ -5,7 +5,6 @@ import { User, Package, MessageSquare, XCircle, LogOut, Info, Loader2 } from 'lu
 import { useUser, useClerk } from "@clerk/nextjs";
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { NIGERIAN_STATES } from '../checkout/nigeria-data';
 
 interface Address {
   id: string;
@@ -18,6 +17,30 @@ interface Address {
   state: string;
   areaCouncil: string;
 }
+
+const inputStyle: React.CSSProperties = {
+  padding: '0 16px',
+  border: '1px solid #d3d3d3',
+  borderRadius: '5px',
+  outline: 'none',
+  fontSize: '13.31px',
+  fontFamily: 'inherit',
+  color: '#25252d',
+  background: '#fff',
+  width: '100%',
+  height: '33px',
+  boxSizing: 'border-box',
+};
+
+const labelStyle: React.CSSProperties = {
+  fontSize: '11px',
+  fontWeight: 600,
+  color: '#374151',
+  display: 'block',
+  marginBottom: '4px',
+  textTransform: 'none',
+  letterSpacing: '0.05em'
+};
 
 export default function ProfilePage() {
   return (
@@ -71,7 +94,6 @@ function ProfileContent() {
     const savedShipping = localStorage.getItem("stanchtech_shipping_address");
     if (savedShipping) setShippingAddress(JSON.parse(savedShipping));
     
-    // Load orders safely on client
     const savedOrders = localStorage.getItem('orders');
     if (savedOrders) setOrders(JSON.parse(savedOrders));
     setHasMounted(true);
@@ -195,14 +217,15 @@ function ProfileContent() {
             minHeight: '498.75px'
           }}
         >
-          <div style={{ padding: '32px 32px 0 32px', marginBottom: '8px' }}> {/* Top alignment with Email label offset */}
+          <div style={{ padding: '32px 32px 0 32px', marginBottom: '8px' }}>
             <span
               style={{
                 fontSize: '13px',
-                fontWeight: 600,
+                fontWeight: 800,
                 letterSpacing: '0.08em',
                 color: '#111',
                 textTransform: 'uppercase',
+                fontFamily: "'Neue Machina', sans-serif"
               }}
             >
               My Account
@@ -300,35 +323,17 @@ function ProfileContent() {
                       gap: '10px',
                       height: '110px',
                       boxSizing: 'border-box',
-                      borderRadius: '0' // Sharp corners
+                      borderRadius: '0'
                     }}
                   >
-                    <span
-                      style={{
-                        fontSize: '13px',
-                        color: '#6b7280',
-                        fontWeight: 500,
-                      }}
-                    >
-                      Email
-                    </span>
+                    <label style={labelStyle}>Email</label>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
                       {isEditingEmail ? (
                         <input
                           type="email"
                           value={tempEmail}
                           onChange={(e) => setTempEmail(e.target.value)}
-                          style={{
-                            flex: 1,
-                            border: 'none',
-                            outline: 'none',
-                            background: 'transparent',
-                            fontSize: '15px',
-                            color: '#111827',
-                            fontFamily: 'inherit',
-                            padding: 0,
-                          }}
-                          placeholder="Email Address"
+                          style={inputStyle}
                           autoFocus
                         />
                       ) : (
@@ -367,7 +372,7 @@ function ProfileContent() {
                     style={{ background: '#fff', border: '1px solid #e5e7eb', padding: '32px 28px', display: 'flex', flexDirection: 'column', gap: '24px', boxSizing: 'border-box', flex: 1, borderRadius: '0' }}
                   >
                     {/* Card Header */}
-                    <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: 500, display: 'block', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb', fontFamily: "'Neue Machina', sans-serif" }}>Addresses</span>
+                    <span style={{ fontSize: '13px', color: '#111', fontWeight: 600, display: 'block', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb', fontFamily: "'Neue Machina', sans-serif", textTransform: 'uppercase', letterSpacing: '0.08em' }}>Addresses</span>
 
                     {/* — Customer Address — */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -386,7 +391,7 @@ function ProfileContent() {
                           <span style={{ position: 'absolute', bottom: 0, right: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderRight: '2px solid #111827' }} />
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div>
-                              <p style={{ fontSize: '15px', fontWeight: 600, color: '#111827', marginBottom: '6px', fontFamily: "'Neue Machina', sans-serif" }}>{userAddress.firstName} {userAddress.lastName}</p>
+                              <p style={{ fontSize: '15px', fontWeight: 800, color: '#111827', marginBottom: '6px', fontFamily: "'Neue Machina', sans-serif" }}>{userAddress.firstName} {userAddress.lastName}</p>
                               <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '4px', lineHeight: 1.6 }}>{userAddress.deliveryAddress}, {userAddress.state}, {userAddress.areaCouncil}</p>
                               <p style={{ fontSize: '14px', color: '#6b7280' }}>{userAddress.phone}</p>
                             </div>
@@ -401,35 +406,48 @@ function ProfileContent() {
                         </div>
                       )}
                       {isAddingAddress && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <input type="text" placeholder="first name *" value={addressForm.firstName} onChange={(e) => { setAddressForm({ ...addressForm, firstName: e.target.value }); setFormErrors(p => ({ ...p, firstName: false })); }} style={{ ...inputStyle, border: formErrors.firstName ? '1.5px solid #ef4444' : inputStyle.border }} />
-                            <input type="text" placeholder="last name *" value={addressForm.lastName} onChange={(e) => { setAddressForm({ ...addressForm, lastName: e.target.value }); setFormErrors(p => ({ ...p, lastName: false })); }} style={{ ...inputStyle, border: formErrors.lastName ? '1.5px solid #ef4444' : inputStyle.border }} />
-                          </div>
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <input type="tel" placeholder="Phone number *" value={addressForm.phone} onChange={(e) => { setAddressForm({ ...addressForm, phone: e.target.value }); setFormErrors(p => ({ ...p, phone: false })); }} style={{ ...inputStyle, border: formErrors.phone ? '1.5px solid #ef4444' : inputStyle.border }} />
-                            <input type="tel" placeholder="additional phone number" value={addressForm.additionalPhone} onChange={(e) => setAddressForm({ ...addressForm, additionalPhone: e.target.value })} style={inputStyle} />
-                          </div>
-                          <input type="text" placeholder="delivery address *" value={addressForm.deliveryAddress} onChange={(e) => { setAddressForm({ ...addressForm, deliveryAddress: e.target.value }); setFormErrors(p => ({ ...p, deliveryAddress: false })); }} style={{ ...inputStyle, width: '100%', boxSizing: 'border-box', border: formErrors.deliveryAddress ? '1.5px solid #ef4444' : inputStyle.border }} />
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <div style={{ position: 'relative' }}>
-                              <select value={addressForm.state} onChange={(e) => { setAddressForm({ ...addressForm, state: e.target.value, areaCouncil: '' }); setFormErrors(p => ({ ...p, state: false })); }} style={{ ...inputStyle, appearance: 'none', paddingRight: '40px', border: formErrors.state ? '1.5px solid #ef4444' : inputStyle.border }}>
-                                <option value="">State *</option>
-                                {Object.keys(NIGERIAN_STATES).map(s => <option key={s} value={s}>{s}</option>)}
-                              </select>
-                              <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#6b7280' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg></div>
+                            <div>
+                              <label style={labelStyle}>First Name <span style={{ color: 'red' }}>*</span></label>
+                              <input type="text" value={addressForm.firstName} onChange={(e) => { setAddressForm({ ...addressForm, firstName: e.target.value }); setFormErrors(p => ({ ...p, firstName: false })); }} style={{ ...inputStyle, border: formErrors.firstName ? '1px solid #ef4444' : inputStyle.border }} />
                             </div>
-                            <div style={{ position: 'relative' }}>
-                              <select value={addressForm.areaCouncil} onChange={(e) => { setAddressForm({ ...addressForm, areaCouncil: e.target.value }); setFormErrors(p => ({ ...p, areaCouncil: false })); }} style={{ ...inputStyle, appearance: 'none', paddingRight: '40px', border: formErrors.areaCouncil ? '1.5px solid #ef4444' : inputStyle.border }}>
-                                <option value="">Area Council *</option>
-                                {addressForm.state && NIGERIAN_STATES[addressForm.state]?.map(lga => <option key={lga} value={lga}>{lga}</option>)}
-                              </select>
-                              <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#6b7280' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg></div>
+                            <div>
+                              <label style={labelStyle}>Last Name <span style={{ color: 'red' }}>*</span></label>
+                              <input type="text" value={addressForm.lastName} onChange={(e) => { setAddressForm({ ...addressForm, lastName: e.target.value }); setFormErrors(p => ({ ...p, lastName: false })); }} style={{ ...inputStyle, border: formErrors.lastName ? '1px solid #ef4444' : inputStyle.border }} />
                             </div>
                           </div>
-                          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '4px' }}>
-                            <button onClick={() => setIsAddingAddress(false)} style={{ padding: '8px 32px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: '0', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Cancel</button>
-                            <button onClick={handleSaveAddress} style={{ padding: '8px 32px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '0', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Save</button>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                            <div>
+                              <label style={labelStyle}>Phone Number <span style={{ color: 'red' }}>*</span></label>
+                              <input type="tel" value={addressForm.phone} onChange={(e) => { setAddressForm({ ...addressForm, phone: e.target.value }); setFormErrors(p => ({ ...p, phone: false })); }} style={{ ...inputStyle, border: formErrors.phone ? '1px solid #ef4444' : inputStyle.border }} />
+                            </div>
+                            <div>
+                              <label style={labelStyle}>Additional Phone</label>
+                              <input type="tel" value={addressForm.additionalPhone} onChange={(e) => setAddressForm({ ...addressForm, additionalPhone: e.target.value })} style={inputStyle} />
+                            </div>
+                          </div>
+                          <div>
+                            <label style={labelStyle}>Address <span style={{ color: 'red' }}>*</span></label>
+                            <input type="text" value={addressForm.deliveryAddress} onChange={(e) => { setAddressForm({ ...addressForm, deliveryAddress: e.target.value }); setFormErrors(p => ({ ...p, deliveryAddress: false })); }} style={{ ...inputStyle, width: '100%', boxSizing: 'border-box', border: formErrors.deliveryAddress ? '1px solid #ef4444' : inputStyle.border }} />
+                          </div>
+                          <div>
+                            <label style={labelStyle}>Landmark</label>
+                            <input type="text" value={addressForm.landmark} onChange={(e) => setAddressForm({ ...addressForm, landmark: e.target.value })} style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }} />
+                          </div>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                            <div>
+                                <label style={labelStyle}>State <span style={{ color: 'red' }}>*</span></label>
+                                <input type="text" value={addressForm.state} onChange={(e) => { setAddressForm({ ...addressForm, state: e.target.value }); setFormErrors(p => ({ ...p, state: false })); }} style={{ ...inputStyle, border: formErrors.state ? '1px solid #ef4444' : inputStyle.border }} />
+                            </div>
+                            <div>
+                                <label style={labelStyle}>Area Council <span style={{ color: 'red' }}>*</span></label>
+                                <input type="text" value={addressForm.areaCouncil} onChange={(e) => { setAddressForm({ ...addressForm, areaCouncil: e.target.value }); setFormErrors(p => ({ ...p, areaCouncil: false })); }} style={{ ...inputStyle, border: formErrors.areaCouncil ? '1px solid #ef4444' : inputStyle.border }} />
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '8px' }}>
+                            <button onClick={() => setIsAddingAddress(false)} style={{ padding: '8px 32px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Cancel</button>
+                            <button onClick={handleSaveAddress} style={{ padding: '8px 32px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Save</button>
                           </div>
                         </div>
                       )}
@@ -455,7 +473,7 @@ function ProfileContent() {
                           <span style={{ position: 'absolute', bottom: 0, right: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderRight: '2px solid #111827' }} />
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div>
-                              <p style={{ fontSize: '15px', fontWeight: 600, color: '#111827', marginBottom: '6px', fontFamily: "'Neue Machina', sans-serif" }}>{shippingAddress.firstName} {shippingAddress.lastName}</p>
+                              <p style={{ fontSize: '15px', fontWeight: 800, color: '#111827', marginBottom: '6px', fontFamily: "'Neue Machina', sans-serif" }}>{shippingAddress.firstName} {shippingAddress.lastName}</p>
                               <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '4px', lineHeight: 1.6 }}>{shippingAddress.deliveryAddress}, {shippingAddress.state}, {shippingAddress.areaCouncil}</p>
                               <p style={{ fontSize: '14px', color: '#6b7280' }}>{shippingAddress.phone}</p>
                             </div>
@@ -470,35 +488,48 @@ function ProfileContent() {
                         </div>
                       )}
                       {isAddingShipping && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <input type="text" placeholder="first name *" value={shippingForm.firstName} onChange={(e) => { setShippingForm({ ...shippingForm, firstName: e.target.value }); setShippingErrors(p => ({ ...p, firstName: false })); }} style={{ ...inputStyle, border: shippingErrors.firstName ? '1.5px solid #ef4444' : inputStyle.border }} />
-                            <input type="text" placeholder="last name *" value={shippingForm.lastName} onChange={(e) => { setShippingForm({ ...shippingForm, lastName: e.target.value }); setShippingErrors(p => ({ ...p, lastName: false })); }} style={{ ...inputStyle, border: shippingErrors.lastName ? '1.5px solid #ef4444' : inputStyle.border }} />
-                          </div>
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <input type="tel" placeholder="Phone number *" value={shippingForm.phone} onChange={(e) => { setShippingForm({ ...shippingForm, phone: e.target.value }); setShippingErrors(p => ({ ...p, phone: false })); }} style={{ ...inputStyle, border: shippingErrors.phone ? '1.5px solid #ef4444' : inputStyle.border }} />
-                            <input type="tel" placeholder="additional phone number" value={shippingForm.additionalPhone} onChange={(e) => setShippingForm({ ...shippingForm, additionalPhone: e.target.value })} style={inputStyle} />
-                          </div>
-                          <input type="text" placeholder="delivery address *" value={shippingForm.deliveryAddress} onChange={(e) => { setShippingForm({ ...shippingForm, deliveryAddress: e.target.value }); setShippingErrors(p => ({ ...p, deliveryAddress: false })); }} style={{ ...inputStyle, width: '100%', boxSizing: 'border-box', border: shippingErrors.deliveryAddress ? '1.5px solid #ef4444' : inputStyle.border }} />
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <div style={{ position: 'relative' }}>
-                              <select value={shippingForm.state} onChange={(e) => { setShippingForm({ ...shippingForm, state: e.target.value, areaCouncil: '' }); setShippingErrors(p => ({ ...p, state: false })); }} style={{ ...inputStyle, appearance: 'none', paddingRight: '40px', border: shippingErrors.state ? '1.5px solid #ef4444' : inputStyle.border }}>
-                                <option value="">State *</option>
-                                {Object.keys(NIGERIAN_STATES).map(s => <option key={s} value={s}>{s}</option>)}
-                              </select>
-                              <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#6b7280' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg></div>
+                             <div>
+                              <label style={labelStyle}>First Name <span style={{ color: 'red' }}>*</span></label>
+                              <input type="text" value={shippingForm.firstName} onChange={(e) => { setShippingForm({ ...shippingForm, firstName: e.target.value }); setShippingErrors(p => ({ ...p, firstName: false })); }} style={{ ...inputStyle, border: shippingErrors.firstName ? '1px solid #ef4444' : inputStyle.border }} />
                             </div>
-                            <div style={{ position: 'relative' }}>
-                              <select value={shippingForm.areaCouncil} onChange={(e) => { setShippingForm({ ...shippingForm, areaCouncil: e.target.value }); setShippingErrors(p => ({ ...p, areaCouncil: false })); }} style={{ ...inputStyle, appearance: 'none', paddingRight: '40px', border: shippingErrors.areaCouncil ? '1.5px solid #ef4444' : inputStyle.border }}>
-                                <option value="">Area Council *</option>
-                                {shippingForm.state && NIGERIAN_STATES[shippingForm.state]?.map(lga => <option key={lga} value={lga}>{lga}</option>)}
-                              </select>
-                              <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#6b7280' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg></div>
+                            <div>
+                              <label style={labelStyle}>Last Name <span style={{ color: 'red' }}>*</span></label>
+                              <input type="text" value={shippingForm.lastName} onChange={(e) => { setShippingForm({ ...shippingForm, lastName: e.target.value }); setShippingErrors(p => ({ ...p, lastName: false })); }} style={{ ...inputStyle, border: shippingErrors.lastName ? '1px solid #ef4444' : inputStyle.border }} />
                             </div>
                           </div>
-                          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '4px' }}>
-                            <button onClick={() => setIsAddingShipping(false)} style={{ padding: '8px 32px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: '0', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Cancel</button>
-                            <button onClick={handleSaveShipping} style={{ padding: '8px 32px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '0', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Save</button>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                            <div>
+                              <label style={labelStyle}>Phone Number <span style={{ color: 'red' }}>*</span></label>
+                              <input type="tel" value={shippingForm.phone} onChange={(e) => { setShippingForm({ ...shippingForm, phone: e.target.value }); setShippingErrors(p => ({ ...p, phone: false })); }} style={{ ...inputStyle, border: shippingErrors.phone ? '1px solid #ef4444' : inputStyle.border }} />
+                            </div>
+                            <div>
+                              <label style={labelStyle}>Additional Phone</label>
+                              <input type="tel" value={shippingForm.additionalPhone} onChange={(e) => setShippingForm({ ...shippingForm, additionalPhone: e.target.value })} style={inputStyle} />
+                            </div>
+                          </div>
+                          <div>
+                            <label style={labelStyle}>Address <span style={{ color: 'red' }}>*</span></label>
+                            <input type="text" value={shippingForm.deliveryAddress} onChange={(e) => { setShippingForm({ ...shippingForm, deliveryAddress: e.target.value }); setShippingErrors(p => ({ ...p, deliveryAddress: false })); }} style={{ ...inputStyle, width: '100%', boxSizing: 'border-box', border: shippingErrors.deliveryAddress ? '1px solid #ef4444' : inputStyle.border }} />
+                          </div>
+                          <div>
+                            <label style={labelStyle}>Landmark</label>
+                            <input type="text" value={shippingForm.landmark} onChange={(e) => setShippingForm({ ...shippingForm, landmark: e.target.value })} style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }} />
+                          </div>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                            <div>
+                                <label style={labelStyle}>State <span style={{ color: 'red' }}>*</span></label>
+                                <input type="text" value={shippingForm.state} onChange={(e) => { setShippingForm({ ...shippingForm, state: e.target.value }); setShippingErrors(p => ({ ...p, state: false })); }} style={{ ...inputStyle, border: shippingErrors.state ? '1px solid #ef4444' : inputStyle.border }} />
+                            </div>
+                            <div>
+                                <label style={labelStyle}>Area Council <span style={{ color: 'red' }}>*</span></label>
+                                <input type="text" value={shippingForm.areaCouncil} onChange={(e) => { setShippingForm({ ...shippingForm, areaCouncil: e.target.value }); setShippingErrors(p => ({ ...p, areaCouncil: false })); }} style={{ ...inputStyle, border: shippingErrors.areaCouncil ? '1px solid #ef4444' : inputStyle.border }} />
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '8px' }}>
+                            <button onClick={() => setIsAddingShipping(false)} style={{ padding: '8px 32px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Cancel</button>
+                            <button onClick={handleSaveShipping} style={{ padding: '8px 32px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Save</button>
                           </div>
                         </div>
                       )}
@@ -522,7 +553,6 @@ function ProfileContent() {
                     boxSizing: 'border-box'
                   }}
                 >
-                  {/* Internal Title with Inset Demarcating Line */}
                   <div style={{ padding: '24px 28px 0 28px' }}>
                     <span style={{ 
                       fontSize: '13px', 
@@ -563,7 +593,7 @@ function ProfileContent() {
                                   <img src={order.items[0]?.image} alt="" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                                 </div>
                                 <div>
-                                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#111827', marginBottom: '4px' }}>Order {order.id}</p>
+                                  <p style={{ fontSize: '14px', fontWeight: 800, color: '#111827', marginBottom: '4px', fontFamily: "'Neue Machina', sans-serif" }}>Order {order.id}</p>
                                   <p style={{ fontSize: '13px', color: '#6b7280' }}>
                                     {new Date(order.date).toLocaleDateString()} • {order.items.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0)} {order.items.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0) === 1 ? 'item' : 'items'}
                                   </p>
@@ -576,7 +606,7 @@ function ProfileContent() {
                                 </div>
                               </div>
                               <div style={{ textAlign: 'right' }}>
-                                <p style={{ fontSize: '16px', fontWeight: 700, color: '#111827', marginBottom: '8px' }}>₦ {order.total.toLocaleString()}</p>
+                                <p style={{ fontSize: '16px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "var(--font-darker-grotesque), sans-serif" }}>₦ {order.total.toLocaleString()}</p>
                                 <button style={{ color: '#2563eb', fontSize: '13px', border: 'none', background: 'transparent', cursor: 'pointer', fontWeight: 500 }}>View Details</button>
                               </div>
                             </div>
@@ -774,16 +804,3 @@ function ProfileContent() {
     </div>
   );
 }
-
-const inputStyle: React.CSSProperties = {
-  padding: '12px 16px',
-  border: '1px solid #d1d5db',
-  borderRadius: '6px',
-  outline: 'none',
-  fontSize: '14px',
-  fontFamily: 'inherit',
-  color: '#111827',
-  background: '#fff',
-  width: '100%',
-  boxSizing: 'border-box',
-};

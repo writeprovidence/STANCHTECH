@@ -1,7 +1,7 @@
 'use client';
 
 import { useCart } from "@/context/cart-context";
-import { X, Trash2, Plus, Minus } from "lucide-react";
+import { X, Trash2, Plus, Minus, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -41,12 +41,12 @@ export function ShoppingCart() {
                         <div className="flex-1 overflow-y-auto pr-4 -mr-4 space-y-12">
                             {cartItems.length === 0 ? (
                                 <div className="text-center py-20 flex flex-col items-center gap-6">
-                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">Your cart is empty</p>
+                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-[13px]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Your cart is empty</p>
                                     <Link 
                                         href="/shop" 
                                         onClick={() => setIsCartOpen(false)}
-                                        className="text-blue-600 font-bold uppercase tracking-widest text-xs hover:underline flex items-center gap-2"
-                                        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                                        className="text-blue-600 font-bold uppercase tracking-widest text-[12px] hover:underline flex items-center gap-2"
+                                        style={{ fontFamily: "'Neue Machina', sans-serif" }}
                                     >
                                         Return to Shop
                                     </Link>
@@ -65,35 +65,37 @@ export function ShoppingCart() {
                                                 />
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="font-bold text-gray-900 truncate mb-1" style={{ fontSize: '14px' }}>{item.name}</h3>
-                                                <div className="flex items-center justify-between mt-6">
-                                                    <div className="flex items-center border border-gray-200 rounded-lg h-11 bg-white shadow-sm overflow-hidden" style={{ width: "fit-content" }}>
+                                                <h3 className="font-bold text-gray-900 truncate mb-1" style={{ fontSize: '15px', fontFamily: "'Neue Machina', sans-serif" }}>{item.name}</h3>
+                                                <div className="flex items-center justify-between" style={{ marginTop: "16px" }}>
+                                                    <div className="flex items-center border-2 border-black h-8 bg-white" style={{ width: "fit-content" }}>
                                                         <button 
                                                             type="button"
                                                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                            className="px-8 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 transition-colors"
+                                                            className="w-8 h-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-all"
                                                         >
                                                             <Minus size={14} />
                                                         </button>
-                                                        <span className="text-[16px] font-bold text-gray-900 min-w-[40px] text-center" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.quantity}</span>
+                                                        <span className="w-8 text-center font-900 text-[14px]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>{item.quantity}</span>
                                                         <button 
                                                             type="button"
                                                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                            className="px-8 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 transition-colors"
+                                                            className="w-8 h-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-all"
                                                         >
                                                             <Plus size={14} />
                                                         </button>
                                                     </div>
-                                                    <span className="text-[14px] font-black text-gray-900 whitespace-nowrap pr-2">₦ {item.price.toLocaleString()}</span>
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="text-[16px] font-[800] text-black whitespace-nowrap" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>₦ {item.price.toLocaleString()}</span>
+                                                        <button 
+                                                            onClick={() => removeFromCart(item.id)}
+                                                            className="text-gray-400 hover:text-red-600 transition-colors p-1 flex items-center justify-center"
+                                                            title="Remove item"
+                                                        >
+                                                            <Trash2 size={16} />
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <button 
-                                                onClick={() => removeFromCart(item.id)}
-                                                className="text-gray-400 hover:text-red-600 transition-colors self-center p-2"
-                                                title="Remove item"
-                                            >
-                                                <Trash2 size={18} />
-                                            </button>
                                         </div>
                                         {idx !== cartItems.length - 1 && (
                                             <div className="w-full h-px bg-gray-100" style={{ marginTop: "4px" }} />
@@ -106,14 +108,14 @@ export function ShoppingCart() {
                         {cartItems.length > 0 && (
                             <div className="mt-auto">
                                 <div className="flex justify-between items-center mb-4">
-                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Subtotal</span>
-                                    <span className="text-[18px] font-black text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Subtotal</span>
+                                    <span className="text-black" style={{ fontSize: '22px', fontWeight: 900, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
                                         ₦ {cartTotal.toLocaleString()}
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center" style={{ marginBottom: "26px" }}>
-                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Shipping</span>
-                                    <span className="text-[14px] font-bold text-gray-500 uppercase tracking-[0.1em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Shipping</span>
+                                    <span className="text-[13px] font-bold text-gray-500 uppercase tracking-[0.1em]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
                                         Calculated at checkout
                                     </span>
                                 </div>
@@ -123,10 +125,10 @@ export function ShoppingCart() {
                                         <Link 
                                             href="/checkout" 
                                             onClick={() => setIsCartOpen(false)}
-                                            style={{ height: "44px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
-                                            className="bg-[#155DFC] text-white rounded-[4px] text-[14px] font-bold hover:bg-white hover:text-[#155DFC] hover:border-[#155DFC] border border-transparent transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(21,93,252,0.25)] text-center"
+                                            className="w-full h-14 bg-black text-white font-bold uppercase tracking-[0.2em] text-[13px] hover:bg-blue-600 transition-all shadow-xl shadow-black/10 flex items-center justify-center gap-3"
+                                            style={{ fontFamily: "'Neue Machina', sans-serif" }}
                                         >
-                                            PROCEED TO CHECKOUT
+                                            PROCEED TO CHECKOUT <ChevronRight size={16} />
                                         </Link>
                                     </div>
                                 </div>

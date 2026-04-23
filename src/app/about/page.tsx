@@ -16,33 +16,33 @@ export default function AboutPage() {
     ];
 
     const values = [
-        { icon: "/asset/about_image/Integrity & Honesty.png", title: "Integrity & Honesty", description: "We do business transparently and responsibly." },
-        { icon: "/asset/about_image/Technical Excellence.png", title: "Technical Excellence", description: "We apply deep expertise across all makes and models of equipment." },
-        { icon: "/asset/about_image/Safety & Compliance.png", title: "Safety & Compliance", description: "We prevent failures before they disrupt operations." },
-        { icon: "/asset/about_image/Proactive Maintenance.png", title: "Proactive Maintenance", description: "We build lasting relationships, not just complete jobs." },
-        { icon: "/asset/about_image/Customer Partnership.png", title: "Customer Partnership", description: "We prioritize regulatory standards and operational safety at all times." },
+        { icon: "/asset/about_image/Integrity_and_Honesty.png", title: "Integrity & Honesty", description: "We do business transparently and responsibly." },
+        { icon: "/asset/about_image/Technical_Excellence.png", title: "Technical Excellence", description: "We apply deep expertise across all makes and models of equipment." },
+        { icon: "/asset/about_image/Safety_and_Compliance.png", title: "Safety & Compliance", description: "We prevent failures before they disrupt operations." },
+        { icon: "/asset/about_image/Proactive_Maintenance.png", title: "Proactive Maintenance", description: "We build lasting relationships, not just complete jobs." },
+        { icon: "/asset/about_image/Customer_Partnership.png", title: "Customer Partnership", description: "We prioritize regulatory standards and operational safety at all times." },
         { icon: "/asset/about_image/Dependability.png", title: "Dependability", description: "Our clients can rely on us in routine operations and critical moments." }
     ];
 
     const services = [
         { 
             title: "Cummins Engines Maintenance & Repair services.", 
-            img: "/asset/about_image/Cummins Engines Maintenance & Repair services.png",
+            img: "/asset/about_image/Cummins_Engines_Maintenance_and_Repair_services.png",
             desc: "Professional Cummins engine maintenance and repair services for reliable performance, reduced downtime, and extended engine life."
         },
         { 
             title: "Vessel Inspection, Maintenance & Repairs.", 
-            img: "/asset/about_image/Vessel Inspection, Maintenance & Repairs.png",
+            img: "/asset/about_image/Vessel_Inspection_Maintenance_and_Repairs.png",
             desc: "Comprehensive sea vessel maintenance and through-life support for all specialized marine operations, ensuring reliability and safety at all times."
         },
         { 
             title: "Sales of Genuine Cummins Engine Spares parts", 
-            img: "/asset/about_image/Sales of Genuine Cummins Engine Spares parts.png",
+            img: "/asset/about_image/Sales_of_Genuine_Cummins_Engine_Spares_parts.png",
             desc: "Premium quality spares and expert technical support for marine and industrial operations this include sales and installation."
         },
         { 
             title: "Marine & Industrial Fitting / Plumbing", 
-            img: "/asset/about_image/Marine & Industrial Fitting_image.png",
+            img: "/asset/about_image/Marine_and_Industrial_Fitting_image.png",
             desc: "Specialized fitting and plumbing services tailored exactly to demanding marine and industrial environments."
         },
         { 
@@ -52,12 +52,12 @@ export default function AboutPage() {
         },
         { 
             title: "Exhaust, Thermal & Heat Control Solutions", 
-            img: "/asset/about_image/Exhaust, Thermal & Heat Control Solutions.png",
+            img: "/asset/about_image/Exhaust_Thermal_and_Heat_Control_Solutions.png",
             desc: "Exhaust system services, thermal insulation and heat control solutions improving efficiency, safety, and equipment longevity."
         },
         { 
             title: "Structural Welding", 
-            img: "/asset/about_image/Structural Welding.png",
+            img: "/asset/about_image/Structural_Welding.png",
             desc: "Professional welding services for all metal types, ensuring structural strength and durability in demanding environments."
         }
     ];
@@ -93,7 +93,7 @@ export default function AboutPage() {
                 height: "80vh", 
                 minHeight: "700px",
                 position: "relative",
-                backgroundImage: 'url("/asset/about_image/built on excellence.png")',
+                backgroundImage: 'url("/asset/about_image/built_on_excellence.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 display: "flex",
@@ -211,7 +211,7 @@ export default function AboutPage() {
 
             {/* CORE VALUES */}
             <section style={{ 
-                backgroundImage: 'url("/asset/about_image/our values.png")',
+                backgroundImage: 'url("/asset/about_image/our_values.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 padding: "140px 10vw",
@@ -278,12 +278,12 @@ export default function AboutPage() {
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
-                            "/asset/about_image/team 4.png",
-                            "/asset/about_image/team_picture 1.jpeg",
+                            "/asset/about_image/team_4.png",
+                            "/asset/about_image/team_picture_1.jpeg",
                             "/asset/about_image/team_picture2.jpeg",
                             "/asset/about_image/Team1.png",
-                            "/asset/about_image/team 2.png",
-                            "/asset/about_image/team 3.png"
+                            "/asset/about_image/team_2.png",
+                            "/asset/about_image/team_3.png"
                         ].map((img, i) => (
                             <div key={i} style={{ aspectRatio: "1/1", borderRadius: "24px", overflow: "hidden" }}>
                                 <img src={img}
@@ -301,7 +301,7 @@ export default function AboutPage() {
                     <p style={{ marginBottom: "80px", color: "#64748b", fontWeight: 700, fontSize: "20px", fontFamily: "'Darker Grotesque', sans-serif" }}>Our partners in delivering reliable marine and industrial maintenance solutions.</p>
                     
                     <div className="flex flex-wrap justify-start items-center gap-24">
-                        <img src="/asset/Landing page_image/partners.png" alt="Collaborative Partners" className="h-32 w-auto object-contain hover:opacity-80 transition-all duration-700" />
+                        <img src="/asset/Landing_page_image/partners.png" alt="Collaborative Partners" className="h-32 w-auto object-contain hover:opacity-80 transition-all duration-700" />
                     </div>
                 </div>
             </section>

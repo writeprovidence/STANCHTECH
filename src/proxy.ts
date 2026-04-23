@@ -9,22 +9,22 @@ const isPublicRoute = createRouteMatcher([
   '/about(.*)',
   '/api/(.*)',
   '/cart',
-  '/checkout'
+  '/checkout',
+  '/asset(.*)'
 ]);
 
-const clerk = clerkMiddleware(async (auth, request) => {
+export default clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {
     await auth.protect();
   }
 });
 
-export function proxy(request: any, event: any) {
-  return clerk(request, event);
-}
-
 export const config = {
   matcher: [
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|otf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/',
+    // Skip Next.js internals and all static files
+    '/((?!_next|static|asset|favicon.ico).*)',
+    // Always run for API routes
     '/(api|trpc)(.*)',
   ],
 };

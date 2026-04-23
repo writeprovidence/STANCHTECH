@@ -7,15 +7,15 @@ import { PRODUCTS } from "@/data/products";
 
 const HERO_SLIDES = [
   {
-    image: "/asset/Landing page_image/low hour engine.jpeg",
+    image: "/asset/Landing_page_image/low_hour_engine.jpeg",
     description: "Vessel Inspection, Maintenance & Repairs"
   },
   {
-    image: "/asset/Landing page_image/cummin_engine.png",
+    image: "/asset/Landing_page_image/cummin_engine.png",
     description: "Professional one-stop Cummins Diesel Engine spare parts solution"
   },
   {
-    image: "/asset/Landing page_image/support.png",
+    image: "/asset/Landing_page_image/support.png",
     description: "Technical support, prompt after-sales service, fast delivery"
   }
 ];
@@ -92,18 +92,29 @@ export default function HomePage() {
         })}
 
         <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px", maxWidth: 1000, width: "100%" }}>
-          <h1 className="hero-headline" style={{ color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", fontWeight: 800, fontFamily: "'Neue Machina', sans-serif", letterSpacing: "-0.01em", lineHeight: 0.9 }}>
-            <span style={{ display: "block", whiteSpace: "nowrap" }}>Next-Level Marine &amp;</span>
-            <span style={{ display: "block", whiteSpace: "nowrap" }}>Industrial Maintenance</span>
+          <h1 className="hero-headline" style={{ 
+            color: "#fff", 
+            display: "flex", 
+            flexDirection: "column", 
+            alignItems: "center", 
+            fontWeight: 800, 
+            fontFamily: "'Neue Machina', var(--font-space-grotesk), sans-serif", 
+            letterSpacing: "-0.02em", 
+            lineHeight: 1.0,
+            fontSize: "64px",
+            textTransform: "uppercase" 
+          }}>
+            <span style={{ display: "block", whiteSpace: "nowrap" }}>NEXT-LEVEL MARINE &amp;</span>
+            <span style={{ display: "block", whiteSpace: "nowrap" }}>INDUSTRIAL MAINTENANCE</span>
           </h1>
           <p className="hero-description" style={{
             color: "rgba(255,255,255,0.9)",
-            fontFamily: "'Neue Machina', sans-serif",
-            fontSize: "clamp(18px, 1.8vw, 22px)",
+            fontFamily: "var(--font-darker-grotesque), sans-serif",
+            fontSize: "24px",
             maxWidth: 850,
             margin: "24px auto 0",
             lineHeight: 1.6,
-            fontWeight: 300,
+            fontWeight: 700,
             minHeight: "120px",
             display: "flex",
             alignItems: "center",
@@ -166,7 +177,7 @@ export default function HomePage() {
           <h2 className="responsive-title" style={{ fontWeight: 900, marginBottom: 14, letterSpacing: "-0.02em", color: "#0b1a2e", fontFamily: "'Neue Machina', sans-serif" }}>
             Core Business Areas
           </h2>
-          <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.78)", maxWidth: 840, margin: "0 auto", fontFamily: "'Darker Grotesque', sans-serif" }}>
+          <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.78)", maxWidth: 840, margin: "0 auto", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
             Applying professional technical support to maintain, upgrade and perform on board technical services. We offer our clients a
             wide range of marine and industrial maintenance solutions.
           </p>
@@ -194,7 +205,7 @@ export default function HomePage() {
                 <span>Maintenance</span>
                 <span>&amp; Repair services</span>
               </h2>
-              <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45, fontFamily: "'Darker Grotesque', sans-serif" }}>
+              <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
                 Cummins engine maintenance and repair services ensuring optimal performance, reliability, and extended equipment lifespan through expert diagnostics and quality servicing.
               </p>
               <Link
@@ -207,7 +218,7 @@ export default function HomePage() {
             {/* Image RIGHT */}
             <div className="order-1 lg:order-2" style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
               <img 
-                src="/asset/Landing page_image/Cummins.png" 
+                src="/asset/Landing_page_image/Cummins.png" 
                 alt="Cummins Engines Maintenance" 
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", mixBlendMode: "multiply", borderRadius: "15px" }} 
               />
@@ -222,7 +233,7 @@ export default function HomePage() {
           {/* Image LEFT - Vessel Presentation */}
           <div style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
             <img 
-              src="/asset/Landing page_image/vessel.png" 
+              src="/asset/Landing_page_image/vessel.png" 
               alt="Marine Vessel Inspection" 
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block", borderRadius: "15px" }} 
             />
@@ -244,7 +255,7 @@ export default function HomePage() {
               <span>Maintenance</span>
               <span>&amp; Repairs.</span>
             </h2>
-            <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45, fontFamily: "'Darker Grotesque', sans-serif" }}>
+            <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
               Ensure vessel safety and performance through thorough inspection, routine maintenance, and reliable repairs. We prevent breakdowns and keep operations running smoothly.
             </p>
             <Link
@@ -278,7 +289,7 @@ export default function HomePage() {
               <span>Cummins Engine</span>
               <span>Spares</span>
             </h2>
-            <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45, fontFamily: "'Darker Grotesque', sans-serif" }}>
+            <p className="section-body" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 44, lineHeight: 1.45, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
               We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems.
             </p>
             <Link
@@ -292,7 +303,7 @@ export default function HomePage() {
           {/* Image RIGHT - Industrial Spares Mastery */}
             <div className="order-1 lg:order-2" style={{ height: "600px", overflow: "hidden", position: "relative", borderRadius: "15px", width: "100%" }}>
               <img 
-                src="/asset/Landing page_image/marine_spare.png" 
+                src="/asset/Landing_page_image/marine_spare.png" 
                 alt="Professional Marine and Industrial Spares" 
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", borderRadius: "15px" }}
               />
@@ -301,8 +312,9 @@ export default function HomePage() {
       </section>
 
       {/* ─── FEATURED PRODUCTS ─── */}
+      {/* ─── FEATURED PRODUCTS ─── */}
       <section className="section-pad" style={{ 
-        backgroundImage: 'url("/asset/Landing%20page_image/product_card.png")', 
+        backgroundImage: 'url("/asset/Landing_page_image/product_card.png")', 
         backgroundSize: "cover",
         backgroundPosition: "center",
         color: "#0b1a2e", 
@@ -312,10 +324,10 @@ export default function HomePage() {
         {/* Header */}
         <div className="fp-header section-header-flex" style={{ maxWidth: 1400, margin: "0 auto 40px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", paddingTop: 0 }}>
           <div style={{ maxWidth: 880 }}>
-            <h2 className="responsive-title" style={{ fontSize: "clamp(28px, 6vw, 42px)", fontWeight: 900, letterSpacing: "-0.03em", textTransform: "none", lineHeight: 1.05, marginBottom: 8 }}>
+            <h2 className="responsive-title" style={{ fontSize: "clamp(28px, 6vw, 42px)", fontWeight: 900, letterSpacing: "-0.03em", textTransform: "none", lineHeight: 1.05, marginBottom: 8, fontFamily: "'Neue Machina', sans-serif" }}>
               Featured products
             </h2>
-            <p className="responsive-subtitle" style={{ fontSize: "clamp(16px, 4vw, 20px)", color: "rgba(11,26,46,0.72)", fontWeight: 700, fontFamily: "'Darker Grotesque', sans-serif" }}>
+            <p className="responsive-subtitle" style={{ fontSize: "clamp(16px, 4vw, 20px)", color: "rgba(11,26,46,0.72)", fontWeight: 700, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
               Our products help to reduce downtime and ensure operations run smoothly.
             </p>
           </div>
@@ -356,9 +368,9 @@ export default function HomePage() {
             <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
               <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>{PRODUCTS[1].name}</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• High-Pressure Performance</li>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Saltwater Corrosion Resistant</li>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• 24-Month Active Warranty</li>
+                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>• High-Pressure Performance</li>
+                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>• Saltwater Corrosion Resistant</li>
+                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>• 24-Month Active Warranty</li>
               </ul>
               <Link href={`/shop/${PRODUCTS[1].id}`} target="_blank" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
@@ -384,9 +396,9 @@ export default function HomePage() {
             <div style={{ flex: 1, background: "#105C7A", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
               <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>{PRODUCTS[0].name}</h3>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Ultra-Fine Fuel Atomization</li>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• OEM Grade Compatibility</li>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Optimized Fuel Efficiency</li>
+                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>• Ultra-Fine Fuel Atomization</li>
+                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>• OEM Grade Compatibility</li>
+                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "var(--font-darker-grotesque), sans-serif" }}>• Optimized Fuel Efficiency</li>
               </ul>
               <Link href={`/shop/${PRODUCTS[0].id}`} target="_blank" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
                 Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
@@ -405,9 +417,9 @@ export default function HomePage() {
               <span style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: "0.45em", textTransform: "uppercase", color: "#2563eb", marginBottom: 20, opacity: 0.8 }}>
                 Trust in Precision
               </span>
-              <h2 className="responsive-title" style={{ fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, textTransform: "none", marginBottom: 28 }}>
+              <h2 className="responsive-title" style={{ fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, textTransform: "none", marginBottom: 28, fontFamily: "'Neue Machina', sans-serif" }}>
                 Built on Trust, Driven by <br />
-                <span style={{ fontStyle: "italic", fontWeight: 300, color: "#c8d0da", fontFamily: "var(--font-serif, Georgia, serif)" }}>Engineering Excellence.</span>
+                <span style={{ fontStyle: "italic", fontWeight: 300, color: "#c8d0da", fontFamily: "'Neue Machina', sans-serif" }}>Engineering Excellence.</span>
               </h2>
               <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.65)", fontWeight: 700, marginBottom: 40, fontFamily: "'Darker Grotesque', sans-serif" }}>
                 Our commitment to excellence is reflected in the success stories and technical milestones achieved alongside our partners.

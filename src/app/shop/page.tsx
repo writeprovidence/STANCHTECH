@@ -95,84 +95,89 @@ function ShopContent() {
                     <div className="absolute inset-0 bg-[#0b1a2e]/40" />
                 </div>
                 <div className="relative z-10 text-center w-full max-w-4xl px-6">
-                    <h1 className="text-6xl md:text-7xl font-medium text-white" style={{ fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: "-0.04em" }}>Explore Spares</h1>
+                    <h1 className="text-6xl md:text-7xl font-800 text-white" style={{ fontFamily: "'Neue Machina', sans-serif", letterSpacing: "-0.04em" }}>Explore Spares</h1>
                 </div>
             </section>
 
-            <div style={{ background: "#F8FAFC", paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "32px", paddingBottom: "32px" }}>
-                <div style={{ background: "#ffffff", borderRadius: "5px" }} className="border border-gray-200 overflow-hidden w-full">
+            <div style={{ background: "#F8FAFC", paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "16px", paddingBottom: "16px" }}>
+                <div style={{ background: "#ffffff", borderRadius: "0" }} className="border border-gray-200 w-full">
                     <div style={{ paddingLeft: "25px", paddingRight: "40px" }}>
-                        <motion.div onClick={() => setIsFilterOpen(!isFilterOpen)} className="flex items-center gap-4 h-[70px] cursor-pointer transition-all border-b border-gray-100/50">
-                            <div className="w-10 h-10 rounded-full border border-black/40 flex items-center justify-center">
-                                {isFilterOpen ? <X size={20} className="text-gray-900" /> : <SlidersHorizontal size={18} className="text-gray-900" />}
+                        <motion.div 
+                            onClick={() => setIsFilterOpen(!isFilterOpen)} 
+                            className="flex items-center gap-6 h-[64px] cursor-pointer group transition-all"
+                        >
+                            <div className={`w-12 h-12 rounded-none border-2 flex items-center justify-center transition-all duration-500 ${isFilterOpen ? 'bg-black border-black text-white rotate-90' : 'bg-transparent border-black/10 text-gray-900 group-hover:border-black group-hover:scale-105'}`}>
+                                {isFilterOpen ? <X size={20} /> : <SlidersHorizontal size={18} />}
                             </div>
-                            <span className="font-black uppercase tracking-widest text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>
-                                {isFilterOpen ? "Collapse Filters" : "Filter"} 
-                                <span className="font-medium text-gray-500" style={{ marginLeft: "12px" }}>({shopProducts.length} {shopProducts.length === 1 ? "product" : "products"})</span>
-                            </span>
+                            <div className="flex items-baseline gap-4">
+                                <span className="font-900 uppercase tracking-[0.2em] text-black" style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "14px" }}>
+                                    {isFilterOpen ? "Close" : "Filter"} 
+                                </span>
+                                <span className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mt-0.5" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                    ({shopProducts.length} product)
+                                </span>
+                            </div>
                         </motion.div>
 
-                        <AnimatePresence>
-                            {isFilterOpen && (
-                                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden" style={{ background: "#ffffff" }}>
-                                    <div style={{ padding: "50px 0px 80px 0px" }}>
-                                        <div className="flex justify-between items-center" style={{ marginBottom: "50px" }}>
-                                            <div className="flex items-center gap-8">
-                                                <h3 className="font-black text-xs uppercase tracking-[0.2em] text-gray-400" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Refine Search</h3>
-                                                <button onClick={() => setSelectedFilters([])} className="text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors underline underline-offset-4" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Clear All</button>
-                                            </div>
-                                        </div>
-                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-16">
-                                            <div>
-                                                <h4 className="font-black text-xs uppercase tracking-[0.2em] text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", marginBottom: "15px" }}>Part Type</h4>
-                                                <div className="flex flex-col gap-5">
-                                                    {["Fuel Injectors", "Turbos", "Controllers", "Filters", "Hardware"].map(cat => (
-                                                        <label key={cat} className="flex items-center gap-3 cursor-pointer group">
-                                                            <input type="checkbox" className="hidden" checked={selectedFilters.includes(cat)} onChange={() => toggleFilter(cat)} />
-                                                            <div className={`w-5 h-5 border rounded flex items-center justify-center transition-all ${selectedFilters.includes(cat) ? 'border-blue-600 bg-blue-50' : 'border-gray-300 group-hover:border-blue-600'}`}>
-                                                                <div className={`w-2.5 h-2.5 bg-blue-600 rounded-sm transition-all ${selectedFilters.includes(cat) ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
-                                                            </div>
-                                                            <span className={`text-sm font-medium transition-colors ${selectedFilters.includes(cat) ? 'text-black' : 'text-gray-600 group-hover:text-black'}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{cat}</span>
-                                                        </label>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h4 className="font-black text-xs uppercase tracking-[0.2em] text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", marginBottom: "15px" }}>Price Range</h4>
-                                                <div className="flex flex-col gap-5">
-                                                    {["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"].map(range => (
-                                                        <label key={range} className="flex items-center gap-3 cursor-pointer group">
-                                                            <input type="checkbox" className="hidden" checked={selectedFilters.includes(range)} onChange={() => toggleFilter(range)} />
-                                                            <div className={`w-5 h-5 border rounded flex items-center justify-center transition-all ${selectedFilters.includes(range) ? 'border-blue-600 bg-blue-50' : 'border-gray-300 group-hover:border-blue-600'}`}>
-                                                                <div className={`w-2.5 h-2.5 bg-blue-600 rounded-sm transition-all ${selectedFilters.includes(range) ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
-                                                            </div>
-                                                            <span className={`text-sm font-medium transition-colors ${selectedFilters.includes(range) ? 'text-black' : 'text-gray-600 group-hover:text-black'}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{range}</span>
-                                                        </label>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h4 className="font-black text-xs uppercase tracking-[0.2em] text-gray-900" style={{ fontFamily: "'Darker Grotesque', sans-serif", marginBottom: "15px" }}>Condition</h4>
-                                                <div className="flex flex-col gap-5">
-                                                    {["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"].map(cond => (
-                                                        <label key={cond} className="flex items-center gap-3 cursor-pointer group">
-                                                            <input type="checkbox" className="hidden" checked={selectedFilters.includes(cond)} onChange={() => toggleFilter(cond)} />
-                                                            <div className={`w-5 h-5 border rounded flex items-center justify-center transition-all ${selectedFilters.includes(cond) ? 'border-blue-600 bg-blue-50' : 'border-gray-300 group-hover:border-blue-600'}`}>
-                                                                <div className={`w-2.5 h-2.5 bg-blue-600 rounded-sm transition-all ${selectedFilters.includes(cond) ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
-                                                            </div>
-                                                            <span className={`text-sm font-medium transition-colors ${selectedFilters.includes(cond) ? 'text-black' : 'text-gray-600 group-hover:text-black'}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{cond}</span>
-                                                        </label>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="mt-16 flex justify-end">
-                                            <button onClick={() => setIsFilterOpen(false)} className="bg-[#155DFC] text-white py-4 rounded-[4px] font-black uppercase tracking-widest text-xs hover:bg-white hover:text-[#155DFC] hover:border-[#155DFC] border border-transparent transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(21,93,252,0.25)]" style={{ paddingLeft: "12px", paddingRight: "12px", fontFamily: "'Darker Grotesque', sans-serif" }}>Apply Filters</button>
+                        <div
+                            style={{
+                                maxHeight: isFilterOpen ? "1400px" : "0px",
+                                overflow: "hidden",
+                                transition: "max-height 0.5s ease",
+                                background: "white"
+                            }}
+                        >
+                            <div style={{ padding: "32px 24px", borderTop: "1px solid #f9fafb" }}>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+                                    {/* Part Type */}
+                                    <div>
+                                        <h4 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>01. Category</h4>
+                                        <div className="flex flex-col gap-6">
+                                            {["Fuel Injectors", "Turbos", "Controllers", "Filters", "Hardware"].map(cat => (
+                                                <label key={cat} className="flex items-center gap-4 cursor-pointer group">
+                                                    <input type="checkbox" className="hidden" checked={selectedFilters.includes(cat)} onChange={() => toggleFilter(cat)} />
+                                                    <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(cat) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
+                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(cat) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{cat}</span>
+                                                </label>
+                                            ))}
                                         </div>
                                     </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+
+                                    {/* Price Range */}
+                                    <div>
+                                        <h4 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>02. Budget</h4>
+                                        <div className="flex flex-col gap-6">
+                                            {["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"].map(range => (
+                                                <label key={range} className="flex items-center gap-4 cursor-pointer group">
+                                                    <input type="checkbox" className="hidden" checked={selectedFilters.includes(range)} onChange={() => toggleFilter(range)} />
+                                                    <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(range) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
+                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(range) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{range}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Condition */}
+                                    <div>
+                                        <h4 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>03. Condition</h4>
+                                        <div className="flex flex-col gap-6">
+                                            {["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"].map(cond => (
+                                                <label key={cond} className="flex items-center gap-4 cursor-pointer group">
+                                                    <input type="checkbox" className="hidden" checked={selectedFilters.includes(cond)} onChange={() => toggleFilter(cond)} />
+                                                    <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(cond) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
+                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(cond) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{cond}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style={{ marginTop: "32px", paddingTop: "24px", borderTop: "1px solid #f9fafb", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                    <button onClick={() => setSelectedFilters([])} className="text-[11px] font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors">Reset All Filters</button>
+                                    <button onClick={() => setIsFilterOpen(false)} className="hero-btn-primary">Apply Filters</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -180,20 +185,39 @@ function ShopContent() {
             <div style={{ height: isFilterOpen ? "0px" : "12px", background: "#F8FAFC" }} className="transition-all duration-500" />
 
             <div className={`transition-all duration-500 ${isFilterOpen ? 'blur-[3px] opacity-70 pointer-events-none' : ''}`} style={{ paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "16px", paddingBottom: "100px", background: "#F8FAFC" }}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ columnGap: "28px", rowGap: "48px" }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {shopProducts.map((product, index) => (
-                        <Link href={`/shop/${product.id}`} key={index} className="group flex flex-col items-center text-center border border-gray-200 rounded-[5px] px-8 transition-all duration-500 hover:border-blue-400 hover:-translate-y-1 bg-white w-full" style={{ maxWidth: "100%", paddingTop: "34px", paddingBottom: "42px" }}>
-                            <div className="flex items-center justify-center transition-transform duration-700 group-hover:scale-105" style={{ width: "85%", aspectRatio: "1/1", margin: "0 auto 20px auto" }}>
+                        <Link 
+                            href={`/shop/${product.id}`} 
+                            key={index} 
+                            className="group relative bg-white border border-gray-100 text-left transition-all duration-700 hover:-translate-y-2 flex flex-col items-center"
+                            style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
+                        >
+                            {/* Genuine Badge */}
+                            <div className="absolute top-6 left-6 text-blue-600 text-[11px] font-800 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                {product.condition}
+                            </div>
+
+                            <div className="w-full aspect-square mb-6 transition-transform duration-700 group-hover:scale-105 flex items-center justify-center p-8">
                                 <img 
                                     src={product.image} 
                                     alt={product.name} 
-                                    className="w-full h-full object-contain drop-shadow-xl" 
-                                    style={{ padding: product.name.includes("Turbo") ? "24px" : "0px" }}
+                                    className="w-[80%] h-[80%] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-700 opacity-80 group-hover:opacity-100" 
                                 />
                             </div>
-                            <div className="flex flex-col items-start text-left">
-                                <h3 className="uppercase tracking-[0.1em] transition-colors group-hover:text-blue-600" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "14px", fontWeight: 500, color: "#94A3B8", marginBottom: "8px" }}>{product.name}</h3>
-                                <p style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px", fontWeight: 900, color: "#000", marginBottom: "15px" }}>{product.currency} {product.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+
+                            <div style={{ width: "100%", marginTop: "auto", textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "4px" }}>
+                                <p className="text-gray-500 font-800 text-lg leading-tight uppercase" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                    {product.name}
+                                </p>
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", paddingTop: "4px", marginTop: "4px" }}>
+                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif", color: "#000000" }}>
+                                        ₦{product.price.toLocaleString()}
+                                    </span>
+                                    <div className="w-8 h-8 rounded-full border border-gray-100 flex flex-shrink-0 items-center justify-center text-gray-300 group-hover:border-black group-hover:text-black transition-all">
+                                        <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                                    </div>
+                                </div>
                             </div>
                         </Link>
                     ))}

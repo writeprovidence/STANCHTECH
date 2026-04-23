@@ -2,12 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Copy, Loader2, Check, ArrowLeft } from 'lucide-react';
+import { Copy, Loader2, Check, ArrowLeft, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCart } from "@/context/cart-context";
 import { useUser } from "@clerk/nextjs";
 import { svgPaths } from './svg-paths';
-import { NIGERIAN_STATES } from './nigeria-data';
 
 interface CheckoutFormData {
   email: string;
@@ -77,6 +76,7 @@ export default function CheckoutPage() {
     setIsAuth(isSignedIn);
 
     const savedUserAddressStr = localStorage.getItem("stanchtech_user_address");
+    const savedShippingAddressStr = localStorage.getItem("stanchtech_shipping_address");
     const savedProfileStr = localStorage.getItem("stanchtech_checkout_profile");
     
     let baseData = {};
@@ -86,32 +86,44 @@ export default function CheckoutPage() {
       } catch (e) {}
     }
 
+    const initialData: any = {
+      ...baseData,
+      email: user?.primaryEmailAddress?.emailAddress || (baseData as any).email || "",
+      agreeToTerms: (baseData as any).agreeToTerms || false,
+    };
+
     if (savedUserAddressStr) {
       setHasProfileAddress(true);
       try {
         const addr = JSON.parse(savedUserAddressStr);
-        reset({
-          ...baseData,
-          email: user?.primaryEmailAddress?.emailAddress || (baseData as any).email || "",
-          billingFirstName: addr.firstName,
-          billingLastName: addr.lastName,
-          billingPhone: addr.phone,
-          billingAdditionalPhone: addr.additionalPhone,
-          billingAddress: addr.deliveryAddress,
-          billingLandmark: addr.landmark,
-          billingState: addr.state,
-          billingCity: addr.areaCouncil,
-          agreeToTerms: (baseData as any).agreeToTerms || false,
-        });
+        initialData.billingFirstName = addr.firstName;
+        initialData.billingLastName = addr.lastName;
+        initialData.billingPhone = addr.phone;
+        initialData.billingAdditionalPhone = addr.additionalPhone;
+        initialData.billingAddress = addr.deliveryAddress;
+        initialData.billingLandmark = addr.landmark;
+        initialData.billingState = addr.state;
+        initialData.billingCity = addr.areaCouncil;
       } catch (e) {}
     } else {
       setHasProfileAddress(false);
-      reset({
-        ...baseData,
-        email: user?.primaryEmailAddress?.emailAddress || (baseData as any).email || "",
-        agreeToTerms: (baseData as any).agreeToTerms || false,
-      });
     }
+
+    if (savedShippingAddressStr) {
+      try {
+        const shipAddr = JSON.parse(savedShippingAddressStr);
+        initialData.shippingFirstName = shipAddr.firstName;
+        initialData.shippingLastName = shipAddr.lastName;
+        initialData.shippingPhone = shipAddr.phone;
+        initialData.shippingAdditionalPhone = shipAddr.additionalPhone;
+        initialData.shippingAddress = shipAddr.deliveryAddress;
+        initialData.shippingLandmark = shipAddr.landmark;
+        initialData.shippingState = shipAddr.state;
+        initialData.shippingCity = shipAddr.areaCouncil;
+      } catch (e) {}
+    }
+
+    reset(initialData);
   }, [isLoaded, isSignedIn, user, reset]);
 
   const handleSameAsBillingChange = (checked: boolean) => {
@@ -175,6 +187,32 @@ export default function CheckoutPage() {
     };
     localStorage.setItem("stanchtech_user_address", JSON.stringify(profileAddress));
 
+    // Sync shipping address back to profile
+    const shippingData = sameAsBilling ? {
+      firstName: data.billingFirstName,
+      lastName: data.billingLastName,
+      phone: data.billingPhone,
+      additionalPhone: data.billingAdditionalPhone,
+      deliveryAddress: data.billingAddress,
+      landmark: data.billingLandmark,
+      state: data.billingState,
+      areaCouncil: data.billingCity,
+    } : {
+      firstName: data.shippingFirstName,
+      lastName: data.shippingLastName,
+      phone: data.shippingPhone,
+      additionalPhone: data.shippingAdditionalPhone,
+      deliveryAddress: data.shippingAddress,
+      landmark: data.shippingLandmark,
+      state: data.shippingState,
+      areaCouncil: data.shippingCity,
+    };
+
+    localStorage.setItem("stanchtech_shipping_address", JSON.stringify({
+      ...shippingData,
+      id: Date.now().toString()
+    }));
+
     // Success logic: save the order to localStorage for the orders page
     const newOrder = {
       id: `ORD-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
@@ -224,7 +262,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="flex justify-center w-full min-h-screen bg-white" style={{ fontFamily: 'Inter, sans-serif', paddingLeft: '20px', paddingRight: '20px' }}>
+    <div className="flex justify-center w-full min-h-screen bg-white" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif", paddingLeft: '20px', paddingRight: '20px' }}>
       <style jsx global>{`
         nav, footer { display: none !important; }
         input[type="text"], input[type="email"], input[type="tel"] {
@@ -243,12 +281,13 @@ export default function CheckoutPage() {
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[1100px] mx-auto" style={{ paddingTop: '80px', paddingBottom: '100px', paddingLeft: '24px', paddingRight: '24px' }}>
         <div className="flex flex-col lg:grid lg:grid-cols-[minmax(auto,459px)_380px] lg:gap-[160px] gap-12">
           {/* Left Column */}
-          <div className="flex flex-col w-full">
-            <h1 className="text-[24px] font-semibold text-black" style={{ marginBottom: '56px' }}>Checkout</h1>
+          <div className="flex flex-col w-full relative">
+            <div className="hidden lg:block absolute right-[-80px] top-[-80px] bottom-[-100px] border-r border-[#F2F2F2]"></div>
+            <h1 className="text-[24px] font-semibold text-black" style={{ marginBottom: '56px', fontFamily: "'Neue Machina', sans-serif" }}>CHECKOUT</h1>
             
             {!isAuth && (
               <>
-                <div className="bg-[#fff5ea] border border-[#ffe4c7] rounded-[3px] flex items-center justify-start mb-[48px] w-full lg:w-[459px] h-[32px] box-border" style={{ paddingLeft: '32px' }}>
+                <div className="bg-[#fff5ea] border border-[#ffe4c7] rounded-[5px] flex items-center justify-start mb-[48px] w-full lg:w-[459px] h-[32px] box-border" style={{ paddingLeft: '32px' }}>
                   <p className="text-[12px] text-[#25252d]">
                     Already have an account?{' '}
                     <button type="button" className="text-[#7047eb] hover:underline" onClick={() => router.push('/login?next=/checkout')}>
@@ -265,20 +304,17 @@ export default function CheckoutPage() {
             {/* Customer Email */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[16px] text-black">Customer email address</h2>
-                {isAuth && (
-                  <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => router.push('/profile')}>
-                    edit details &gt;
-                  </button>
-                )}
+                <h2 className="text-[16px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Customer email address</h2>
+
               </div>
               <div style={{ width: '100%' }}>
+                <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', letterSpacing: '0.05em' }}>Email Address <span style={{ color: 'red' }}>*</span></label>
                 <input
                   {...register('email')}
                   type="email"
-                  placeholder="email for order confirmation"
+                  placeholder=""
                   style={{ width: '100%' }}
-                  className="border rounded-[3px] px-4 h-[33px] text-[13.31px] text-[#25252d] placeholder:text-[#828282] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
+                  className="border rounded-[5px] px-4 h-[33px] text-[13.31px] text-[#25252d] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
                 />
               </div>
             </div>
@@ -286,114 +322,118 @@ export default function CheckoutPage() {
             {/* Customer Address */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[16px] text-black">Customer address</h2>
-                {isAuth && (
-                  <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => router.push('/profile')}>
-                    edit details &gt;
-                  </button>
-                )}
+                <h2 className="text-[16px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Customer address</h2>
+
               </div>
               <div style={{ width: '100%' }}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
-                  <input
-                    {...register('billingFirstName')}
-                    type="text"
-                    readOnly={hasProfileAddress}
-                    onClick={() => hasProfileAddress && router.push('/profile')}
-                    placeholder="first name"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
-                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                  />
-                  <input
-                    {...register('billingLastName')}
-                    type="text"
-                    readOnly={hasProfileAddress}
-                    onClick={() => hasProfileAddress && router.push('/profile')}
-                    placeholder="last name"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
-                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                  />
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>First Name <span style={{ color: 'red' }}>*</span></label>
+                    <input
+                      {...register('billingFirstName')}
+                      type="text"
+                      readOnly={hasProfileAddress}
+                      onClick={() => hasProfileAddress && router.push('/profile')}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                        hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Last Name <span style={{ color: 'red' }}>*</span></label>
+                    <input
+                      {...register('billingLastName')}
+                      type="text"
+                      readOnly={hasProfileAddress}
+                      onClick={() => hasProfileAddress && router.push('/profile')}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                        hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                    />
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Phone Number <span style={{ color: 'red' }}>*</span></label>
+                    <input
+                      {...register('billingPhone')}
+                      type="tel"
+                      readOnly={hasProfileAddress}
+                      onClick={() => hasProfileAddress && router.push('/profile')}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                        hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Additional Phone</label>
+                    <input
+                      {...register('billingAdditionalPhone')}
+                      type="tel"
+                      readOnly={hasProfileAddress}
+                      onClick={() => hasProfileAddress && router.push('/profile')}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                        hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Address</label>
                   <input
-                    {...register('billingPhone')}
-                    type="tel"
-                    readOnly={hasProfileAddress}
-                    onClick={() => hasProfileAddress && router.push('/profile')}
-                    placeholder="phone number"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
-                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                  />
-                  <input
-                    {...register('billingAdditionalPhone')}
-                    type="tel"
-                    readOnly={hasProfileAddress}
-                    onClick={() => hasProfileAddress && router.push('/profile')}
-                    placeholder="additional phone number"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
-                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
+                      {...register('billingAddress')}
+                      type="text"
+                      readOnly={hasProfileAddress}
+                      onClick={() => hasProfileAddress && router.push('/profile')}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                        hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
                   />
                 </div>
-                <input
-                    {...register('billingAddress')}
-                    type="text"
-                    readOnly={hasProfileAddress}
-                    onClick={() => hasProfileAddress && router.push('/profile')}
-                    placeholder="delivery address"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
-                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                    style={{ width: '100%', marginBottom: '16px' }}
-                />
-                <input
-                    {...register('billingLandmark')}
-                    type="text"
-                    readOnly={hasProfileAddress}
-                    onClick={() => hasProfileAddress && router.push('/profile')}
-                    placeholder="landmark"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
-                      hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                    style={{ width: '100%', marginBottom: '16px' }}
-                />
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Landmark</label>
+                  <input
+                      {...register('billingLandmark')}
+                      type="text"
+                      readOnly={hasProfileAddress}
+                      onClick={() => hasProfileAddress && router.push('/profile')}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                        hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                  />
+                </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div style={{ position: 'relative' }}>
-                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>State <span style={{ color: 'red' }}>*</span></label>
-                    <select
-                        {...register('billingState', { required: true })}
-                        disabled={hasProfileAddress}
-                        onClick={() => hasProfileAddress && router.push('/profile')}
-                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none w-full ${
-                          hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                        }`}
-                    >
-                        <option value="" disabled>Select State</option>
-                        {Object.keys(NIGERIAN_STATES).map(state => (
-                            <option key={state} value={state}>{state}</option>
-                        ))}
-                    </select>
-                </div>
+                      <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>State <span style={{ color: 'red' }}>*</span></label>
+                      <input
+                          {...register('billingState', { required: true })}
+                          type="text"
+                          placeholder=""
+                          disabled={hasProfileAddress}
+                          onClick={() => hasProfileAddress && router.push('/profile')}
+                          className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                            hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                          }`}
+                      />
+                    </div>
                     <div style={{ position: 'relative' }}>
-                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Area Council <span style={{ color: 'red' }}>*</span></label>
-                    <select
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Area Council <span style={{ color: 'red' }}>*</span></label>
+                    <input
                         {...register('billingCity', { required: true })}
+                        type="text"
+                        placeholder=""
                         disabled={hasProfileAddress}
                         onClick={() => hasProfileAddress && router.push('/profile')}
-                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none w-full ${
+                        className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
                           hasProfileAddress ? 'bg-gray-50 border-[#eee] cursor-pointer' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
                         }`}
-                    >
-                        <option value="" disabled>Select Area Council</option>
-                        {watch('billingState') && NIGERIAN_STATES[watch('billingState')] ? (
-                            NIGERIAN_STATES[watch('billingState')].map(lga => (
-                                <option key={lga} value={lga}>{lga}</option>
-                            ))
-                        ) : null}
-                    </select>
+                    />
                 </div>
                 </div>
               </div>
@@ -402,114 +442,123 @@ export default function CheckoutPage() {
             {/* Shipping Address */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[16px] text-black">Shipping address</h2>
-                {!sameAsBilling && (
-                  <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => router.push('/profile')}>
-                    edit details &gt;
-                  </button>
-                )}
+                <h2 className="text-[16px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Shipping address</h2>
+
               </div>
               <label className="flex items-center cursor-pointer" style={{ gap: '12px', marginBottom: '16px' }}>
                 <input
                   type="checkbox"
                   checked={sameAsBilling}
                   onChange={(e) => handleSameAsBillingChange(e.target.checked)}
-                  className="w-[16px] h-[15px] border border-[#d3d3d3] rounded-[3px] accent-[#7047eb]"
+                  className="w-[16px] h-[15px] border border-[#d3d3d3] rounded-[5px] accent-[#7047eb]"
                 />
                 <span className="text-[12px] text-[#25252d]">Same as customer address</span>
               </label>
               <div style={{ width: '100%' }}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
-                  <input
-                    {...register('shippingFirstName')}
-                    type="text"
-                    readOnly={sameAsBilling}
-                    placeholder="first name"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
-                        sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                  />
-                  <input
-                    {...register('shippingLastName')}
-                    type="text"
-                    readOnly={sameAsBilling}
-                    placeholder="last name"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none w-full ${
-                        sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                  />
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>First Name <span style={{ color: 'red' }}>*</span></label>
+                    <input
+                      {...register('shippingFirstName')}
+                      type="text"
+                      readOnly={sameAsBilling}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Last Name <span style={{ color: 'red' }}>*</span></label>
+                    <input
+                      {...register('shippingLastName')}
+                      type="text"
+                      readOnly={sameAsBilling}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                    />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Phone Number <span style={{ color: 'red' }}>*</span></label>
+                    <input
+                      {...register('shippingPhone')}
+                      type="tel"
+                      readOnly={sameAsBilling}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Additional Phone</label>
+                    <input
+                      {...register('shippingAdditionalPhone')}
+                      type="tel"
+                      readOnly={sameAsBilling}
+                      placeholder=""
+                      className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Address</label>
                   <input
-                    {...register('shippingPhone')}
-                    type="tel"
-                    readOnly={sameAsBilling}
-                    placeholder="phone number"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none ${
-                        sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
+                      {...register('shippingAddress')}
+                      type="text"
+                      readOnly={sameAsBilling}
+                      placeholder=""
+                      className={`w-full border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none ${
+                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
                   />
+                </div>
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Landmark</label>
                   <input
-                    {...register('shippingAdditionalPhone')}
-                    type="tel"
-                    readOnly={sameAsBilling}
-                    placeholder="additional phone number"
-                    className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none ${
-                        sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
+                      {...register('shippingLandmark')}
+                      type="text"
+                      readOnly={sameAsBilling}
+                      placeholder=""
+                      className={`w-full border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none ${
+                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                      }`}
                   />
                 </div>
 
-                <input
-                    {...register('shippingAddress')}
-                    type="text"
-                    readOnly={sameAsBilling}
-                    placeholder="delivery address"
-                    className={`w-full border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none ${
-                        sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                    style={{ marginBottom: '16px' }}
-                />
-                
-                <input
-                    {...register('shippingLandmark')}
-                    type="text"
-                    readOnly={sameAsBilling}
-                    placeholder="landmark"
-                    className={`w-full border rounded-[3px] px-4 h-[33px] text-[13.31px] placeholder:text-[#828282] focus:outline-none ${
-                        sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                    }`}
-                    style={{ marginBottom: '16px' }}
-                />
-
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                    <select
-                        {...register('shippingState')}
-                        disabled={sameAsBilling}
-                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none ${
-                            sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                        }`}
-                    >
-                        <option value="" disabled>State</option>
-                        {Object.keys(NIGERIAN_STATES).map(state => (
-                            <option key={state} value={state}>{state}</option>
-                        ))}
-                    </select>
-                    <select
-                        {...register('shippingCity')}
-                        disabled={sameAsBilling}
-                        className={`border rounded-[3px] px-4 h-[33px] text-[13.31px] focus:outline-none ${
-                            sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                        }`}
-                    >
-                        <option value="" disabled>Local council</option>
-                        {watch('shippingState') && NIGERIAN_STATES[watch('shippingState')] ? (
-                            NIGERIAN_STATES[watch('shippingState')].map(lga => (
-                                <option key={lga} value={lga}>{lga}</option>
-                            ))
-                        ) : null}
-                    </select>
+                    <div>
+                      <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>State <span style={{ color: 'red' }}>*</span></label>
+                      <input
+                          {...register('shippingState')}
+                          type="text"
+                          placeholder=""
+                          disabled={sameAsBilling}
+                          className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                              sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                          }`}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Local Council <span style={{ color: 'red' }}>*</span></label>
+                      <input
+                          {...register('shippingCity')}
+                          type="text"
+                          placeholder=""
+                          disabled={sameAsBilling}
+                          className={`border rounded-[5px] px-4 h-[33px] text-[13.31px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
+                              sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
+                          }`}
+                      />
+                    </div>
                 </div>
               </div>
             </div>
@@ -517,13 +566,13 @@ export default function CheckoutPage() {
             {/* Delivery Options */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[16px] text-black">Delivery options</h2>
+                <h2 className="text-[16px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Delivery options</h2>
               </div>
               <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                 <button
                   type="button"
                   onClick={() => setDeliveryMethod('home')}
-                  className={`relative border rounded-[3px] text-left transition-all ${
+                  className={`relative border rounded-[5px] text-left transition-all ${
                     deliveryMethod === 'home'
                       ? 'border-[#7047eb] bg-white'
                       : 'border-[#bdbdbd] bg-[#f9f9f9]'
@@ -545,7 +594,7 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => setDeliveryMethod('store')}
-                  className={`relative border rounded-[3px] text-left transition-all ${
+                  className={`relative border rounded-[5px] text-left transition-all ${
                     deliveryMethod === 'store'
                       ? 'border-[#7047eb] bg-white'
                       : 'border-[#bdbdbd] bg-[#f9f9f9]'
@@ -569,7 +618,7 @@ export default function CheckoutPage() {
                   href="/contact#address" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="flex items-center border border-[#d3d3d3] rounded-[3px] bg-white cursor-pointer hover:border-[#7047eb] transition-colors"
+                  className="flex items-center border border-[#d3d3d3] rounded-[5px] bg-white cursor-pointer hover:border-[#7047eb] transition-colors"
                   style={{ width: '100%', maxWidth: '459px', height: '44px', marginTop: '32px', paddingLeft: '20px', paddingRight: '20px', boxSizing: 'border-box' }}
                 >
                   <span className="text-[#828282] text-[11px] flex-1 tracking-wide">Locate StanchTech</span>
@@ -585,13 +634,18 @@ export default function CheckoutPage() {
               )}
             </div>
 
+
+          
+
+
+
           </div>
 
 
           {/* Right Column - Order Summary */}
           <div>
             <div className="flex justify-between items-center" style={{ marginBottom: '32px' }}>
-              <h2 className="text-[16px] text-[#25252d]">Order Summary({cartCount})</h2>
+              <h2 className="text-[16px] text-[#25252d]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Order Summary({cartCount})</h2>
               <div className="flex items-center gap-3">
                 <button type="button" className="text-[#016fd0] text-[12px] hover:underline" onClick={() => setIsCartOpen(true)}>
                   edit cart
@@ -616,11 +670,11 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-start" style={{ marginBottom: '8px' }}>
-                      <p className="text-[12px] text-[#19191d]">
+                      <p className="text-[12px] text-[#19191d]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
                         {item.name}
                         {(item as any).stock === 0 && <span className="text-red-500 font-bold ml-2 text-[10px] whitespace-nowrap">(Out of stock)</span>}
                       </p>
-                      <p className="text-[12px] text-black whitespace-nowrap ml-2">₦ {(item.price * item.quantity).toLocaleString()}</p>
+                      <p className="text-[12px] text-black whitespace-nowrap ml-2" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>₦ {(item.price * item.quantity).toLocaleString()}</p>
                     </div>
                     <p className="text-[12px] text-black">Qty: {item.quantity}</p>
                   </div>
@@ -641,7 +695,7 @@ export default function CheckoutPage() {
                 <input
                   type="text"
                   placeholder="Promo code"
-                  className="w-full border border-[#d3d3d3] rounded-[3px] px-3 h-[33px] text-[12px] focus:outline-none focus:border-[#7047eb]"
+                  className="w-full border border-[#d3d3d3] rounded-[5px] px-3 h-[33px] text-[12px] focus:outline-none focus:border-[#7047eb]"
                 />
               )}
             </div>
@@ -650,25 +704,25 @@ export default function CheckoutPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
               <div className="flex justify-between text-[12px]">
                 <span className="text-black">Subtotal</span>
-                <span className="text-black">₦ {cartTotal.toLocaleString()}</span>
+                <span className="text-black" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>₦ {cartTotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-[12px]">
                 <span className="text-black">Shipping</span>
-                 <span className="text-black font-semibold">₦ 0.00</span>
+                 <span className="text-black font-semibold" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>₦ 0.00</span>
               </div>
             </div>
 
               <div style={{ borderTop: '1px solid #e0e0e0', paddingTop: '24px', marginBottom: '48px' }}>
                 <div className="flex justify-between text-[12px] font-medium">
                   <span className="text-black">Total</span>
-                  <span className="text-black">₦ {cartTotal.toLocaleString()}</span>
+                  <span className="text-black" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>₦ {cartTotal.toLocaleString()}</span>
                 </div>
               </div>
 
             {/* Payment Options */}
-            <div style={{ marginBottom: '32px' }}>
+            <div style={{ marginTop: '120px', marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '24px' }}>
-                <h2 className="text-[16px] text-black">Payment options</h2>
+                <h2 className="text-[16px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Payment options</h2>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div className="flex items-start gap-3 cursor-pointer" onClick={() => { setPaymentMethod('cod'); setBankExpanded(false); }}>
@@ -705,7 +759,7 @@ export default function CheckoutPage() {
                     <div className="text-[12px] text-[#828282]" style={{ marginBottom: '12px' }}>Make payment directly through bank account.</div>
                     
                     {paymentMethod === 'bank' && bankExpanded && (
-                      <div className="mt-4 bg-[#f9f9f9] rounded-[3px] border border-[#e0e0e0] cursor-default pointer-events-auto" style={{ padding: '32px 40px', display: 'flex', flexDirection: 'column', gap: '24px' }} onClick={(e) => e.stopPropagation()}>
+                      <div className="mt-4 bg-[#f9f9f9] rounded-[5px] border border-[#e0e0e0] cursor-default pointer-events-auto" style={{ padding: '32px 40px', display: 'flex', flexDirection: 'column', gap: '24px' }} onClick={(e) => e.stopPropagation()}>
                         <div className="flex justify-between items-center">
                           <div>
                             <div className="text-[10px] text-[#828282] mb-1">Bank Account</div>
@@ -762,7 +816,7 @@ export default function CheckoutPage() {
                         <text x="0" y="16" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="17" fill="#9ca3af">O</text>
                         <text x="13" y="16" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="17" fill="#9ca3af">Pay</text>
                       </svg>
-                      <span className="bg-[#f3f4f6] text-[#9ca3af] text-[9px] font-bold px-1.5 py-0.5 rounded-[3px] tracking-wide border border-[#e5e7eb]">COMING SOON</span>
+                      <span className="bg-[#f3f4f6] text-[#9ca3af] text-[9px] font-bold px-1.5 py-0.5 rounded-[5px] tracking-wide border border-[#e5e7eb]">COMING SOON</span>
                     </div>
                     <div className="text-[12px] text-[#b0b0b0]">OPay payments — wallet, bank card & transfer — launching soon.</div>
                   </div>
@@ -772,18 +826,18 @@ export default function CheckoutPage() {
             </div>
 
             {/* Review & Place Order */}
-            <div style={{ marginBottom: '24px' }}>
-              <h2 className="text-[16px] text-black" style={{ marginBottom: '16px' }}>Review & Place Order</h2>
+            <div style={{ marginTop: '60px', marginBottom: '24px' }}>
+              <h2 className="text-[16px] text-black" style={{ marginBottom: '16px', fontFamily: "'Neue Machina', sans-serif" }}>Review & Place Order</h2>
               <p className="text-[14px] text-[#645a5c]" style={{ marginBottom: '24px' }}>
                 Please review the order details and payment details before proceeding to confirm your order
               </p>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '48px' }}>
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     {...register('agreeToTerms')}
                     type="checkbox"
-                    className="mt-0.5 w-4 h-4 border border-[#d3d3d3] rounded-[3px] accent-[#7047eb]"
+                    className="mt-0.5 w-4 h-4 border border-[#d3d3d3] rounded-[5px] accent-[#7047eb]"
                   />
                   <span className="text-[12px] text-[#25252d]">
                     I agree to the{' '}
@@ -799,7 +853,7 @@ export default function CheckoutPage() {
                   <input
                     {...register('emailSignup')}
                     type="checkbox"
-                    className="mt-0.5 w-4 h-4 border border-[#d3d3d3] rounded-[3px] accent-[#7047eb]"
+                    className="mt-0.5 w-4 h-4 border border-[#d3d3d3] rounded-[5px] accent-[#7047eb]"
                   />
                   <span className="text-[12px] text-[#25252d]">Sign me up to the email list</span>
                 </label>
@@ -808,11 +862,18 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={isSubmitting || cartItems.length === 0 || !isFormValid}
-                className="bg-[#155DFC] text-white rounded-[4px] text-[13px] font-semibold hover:bg-white hover:text-[#155DFC] hover:border-[#155DFC] border border-transparent transition-all disabled:bg-[#f2f2f2] disabled:text-[#bdbdbd] disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(21,93,252,0.25)] w-full h-[40px] flex justify-center items-center"
+                className="w-full h-14 bg-black text-white font-bold uppercase tracking-[0.2em] text-xs hover:bg-blue-600 transition-all flex items-center justify-center gap-3 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+                style={{ fontFamily: "'Neue Machina', sans-serif" }}
               >
-                {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "Place Order"}
+                {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : (
+                  <>
+                    PLACE ORDER <ChevronRight size={16} />
+                  </>
+                )}
               </button>
             </div>
+
+
 
           </div>
         </div>
