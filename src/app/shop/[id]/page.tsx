@@ -31,9 +31,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* --- PREMIUM BREADCRUMB --- */}
             <div className="border-b border-gray-100 bg-white">
                 <div style={{ paddingLeft: "5vw", paddingRight: "5vw" }} className="h-16 flex items-center gap-4">
-                    <Link href="/shop" className="text-gray-400 hover:text-black transition-colors font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Shop</Link>
+                    <Link href="/shop" className="text-gray-400 hover:text-black transition-colors font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Shop</Link>
                     <ChevronRight size={12} className="text-gray-300" />
-                    <span className="text-black font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>{product.name}</span>
+                    <span className="text-black font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{product.name}</span>
                 </div>
             </div>
 
@@ -41,9 +41,56 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 {/* --- PRODUCT MAIN --- */}
                 <section className="w-full flex flex-col lg:flex-row gap-24 items-start">
                     {/* LEFT: IMAGES */}
-                    <div className="w-full lg:w-[55%] flex gap-8">
-                        {/* THUMBNAILS */}
-                        <div className="hidden md:flex flex-col gap-4">
+                    <div className="w-full lg:w-[55%] flex flex-col gap-4">
+                        {/* MAIN IMAGE */}
+                        <div className="w-full flex gap-8">
+                            {/* THUMBNAILS — vertical on desktop, hidden inside this flex on mobile */}
+                            <div className="hidden md:flex flex-col gap-4 flex-shrink-0">
+                                {[
+                                    { rotate: "0deg", scale: "1" },
+                                    { rotate: "8deg", scale: "0.95" },
+                                    { rotate: "-6deg", scale: "1.05" }
+                                ].map((style, idx) => (
+                                    <button 
+                                        key={idx}
+                                        onClick={() => setActiveImage(idx)}
+                                        className={`w-20 h-20 border-2 transition-all duration-500 overflow-hidden bg-[#f8fafc] flex items-center justify-center p-2 ${activeImage === idx ? "border-black scale-105" : "border-transparent opacity-40 hover:opacity-100"}`}
+                                    >
+                                        <Image 
+                                            src={product.image} 
+                                            alt={`View ${idx + 1}`} 
+                                            width={100}
+                                            height={100}
+                                            className="w-full h-full object-contain filter grayscale"
+                                            style={{ transform: `rotate(${style.rotate}) scale(${style.scale})`, transition: "transform 0.3s" }}
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                            {/* MAIN IMAGE */}
+                            <div className="flex-1 border border-gray-50 flex items-center justify-center relative group overflow-hidden" style={{ background: "#f8fafc", aspectRatio: "1 / 1" }}>
+                                <div className="absolute top-8 right-8 z-10">
+                                    <span className="bg-black text-white px-4 py-1 text-[12px] font-900 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                        {product.condition}
+                                    </span>
+                                </div>
+                                <MotionImage 
+                                    key={activeImage}
+                                    initial={{ opacity: 0, scale: 1.1 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    src={product.image} 
+                                    alt={product.name} 
+                                    width={1200}
+                                    height={1200}
+                                    className="w-[85%] h-[85%] object-contain brightness-105"
+                                    style={{ transform: activeImage === 1 ? "rotate(8deg)" : activeImage === 2 ? "rotate(-6deg) scale(1.05)" : "rotate(0deg)" }}
+                                />
+                            </div>
+                        </div>
+
+                        {/* THUMBNAILS — horizontal row on mobile only */}
+                        <div className="flex md:hidden gap-3 justify-center">
                             {[
                                 { rotate: "0deg", scale: "1" },
                                 { rotate: "8deg", scale: "0.95" },
@@ -52,7 +99,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                 <button 
                                     key={idx}
                                     onClick={() => setActiveImage(idx)}
-                                    className={`w-20 h-20 border-2 transition-all duration-500 overflow-hidden bg-[#f8fafc] flex items-center justify-center p-2 ${activeImage === idx ? "border-black scale-105" : "border-transparent opacity-40 hover:opacity-100"}`}
+                                    className={`w-20 h-20 border-2 transition-all duration-500 overflow-hidden bg-[#f8fafc] flex items-center justify-center p-2 ${activeImage === idx ? "border-black scale-105" : "border-transparent opacity-40"}`}
                                 >
                                     <Image 
                                         src={product.image} 
@@ -65,40 +112,20 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                 </button>
                             ))}
                         </div>
-                        {/* MAIN IMAGE */}
-                        <div className="flex-1 border border-gray-50 flex items-center justify-center relative group overflow-hidden" style={{ background: "#f8fafc", aspectRatio: "1 / 1" }}>
-                            <div className="absolute top-8 right-8 z-10">
-                                <span className="bg-black text-white px-4 py-1 text-[12px] font-900 uppercase tracking-[0.2em]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
-                                    {product.condition}
-                                </span>
-                            </div>
-                            <MotionImage 
-                                key={activeImage}
-                                initial={{ opacity: 0, scale: 1.1 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                                src={product.image} 
-                                alt={product.name} 
-                                width={1200}
-                                height={1200}
-                                className="w-[85%] h-[85%] object-contain brightness-105"
-                                style={{ transform: activeImage === 1 ? "rotate(8deg)" : activeImage === 2 ? "rotate(-6deg) scale(1.05)" : "rotate(0deg)" }}
-                            />
-                        </div>
                     </div>
 
                     {/* RIGHT: INFO */}
                     <div className="w-full lg:w-[45%] space-y-10">
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
-                                <span className="text-blue-600 font-bold uppercase tracking-[0.3em] text-[12px]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>{product.category}</span>
+                                <span className="text-blue-600 font-bold uppercase tracking-[0.3em] text-[12px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{product.category}</span>
                                 <div className="h-px w-8 bg-blue-100" />
                             </div>
                             <h1 className="text-5xl font-800 text-black uppercase leading-[1.1]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
                                 {product.name}
                             </h1>
                             <div className="flex items-center gap-6" style={{ marginTop: "16px" }}>
-                                <span className="text-4xl font-800 text-black" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
+                                <span className="text-4xl font-800 text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     ₦{product.price.toLocaleString()}
                                 </span>
                                 <div className="h-6 w-px bg-gray-100" />
@@ -126,7 +153,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                     >
                                         <Minus size={16} />
                                     </button>
-                                    <span className="w-12 text-center font-900 text-lg" style={{ fontFamily: "'Neue Machina', sans-serif" }}>{quantity}</span>
+                                    <span className="w-12 text-center font-900 text-lg" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{quantity}</span>
                                     <button 
                                         onClick={() => setQuantity(quantity + 1)}
                                         className="w-14 h-full flex items-center justify-center hover:bg-black hover:text-white transition-all"
@@ -137,7 +164,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                 <button 
                                     onClick={() => addToCart({ ...product, quantity })}
                                     className="flex-1 h-14 bg-black text-white font-bold uppercase tracking-[0.2em] text-[13px] hover:bg-blue-600 transition-all flex items-center justify-center gap-3"
-                                    style={{ fontFamily: "'Neue Machina', sans-serif" }}
+                                    style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
                                 >
                                     Add To Cart <ChevronRight size={16} />
                                 </button>
@@ -146,10 +173,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             <div className="flex items-center justify-between py-6" style={{ marginTop: "32px" }}>
                                 <div className="flex items-center gap-3">
                                     <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
-                                    <span className="text-[13px] font-900 uppercase tracking-widest text-black" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>In Stock</span>
+                                    <span className="text-[13px] font-900 uppercase tracking-widest text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>In Stock</span>
                                 </div>
                                 <div className="flex gap-4 items-center">
-                                    <span className="text-[13px] font-900 uppercase tracking-widest text-black" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>Share Product</span>
+                                    <span className="text-[13px] font-900 uppercase tracking-widest text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Share Product</span>
                                     <div className="flex gap-5 items-center">
                                         <Facebook size={18} color="#1877F2" strokeWidth={2} className="cursor-pointer hover:scale-110 transition-transform" />
                                         <Instagram size={18} color="#E4405F" strokeWidth={2} className="cursor-pointer hover:scale-110 transition-transform" />
@@ -173,7 +200,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`pb-4 relative text-[15px] font-900 uppercase tracking-[0.3em] transition-all ${activeTab === tab ? 'text-black' : 'text-gray-300'}`}
-                                style={{ fontFamily: "'Neue Machina', sans-serif" }}
+                                style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
                             >
                                 {tab}
                             </button>
@@ -191,7 +218,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             {activeTab === 'description' && (
                                 <div className="space-y-16">
                                     <div className="max-w-4xl">
-                                        <p className="text-xl text-gray-500 leading-relaxed font-medium" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                        <p className="text-xl text-gray-500 leading-relaxed font-medium" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                             Precision-engineered for heavy-duty performance, our spare parts undergo rigorous testing to exceed OEM standards. Built with premium materials to withstand corrosive marine environments and intense vibration, these highly reliable replacements effortlessly integrate into your existing systems to maximize operational uptime and minimize your long-term maintenance costs.
                                         </p>
                                     </div>
@@ -222,9 +249,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                         ['Interface', 'Standard Flange'],
                                         ['Warranty', '12 Months Limited']
                                     ].map(([label, val]) => (
-                                        <div key={label} className="flex items-center justify-between py-4 border-b border-gray-50">
-                                            <span className="text-[12px] font-bold uppercase tracking-widest text-gray-400" style={{ fontFamily: "'Neue Machina', sans-serif" }}>{label}</span>
-                                            <span className="text-[13px] font-900 uppercase" style={{ fontFamily: "'Neue Machina', sans-serif" }}>{val}</span>
+                                        <div key={label} className="flex items-center justify-between py-5 border-b border-gray-100">
+                                            <span className="text-[16px] font-bold uppercase tracking-widest text-gray-400" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{label}</span>
+                                            <span className="text-[17px] font-900 uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{val}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -242,8 +269,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-xs">{(review.name).charAt(0)}</div>
                                                     <div>
-                                                        <p className="text-xs font-900 uppercase">{review.name}</p>
-                                                        <p className="text-[10px] text-gray-400 uppercase tracking-widest">{review.date}</p>
+                                                        <p className="text-[17px] font-900 uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{review.name}</p>
+                                                        <p className="text-[15px] text-gray-400 uppercase tracking-widest" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{review.date}</p>
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-1 text-[#FFDA5B]">
@@ -274,7 +301,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
                         >
                             {/* Genuine Badge */}
-                            <div className="absolute top-6 left-6 px-3 py-1 bg-blue-50 text-blue-600 text-[12px] font-900 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                            <div className="absolute top-6 left-6 px-3 py-1 bg-blue-50 text-blue-600 text-[16px] font-900 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                 {p.condition}
                             </div>
 
@@ -287,11 +314,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             </div>
 
                             <div style={{ width: "100%", marginTop: "auto", textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "4px" }}>
-                                <p className="text-black font-800 text-lg leading-tight uppercase" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                <p className="text-black font-800 text-lg leading-tight uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     {p.name}
                                 </p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", paddingTop: "4px", marginTop: "4px" }}>
-                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif", color: "#000000" }}>
+                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "'Darker Grotesque', sans-serif", color: "#000000" }}>
                                         ₦{p.price.toLocaleString()}
                                     </span>
                                     <div className="w-8 h-8 rounded-full border border-gray-100 flex flex-shrink-0 items-center justify-center text-gray-300 group-hover:border-black group-hover:text-black transition-all">
@@ -304,7 +331,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </div>
                 
                 <div className="flex justify-center" style={{ marginTop: "120px" }}>
-                    <Link href="/shop" className="text-[15px] font-900 uppercase tracking-[0.3em] hover:text-blue-600 transition-all" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                    <Link href="/shop" className="text-[15px] font-900 uppercase tracking-[0.3em] hover:text-blue-600 transition-all" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                         View Full catalog
                     </Link>
                 </div>

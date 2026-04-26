@@ -41,12 +41,12 @@ export function ShoppingCart() {
                         <div className="flex-1 overflow-y-auto pr-4 -mr-4 space-y-12">
                             {cartItems.length === 0 ? (
                                 <div className="text-center py-20 flex flex-col items-center gap-6">
-                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-[13px]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Your cart is empty</p>
+                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-[13px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Your cart is empty</p>
                                     <Link 
                                         href="/shop" 
                                         onClick={() => setIsCartOpen(false)}
                                         className="text-blue-600 font-bold uppercase tracking-widest text-[12px] hover:underline flex items-center gap-2"
-                                        style={{ fontFamily: "'Neue Machina', sans-serif" }}
+                                        style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
                                     >
                                         Return to Shop
                                     </Link>
@@ -75,7 +75,7 @@ export function ShoppingCart() {
                                                         >
                                                             <Minus size={14} />
                                                         </button>
-                                                        <span className="w-8 text-center font-900 text-[14px]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>{item.quantity}</span>
+                                                        <span className="w-8 text-center font-900 text-[14px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{item.quantity}</span>
                                                         <button 
                                                             type="button"
                                                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
@@ -85,7 +85,7 @@ export function ShoppingCart() {
                                                         </button>
                                                     </div>
                                                     <div className="flex items-center gap-3">
-                                                        <span className="text-[16px] font-[800] text-black whitespace-nowrap" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>₦ {item.price.toLocaleString()}</span>
+                                                        <span className="text-[16px] font-[800] text-black whitespace-nowrap" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>₦ {item.price.toLocaleString()}</span>
                                                         <button 
                                                             onClick={() => removeFromCart(item.id)}
                                                             className="text-gray-400 hover:text-red-600 transition-colors p-1 flex items-center justify-center"
@@ -108,14 +108,14 @@ export function ShoppingCart() {
                         {cartItems.length > 0 && (
                             <div className="mt-auto">
                                 <div className="flex justify-between items-center mb-4">
-                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Subtotal</span>
-                                    <span className="text-black" style={{ fontSize: '22px', fontWeight: 900, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
+                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Subtotal</span>
+                                    <span className="text-black" style={{ fontSize: '22px', fontWeight: 900, fontFamily: "'Darker Grotesque', sans-serif" }}>
                                         ₦ {cartTotal.toLocaleString()}
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center" style={{ marginBottom: "26px" }}>
-                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Shipping</span>
-                                    <span className="text-[13px] font-bold text-gray-500 uppercase tracking-[0.1em]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Shipping</span>
+                                    <span className="text-[13px] font-bold text-gray-500 uppercase tracking-[0.1em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                         Calculated at checkout
                                     </span>
                                 </div>
@@ -126,7 +126,7 @@ export function ShoppingCart() {
                                             href="/checkout" 
                                             onClick={() => setIsCartOpen(false)}
                                             className="w-full h-14 bg-black text-white font-bold uppercase tracking-[0.2em] text-[13px] hover:bg-blue-600 transition-all shadow-xl shadow-black/10 flex items-center justify-center gap-3"
-                                            style={{ fontFamily: "'Neue Machina', sans-serif" }}
+                                            style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
                                         >
                                             PROCEED TO CHECKOUT <ChevronRight size={16} />
                                         </Link>

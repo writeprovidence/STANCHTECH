@@ -32,7 +32,7 @@ export function Footer() {
                     color: "#fff",
                     textTransform: "uppercase",
                     lineHeight: 1,
-                    fontFamily: "'Neue Machina', sans-serif"
+                    fontFamily: "'Darker Grotesque', sans-serif"
                   }}>
                     STANCHTECH
                   </span>
@@ -59,7 +59,7 @@ export function Footer() {
             {/* Column 2: Navigation */}
             <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Neue Machina', sans-serif" }}>Quick Links</p>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Quick Links</p>
               </div>
               <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {["HOME", "ABOUT", "SHOP", "CONTACT"].map((link) => {
@@ -94,7 +94,7 @@ export function Footer() {
             {/* Column 3: Contact Us */}
             <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Neue Machina', sans-serif" }}>Contact Us</p>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Contact Us</p>
               </div>
               <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 20, lineHeight: 1.6 }}>
                 <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
@@ -115,7 +115,7 @@ export function Footer() {
             {/* Column 4: Emergency Support */}
             <div className="footer-col">
               <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Neue Machina', sans-serif" }}>Emergency Support</p>
+                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Emergency Support</p>
               </div>
               <div className="footer-content-col" style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 24 }}>
                 <p style={{ lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>
@@ -147,8 +147,8 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div style={{ maxWidth: 1320, margin: "80px auto 0", paddingTop: 40, borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 500, fontFamily: "var(--font-darker-grotesque), sans-serif" }}>
-            <p style={{ fontFamily: "var(--font-darker-grotesque), sans-serif" }}>&copy; {new Date().getFullYear()} Stanch Tech. All rights reserved.</p>
+          <div style={{ maxWidth: 1320, margin: "80px auto 0", paddingTop: 40, borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif" }}>
+            <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>&copy; {new Date().getFullYear()} Stanch Tech. All rights reserved.</p>
             <div style={{ display: "flex", gap: 40 }}>
               <span style={{ cursor: "pointer", fontFamily: "'Darker Grotesque', sans-serif" }}>Privacy Policy</span>
               <span style={{ cursor: "pointer", fontFamily: "'Darker Grotesque', sans-serif" }}>Terms of Service</span>

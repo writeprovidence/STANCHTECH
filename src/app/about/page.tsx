@@ -171,7 +171,7 @@ export default function AboutPage() {
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>2018</span>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>2018</span>
                                 <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Founded in Port Harcourt, Nigeria
                                 </p>
@@ -185,7 +185,7 @@ export default function AboutPage() {
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>50+</span>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>50+</span>
                                 <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Specialized Technical Staff
                                 </p>
@@ -199,7 +199,7 @@ export default function AboutPage() {
                                 backgroundRepeat: "no-repeat",
                                 backgroundPosition: "center"
                             }}>
-                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>15+</span>
+                                <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>15+</span>
                                 <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     Global Technical Partners
                                 </p>
@@ -217,6 +217,7 @@ export default function AboutPage() {
                 padding: "140px 10vw",
                 position: "relative"
             }}>
+                <div style={{ position: "absolute", inset: 0, background: "rgba(11,26,46,0.7)", zIndex: 1 }} />
                 <div className="container mx-auto relative z-10">
                     <h2 style={{ 
                         fontSize: "35px", 
@@ -327,7 +328,7 @@ export default function AboutPage() {
                                     style={{ paddingBottom: "24px" }}
                                 >
                                     <div className="flex items-center gap-6 md:gap-8 pr-4">
-                                        <span style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "24px", fontWeight: 900, color: "#0b1a2e", opacity: 0.5 }}>{faq.id}</span>
+                                        <span style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "24px", fontWeight: 900, color: "#0b1a2e", opacity: 0.5 }}>{faq.id}</span>
                                         <span style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "26px", fontWeight: 700, color: "#0b1a2e", lineHeight: 1.3, maxWidth: "440px", display: "inline-block" }} className="group-hover:text-blue-600 transition-colors">
                                             {faq.question}
                                         </span>

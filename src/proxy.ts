@@ -10,7 +10,8 @@ const isPublicRoute = createRouteMatcher([
   '/api/(.*)',
   '/cart',
   '/checkout',
-  '/asset(.*)'
+  '/asset(.*)',
+  '/fonts(.*)'
 ]);
 
 export default clerkMiddleware(async (auth, request) => {
@@ -23,7 +24,7 @@ export const config = {
   matcher: [
     '/',
     // Skip Next.js internals and all static files
-    '/((?!_next|static|asset|favicon.ico).*)',
+    '/((?!_next|static|asset|fonts|favicon.ico).*)',
     // Always run for API routes
     '/(api|trpc)(.*)',
   ],

@@ -88,7 +88,7 @@ export default function ContactPage() {
                             viewport={{ once: true }}
                             className="flex flex-col items-start pt-8 lg:pt-20"
                         >
-                            <h4 style={{ color: "#2563eb", letterSpacing: "0.2em", fontSize: "14px", fontWeight: 800, textTransform: "uppercase", marginBottom: "32px", fontFamily: "'Darker Grotesque', sans-serif" }}>
+                            <h4 style={{ color: "#2563eb", letterSpacing: "0.2em", fontSize: "14px", fontWeight: 800, textTransform: "uppercase", marginBottom: "32px", fontFamily: "'Neue Machina', sans-serif" }}>
                                 Our Presence
                             </h4>
                             <div style={{ marginBottom: "48px" }}>
@@ -105,7 +105,7 @@ export default function ContactPage() {
                                 Rivers state, Nigeria
                             </p>
                             
-                            <a href="https://maps.google.com" target="_blank" className="flex items-center gap-3 text-[#2563eb] hover:text-blue-800 transition-colors uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px", fontWeight: 900, letterSpacing: "0.1em" }}>
+                            <a href="https://maps.google.com" target="_blank" className="flex items-center gap-3 text-[#2563eb] hover:text-blue-800 transition-colors uppercase" style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "16px", fontWeight: 900, letterSpacing: "0.1em" }}>
                                 Open in Google Maps <ArrowRight className="w-5 h-5" />
                             </a>
                         </motion.div>
@@ -161,7 +161,7 @@ export default function ContactPage() {
                                     style={{ paddingBottom: "24px" }}
                                 >
                                     <div className="flex items-center gap-6 md:gap-8 pr-4">
-                                        <span style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "24px", fontWeight: 900, color: "#0b1a2e", opacity: 0.5 }}>{faq.id}</span>
+                                        <span style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "24px", fontWeight: 900, color: "#0b1a2e", opacity: 0.5 }}>{faq.id}</span>
                                         <span style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "26px", fontWeight: 700, color: "#0b1a2e", lineHeight: 1.3, maxWidth: "440px", display: "inline-block" }} className="group-hover:text-blue-600 transition-colors">
                                             {faq.question}
                                         </span>

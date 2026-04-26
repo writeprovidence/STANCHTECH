@@ -5,6 +5,7 @@ import { User, Package, MessageSquare, XCircle, LogOut, Info, Loader2 } from 'lu
 import { useUser, useClerk } from "@clerk/nextjs";
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { NIGERIAN_STATES } from '../checkout/nigeria-data';
 
 interface Address {
   id: string;
@@ -23,23 +24,25 @@ const inputStyle: React.CSSProperties = {
   border: '1px solid #d3d3d3',
   borderRadius: '5px',
   outline: 'none',
-  fontSize: '13.31px',
-  fontFamily: 'inherit',
+  fontSize: '15px',
+  fontFamily: "'Darker Grotesque', sans-serif",
+  fontWeight: 600,
   color: '#25252d',
   background: '#fff',
   width: '100%',
-  height: '33px',
+  height: '40px',
   boxSizing: 'border-box',
 };
 
 const labelStyle: React.CSSProperties = {
-  fontSize: '11px',
-  fontWeight: 600,
+  fontSize: '14px',
+  fontWeight: 800,
   color: '#374151',
   display: 'block',
   marginBottom: '4px',
-  textTransform: 'none',
-  letterSpacing: '0.05em'
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+  fontFamily: "'Darker Grotesque', sans-serif"
 };
 
 export default function ProfilePage() {
@@ -225,7 +228,7 @@ function ProfileContent() {
                 letterSpacing: '0.08em',
                 color: '#111',
                 textTransform: 'uppercase',
-                fontFamily: "'Neue Machina', sans-serif"
+                fontFamily: "'Darker Grotesque', sans-serif"
               }}
             >
               My Account
@@ -250,9 +253,11 @@ function ProfileContent() {
                   fontSize: '15px',
                   color: activeTab === item.id ? '#111' : '#374151',
                   background: activeTab === item.id ? '#f5f5f5' : 'transparent',
-                  fontFamily: 'inherit',
+                  fontFamily: "'Darker Grotesque', sans-serif",
                   transition: 'background 0.15s',
-                  fontWeight: activeTab === item.id ? 600 : 400
+                  fontWeight: activeTab === item.id ? 800 : 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.02em'
                 }}
               >
                 <item.icon style={{ width: '20px', height: '20px', color: activeTab === item.id ? '#111' : '#374151', flexShrink: 0 }} strokeWidth={activeTab === item.id ? 2 : 1.5} />
@@ -285,8 +290,11 @@ function ProfileContent() {
                 fontSize: '15px',
                 color: '#374151',
                 background: 'transparent',
-                fontFamily: 'inherit',
+                fontFamily: "'Neue Machina', sans-serif",
                 transition: 'background 0.15s',
+                fontWeight: 800,
+                textTransform: 'uppercase',
+                letterSpacing: '0.02em'
               }}
             >
               <LogOut style={{ width: '20px', height: '20px', color: '#374151' }} strokeWidth={1.5} />
@@ -326,18 +334,18 @@ function ProfileContent() {
                       borderRadius: '0'
                     }}
                   >
-                    <label style={labelStyle}>Email</label>
+                    <label style={{...labelStyle, fontSize: '16px'}}>Email</label>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
                       {isEditingEmail ? (
                         <input
                           type="email"
                           value={tempEmail}
                           onChange={(e) => setTempEmail(e.target.value)}
-                          style={inputStyle}
+                          style={{...inputStyle, fontSize: '18px'}}
                           autoFocus
                         />
                       ) : (
-                        <span style={{ fontSize: '15px', color: '#111827', flex: 1 }}>{email}</span>
+                        <span style={{ fontSize: '18px', color: '#111827', flex: 1, fontFamily: "'Darker Grotesque', sans-serif", fontWeight: 600 }}>{email}</span>
                       )}
                       <button
                         onClick={() => {
@@ -354,7 +362,10 @@ function ProfileContent() {
                           border: 'none',
                           background: 'transparent',
                           cursor: 'pointer',
-                          fontFamily: 'inherit',
+                          fontFamily: "'Neue Machina', sans-serif",
+                          fontWeight: 800,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
                           padding: 0,
                           flexShrink: 0,
                         }}
@@ -372,30 +383,30 @@ function ProfileContent() {
                     style={{ background: '#fff', border: '1px solid #e5e7eb', padding: '32px 28px', display: 'flex', flexDirection: 'column', gap: '24px', boxSizing: 'border-box', flex: 1, borderRadius: '0' }}
                   >
                     {/* Card Header */}
-                    <span style={{ fontSize: '13px', color: '#111', fontWeight: 600, display: 'block', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb', fontFamily: "'Neue Machina', sans-serif", textTransform: 'uppercase', letterSpacing: '0.08em' }}>Addresses</span>
+                    <span style={{ fontSize: '13px', color: '#111', fontWeight: 600, display: 'block', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb', fontFamily: "'Darker Grotesque', sans-serif", textTransform: 'uppercase', letterSpacing: '0.08em' }}>Addresses</span>
 
                     {/* — Customer Address — */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span style={{ fontSize: '12px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Customer Address</span>
+                        <span style={{ fontSize: '16px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "'Darker Grotesque', sans-serif" }}>Customer Address</span>
                         {!isAddingAddress && !userAddress && (
-                          <button onClick={handleAddAddress} style={{ fontSize: '13px', color: '#2563eb', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: 0 }}>+ Add</button>
+                          <button onClick={handleAddAddress} style={{ fontSize: '16px', color: '#2563eb', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: 0, fontWeight: 700 }}>+ Add</button>
                         )}
                       </div>
 
                       {!isAddingAddress && userAddress && (
-                        <div style={{ position: 'relative', padding: '16px 20px' }}>
+                        <div style={{ position: 'relative', padding: '24px' }}>
                           <span style={{ position: 'absolute', top: 0, left: 0, width: '14px', height: '14px', borderTop: '2px solid #111827', borderLeft: '2px solid #111827' }} />
                           <span style={{ position: 'absolute', top: 0, right: 0, width: '14px', height: '14px', borderTop: '2px solid #111827', borderRight: '2px solid #111827' }} />
                           <span style={{ position: 'absolute', bottom: 0, left: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderLeft: '2px solid #111827' }} />
                           <span style={{ position: 'absolute', bottom: 0, right: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderRight: '2px solid #111827' }} />
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div>
-                              <p style={{ fontSize: '15px', fontWeight: 800, color: '#111827', marginBottom: '6px', fontFamily: "'Neue Machina', sans-serif" }}>{userAddress.firstName} {userAddress.lastName}</p>
-                              <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '4px', lineHeight: 1.6 }}>{userAddress.deliveryAddress}, {userAddress.state}, {userAddress.areaCouncil}</p>
-                              <p style={{ fontSize: '14px', color: '#6b7280' }}>{userAddress.phone}</p>
+                              <p style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "'Darker Grotesque', sans-serif" }}>{userAddress.firstName} {userAddress.lastName}</p>
+                              <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '6px', lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>{userAddress.deliveryAddress}, {userAddress.state}, {userAddress.areaCouncil}</p>
+                              <p style={{ fontSize: '18px', color: '#6b7280', fontFamily: "'Darker Grotesque', sans-serif" }}>{userAddress.phone}</p>
                             </div>
-                            <button onClick={() => { setAddressForm(userAddress); setIsAddingAddress(true); }} style={{ color: '#2563eb', fontSize: '12px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Edit</button>
+                            <button onClick={() => { setAddressForm(userAddress); setIsAddingAddress(true); }} style={{ color: '#2563eb', fontSize: '14px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 800 }}>Edit</button>
                           </div>
                         </div>
                       )}
@@ -438,11 +449,36 @@ function ProfileContent() {
                           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                             <div>
                                 <label style={labelStyle}>State <span style={{ color: 'red' }}>*</span></label>
-                                <input type="text" value={addressForm.state} onChange={(e) => { setAddressForm({ ...addressForm, state: e.target.value }); setFormErrors(p => ({ ...p, state: false })); }} style={{ ...inputStyle, border: formErrors.state ? '1px solid #ef4444' : inputStyle.border }} />
+                                <select 
+                                  value={addressForm.state} 
+                                  onChange={(e) => { 
+                                    setAddressForm({ ...addressForm, state: e.target.value, areaCouncil: '' }); 
+                                    setFormErrors(p => ({ ...p, state: false })); 
+                                  }} 
+                                  style={{ ...inputStyle, border: formErrors.state ? '1px solid #ef4444' : inputStyle.border, cursor: 'pointer' }}
+                                >
+                                  <option value="">Select State</option>
+                                  {Object.keys(NIGERIAN_STATES).map(state => (
+                                    <option key={state} value={state}>{state}</option>
+                                  ))}
+                                </select>
                             </div>
                             <div>
                                 <label style={labelStyle}>Area Council <span style={{ color: 'red' }}>*</span></label>
-                                <input type="text" value={addressForm.areaCouncil} onChange={(e) => { setAddressForm({ ...addressForm, areaCouncil: e.target.value }); setFormErrors(p => ({ ...p, areaCouncil: false })); }} style={{ ...inputStyle, border: formErrors.areaCouncil ? '1px solid #ef4444' : inputStyle.border }} />
+                                <select 
+                                  value={addressForm.areaCouncil} 
+                                  onChange={(e) => { 
+                                    setAddressForm({ ...addressForm, areaCouncil: e.target.value }); 
+                                    setFormErrors(p => ({ ...p, areaCouncil: false })); 
+                                  }} 
+                                  style={{ ...inputStyle, border: formErrors.areaCouncil ? '1px solid #ef4444' : inputStyle.border, cursor: 'pointer' }}
+                                  disabled={!addressForm.state}
+                                >
+                                  <option value="">Select Area Council</option>
+                                  {addressForm.state && NIGERIAN_STATES[addressForm.state]?.map(lga => (
+                                    <option key={lga} value={lga}>{lga}</option>
+                                  ))}
+                                </select>
                             </div>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '8px' }}>
@@ -459,25 +495,25 @@ function ProfileContent() {
                     {/* — Shipping Address — */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span style={{ fontSize: '12px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Shipping Address</span>
+                        <span style={{ fontSize: '16px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "'Darker Grotesque', sans-serif" }}>Shipping Address</span>
                         {!isAddingShipping && !shippingAddress && (
-                          <button onClick={handleAddShipping} style={{ fontSize: '13px', color: '#2563eb', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: 0 }}>+ Add</button>
+                          <button onClick={handleAddShipping} style={{ fontSize: '16px', color: '#2563eb', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: 0, fontWeight: 700 }}>+ Add</button>
                         )}
                       </div>
 
                       {!isAddingShipping && shippingAddress && (
-                        <div style={{ position: 'relative', padding: '16px 20px' }}>
+                        <div style={{ position: 'relative', padding: '24px' }}>
                           <span style={{ position: 'absolute', top: 0, left: 0, width: '14px', height: '14px', borderTop: '2px solid #111827', borderLeft: '2px solid #111827' }} />
                           <span style={{ position: 'absolute', top: 0, right: 0, width: '14px', height: '14px', borderTop: '2px solid #111827', borderRight: '2px solid #111827' }} />
                           <span style={{ position: 'absolute', bottom: 0, left: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderLeft: '2px solid #111827' }} />
                           <span style={{ position: 'absolute', bottom: 0, right: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderRight: '2px solid #111827' }} />
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div>
-                              <p style={{ fontSize: '15px', fontWeight: 800, color: '#111827', marginBottom: '6px', fontFamily: "'Neue Machina', sans-serif" }}>{shippingAddress.firstName} {shippingAddress.lastName}</p>
-                              <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '4px', lineHeight: 1.6 }}>{shippingAddress.deliveryAddress}, {shippingAddress.state}, {shippingAddress.areaCouncil}</p>
-                              <p style={{ fontSize: '14px', color: '#6b7280' }}>{shippingAddress.phone}</p>
+                              <p style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "'Darker Grotesque', sans-serif" }}>{shippingAddress.firstName} {shippingAddress.lastName}</p>
+                              <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '6px', lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>{shippingAddress.deliveryAddress}, {shippingAddress.state}, {shippingAddress.areaCouncil}</p>
+                              <p style={{ fontSize: '18px', color: '#6b7280', fontFamily: "'Darker Grotesque', sans-serif" }}>{shippingAddress.phone}</p>
                             </div>
-                            <button onClick={() => { setShippingForm(shippingAddress); setIsAddingShipping(true); }} style={{ color: '#2563eb', fontSize: '12px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Edit</button>
+                            <button onClick={() => { setShippingForm(shippingAddress); setIsAddingShipping(true); }} style={{ color: '#2563eb', fontSize: '14px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 800 }}>Edit</button>
                           </div>
                         </div>
                       )}
@@ -520,11 +556,36 @@ function ProfileContent() {
                           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                             <div>
                                 <label style={labelStyle}>State <span style={{ color: 'red' }}>*</span></label>
-                                <input type="text" value={shippingForm.state} onChange={(e) => { setShippingForm({ ...shippingForm, state: e.target.value }); setShippingErrors(p => ({ ...p, state: false })); }} style={{ ...inputStyle, border: shippingErrors.state ? '1px solid #ef4444' : inputStyle.border }} />
+                                <select 
+                                  value={shippingForm.state} 
+                                  onChange={(e) => { 
+                                    setShippingForm({ ...shippingForm, state: e.target.value, areaCouncil: '' }); 
+                                    setShippingErrors(p => ({ ...p, state: false })); 
+                                  }} 
+                                  style={{ ...inputStyle, border: shippingErrors.state ? '1px solid #ef4444' : inputStyle.border, cursor: 'pointer' }}
+                                >
+                                  <option value="">Select State</option>
+                                  {Object.keys(NIGERIAN_STATES).map(state => (
+                                    <option key={state} value={state}>{state}</option>
+                                  ))}
+                                </select>
                             </div>
                             <div>
                                 <label style={labelStyle}>Area Council <span style={{ color: 'red' }}>*</span></label>
-                                <input type="text" value={shippingForm.areaCouncil} onChange={(e) => { setShippingForm({ ...shippingForm, areaCouncil: e.target.value }); setShippingErrors(p => ({ ...p, areaCouncil: false })); }} style={{ ...inputStyle, border: shippingErrors.areaCouncil ? '1px solid #ef4444' : inputStyle.border }} />
+                                <select 
+                                  value={shippingForm.areaCouncil} 
+                                  onChange={(e) => { 
+                                    setShippingForm({ ...shippingForm, areaCouncil: e.target.value }); 
+                                    setShippingErrors(p => ({ ...p, areaCouncil: false })); 
+                                  }} 
+                                  style={{ ...inputStyle, border: shippingErrors.areaCouncil ? '1px solid #ef4444' : inputStyle.border, cursor: 'pointer' }}
+                                  disabled={!shippingForm.state}
+                                >
+                                  <option value="">Select Area Council</option>
+                                  {shippingForm.state && NIGERIAN_STATES[shippingForm.state]?.map(lga => (
+                                    <option key={lga} value={lga}>{lga}</option>
+                                  ))}
+                                </select>
                             </div>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '8px' }}>
@@ -593,7 +654,7 @@ function ProfileContent() {
                                   <img src={order.items[0]?.image} alt="" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                                 </div>
                                 <div>
-                                  <p style={{ fontSize: '14px', fontWeight: 800, color: '#111827', marginBottom: '4px', fontFamily: "'Neue Machina', sans-serif" }}>Order {order.id}</p>
+                                  <p style={{ fontSize: '14px', fontWeight: 800, color: '#111827', marginBottom: '4px', fontFamily: "'Darker Grotesque', sans-serif" }}>Order {order.id}</p>
                                   <p style={{ fontSize: '13px', color: '#6b7280' }}>
                                     {new Date(order.date).toLocaleDateString()} • {order.items.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0)} {order.items.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0) === 1 ? 'item' : 'items'}
                                   </p>
@@ -606,7 +667,7 @@ function ProfileContent() {
                                 </div>
                               </div>
                               <div style={{ textAlign: 'right' }}>
-                                <p style={{ fontSize: '16px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "var(--font-darker-grotesque), sans-serif" }}>₦ {order.total.toLocaleString()}</p>
+                                <p style={{ fontSize: '16px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "'Darker Grotesque', sans-serif" }}>₦ {order.total.toLocaleString()}</p>
                                 <button style={{ color: '#2563eb', fontSize: '13px', border: 'none', background: 'transparent', cursor: 'pointer', fontWeight: 500 }}>View Details</button>
                               </div>
                             </div>

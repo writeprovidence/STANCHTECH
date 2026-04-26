@@ -110,10 +110,10 @@ function ShopContent() {
                                 {isFilterOpen ? <X size={20} /> : <SlidersHorizontal size={18} />}
                             </div>
                             <div className="flex items-baseline gap-4">
-                                <span className="font-900 uppercase tracking-[0.2em] text-black" style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "14px" }}>
+                                <span className="font-900 uppercase tracking-[0.2em] text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "14px" }}>
                                     {isFilterOpen ? "Close" : "Filter"} 
                                 </span>
-                                <span className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mt-0.5" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                <span className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mt-0.5" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     ({shopProducts.length} product)
                                 </span>
                             </div>
@@ -194,7 +194,7 @@ function ShopContent() {
                             style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
                         >
                             {/* Genuine Badge */}
-                            <div className="absolute top-6 left-6 text-blue-600 text-[11px] font-800 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                            <div className="absolute top-6 left-6 text-blue-600 text-[16px] font-900 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                 {product.condition}
                             </div>
 
@@ -207,11 +207,11 @@ function ShopContent() {
                             </div>
 
                             <div style={{ width: "100%", marginTop: "auto", textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "4px" }}>
-                                <p className="text-gray-500 font-800 text-lg leading-tight uppercase" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                <p className="text-gray-500 font-800 text-lg leading-tight uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
                                     {product.name}
                                 </p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", paddingTop: "4px", marginTop: "4px" }}>
-                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "var(--font-darker-grotesque), sans-serif", color: "#000000" }}>
+                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "'Darker Grotesque', sans-serif", color: "#000000" }}>
                                         ₦{product.price.toLocaleString()}
                                     </span>
                                     <div className="w-8 h-8 rounded-full border border-gray-100 flex flex-shrink-0 items-center justify-center text-gray-300 group-hover:border-black group-hover:text-black transition-all">
