@@ -383,10 +383,8 @@ export default function AdminDashboard() {
       <aside style={{
         width: sidebarCollapsed ? '72px' : '240px', background: '#111', color: '#fff',
         display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'all 0.25s ease',
-        position: 'fixed', left: mobileMenuOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth < 1024 ? '-240px' : '0'), 
-        top: 0, height: '100vh', overflow: 'hidden', zIndex: 150,
-        lgPosition: 'sticky', // This is just a reminder for the logic
-      }} className="admin-sidebar">
+        top: 0, height: '100vh', overflow: 'hidden', zIndex: 150
+      }} className={`admin-sidebar ${mobileMenuOpen ? 'open' : ''}`}>
         <style dangerouslySetInnerHTML={{ __html: `
           @media (min-width: 1024px) {
             .admin-sidebar { position: sticky !important; left: 0 !important; }
@@ -394,14 +392,28 @@ export default function AdminDashboard() {
             .content-container { padding-left: 0 !important; }
           }
           @media (max-width: 1023px) {
-            .admin-sidebar { position: fixed !important; width: 240px !important; }
+            .admin-sidebar { 
+              position: fixed !important; 
+              width: 240px !important; 
+              left: -240px;
+              transition: left 0.3s ease !important;
+            }
+            .admin-sidebar.open { left: 0 !important; }
             .stats-grid { grid-template-columns: 1fr !important; }
             .overview-grid { grid-template-columns: 1fr !important; }
-            .order-detail-panel { 
-              position: fixed !important; inset: 0 !important; width: 100% !important; 
-              height: 100% !important; z-index: 200 !important; margin: 0 !important;
+            .admin-panel-overlay {
+              position: fixed !important;
+              inset: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+              z-index: 200 !important;
+              margin: 0 !important;
               max-height: 100vh !important;
+              border-radius: 0 !important;
             }
+            .mobile-stack { flex-direction: column !important; align-items: stretch !important; gap: 16px !important; }
+            .mobile-hide { display: none !important; }
+            .main-content { padding: 16px !important; }
           }
         `}} />
 
@@ -496,12 +508,12 @@ export default function AdminDashboard() {
             </button>
             <div>
               <h1 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '14px', lgFontSize: '16px', fontWeight: 900, color: '#111', letterSpacing: '-0.01em', marginBottom: '1px' }}>
-
-              {activeTab === 'overview' && 'Dashboard Overview'}
-              {activeTab === 'orders' && 'Order Management'}
-              {activeTab === 'products' && 'Product Catalog'}
-              {activeTab === 'customers' && 'Customers'}
-            </h1>
+                {activeTab === 'overview' && 'Dashboard Overview'}
+                {activeTab === 'orders' && 'Order Management'}
+                {activeTab === 'products' && 'Product Catalog'}
+                {activeTab === 'customers' && 'Customers'}
+              </h1>
+            </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <p style={{ fontSize: '12px', color: '#9ca3af' }}>
                 {new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
@@ -533,7 +545,7 @@ export default function AdminDashboard() {
         </header>
 
         {/* Page Content */}
-        <main style={{ flex: 1, overflowY: 'auto', padding: '32px', position: 'relative' }}>
+        <main className="main-content" style={{ flex: 1, overflowY: 'auto', padding: '32px', position: 'relative' }}>
           {isLoading && (
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: BRAND_BLUE, zIndex: 100, animation: 'loading-bar 2s infinite linear' }}>
               <style>{`
@@ -713,7 +725,7 @@ export default function AdminDashboard() {
 
               {/* Order detail panel */}
               {selectedOrder && (
-                <div className="order-detail-panel" style={{ width: '340px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', display: 'flex', flexDirection: 'column', overflowY: 'auto', maxHeight: 'calc(100vh - 128px)', position: 'sticky', top: 0 }}>
+                <div className="order-detail-panel admin-panel-overlay" style={{ width: '340px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', display: 'flex', flexDirection: 'column', overflowY: 'auto', maxHeight: 'calc(100vh - 128px)', position: 'sticky', top: 0 }}>
 
                   <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '13px', fontWeight: 900, color: '#111' }}>Order Details</h3>
@@ -804,7 +816,7 @@ export default function AdminDashboard() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 {/* Toolbar */}
                 <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden' }}>
-                  <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <div className="mobile-stack" style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <div style={{ position: 'relative', flex: 1 }}>
                       <Search size={14} color="#9ca3af" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                       <input
@@ -890,7 +902,7 @@ export default function AdminDashboard() {
 
               {/* Edit product panel */}
               {editingProduct && (
-                <div style={{ width: '320px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden', position: 'sticky', top: 0, maxHeight: 'calc(100vh - 128px)', overflowY: 'auto' }}>
+                <div className="admin-panel-overlay" style={{ width: '320px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden', position: 'sticky', top: 0, maxHeight: 'calc(100vh - 128px)', overflowY: 'auto' }}>
                   <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '13px', fontWeight: 900, color: '#111' }}>
                       {products.find(x => x.id === editingProduct.id) ? 'Edit Product' : 'Add New Product'}
@@ -1004,7 +1016,7 @@ export default function AdminDashboard() {
                   const existing = map.get(email);
                   if (existing) {
                     existing.orderCount += 1;
-                    existing.totalSpent += o.status !== 'Cancelled' ? o.total : 0;
+                    existing.totalSpent += (o.status !== 'Cancelled' ? (o.total || 0) : 0);
                     if (new Date(o.date) > new Date(existing.lastOrder)) existing.lastOrder = o.date;
                   } else {
                     map.set(email, {
@@ -1012,7 +1024,7 @@ export default function AdminDashboard() {
                       email,
                       phone: o.billing?.billingPhone || '—',
                       orderCount: 1,
-                      totalSpent: o.status !== 'Cancelled' ? o.total : 0,
+                      totalSpent: (o.status !== 'Cancelled' ? (o.total || 0) : 0),
                       lastOrder: o.date,
                       state: o.billing?.billingState || '—',
                     });
@@ -1021,7 +1033,8 @@ export default function AdminDashboard() {
                 const customers = Array.from(map.values()).sort((a, b) => b.totalSpent - a.totalSpent);
 
                 return (
-                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
                     <thead>
                       <tr style={{ background: '#f9fafb' }}>
                         {['Customer', 'Email', 'Phone', 'State', 'Orders', 'Total Spent', 'Last Order'].map(h => (
@@ -1054,7 +1067,8 @@ export default function AdminDashboard() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                    </table>
+                  </div>
                 );
               })()}
             </div>
