@@ -108,6 +108,7 @@ export default function AdminDashboard() {
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
   const [productToDelete, setProductToDelete] = useState<AdminProduct | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
 
@@ -369,13 +370,41 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f5f5f7', fontFamily: "'Darker Grotesque', sans-serif" }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f5f5f7', fontFamily: "'Darker Grotesque', sans-serif", position: 'relative' }}>
+      {/* ── Overlay for Mobile Menu ── */}
+      {mobileMenuOpen && (
+        <div 
+          onClick={() => setMobileMenuOpen(false)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100, cursor: 'pointer' }} 
+        />
+      )}
+
       {/* ── Sidebar ── */}
       <aside style={{
         width: sidebarCollapsed ? '72px' : '240px', background: '#111', color: '#fff',
-        display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'width 0.25s ease',
-        position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', zIndex: 50,
-      }}>
+        display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'all 0.25s ease',
+        position: 'fixed', left: mobileMenuOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth < 1024 ? '-240px' : '0'), 
+        top: 0, height: '100vh', overflow: 'hidden', zIndex: 150,
+        lgPosition: 'sticky', // This is just a reminder for the logic
+      }} className="admin-sidebar">
+        <style dangerouslySetInnerHTML={{ __html: `
+          @media (min-width: 1024px) {
+            .admin-sidebar { position: sticky !important; left: 0 !important; }
+            .mobile-toggle { display: none !important; }
+            .content-container { padding-left: 0 !important; }
+          }
+          @media (max-width: 1023px) {
+            .admin-sidebar { position: fixed !important; width: 240px !important; }
+            .stats-grid { grid-template-columns: 1fr !important; }
+            .overview-grid { grid-template-columns: 1fr !important; }
+            .order-detail-panel { 
+              position: fixed !important; inset: 0 !important; width: 100% !important; 
+              height: 100% !important; z-index: 200 !important; margin: 0 !important;
+              max-height: 100vh !important;
+            }
+          }
+        `}} />
+
         {/* Logo */}
         <div style={{ padding: sidebarCollapsed ? '24px 16px' : '24px', borderBottom: '1px solid #1f1f1f', display: 'flex', alignItems: 'center', gap: '12px', overflow: 'hidden' }}>
           <div style={{ width: '36px', height: '36px', background: '#fff', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
@@ -456,9 +485,18 @@ export default function AdminDashboard() {
       {/* ── Main Content ── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
         {/* Header */}
-        <header style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '0 32px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
-          <div>
-            <h1 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '16px', fontWeight: 900, color: '#111', letterSpacing: '-0.01em', marginBottom: '1px' }}>
+        <header style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '0 16px', lgPadding: '0 32px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <button 
+              onClick={() => setMobileMenuOpen(true)}
+              className="mobile-toggle"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#111', display: 'flex', alignItems: 'center' }}
+            >
+              <BarChart3 size={20} />
+            </button>
+            <div>
+              <h1 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '14px', lgFontSize: '16px', fontWeight: 900, color: '#111', letterSpacing: '-0.01em', marginBottom: '1px' }}>
+
               {activeTab === 'overview' && 'Dashboard Overview'}
               {activeTab === 'orders' && 'Order Management'}
               {activeTab === 'products' && 'Product Catalog'}
@@ -511,7 +549,7 @@ export default function AdminDashboard() {
           {activeTab === 'overview' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
               {/* Stat Cards */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+              <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
                 <StatCard label="Total Revenue" value={fmt(totalRevenue)} sub={`From ${orders.filter(o => o.status !== 'Cancelled').length} orders`} icon={TrendingUp} accent="#7047eb" trend={{ up: true, text: 'All time earnings' }} />
                 <StatCard label="Total Orders" value={String(orders.length)} sub={`${pendingOrders} pending`} icon={ShoppingBag} accent="#2563eb" />
                 <StatCard label="Products" value={String(products.length)} sub="In catalog" icon={Package} accent="#16a34a" />
@@ -519,9 +557,10 @@ export default function AdminDashboard() {
               </div>
 
               {/* Two columns: recent orders + category chart */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '20px' }}>
+              <div className="overview-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '20px' }}>
                 {/* Recent Orders */}
-                <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden' }}>
+                <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflowX: 'auto' }}>
+
                   <div style={{ padding: '20px 24px', borderBottom: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '14px', fontWeight: 900, color: '#111' }}>Recent Orders</h3>
                     <button onClick={() => setActiveTab('orders')} style={{ fontSize: '12px', color: '#7047eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>View all →</button>
@@ -602,7 +641,7 @@ export default function AdminDashboard() {
           {activeTab === 'orders' && (
             <div style={{ display: 'flex', gap: '24px' }}>
               {/* Orders list */}
-              <div style={{ flex: 1, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden', minWidth: 0 }}>
+              <div style={{ flex: 1, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
                 {/* Toolbar */}
                 <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                   <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
@@ -628,8 +667,8 @@ export default function AdminDashboard() {
                     {orders.length === 0 ? 'No orders have been placed yet.' : 'No orders match your filters.'}
                   </div>
                 ) : (
-                  <div style={{ overflowX: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '600px' }}>
+                  <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
                       <thead>
                         <tr style={{ background: '#f9fafb' }}>
                           {['Order ID', 'Customer', 'Items', 'Total', 'Payment', 'Status', ''].map((h, i) => (
@@ -674,7 +713,8 @@ export default function AdminDashboard() {
 
               {/* Order detail panel */}
               {selectedOrder && (
-                <div style={{ width: '340px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', display: 'flex', flexDirection: 'column', overflowY: 'auto', maxHeight: 'calc(100vh - 128px)', position: 'sticky', top: 0 }}>
+                <div className="order-detail-panel" style={{ width: '340px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', display: 'flex', flexDirection: 'column', overflowY: 'auto', maxHeight: 'calc(100vh - 128px)', position: 'sticky', top: 0 }}>
+
                   <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '13px', fontWeight: 900, color: '#111' }}>Order Details</h3>
                     <button onClick={() => setSelectedOrder(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af' }}><X size={16} /></button>
@@ -794,20 +834,21 @@ export default function AdminDashboard() {
                     <span style={{ fontSize: '12px', color: '#9ca3af', whiteSpace: 'nowrap' }}>{filteredProducts.length} products</span>
                   </div>
 
-                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                    <thead>
-                      <tr style={{ background: '#f9fafb' }}>
-                        {['', 'Product', 'SKU', 'Category', 'Condition', 'Price', ''].map((h, i) => (
-                          <th key={i} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', whiteSpace: 'nowrap' }}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredProducts.map(p => (
-                        <tr key={p.id} style={{ borderTop: '1px solid #f3f4f6' }}
-                          onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#f9fafb'}
-                          onMouseOut={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
-                        >
+                  <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
+                      <thead>
+                        <tr style={{ background: '#f9fafb' }}>
+                          {['', 'Product', 'SKU', 'Category', 'Condition', 'Price', ''].map((h, i) => (
+                            <th key={i} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', whiteSpace: 'nowrap' }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredProducts.map(p => (
+                          <tr key={p.id} style={{ borderTop: '1px solid #f3f4f6' }}
+                            onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#f9fafb'}
+                            onMouseOut={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
+                          >
                           <td style={{ padding: '10px 12px 10px 16px' }}>
                             <div style={{ width: '44px', height: '44px', background: '#f9fafb', border: '1px solid #f3f4f6', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                               <img src={p.image} alt="" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
@@ -842,7 +883,8 @@ export default function AdminDashboard() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                    </table>
+                  </div>
                 </div>
               </div>
 

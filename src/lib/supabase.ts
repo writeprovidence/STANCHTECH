@@ -7,4 +7,9 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('Supabase credentials missing. Check .env.local');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Use placeholders during build to prevent '@supabase/supabase-js' from throwing errors
+// when environment variables are not yet configured in the build environment.
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder'
+);
