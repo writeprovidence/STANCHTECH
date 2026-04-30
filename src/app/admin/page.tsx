@@ -474,12 +474,12 @@ export default function AdminDashboard() {
             {!sidebarCollapsed && <span style={{ fontSize: '13px', fontWeight: 600 }}>Collapse</span>}
           </button>
 
-          <a href="/" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: sidebarCollapsed ? '12px' : '10px 16px', borderRadius: '8px', textDecoration: 'none', color: '#4b5563', justifyContent: sidebarCollapsed ? 'center' : 'flex-start' }}
+          <a href="/shop" target="_blank" rel="noreferrer" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: sidebarCollapsed ? '12px' : '10px 16px', borderRadius: '8px', textDecoration: 'none', color: '#4b5563', justifyContent: sidebarCollapsed ? 'center' : 'flex-start' }}
             onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#1a1a1f'}
             onMouseOut={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
           >
             <ExternalLink size={17} style={{ flexShrink: 0 }} />
-            {!sidebarCollapsed && <span style={{ fontSize: '13px', fontWeight: 600 }}>View Site</span>}
+            {!sidebarCollapsed && <span style={{ fontSize: '13px', fontWeight: 600 }}>View Store</span>}
           </a>
 
           <button

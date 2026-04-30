@@ -12,9 +12,11 @@ export function Footer() {
     if (isAuthPage) return null;
 
     return (
-      <footer style={{ background: "#060D17", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-        {/* Section 2: Main Footer Grid */}
-        <section>
+      <>
+        <footer className="hide-mobile" style={{ background: "#060D17", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+          {/* Section 2: Main Footer Grid */}
+          <section>
+
           <div className="footer-grid">
             {/* Column 1: Logo & Vision */}
             <div className="footer-col">
@@ -156,8 +158,10 @@ export function Footer() {
           </div>
         </section>
       </footer>
-    );
+      {/* Spacer shown only on mobile instead of footer */}
+      <div className="mobile-whitespace" style={{ display: "none" }} />
+    </>
+  );
 }
-
 
 

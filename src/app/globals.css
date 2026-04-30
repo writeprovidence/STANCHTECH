@@ -602,3 +602,11 @@ p {
   }
 }
 
+@media (max-width: 640px) {
+  .mobile-whitespace {
+    display: block !important;
+    height: 100px;
+    width: 100%;
+    background-color: var(--background);
+  }
+}
