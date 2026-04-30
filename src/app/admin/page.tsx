@@ -9,7 +9,7 @@ import {
   ChevronRight, Search, Eye, Edit2, Trash2, X,
   ArrowUpRight, ArrowDownRight, BarChart3, Filter,
   Shield, Lock, RefreshCcw, Plus, Save, ChevronDown,
-  ExternalLink, MoreVertical, Circle
+  ExternalLink, MoreVertical, Circle, Settings
 } from 'lucide-react';
 
 // ─── Colors ─────────────────────────────────────────────────────────────────
@@ -98,7 +98,8 @@ export default function AdminDashboard() {
   const [pinInput, setPinInput] = useState('');
   const [isAuthed, setIsAuthed] = useState(false);
   const [pinError, setPinError] = useState(false);
-  const [activeTab, setActiveTab] = useState<'overview' | 'orders' | 'products' | 'customers'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'orders' | 'products' | 'customers' | 'settings'>('overview');
+  const [dynamicPin, setDynamicPin] = useState(ADMIN_PIN);
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [searchOrders, setSearchOrders] = useState('');
@@ -150,6 +151,13 @@ export default function AdminDashboard() {
     } finally {
       setIsLoading(false);
     }
+
+    try {
+      // 3. Fetch custom PIN if exists (requires 'site_settings' table)
+      const { data: dbSettings } = await supabase.from('site_settings').select('*').eq('key', 'admin_pin').single();
+      if (dbSettings?.value) setDynamicPin(dbSettings.value);
+    } catch {}
+    
   }, [isAuthed]);
 
   useEffect(() => {
@@ -157,7 +165,10 @@ export default function AdminDashboard() {
   }, [loadData]);
 
   const checkPin = () => {
-    if (pinInput.trim().toUpperCase() === ADMIN_PIN) {
+    const localPinOverride = localStorage.getItem('CUSTOM_ADMIN_PIN');
+    const validPin = localPinOverride || dynamicPin;
+    
+    if (pinInput.trim().toUpperCase() === validPin) {
       setIsAuthed(true);
       setPinError(false);
       sessionStorage.setItem('stanch_admin', '1');
@@ -367,6 +378,7 @@ export default function AdminDashboard() {
     { id: 'orders', label: 'Orders', icon: ShoppingBag },
     { id: 'products', label: 'Products', icon: Package },
     { id: 'customers', label: 'Customers', icon: Users },
+    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   return (
@@ -1071,6 +1083,55 @@ export default function AdminDashboard() {
                   </div>
                 );
               })()}
+            </div>
+          )}
+
+          {/* ═══════════════ SETTINGS TAB ═══════════════ */}
+          {activeTab === 'settings' && (
+            <div style={{ maxWidth: 640 }}>
+              <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '4px', padding: '24px' }}>
+                <h2 style={{ fontSize: '18px', fontWeight: 800, fontFamily: "'Neue Machina', sans-serif", marginBottom: '8px' }}>Security Settings</h2>
+                <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '24px' }}>Update your dashboard access PIN.</p>
+                
+                <form 
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setIsLoading(true);
+                    const fd = new FormData(e.currentTarget);
+                    const newPin = (fd.get('newPin') as string).trim().toUpperCase();
+                    
+                    if (newPin.length < 4) {
+                      alert('PIN must be at least 4 characters.');
+                      setIsLoading(false);
+                      return;
+                    }
+                    
+                    try {
+                      // Attempt to store in Supabase globally
+                      const { error } = await supabase.from('site_settings').upsert({ key: 'admin_pin', value: newPin });
+                      if (error) throw error;
+                      alert('PIN updated and synchronized globally!');
+                    } catch (err) {
+                      // Fallback to local storage if table doesn't exist
+                      console.warn('Could not save PIN to Supabase (missing site_settings table). Saving to local device storage instead.', err);
+                      localStorage.setItem('CUSTOM_ADMIN_PIN', newPin);
+                      alert('PIN updated locally on this device!\n(To make this apply globally across all devices, create a "site_settings" table in your Supabase DB with columns: key (text, PRIMARY KEY), value (text)).');
+                    }
+                    
+                    setDynamicPin(newPin);
+                    setIsLoading(false);
+                  }}
+                  style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+                >
+                  <div>
+                    <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '6px' }}>New Access PIN</label>
+                    <input name="newPin" type="text" placeholder="e.g. NEWPIN2025" required style={{ width: '100%', padding: '12px 16px', borderRadius: '4px', border: '1px solid #d1d5db', fontSize: '14px', fontFamily: "'Darker Grotesque', sans-serif", textTransform: 'uppercase' }} />
+                  </div>
+                  <button type="submit" disabled={isLoading} style={{ alignSelf: 'flex-start', background: BRAND_BLUE, color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '4px', fontWeight: 700, cursor: 'pointer', opacity: isLoading ? 0.7 : 1 }}>
+                    {isLoading ? 'Updating...' : 'Change PIN'}
+                  </button>
+                </form>
+              </div>
             </div>
           )}
 
