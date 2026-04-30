@@ -497,7 +497,7 @@ export default function AdminDashboard() {
       {/* ── Main Content ── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
         {/* Header */}
-        <header style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '0 16px', lgPadding: '0 32px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+        <header style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '0 16px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button 
               onClick={() => setMobileMenuOpen(true)}
@@ -507,7 +507,7 @@ export default function AdminDashboard() {
               <BarChart3 size={20} />
             </button>
             <div>
-              <h1 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '14px', lgFontSize: '16px', fontWeight: 900, color: '#111', letterSpacing: '-0.01em', marginBottom: '1px' }}>
+              <h1 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '16px', fontWeight: 900, color: '#111', letterSpacing: '-0.01em', marginBottom: '1px' }}>
                 {activeTab === 'overview' && 'Dashboard Overview'}
                 {activeTab === 'orders' && 'Order Management'}
                 {activeTab === 'products' && 'Product Catalog'}
