@@ -112,6 +112,7 @@ export default function AdminDashboard() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [migrationModal, setMigrationModal] = useState<{ open: boolean; status: 'idle' | 'syncing' | 'success' | 'error'; message?: string }>({ open: false, status: 'idle' });
 
   // Load data
   const loadData = useCallback(async () => {
@@ -205,9 +206,8 @@ export default function AdminDashboard() {
     setProductToDelete(null);
   };
 
-  const migrateLocalToSupabase = async () => {
-    if (!confirm('This will push all your local storage products and orders to Supabase. Continue?')) return;
-    setIsSyncing(true);
+  const executeMigration = async () => {
+    setMigrationModal(prev => ({ ...prev, status: 'syncing' }));
     try {
       if (products.length > 0) {
         await supabase.from('products').upsert(products.map(({ id, ...p }) => p), { onConflict: 'sku' });
@@ -215,13 +215,11 @@ export default function AdminDashboard() {
       if (orders.length > 0) {
         await supabase.from('orders').upsert(orders);
       }
-      alert('Migration complete! Refreshing dashboard...');
+      setMigrationModal({ open: true, status: 'success', message: 'Migration complete! All local data is fully synchronized.' });
       loadData();
-    } catch (err) {
-      alert('Migration failed. Check console.');
+    } catch (err: any) {
+      setMigrationModal({ open: true, status: 'error', message: err.message || 'Migration failed. Check console.' });
       console.error(err);
-    } finally {
-      setIsSyncing(false);
     }
   };
 
@@ -532,15 +530,15 @@ export default function AdminDashboard() {
               </p>
               {activeTab === 'overview' && (
                 <button 
-                  onClick={migrateLocalToSupabase}
-                  disabled={isSyncing}
+                  onClick={() => setMigrationModal({ open: true, status: 'idle' })}
+                  disabled={migrationModal.status === 'syncing'}
                   style={{ 
                     padding: '2px 8px', fontSize: '10px', color: BRAND_BLUE, fontWeight: 800, background: '#fff', 
                     border: `1.5px solid ${BRAND_BLUE}`, borderRadius: '4px', cursor: 'pointer', transition: 'all 0.2s',
-                    opacity: isSyncing ? 0.6 : 1
+                    opacity: migrationModal.status === 'syncing' ? 0.6 : 1
                   }}
                 >
-                  {isSyncing ? 'SYNCING...' : 'SYNC TO SUPABASE'}
+                  {migrationModal.status === 'syncing' ? 'SYNCING...' : 'SYNC TO SUPABASE'}
                 </button>
               )}
             </div>
@@ -1165,6 +1163,69 @@ export default function AdminDashboard() {
               </div>
             </div>
           )}
+
+          {/* ═══════════════ MIGRATION MODAL ═══════════════ */}
+          {migrationModal.open && (
+            <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '24px' }}>
+              <div style={{ background: '#fff', width: '100%', maxWidth: '420px', borderRadius: '4px', overflow: 'hidden', boxShadow: '24px 24px 0px rgba(0,0,0,1)' }}>
+                <div style={{ padding: '36px', textAlign: 'center' }}>
+                  {migrationModal.status === 'idle' && (
+                    <>
+                      <div style={{ width: '64px', height: '64px', background: '#e0e7ff', color: BRAND_BLUE, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                        <RefreshCcw size={32} />
+                      </div>
+                      <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>Database Synchronization</h3>
+                      <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: 1.6, marginBottom: '32px' }}>
+                        This will securely push all localized application data (products and orders) to the live Supabase Postgres Database. Are you ready to continue?
+                      </p>
+                      <div style={{ display: 'flex', gap: '12px' }}>
+                        <button
+                          onClick={() => setMigrationModal({ open: false, status: 'idle' })}
+                          style={{ flex: 1, padding: '14px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#4b5563', cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif" }}
+                        >
+                          CANCEL
+                        </button>
+                        <button
+                          onClick={executeMigration}
+                          style={{ flex: 1, padding: '14px', background: BRAND_BLUE, border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#fff', cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif" }}
+                        >
+                          PROCEED
+                        </button>
+                      </div>
+                    </>
+                  )}
+                  {migrationModal.status === 'syncing' && (
+                    <div style={{ padding: '20px 0' }}>
+                      <div className="spinner" style={{ border: '4px solid rgba(0,0,0,0.1)', borderTop: `4px solid ${BRAND_BLUE}`, borderRadius: '50%', width: '48px', height: '48px', margin: '0 auto 24px', animation: 'spin 1s linear infinite' }}></div>
+                      <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+                      <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '18px', fontWeight: 800, color: '#111' }}>Synchronizing Data...</h3>
+                      <p style={{ fontSize: '14px', color: '#6b7280', marginTop: '8px' }}>Please do not close this window.</p>
+                    </div>
+                  )}
+                  {(migrationModal.status === 'success' || migrationModal.status === 'error') && (
+                    <>
+                      <div style={{ width: '64px', height: '64px', background: migrationModal.status === 'success' ? '#dcfce7' : '#fee2e2', color: migrationModal.status === 'success' ? '#16a34a' : '#dc2626', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                        {migrationModal.status === 'success' ? <Shield size={32} /> : <X size={32} />}
+                      </div>
+                      <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>
+                        {migrationModal.status === 'success' ? 'Success' : 'Action Failed'}
+                      </h3>
+                      <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: 1.6, marginBottom: '32px' }}>
+                        {migrationModal.message}
+                      </p>
+                      <button
+                        onClick={() => setMigrationModal({ open: false, status: 'idle' })}
+                        style={{ width: '100%', padding: '14px', background: '#111', border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#fff', cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif" }}
+                      >
+                        CLOSE
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
         </main>
       </div>
     </div>
