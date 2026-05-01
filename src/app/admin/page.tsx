@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import {
   LayoutDashboard, Package, ShoppingBag, Users, LogOut,
   TrendingUp, AlertCircle, Clock, CheckCircle2, Truck,
-  ChevronRight, Search, Eye, Edit2, Trash2, X,
+  ChevronRight, Search, Eye, EyeOff, Edit2, Trash2, X,
   ArrowUpRight, ArrowDownRight, BarChart3, Filter,
   Shield, Lock, RefreshCcw, Plus, Save, ChevronDown,
   ExternalLink, MoreVertical, Circle, Settings
@@ -96,6 +96,8 @@ function StatCard({ label, value, sub, icon, accent, trend }: { label: string; v
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function AdminDashboard() {
   const [pinInput, setPinInput] = useState('');
+  const [showLoginPin, setShowLoginPin] = useState(false);
+  const [showChangePin, setShowChangePin] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
   const [pinError, setPinError] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'orders' | 'products' | 'customers' | 'settings'>('overview');
@@ -113,6 +115,12 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [migrationModal, setMigrationModal] = useState<{ open: boolean; status: 'idle' | 'syncing' | 'success' | 'error'; message?: string }>({ open: false, status: 'idle' });
+  const [toastMessage, setToastMessage] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+
+  const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' = 'success') => {
+    setToastMessage({ message, type });
+    setTimeout(() => setToastMessage(null), 4000);
+  }, []);
 
   // Load data
   const loadData = useCallback(async () => {
@@ -153,17 +161,22 @@ export default function AdminDashboard() {
       setIsLoading(false);
     }
 
-    try {
-      // 3. Fetch custom PIN if exists (requires 'site_settings' table)
-      const { data: dbSettings } = await supabase.from('site_settings').select('*').eq('key', 'admin_pin').single();
-      if (dbSettings?.value) setDynamicPin(dbSettings.value);
-    } catch {}
-    
   }, [isAuthed]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
+
+  // Fetch custom PIN on mount unconditionally
+  useEffect(() => {
+    const fetchPin = async () => {
+      try {
+        const { data: dbSettings } = await supabase.from('site_settings').select('*').eq('key', 'admin_pin').single();
+        if (dbSettings?.value) setDynamicPin(dbSettings.value);
+      } catch {}
+    };
+    fetchPin();
+  }, []);
 
   const checkPin = () => {
     const localPinOverride = localStorage.getItem('CUSTOM_ADMIN_PIN');
@@ -333,18 +346,25 @@ export default function AdminDashboard() {
             <div style={{ position: 'relative', marginBottom: '20px' }}>
               <Lock size={15} color="#4b5563" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
               <input
-                type="password"
+                type={showLoginPin ? 'text' : 'password'}
                 value={pinInput}
                 onChange={e => { setPinInput(e.target.value); setPinError(false); }}
                 onKeyDown={e => e.key === 'Enter' && checkPin()}
                 placeholder="Enter passphrase"
                 autoFocus
                 style={{
-                  width: '100%', padding: '14px 14px 14px 40px', background: '#0f0f11', border: `1px solid ${pinError ? '#dc2626' : '#2a2a32'}`,
+                  width: '100%', padding: '14px 40px 14px 40px', background: '#0f0f11', border: `1px solid ${pinError ? '#dc2626' : '#2a2a32'}`,
                   borderRadius: '8px', color: '#fff', fontSize: '16px', outline: 'none', boxSizing: 'border-box',
                   fontFamily: "'Darker Grotesque', sans-serif", letterSpacing: '0.1em',
                 }}
               />
+              <button 
+                type="button"
+                onClick={() => setShowLoginPin(!showLoginPin)}
+                style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', outline: 'none', padding: 0, color: '#4b5563', display: 'flex' }}
+              >
+                {showLoginPin ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
             </div>
             {pinError && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#ef4444', fontSize: '13px', marginBottom: '16px' }}>
@@ -1099,7 +1119,7 @@ export default function AdminDashboard() {
                     const newPin = (fd.get('newPin') as string).trim().toUpperCase();
                     
                     if (newPin.length < 4) {
-                      alert('PIN must be at least 4 characters.');
+                      showToast('PIN must be at least 4 characters.', 'error');
                       setIsLoading(false);
                       return;
                     }
@@ -1108,12 +1128,14 @@ export default function AdminDashboard() {
                       // Attempt to store in Supabase globally
                       const { error } = await supabase.from('site_settings').upsert({ key: 'admin_pin', value: newPin });
                       if (error) throw error;
-                      alert('PIN updated and synchronized globally!');
-                    } catch (err) {
+                      showToast('PIN Changed successfully', 'success');
+                      localStorage.removeItem('CUSTOM_ADMIN_PIN');
+                      (e.target as HTMLFormElement).reset();
+                    } catch (err: any) {
                       // Fallback to local storage if table doesn't exist
-                      console.warn('Could not save PIN to Supabase (missing site_settings table). Saving to local device storage instead.', err);
+                      console.warn('Could not save PIN to Supabase (missing site_settings table or config). Saving to local device storage instead.', err);
                       localStorage.setItem('CUSTOM_ADMIN_PIN', newPin);
-                      alert('PIN updated locally on this device!\n(To make this apply globally across all devices, create a "site_settings" table in your Supabase DB with columns: key (text, PRIMARY KEY), value (text)).');
+                      showToast(`PIN updated locally! (Sync failed: ${err?.message || 'Unknown'})`, 'error');
                     }
                     
                     setDynamicPin(newPin);
@@ -1123,7 +1145,16 @@ export default function AdminDashboard() {
                 >
                   <div>
                     <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '6px' }}>New Access PIN</label>
-                    <input name="newPin" type="text" placeholder="e.g. NEWPIN2025" required style={{ width: '100%', padding: '12px 16px', borderRadius: '4px', border: '1px solid #d1d5db', fontSize: '14px', fontFamily: "'Darker Grotesque', sans-serif", textTransform: 'uppercase' }} />
+                    <div style={{ position: 'relative' }}>
+                      <input name="newPin" type={showChangePin ? 'text' : 'password'} placeholder="e.g. NEWPIN2025" required style={{ width: '100%', padding: '12px 40px 12px 16px', borderRadius: '4px', border: '1px solid #d1d5db', fontSize: '14px', fontFamily: "'Darker Grotesque', sans-serif", textTransform: 'uppercase', boxSizing: 'border-box' }} />
+                      <button 
+                        type="button"
+                        onClick={() => setShowChangePin(!showChangePin)}
+                        style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', outline: 'none', padding: 0, color: '#9ca3af', display: 'flex' }}
+                      >
+                        {showChangePin ? <EyeOff size={15} /> : <Eye size={15} />}
+                      </button>
+                    </div>
                   </div>
                   <button type="submit" disabled={isLoading} style={{ alignSelf: 'flex-start', background: BRAND_BLUE, color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '4px', fontWeight: 700, cursor: 'pointer', opacity: isLoading ? 0.7 : 1 }}>
                     {isLoading ? 'Updating...' : 'Change PIN'}
@@ -1161,6 +1192,23 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* ═══════════════ TOAST NOTIFICATION ═══════════════ */}
+          {toastMessage && (
+            <div style={{
+              position: 'fixed', bottom: '32px', right: '32px', zIndex: 9999,
+              background: toastMessage.type === 'error' ? '#ef4444' : toastMessage.type === 'info' ? '#3b82f6' : '#16a34a',
+              color: '#fff', padding: '16px 24px', borderRadius: '8px',
+              fontFamily: "'Darker Grotesque', sans-serif", fontSize: '15px', fontWeight: 700,
+              display: 'flex', alignItems: 'center', gap: '12px',
+              boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
+              animation: 'toast-slide-up 0.3s ease-out forwards'
+            }}>
+              {toastMessage.type === 'error' ? <AlertCircle size={18} /> : toastMessage.type === 'info' ? <AlertCircle size={18} /> : <CheckCircle2 size={18} />}
+              {toastMessage.message}
+              <style>{`@keyframes toast-slide-up { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }`}</style>
             </div>
           )}
 
