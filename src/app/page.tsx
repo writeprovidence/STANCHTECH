@@ -184,10 +184,10 @@ export default function HomePage() {
         </div>
 
         {/* ─── CUMMINS ENGINES ─── */}
-        <div style={{ overflow: "hidden", padding: "60px 5% 40px 5%" }}>
+        <div style={{ overflow: "hidden", padding: "100px 5%" }}>
           <div className="two-col-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "center", maxWidth: 1400, margin: "0 auto" }}>
             {/* Text LEFT */}
-            <div>
+            <div style={{ maxWidth: 840 }}>
               <h2 className="font-bold" style={{ 
                 fontSize: "38px", 
                 lineHeight: 1.1, 
@@ -202,7 +202,7 @@ export default function HomePage() {
                 <span style={{ display: "block" }}>maintenance and</span>
                 <span style={{ display: "block" }}>repair services</span>
               </h2>
-               <p className="section-body darker-regular" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 36, lineHeight: 1.55, fontFamily: "'Darker Grotesque', sans-serif", fontWeight: 500, fontSize: "20px" }}>
+               <p className="section-body darker-regular" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 36, lineHeight: 1.55, fontFamily: "'Darker Grotesque', sans-serif", fontWeight: 500, fontSize: "20px", maxWidth: 480 }}>
                 <span style={{ display: "block", whiteSpace: "nowrap" }}>Cummins engine maintenance and repair services, ensuring</span>
                 <span style={{ display: "block", whiteSpace: "nowrap" }}>optimal performance, reliability and extended</span>
                 <span style={{ display: "block", whiteSpace: "nowrap" }}>lifespan through expert diagnostics.</span>
@@ -224,7 +224,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── MARINE VESSEL INSPECTION ─── */}
-      <section style={{ background: "#FFFFFF", color: "#0b1a2e", display: "flex", alignItems: "center", padding: "100px 5%" }}>
+      <section style={{ background: "#FFFFFF", color: "#0b1a2e", display: "flex", alignItems: "center", padding: "120px 5%" }}>
         <div className="two-col-grid" style={{ gap: 60, alignItems: "center", maxWidth: 1400, gridTemplateColumns: "1fr 1fr" }}>
           {/* Image LEFT - Vessel Presentation */}
           <div className="reverse-mobile" style={{ height: "506px", width: "100%", maxWidth: "100%", overflow: "hidden", position: "relative", borderRadius: "15px", flexShrink: 0 }}>
@@ -235,7 +235,7 @@ export default function HomePage() {
             />
           </div>
           {/* Text RIGHT */}
-          <div style={{ maxWidth: 740 }}>
+          <div className="vessel-text-container" style={{ maxWidth: 840 }}>
               <h2 className="font-bold" style={{ 
                 fontSize: "38px", 
                 lineHeight: 1.1, 
@@ -287,13 +287,13 @@ export default function HomePage() {
             </Link>
           </div>
           {/* Image RIGHT - Industrial Spares Mastery */}
-            <div className="reverse-mobile" style={{ height: "506px", width: "100%", maxWidth: "100%", overflow: "hidden", position: "relative", borderRadius: "15px", flexShrink: 0 }}>
+          <div className="reverse-mobile" style={{ height: "506px", width: "100%", maxWidth: "100%", overflow: "hidden", position: "relative", borderRadius: "15px", flexShrink: 0 }}>
               <img 
                 src="/asset/Landing_page_image/marine_spares.png" 
                 alt="Professional Marine and Industrial Spares" 
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
-            </div>
+          </div>
         </div>
       </section>
 
@@ -326,7 +326,6 @@ export default function HomePage() {
               background: "transparent", 
               border: "1px solid #0b1a2e", 
               color: "#0b1a2e", 
-              padding: "16px 36px",
               marginTop: 24,
             }}
           >
@@ -417,7 +416,6 @@ export default function HomePage() {
               style={{
                 border: "1px solid #0b1a2e",
                 color: "#0b1a2e",
-                padding: "16px 36px",
                 background: "transparent",
                 marginBottom: 8,
                 flexShrink: 0,

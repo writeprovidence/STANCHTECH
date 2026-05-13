@@ -13,7 +13,7 @@ export function Footer() {
 
     return (
       <>
-        <footer className="hide-mobile" style={{ background: "#060D17", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+        <footer style={{ background: "#060D17", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
           {/* Section 2: Main Footer Grid */}
           <section>
 
@@ -41,7 +41,9 @@ export function Footer() {
                 </Link>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, marginBottom: 32, fontFamily: "'Darker Grotesque', sans-serif" }}>
-                Nigeria's premier partner for marine engine salvaging, diagnostic precision, and technical maintenance solutions.
+                Nigeria's premier partner for marine engine <br />
+                salvaging, diagnostic precision, and technical <br />
+                maintenance solutions.
               </p>
               <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
                 <a href="#" style={{ color: "#1877F2", transition: "transform 0.3s ease", display: "inline-flex" }} onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"} onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}>
@@ -149,7 +151,7 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div style={{ maxWidth: 1320, margin: "80px auto 0", paddingTop: 40, borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif" }}>
+          <div className="footer-bottom-bar" style={{ maxWidth: 1320, margin: "80px auto 0", paddingTop: 40, borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif" }}>
             <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>&copy; {new Date().getFullYear()} Stanch Tech. All rights reserved.</p>
             <div style={{ display: "flex", gap: 40 }}>
               <span style={{ cursor: "pointer", fontFamily: "'Darker Grotesque', sans-serif" }}>Privacy Policy</span>
@@ -158,8 +160,6 @@ export function Footer() {
           </div>
         </section>
       </footer>
-      {/* Spacer shown only on mobile instead of footer */}
-      <div className="mobile-whitespace" style={{ display: "none" }} />
     </>
   );
 }
