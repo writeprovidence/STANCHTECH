@@ -239,7 +239,7 @@ export default function ProjectDetail() {
             <div style={{ borderTop: "1px solid #f1f5f9", paddingTop: 80 }}>
               <h2 style={{ fontSize: 28, fontWeight: 800, fontFamily: "var(--font-heading)", marginBottom: 48 }}>Completed Highlights</h2>
               
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginBottom: 80 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 350px), 1fr))", gap: 32, marginBottom: 80 }}>
                 {project.highlightImages.map((img, idx) => (
                   <div key={idx} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     <div style={{ height: 260, overflow: "hidden" }}>

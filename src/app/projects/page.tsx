@@ -156,10 +156,10 @@ export default function ProjectsPage() {
                 alt="Main Project" 
                 style={{ width: "100%", height: "100%", objectFit: "cover" }} 
                />
-               <div style={{ position: "absolute", bottom: 40, left: 40, right: 40, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-                  <div style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(10px)", color: "#fff", padding: "20px 32px", borderRadius: 0, maxWidth: 600 }}>
+               <div style={{ position: "absolute", bottom: "clamp(16px, 4vw, 40px)", left: "clamp(16px, 4vw, 40px)", right: "clamp(16px, 4vw, 40px)", display: "flex", flexWrap: "wrap", gap: 16, justifyContent: "space-between", alignItems: "flex-end" }}>
+                  <div style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(10px)", color: "#fff", padding: "clamp(16px, 4vw, 20px) clamp(16px, 4vw, 32px)", borderRadius: 0, maxWidth: 600 }}>
                     <p style={{ fontSize: 16, opacity: 0.8, marginBottom: 8 }}>Highlight Portfolio</p>
-                    <h4 style={{ fontSize: 18, fontWeight: 700 }}>Performance optimization of a Caterpillar C32 marine engine for high-traffic fleets.</h4>
+                    <h4 style={{ fontSize: "clamp(16px, 4vw, 18px)", fontWeight: 700 }}>Performance optimization of a Caterpillar C32 marine engine for high-traffic fleets.</h4>
                   </div>
                   <Link href={`/projects/${PROJECTS[0].id}`} style={{ 
                     background: "#FFFFFF", 
@@ -209,7 +209,7 @@ export default function ProjectsPage() {
       {/* ─── GRID ─── */}
       <section style={{ padding: "80px 5% 120px" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))", gap: 32 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 350px), 1fr))", gap: 32 }}>
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
                 <motion.div

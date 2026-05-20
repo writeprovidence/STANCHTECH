@@ -88,7 +88,7 @@ export default function ContactPage() {
                             viewport={{ once: true }}
                             className="flex flex-col items-start pt-8 lg:pt-20"
                         >
-                            <div style={{ position: "relative", paddingLeft: 32, borderLeft: "4px solid #fb5b17", marginBottom: 60 }}>
+                            <div style={{ position: "relative", paddingLeft: 32, borderLeft: "4px solid #2563eb", marginBottom: 60 }}>
                                 <h2 style={{ fontFamily: "var(--font-serif), Georgia, serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 900, lineHeight: 1.0, color: "#111827", letterSpacing: "-0.03em", margin: 0 }}>
                                     VISIT <span style={{ display: "block", fontStyle: "italic", color: "#8ea2b6" }}>OUR OFFICE.</span>
                                 </h2>
@@ -98,7 +98,7 @@ export default function ContactPage() {
                                 {/* Address Block */}
                                 <div style={{ display: "flex", gap: 20 }}>
                                     <div style={{ width: 44, height: 44, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                        <MapPin size={18} color="#fb5b17" />
+                                        <MapPin size={18} color="#2563eb" />
                                     </div>
                                     <div>
                                         <p style={{ color: "#9ca3af", fontSize: 10, fontWeight: 800, textTransform: "uppercase", marginBottom: 6, letterSpacing: "0.1em" }}>Address</p>
@@ -113,7 +113,7 @@ export default function ContactPage() {
                                 {/* Email Block */}
                                 <div style={{ display: "flex", gap: 20 }}>
                                     <div style={{ width: 44, height: 44, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                         <Mail size={18} color="#fb5b17" />
+                                         <Mail size={18} color="#2563eb" />
                                     </div>
                                     <div>
                                         <p style={{ color: "#9ca3af", fontSize: 10, fontWeight: 800, textTransform: "uppercase", marginBottom: 6, letterSpacing: "0.1em" }}>Email</p>
@@ -124,7 +124,7 @@ export default function ContactPage() {
                                 {/* Phone Block */}
                                 <div style={{ display: "flex", gap: 20 }}>
                                     <div style={{ width: 44, height: 44, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                         <Phone size={18} color="#fb5b17" />
+                                         <Phone size={18} color="#2563eb" />
                                     </div>
                                     <div>
                                         <p style={{ color: "#9ca3af", fontSize: 10, fontWeight: 800, textTransform: "uppercase", marginBottom: 6, letterSpacing: "0.1em" }}>Contact Support</p>
@@ -218,25 +218,7 @@ export default function ContactPage() {
                 </div>
             </section>
 
-            {/* --- SHIP ILLUSTRATION SECTION --- */}
-            <section className="bg-white mt-12 mb-[-60px] md:mb-[-120px] relative z-10 w-full overflow-hidden">
-                <div className="w-full">
-                    <motion.div 
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="w-full"
-                    >
-                        <img 
-                            src="/asset/Contact_image/ship.jpg" 
-                            alt="Stanch Tech Marine Excellence" 
-                            className="w-full h-auto object-cover block"
-                            style={{ marginTop: "-8%" }}
-                        />
-                    </motion.div>
-                </div>
-            </section>
+
         </div>
     );
 }
