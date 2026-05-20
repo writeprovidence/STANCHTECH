@@ -12,7 +12,7 @@ function ShopContent() {
     const [activeFaq, setActiveFaq] = useState(null);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 16;
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [products, setProducts] = useState(PRODUCTS);
     const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +27,7 @@ function ShopContent() {
                     .order('id', { ascending: false });
 
                 if (error) throw error;
-                if (data && data.length > 0) {
+                if (data !== null) {
                     setProducts(data);
                 }
             } catch (err) {
@@ -55,15 +55,16 @@ function ShopContent() {
         setCurrentPage(1); // Reset to first page on filter change
     };
 
+    // Derive unique categories dynamically from live products
+    const dynamicCategories = Array.from(new Set(products.map(p => p.category).filter(Boolean))).sort();
+    const priceFilters = ["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"];
+    const conditionFilters = ["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"];
+
     // Filter products based on selected categories, price, and condition
     const filteredProducts = products.filter(product => {
         if (selectedFilters.length === 0) return true;
-        
-        const categoryFilters = ["Fuel Injectors", "Turbos", "Controllers", "Filters", "Hardware"];
-        const priceFilters = ["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"];
-        const conditionFilters = ["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"];
 
-        const activeCategoryFilters = selectedFilters.filter(f => categoryFilters.includes(f));
+        const activeCategoryFilters = selectedFilters.filter(f => dynamicCategories.includes(f));
         const activePriceFilters = selectedFilters.filter(f => priceFilters.includes(f));
         const activeConditionFilters = selectedFilters.filter(f => conditionFilters.includes(f));
 
@@ -158,11 +159,13 @@ function ShopContent() {
                         >
                             <div style={{ padding: "32px 24px", borderTop: "1px solid #f9fafb" }}>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-                                    {/* Part Type */}
+                                    {/* Part Type — Dynamic from DB */}
                                     <div>
                                         <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>01. Category</h4>
                                         <div className="flex flex-col gap-6">
-                                            {["Fuel Injectors", "Turbos", "Controllers", "Filters", "Hardware"].map(cat => (
+                                            {dynamicCategories.length === 0 ? (
+                                                <span style={{ fontSize: "12px", color: "#9ca3af", fontFamily: "var(--font-body)" }}>No categories yet</span>
+                                            ) : dynamicCategories.map(cat => (
                                                 <label key={cat} className="flex items-center gap-4 cursor-pointer group">
                                                     <input type="checkbox" className="hidden" checked={selectedFilters.includes(cat)} onChange={() => toggleFilter(cat)} />
                                                     <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(cat) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
@@ -251,27 +254,41 @@ function ShopContent() {
                         </Link>
                     ))}
                 </div>
-                <div style={{ height: "118px" }} />
+                <div style={{ height: "64px" }} />
+                {totalPages > 1 && (
                     <div className="flex justify-center items-center gap-4">
-                         <button 
-                            className="w-12 h-12 flex items-center justify-center rounded-[4px] bg-gray-50 text-gray-300 opacity-50 cursor-default transition-all"
+                        <button 
+                            onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+                            disabled={currentPage === 1}
+                            className={`w-12 h-12 flex items-center justify-center rounded-[4px] bg-gray-50 transition-all ${currentPage === 1 ? 'text-gray-300 opacity-50 cursor-default' : 'text-gray-900 cursor-pointer hover:bg-gray-200'}`}
                         >
                             <ChevronDown className="rotate-90" size={16} />
                         </button>
 
-                        <button 
-                            className="w-12 h-12 flex items-center justify-center rounded-[4px] font-bold text-sm bg-[#0b1a2e] text-white shadow-lg shadow-blue-100/20"
-                            style={{ fontFamily: "var(--font-heading)" }}
-                        >
-                            1
-                        </button>
+                        {Array.from({ length: totalPages }).map((_, i) => {
+                            const pageNum = i + 1;
+                            const isActive = pageNum === currentPage;
+                            return (
+                                <button 
+                                    key={pageNum}
+                                    onClick={() => handlePageChange(pageNum)}
+                                    className={`w-12 h-12 flex items-center justify-center rounded-[4px] font-bold text-sm transition-all ${isActive ? 'bg-[#2563eb] text-white shadow-lg shadow-blue-100/20' : 'bg-gray-50 text-gray-600 hover:bg-gray-200 cursor-pointer'}`}
+                                    style={{ fontFamily: "var(--font-heading)" }}
+                                >
+                                    {pageNum}
+                                </button>
+                            );
+                        })}
 
                         <button 
-                            className="w-12 h-12 flex items-center justify-center rounded-[4px] bg-gray-50 text-gray-900 transition-all opacity-50 cursor-default"
+                            onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className={`w-12 h-12 flex items-center justify-center rounded-[4px] bg-gray-50 transition-all ${currentPage === totalPages ? 'text-gray-300 opacity-50 cursor-default' : 'text-gray-900 cursor-pointer hover:bg-gray-200'}`}
                         >
                             <ChevronRight size={16} />
                         </button>
                     </div>
+                )}
                 <div style={{ height: "100px" }} />
             </div>
         </div>
