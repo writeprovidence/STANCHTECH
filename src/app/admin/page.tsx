@@ -897,7 +897,23 @@ export default function AdminDashboard() {
                             </div>
                           </td>
                           <td style={{ padding: '10px 12px' }}>
-                            <p style={{ fontSize: '13px', fontWeight: 700, color: '#111', marginBottom: '1px' }}>{p.name}</p>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <p style={{ fontSize: '13px', fontWeight: 700, color: '#111', marginBottom: '1px' }}>{p.name}</p>
+                              {products.slice(0, 3).some(fp => fp.id === p.id) && (
+                                <span style={{ 
+                                  fontSize: '10px', 
+                                  fontWeight: 900, 
+                                  background: '#000', 
+                                  color: '#fff', 
+                                  padding: '2px 6px', 
+                                  borderRadius: '2px',
+                                  fontFamily: "'Space Grotesk', sans-serif",
+                                  letterSpacing: '0.05em'
+                                }}>
+                                  LIVE ON STORE
+                                </span>
+                              )}
+                            </div>
                           </td>
                           <td style={{ padding: '10px 12px', fontSize: '12px', color: '#9ca3af', fontFamily: "'Space Grotesk', sans-serif" }}>{p.sku}</td>
                           <td style={{ padding: '10px 12px' }}>
