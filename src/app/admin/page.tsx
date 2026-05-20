@@ -138,23 +138,19 @@ export default function AdminDashboard() {
 
       if (dbProducts !== null && !pError) {
         setProducts(dbProducts);
-      } else {
-        // Fallback if database totally fails to connect
+      } else if (pError) {
+        // Only if there's an actual ERROR (not just empty), we might show a message or fallback
+        console.error('Products fetch error:', pError);
         const overrides = localStorage.getItem('admin_products');
-        let prods: AdminProduct[] = PRODUCTS.map(p => ({ ...p, stock: 10 }));
         if (overrides) {
-          try {
-            const ov: AdminProduct[] = JSON.parse(overrides);
-            prods = prods.map(p => { const o = ov.find(x => x.id === p.id); return o ? { ...p, ...o } : p; });
-          } catch {}
+          try { setProducts(JSON.parse(overrides)); } catch {}
         }
-        setProducts(prods);
       }
 
       if (dbOrders !== null && !oError) {
         setOrders(dbOrders);
-      } else {
-        // Only fall back to localStorage if Supabase itself failed to connect
+      } else if (oError) {
+        console.error('Orders fetch error:', oError);
         const raw = localStorage.getItem('orders');
         if (raw) try { setOrders(JSON.parse(raw)); } catch {}
       }
@@ -212,14 +208,27 @@ export default function AdminDashboard() {
   };
 
   const deleteProduct = async (id: number) => {
-    // 1. Update Supabase
-    await supabase.from('products').delete().eq('id', id);
+    setIsLoading(true);
+    try {
+      // 1. Update Supabase
+      const { error } = await supabase.from('products').delete().eq('id', id);
+      
+      if (error) {
+        showToast(`Failed to delete from Supabase: ${error.message}`, "error");
+        return;
+      }
 
-    // 2. Update local state
-    const updated = products.filter(p => p.id !== id);
-    setProducts(updated);
-    localStorage.setItem('admin_products', JSON.stringify(updated));
-    setProductToDelete(null);
+      // 2. Update local state
+      const updated = products.filter(p => p.id !== id);
+      setProducts(updated);
+      localStorage.setItem('admin_products', JSON.stringify(updated));
+      setProductToDelete(null);
+      showToast("Product deleted successfully", "success");
+    } catch (err: any) {
+      showToast(`Error: ${err.message}`, "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const deleteAllProducts = async () => {
@@ -267,16 +276,28 @@ export default function AdminDashboard() {
   const executeMigration = async () => {
     setMigrationModal(prev => ({ ...prev, status: 'syncing' }));
     try {
+      // To fix "once and for all": 
+      // 1. We want Supabase to match the local state exactly.
+      // 2. Clear current products in DB to avoid "zombies"
       if (products.length > 0) {
-        await supabase.from('products').upsert(products.map(({ id, ...p }) => p), { onConflict: 'sku' });
+        // Clear all first
+        await supabase.from('products').delete().gt('id', -1);
+        // Insert local batch (removing id to let Supabase generate new serial ones if needed, 
+        // OR keeping them if we want to preserve IDs. Usually keeping them is better for links.)
+        const { error: pError } = await supabase.from('products').insert(products.map(({ id, ...p }) => p));
+        if (pError) throw pError;
       }
+
       if (orders.length > 0) {
-        await supabase.from('orders').upsert(orders);
+        // Orders are more sensitive, maybe only upsert
+        const { error: oError } = await supabase.from('orders').upsert(orders);
+        if (oError) throw oError;
       }
-      setMigrationModal({ open: true, status: 'success', message: 'Migration complete! All local data is fully synchronized.' });
+
+      setMigrationModal({ open: true, status: 'success', message: 'Synchronization complete! Database is now identical to your dashboard.' });
       loadData();
     } catch (err: any) {
-      setMigrationModal({ open: true, status: 'error', message: err.message || 'Migration failed. Check console.' });
+      setMigrationModal({ open: true, status: 'error', message: err.message || 'Sync failed. Check console.' });
       console.error(err);
     }
   };
