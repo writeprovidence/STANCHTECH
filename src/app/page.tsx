@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle, MapPin, Package } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PRODUCTS } from "@/data/products";
@@ -89,8 +90,8 @@ export default function HomePage() {
       {/* ─── 01. REDESIGNED HERO ─── */}
       <section style={{
         position: "relative",
-        height: "95vh",
-        minHeight: 800,
+        height: "85vh",
+        minHeight: 600,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -98,7 +99,7 @@ export default function HomePage() {
         overflow: "hidden",
       }}>
         {/* Cinematic Backdrop */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 1, background: "rgba(0,0,0,0.45)" }} />
+        <div style={{ position: "absolute", inset: 0, zIndex: 1, background: "rgba(0,0,0,0.5)" }} />
         {HERO_SLIDES.map((slide, index) => (
           <motion.div
             key={slide.image}
@@ -110,7 +111,13 @@ export default function HomePage() {
             }}
             style={{ position: "absolute", inset: 0, zIndex: 0 }}
           >
-            <img src={slide.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <Image 
+              src={slide.image} 
+              alt="" 
+              fill 
+              priority={index === 0}
+              style={{ objectFit: "cover" }} 
+            />
           </motion.div>
         ))}
 
@@ -149,12 +156,17 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            style={{ display: "flex", gap: 20, justifyContent: "center" }}
+            style={{ 
+              display: "flex", 
+              gap: 16, 
+              justifyContent: "center",
+              flexWrap: "wrap"
+            }}
           >
-            <Link href="/contact" className="hero-btn-primary">
+            <Link href="/shop" className="hero-btn-primary" style={{ width: "min(100%, 220px)" }}>
               Explore Inventory
             </Link>
-            <Link href="/projects" className="hero-btn-secondary" style={{ backdropFilter: "blur(10px)", background: "rgba(255,255,255,0.1)" }}>
+            <Link href="/projects" className="hero-btn-secondary" style={{ backdropFilter: "blur(10px)", background: "rgba(255,255,255,0.1)", width: "min(100%, 220px)" }}>
               View Our Portfolio
             </Link>
           </motion.div>
@@ -163,14 +175,20 @@ export default function HomePage() {
 
       {/* ─── 02. STATS BAR ─── */}
       <section style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "40px 5%" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 32 }}>
+        <div style={{ 
+          maxWidth: 1400, 
+          margin: "0 auto", 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", 
+          gap: 32 
+        }}>
            {[
              { label: "Technical Support", icon: <MessageCircle size={24} /> },
              { label: "Spares Inventory", icon: <Package size={24} /> },
              { label: "Onsite Maintenance", icon: <MapPin size={24} /> },
              { label: "Expert Consultancy", icon: <Star size={24} /> }
            ].map((item, i) => (
-             <div key={i} style={{ display: "flex", alignItems: "center", gap: 16, color: "var(--navy)" }}>
+             <div key={i} style={{ display: "flex", alignItems: "center", gap: 16, color: "var(--navy)", justifyContent: "center" }}>
                 <div style={{ color: "var(--accent)" }}>{item.icon}</div>
                 <span style={{ fontWeight: 700, letterSpacing: "0.02em", textTransform: "uppercase", fontSize: 12, fontFamily: "var(--font-heading)" }}>{item.label}</span>
              </div>
@@ -179,11 +197,11 @@ export default function HomePage() {
       </section>
 
       {/* ─── 03. INTRO / STATS ─── */}
-      <section style={{ padding: "140px 5%", background: "#fff" }}>
-        <div className="two-col-grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 100 }}>
+      <section className="section-pad" style={{ background: "#fff" }}>
+        <div className="two-col-grid">
           <div style={{ borderLeft: "4px solid var(--accent)", paddingLeft: 40 }}>
              <span className="section-label">Our Philosophy</span>
-             <h2 className="responsive-title" style={{ fontSize: 48, marginBottom: 24 }}>
+             <h2 className="responsive-title" style={{ marginBottom: 24 }}>
                 Precision is our foundation, <br />
                 performance is our <span style={{ color: "var(--accent)" }}>legacy.</span>
              </h2>
@@ -194,7 +212,7 @@ export default function HomePage() {
                 LEARN MORE ABOUT OUR MISSION <ArrowUpRight size={18} color="var(--accent)" />
              </Link>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 40 }}>
              {[
                { val: "8+", label: "Years Experience" },
                { val: "100+", label: "Projects Completed" },
@@ -202,7 +220,7 @@ export default function HomePage() {
                { val: "98%", label: "Repeat Business" },
              ].map((stat, i) => (
                <div key={i}>
-                  <h3 style={{ fontSize: 48, fontWeight: 700, color: "var(--navy)", marginBottom: 8, letterSpacing: "-0.04em", fontFamily: "var(--font-heading)" }}>{stat.val}</h3>
+                  <h3 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700, color: "var(--navy)", marginBottom: 8, letterSpacing: "-0.04em", fontFamily: "var(--font-heading)" }}>{stat.val}</h3>
                   <p style={{ color: "#6b7280", fontWeight: 500, fontSize: 16 }}>{stat.label}</p>
                </div>
              ))}
@@ -211,12 +229,12 @@ export default function HomePage() {
       </section>
 
       {/* ─── 04. REDESIGNED SERVICES GRID ─── */}
-      <section style={{ padding: "0 5% 140px", background: "#fff" }}>
-        <div style={{ textAlign: "center", marginBottom: 80 }}>
+      <section className="section-pad" style={{ background: "#fff", paddingTop: 0 }}>
+        <div style={{ textAlign: "center", marginBottom: 60 }}>
            <span className="section-label">What We Do</span>
            <h2 className="responsive-title">Engineered to Perfection</h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
            {[
              { num: "01", title: "Cummins engines maintenance and repair services", img: "/asset/Landing_page_image/cummin_engine.png", desc: "Cummins engine maintenance and repair services, ensuring optimal performance, reliability and extended lifespan through expert diagnostics." },
              { num: "02", title: "Vessel Inspection, Maintenance & Repairs.", img: "/asset/Landing_page_image/vessel.png", desc: "Ensure vessel safety and performance through thorough inspection, routine maintenance, and reliable repairs. We prevent breakdowns and keep operations running smoothly." },
@@ -224,10 +242,15 @@ export default function HomePage() {
            ].map((service, i) => (
              <div key={i} className="premium-card" style={{ display: "flex", flexDirection: "column" }}>
                 <span className="card-number">{service.num}/</span>
-                <h3 style={{ fontSize: 28, fontWeight: 700, marginBottom: 20, fontFamily: "var(--font-heading)" }}>{service.title}</h3>
-                <p style={{ color: "#6b7280", lineHeight: 1.6, marginBottom: 32 }}>{service.desc}</p>
-                <div style={{ height: 260, overflow: "hidden", marginBottom: -40, marginLeft: -40, marginRight: -40, marginTop: "auto" }}>
-                   <img src={service.img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 20, fontFamily: "var(--font-heading)" }}>{service.title}</h3>
+                <p style={{ color: "#4b5563", lineHeight: 1.6, marginBottom: 32 }}>{service.desc}</p>
+                <div style={{ height: 260, position: "relative", marginBottom: -40, marginLeft: -40, marginRight: -40, marginTop: "auto", overflow: "hidden" }}>
+                   <Image 
+                     src={service.img} 
+                     alt={service.title} 
+                     fill 
+                     style={{ objectFit: "cover" }} 
+                   />
                 </div>
              </div>
            ))}
@@ -235,12 +258,12 @@ export default function HomePage() {
       </section>
 
       {/* ─── 05. WHY STANCHTECH? ─── */}
-      <section style={{ background: "#F8F9FE", padding: "140px 5%" }}>
-         <div style={{ textAlign: "center", marginBottom: 160 }}>
+      <section className="section-pad" style={{ background: "#F8F9FE" }}>
+         <div style={{ textAlign: "center", marginBottom: "clamp(60px, 10vw, 120px)" }}>
             <span className="section-label">Excellence Guaranteed</span>
             <h2 className="responsive-title">Why StanchTech?</h2>
          </div>
-         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
             {[
               { title: "Unmatched Expertise", desc: "Our technicians are certified specialists for high-power marine diesel systems." },
               { title: "24/7 Deployment", desc: "Breakdowns don't wait. Our support teams are ready for rapid onsite response." },
@@ -249,7 +272,7 @@ export default function HomePage() {
             ].map((item, i) => (
               <div key={i} style={{ borderLeft: "2px solid var(--accent)", paddingLeft: 24 }}>
                  <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16, fontFamily: "var(--font-heading)" }}>{item.title}</h3>
-                 <p style={{ color: "#6b7280", lineHeight: 1.6 }}>{item.desc}</p>
+                 <p style={{ color: "#4b5563", lineHeight: 1.6 }}>{item.desc}</p>
               </div>
             ))}
          </div>
@@ -275,10 +298,15 @@ export default function HomePage() {
                        transition={{ duration: 0.5 }}
                        style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
                     >
-                       <img src={PROJECT_SLIDES[currentProjectSlide].image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: 60, background: "linear-gradient(to top, rgba(11,26,46,0.9) 0%, transparent 100%)" }}>
+                       <Image 
+                         src={PROJECT_SLIDES[currentProjectSlide].image} 
+                         alt={PROJECT_SLIDES[currentProjectSlide].title} 
+                         fill 
+                         style={{ objectFit: "cover" }} 
+                       />
+                       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "clamp(24px, 5vw, 60px)", background: "linear-gradient(to top, rgba(11,26,46,0.9) 0%, transparent 100%)" }}>
                           <span className="section-label" style={{ color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].category}</span>
-                          <h3 style={{ fontSize: 32, fontWeight: 700, fontFamily: "var(--font-heading)", color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].title}</h3>
+                          <h3 style={{ fontSize: "clamp(22px, 4vw, 32px)", fontWeight: 700, fontFamily: "var(--font-heading)", color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].title}</h3>
                        </div>
                     </motion.div>
                  </AnimatePresence>
@@ -328,11 +356,11 @@ export default function HomePage() {
       </section>
 
       {/* ─── 07. WORK PROCESS ─── */}
-      <section style={{ padding: "140px 5%", background: "#fff" }}>
+      <section className="section-pad" style={{ background: "#fff" }}>
          <div style={{ maxWidth: 800 }}>
             <span className="section-label">The Blueprint</span>
             <h2 className="responsive-title" style={{ marginBottom: 40 }}>Our Technical Process</h2>
-            <p className="responsive-subtitle" style={{ marginBottom: 80 }}>
+            <p className="responsive-subtitle" style={{ marginBottom: "clamp(40px, 8vw, 80px)" }}>
                We follow a rigorous, documented workflow to ensure every job meets international marine safety standards.
             </p>
          </div>
@@ -353,8 +381,8 @@ export default function HomePage() {
       </section>
 
       {/* ─── 04.5 FEATURED PRODUCTS ─── */}
-      <section style={{ padding: "0 5% 140px", background: "#fff" }}>
-         <div style={{ position: "relative", marginBottom: 80, maxWidth: 1400, margin: "0 auto 80px" }}>
+      <section className="section-pad" style={{ background: "#fff", paddingTop: 0 }}>
+         <div style={{ position: "relative", marginBottom: 60, maxWidth: 1400, margin: "0 auto 60px" }}>
             <div style={{ textAlign: "center" }}>
                <span className="section-label" style={{ color: "var(--accent)" }}>Spare Inventory</span>
                <h2 className="responsive-title">Featured Spares</h2>
@@ -393,14 +421,19 @@ export default function HomePage() {
               </Link>
             </motion.div>
          </div>
-         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
             {products.slice(0, 3).map((product) => (
               <div key={product.id} className="premium-card" style={{ padding: "40px 32px", background: "#fff", display: "flex", flexDirection: "column" }}>
-                 <div style={{ width: "100%", height: 240, overflow: "hidden", marginBottom: 32, display: "flex", alignItems: "center", justifyContent: "center", background: "#f9fafb" }}>
-                    <img src={Array.isArray(product.image) ? product.image[0] : product.image || "/asset/Landing_page_image/marine_spares.png"} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                 <div style={{ width: "100%", height: 240, position: "relative", overflow: "hidden", marginBottom: 32, display: "flex", alignItems: "center", justifyContent: "center", background: "#f9fafb" }}>
+                    <Image 
+                      src={Array.isArray(product.image) ? product.image[0] : product.image || "/asset/Landing_page_image/marine_spares.png"} 
+                      alt={product.name} 
+                      fill 
+                      style={{ objectFit: "contain" }} 
+                    />
                  </div>
                  <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 12, fontFamily: "var(--font-heading)" }}>{product.name}</h3>
-                 <p style={{ color: "#6b7280", fontSize: 16, marginBottom: 24, flex: 1 }}>{product.description?.substring(0, 80)}...</p>
+                 <p style={{ color: "#4b5563", fontSize: 16, marginBottom: 24, flex: 1 }}>{product.description?.substring(0, 80)}...</p>
                  <Link href={`/shop/${product.id}`} className="hero-btn-primary" style={{ width: "100%", height: 44, fontSize: 15, background: "var(--navy)" }}>
                     BUY SPARE
                  </Link>
@@ -410,7 +443,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 08. TESTIMONIALS ─── */}
-      <section style={{ padding: "140px 5%", background: "#F8F9FE" }}>
+      <section className="section-pad" style={{ background: "#F8F9FE" }}>
          <div style={{ textAlign: "center", marginBottom: 80 }}>
             <span className="section-label" style={{ color: "var(--accent)" }}>Client Success</span>
             <h2 className="responsive-title">Voice of Excellence</h2>
@@ -458,9 +491,8 @@ export default function HomePage() {
       </section>
 
       {/* ─── 09. FINAL CTA ─── */}
-      <section style={{ 
+      <section className="section-pad" style={{ 
         background: "#0b1a2e", 
-        padding: "160px 5%", 
         textAlign: "center", 
         color: "#fff",
         backgroundImage: 'linear-gradient(rgba(11,26,46,0.9), rgba(11,26,46,0.9)), url("/asset/Landing_page_image/support.png")',

@@ -60,9 +60,26 @@
   font-weight: 500;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
+  .responsive-title {
+    font-size: clamp(32px, 10vw, 42px) !important;
+    line-height: 1.1 !important;
+  }
   .responsive-subtitle {
-    font-size: 18px !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+  .section-pad {
+    padding: 80px 5% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .responsive-title {
+    font-size: 28px !important;
+  }
+  .section-pad {
+    padding: 60px 20px !important;
   }
 }
 
