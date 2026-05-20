@@ -287,8 +287,8 @@ export default function HomePage() {
                  <h2 className="responsive-title" style={{ color: "#fff" }}>Featured Projects</h2>
               </div>
            </div>
-           <div className="two-col-grid" style={{ gridTemplateColumns: "1.4fr 0.6fr", gap: 64, alignItems: "stretch", overflow: "hidden", borderRadius: 0 }}>
-              <div style={{ display: "block", height: 420, overflow: "hidden", position: "relative", borderRadius: 0 }}>
+           <div className="two-col-grid" style={{ alignItems: "stretch", overflow: "hidden", borderRadius: 0 }}>
+              <div style={{ display: "block", height: "clamp(300px, 60vw, 420px)", overflow: "hidden", position: "relative", borderRadius: 0 }}>
                  <AnimatePresence mode="wait">
                     <motion.div
                        key={currentProjectSlide}
@@ -328,13 +328,13 @@ export default function HomePage() {
                   </AnimatePresence>
 
                   {/* Rectangular Slider controls */}
-                  <div style={{ display: "flex", gap: 32, marginTop: "auto" }}>
+                  <div style={{ display: "flex", gap: "clamp(12px, 3vw, 32px)", marginTop: 40, flexWrap: "wrap", justifyContent: "flex-start" }}>
                      {PROJECT_SLIDES.map((_, idx) => (
                         <div key={idx} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                            <button 
                               onClick={() => setCurrentProjectSlide(idx)}
                               style={{ 
-                                 width: 64, 
+                                 width: "clamp(40px, 8vw, 64px)", 
                                  height: 4, 
                                  background: currentProjectSlide === idx ? "var(--accent)" : "rgba(255,255,255,0.3)",
                                  border: "none",
@@ -344,7 +344,7 @@ export default function HomePage() {
                               }}
                               aria-label={`Go to slide ${idx + 1}`}
                            />
-                           <span style={{ fontSize: 15, fontWeight: 600, color: currentProjectSlide === idx ? "#fff" : "rgba(255,255,255,0.4)", fontFamily: "var(--font-heading)" }}>
+                           <span style={{ fontSize: 15, fontWeight: 600, color: currentProjectSlide === idx ? "#fff" : "rgba(255,255,255,0.4)", fontFamily: "var(--font-heading)", whiteSpace: "nowrap" }}>
                               0{idx + 1}
                            </span>
                         </div>

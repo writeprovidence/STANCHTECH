@@ -121,27 +121,29 @@ export function Navbar() {
                     justifyContent: "space-between",
                 }}>
                     {/* LEFT: Logo */}
-                    <div style={{ flex: 1, display: "flex", justifyContent: "flex-start" }}>
-                        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 0, textDecoration: "none" }}>
+                    <div style={{ flex: 1, display: "flex", justifyContent: "flex-start", overflow: "hidden" }}>
+                        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
                             <img
                                 src="/asset/Landing_page_image/stanch_tech_logo.png"
                                 alt="STANCH TECH"
                                 style={{ 
-                                    height: "clamp(35px, 8vw, 55px)", 
-                                    width: "auto", 
+                                    height: "clamp(28px, 6vw, 55px)", 
+                                    width: "auto",
+                                    minWidth: "28px",
                                     objectFit: "contain", 
-                                    marginRight: -2,
-                                    filter: "brightness(0) invert(1)"
+                                    filter: "brightness(0) invert(1)",
+                                    flexShrink: 0
                                 }}
                             />
                             <span className="logo-text" style={{
-                                fontSize: "clamp(13px, 3.5vw, 16px)",
+                                fontSize: "clamp(12px, 3vw, 16px)",
                                 fontWeight: 900,
                                 letterSpacing: "0.1em",
                                 color: "#fff",
                                 textTransform: "uppercase",
                                 lineHeight: 1,
-                                fontFamily: "var(--font-heading)"
+                                fontFamily: "var(--font-heading)",
+                                whiteSpace: "nowrap"
                             }}>
                                 STANCHTECH
                             </span>
