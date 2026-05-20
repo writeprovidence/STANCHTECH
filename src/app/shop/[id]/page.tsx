@@ -151,7 +151,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     <div className="w-full lg:w-[45%] space-y-10">
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
-                                <span className="text-blue-600 font-bold uppercase tracking-[0.3em] text-[12px]" style={{ fontFamily: "var(--font-body)" }}>{product.category}</span>
+                                <span className="text-blue-600 font-bold uppercase tracking-[0.3em] text-[12px]" style={{ fontFamily: "var(--font-body)" }}>Engine Model: {product.category}</span>
                                 <div className="h-px w-8 bg-blue-100" />
                             </div>
                             <h1 className="text-5xl font-800 text-black uppercase leading-[1.1]" style={{ fontFamily: "var(--font-heading)" }}>
@@ -273,14 +273,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             {activeTab === 'specification' && (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-6">
                                     {[
-                                        ['Manufacturer', 'Cummins Genuine'],
-                                        ['Model Range', 'K-Series / Q-Series'],
-                                        ['Material', 'Industrial Grade Alloy'],
-                                        ['Certification', 'ISO 9001:2015'],
+                                        ['Manufacturer', 'Cummins'],
+                                        ['Model Range', 'C-series/Q-series and QS-series'],
                                         ['Weight', '4.2 kg'],
                                         ['Part Number', `ST-${product.id}09-XC`],
                                         ['Interface', 'Standard Flange'],
-                                        ['Warranty', '12 Months Limited']
                                     ].map(([label, val]) => (
                                         <div key={label} className="flex items-center justify-between py-5 border-b border-gray-100">
                                             <span className="text-[16px] font-bold uppercase tracking-widest text-gray-400" style={{ fontFamily: "var(--font-body)" }}>{label}</span>

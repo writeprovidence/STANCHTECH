@@ -918,7 +918,7 @@ export default function AdminDashboard() {
                       <input
                         value={searchProducts}
                         onChange={e => setSearchProducts(e.target.value)}
-                        placeholder="Search products by name, SKU or category…"
+                        placeholder="Search products by name, SKU or Engine Model…"
                         style={{ width: '100%', padding: '9px 12px 9px 34px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box', color: '#111' }}
                       />
                     </div>
@@ -938,8 +938,8 @@ export default function AdminDashboard() {
                         images: ['https://images.unsplash.com/photo-1590674899484-d564fa070e6c?auto=format&fit=crop&q=80&w=200'],
                         description: '',
                         sku: `SS${String(Math.max(0, ...products.map(p => p.id)) + 1).padStart(3, '0')}`,
-                        category: 'Hardware',
-                        condition: 'Genuine New'
+                        category: 'QSK 60',
+                        condition: 'Genuine Part'
                       })}
                       style={{ padding: '9px 16px', background: BRAND_BLUE, color: '#fff', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "var(--font-heading)" }}
                     >
@@ -952,7 +952,7 @@ export default function AdminDashboard() {
                     <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
                       <thead>
                         <tr style={{ background: '#f9fafb' }}>
-                          {['', 'Product', 'SKU', 'Category', 'Condition', 'Price', ''].map((h, i) => (
+                          {['', 'Product', 'SKU', 'Engine Models', 'Condition', 'Price', ''].map((h, i) => (
                             <th key={i} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', whiteSpace: 'nowrap' }}>{h}</th>
                           ))}
                         </tr>
@@ -1080,13 +1080,13 @@ export default function AdminDashboard() {
                     ))}
 
                     <div>
-                      <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#6b7280', display: 'block', marginBottom: '5px' }}>Category</label>
+                      <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#6b7280', display: 'block', marginBottom: '5px' }}>Engine Models</label>
                       <select
                         value={editingProduct.category}
                         onChange={e => setEditingProduct({ ...editingProduct, category: e.target.value })}
                         style={{ width: '100%', padding: '8px 10px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', color: '#111', background: '#fff' }}
                       >
-                        {['Fuel Injectors', 'Turbos', 'Controllers', 'Filters', 'Hardware'].map(c => <option key={c}>{c}</option>)}
+                        {['QSK 60', 'K-SERIES', 'B-SERIES', 'C-SERIES', 'KSM', 'QSM', 'QSL'].map(c => <option key={c}>{c}</option>)}
                       </select>
                     </div>
 
@@ -1097,7 +1097,7 @@ export default function AdminDashboard() {
                         onChange={e => setEditingProduct({ ...editingProduct, condition: e.target.value })}
                         style={{ width: '100%', padding: '8px 10px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', color: '#111', background: '#fff' }}
                       >
-                        {['Genuine New', 'OEM Standard', 'Refurbished', 'Used / Tested'].map(c => <option key={c}>{c}</option>)}
+                        {['Genuine Part', 'OEM', 'Rerun/Reman', 'Used'].map(c => <option key={c}>{c}</option>)}
                       </select>
                     </div>
 

@@ -49,34 +49,23 @@ function ShopContent() {
         setSelectedFilters(prev => 
             prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
         );
-        setSelectedFilters(prev => 
-            prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
-        );
         setCurrentPage(1); // Reset to first page on filter change
     };
 
     // Derive unique categories dynamically from live products
     const dynamicCategories = Array.from(new Set(products.map(p => p.category).filter(Boolean))).sort();
-    const priceFilters = ["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"];
-    const conditionFilters = ["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"];
+    const conditionFilters = ["Genuine Part", "OEM", "Rerun/Reman", "Used"];
 
     // Filter products based on selected categories, price, and condition
     const filteredProducts = products.filter(product => {
         if (selectedFilters.length === 0) return true;
 
         const activeCategoryFilters = selectedFilters.filter(f => dynamicCategories.includes(f));
-        const activePriceFilters = selectedFilters.filter(f => priceFilters.includes(f));
         const activeConditionFilters = selectedFilters.filter(f => conditionFilters.includes(f));
 
         const matchesCategory = activeCategoryFilters.length === 0 || activeCategoryFilters.includes(product.category);
         
-        const matchesPrice = activePriceFilters.length === 0 || activePriceFilters.some(f => {
-            if (f === "Under 50k NGN") return product.price < 50000;
-            if (f === "50k - 200k NGN") return product.price >= 50000 && product.price <= 200000;
-            if (f === "200k - 500k NGN") return product.price > 200000 && product.price <= 500000;
-            if (f === "Over 500k NGN") return product.price > 500000;
-            return false;
-        });
+        const matchesPrice = true; 
 
         const matchesCondition = activeConditionFilters.length === 0 || activeConditionFilters.includes(product.condition);
 
@@ -161,7 +150,7 @@ function ShopContent() {
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
                                     {/* Part Type — Dynamic from DB */}
                                     <div>
-                                        <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>01. Category</h4>
+                                        <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>01. Engine Models</h4>
                                         <div className="flex flex-col gap-6">
                                             {dynamicCategories.length === 0 ? (
                                                 <span style={{ fontSize: "12px", color: "#9ca3af", fontFamily: "var(--font-body)" }}>No categories yet</span>
@@ -175,25 +164,13 @@ function ShopContent() {
                                         </div>
                                     </div>
 
-                                    {/* Price Range */}
-                                    <div>
-                                        <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>02. Budget</h4>
-                                        <div className="flex flex-col gap-6">
-                                            {["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"].map(range => (
-                                                <label key={range} className="flex items-center gap-4 cursor-pointer group">
-                                                    <input type="checkbox" className="hidden" checked={selectedFilters.includes(range)} onChange={() => toggleFilter(range)} />
-                                                    <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(range) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
-                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(range) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "var(--font-body)" }}>{range}</span>
-                                                </label>
-                                            ))}
-                                        </div>
-                                    </div>
+
 
                                     {/* Condition */}
                                     <div>
-                                        <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>03. Condition</h4>
+                                        <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>02. Condition</h4>
                                         <div className="flex flex-col gap-6">
-                                            {["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"].map(cond => (
+                                            {["Genuine Part", "OEM", "Rerun/Reman", "Used"].map(cond => (
                                                 <label key={cond} className="flex items-center gap-4 cursor-pointer group">
                                                     <input type="checkbox" className="hidden" checked={selectedFilters.includes(cond)} onChange={() => toggleFilter(cond)} />
                                                     <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(cond) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
