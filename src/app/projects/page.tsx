@@ -252,19 +252,7 @@ export default function ProjectsPage() {
          <div style={{ maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 10 }}>
            <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, marginBottom: 24, fontFamily: "var(--font-heading)" }}>Ready to Bring your Portfolio <br /> to Life with Confidence?</h2>
            <div style={{ width: 100, height: 1, background: "rgba(255,255,255,0.3)", margin: "0 auto 40px" }} />
-           <Link href="/contact" style={{ 
-             background: "#FFFFFF", 
-             color: "#4B7A8D", 
-             padding: "16px 40px", 
-             borderRadius: 8, 
-             fontWeight: 700, 
-             textDecoration: "none",
-             fontSize: 18,
-             display: "inline-flex",
-             alignItems: "center",
-             gap: 8,
-             boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
-           }}>
+           <Link href="/contact" className="journey-hero-btn">
              Start Your Journey <ArrowUpRight size={20} />
            </Link>
          </div>

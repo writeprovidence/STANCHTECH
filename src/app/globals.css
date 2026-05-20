@@ -826,3 +826,23 @@ span {
   box-shadow: 0 20px 40px rgba(0, 102, 255, 0.25) !important;
 }
 
+.journey-hero-btn {
+  background: #FFFFFF;
+  color: #2563eb;
+  padding: 16px 40px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.journey-hero-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px rgba(11,26,46,0.15);
+  background: #f8fafc;
+}

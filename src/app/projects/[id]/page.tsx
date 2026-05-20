@@ -227,8 +227,8 @@ export default function ProjectDetail() {
                
                <ul style={{ listStyle: "none", padding: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32 }}>
                   {project.process.map((step, idx) => (
-                    <li key={idx} style={{ padding: "24px", background: "#f8fafc", borderLeft: "4px solid #fb5b17", display: "flex", flexDirection: "column", gap: 12 }}>
-                      <span style={{ fontSize: 12, fontWeight: 800, color: "#fb5b17" }}>PHASE 0{idx + 1}</span>
+                    <li key={idx} style={{ padding: "24px", background: "#f8fafc", borderLeft: "4px solid #2563eb", display: "flex", flexDirection: "column", gap: 12 }}>
+                      <span style={{ fontSize: 12, fontWeight: 800, color: "#2563eb" }}>PHASE 0{idx + 1}</span>
                       <p style={{ fontSize: 16, fontWeight: 700, color: "#0b1a2e", lineHeight: 1.4 }}>{step}</p>
                     </li>
                   ))}
@@ -265,7 +265,7 @@ export default function ProjectDetail() {
               <div style={{ borderTop: "1px solid #f1f5f9", paddingTop: 80 }}>
                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48 }}>
                    <h2 style={{ fontSize: 28, fontWeight: 800, fontFamily: "var(--font-heading)" }}>Related Portfolio</h2>
-                   <Link href="/projects" style={{ color: "#fb5b17", fontWeight: 700, textDecoration: "none", fontSize: 14 }}>View All Portfolio</Link>
+                   <Link href="/projects" style={{ color: "#2563eb", fontWeight: 700, textDecoration: "none", fontSize: 14 }}>View All Portfolio</Link>
                  </div>
                  
                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 32 }}>
@@ -275,7 +275,7 @@ export default function ProjectDetail() {
                            <img src={rp.image} alt={rp.title} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 0 }} />
                         </div>
                         <div>
-                          <p style={{ fontSize: 12, fontWeight: 800, color: "#fb5b17", marginBottom: 4 }}>{rp.category}</p>
+                          <p style={{ fontSize: 12, fontWeight: 800, color: "#2563eb", marginBottom: 4 }}>{rp.category}</p>
                           <h4 style={{ fontSize: 18, fontWeight: 800 }}>{rp.title}</h4>
                         </div>
                       </Link>
