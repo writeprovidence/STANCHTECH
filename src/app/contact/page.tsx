@@ -143,8 +143,11 @@ export default function ContactPage() {
                     <div className="lg:w-1/2 hidden lg:block" />
                 </div>
 
+                {/* Mobile Spacer to brutally force distance between text and map */}
+                <div className="block lg:hidden" style={{ height: "80px", width: "100%" }} />
+
                 {/* Map Side (Right Half) */}
-                <div className="w-full lg:w-[48vw] lg:absolute lg:right-[3%] lg:top-1/2 lg:-translate-y-1/2 mt-16 lg:mt-0 flex justify-end z-20">
+                <div className="w-full lg:w-[48vw] lg:absolute lg:right-[3%] lg:top-1/2 lg:-translate-y-1/2 flex justify-end z-20">
                     <motion.div 
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
