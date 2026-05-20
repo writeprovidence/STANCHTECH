@@ -141,11 +141,11 @@ export default function ProjectsPage() {
                 </div>
                 <div style={{ display: "flex", gap: "24px", justifyContent: "flex-end", flexWrap: "wrap" }}>
                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                     <MapPin size={16} color="#fb5b17" />
+                     <MapPin size={16} color="#2563eb" />
                      <span style={{ fontSize: 15, fontWeight: 600 }}>Lagos, Nigeria</span>
                    </div>
                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                     <Calendar size={16} color="#fb5b17" />
+                     <Calendar size={16} color="#2563eb" />
                      <span style={{ fontSize: 15, fontWeight: 600 }}>March 2024</span>
                    </div>
                 </div>
@@ -232,7 +232,7 @@ export default function ProjectsPage() {
                   <div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
                       <h3 style={{ fontSize: 22, fontWeight: 800, fontFamily: "var(--font-heading)" }}>{project.title}</h3>
-                      <Link href={`/projects/${project.id}`} style={{ color: "#fb5b17", display: "flex", alignItems: "center", gap: 4, fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
+                      <Link href={`/projects/${project.id}`} style={{ color: "#2563eb", display: "flex", alignItems: "center", gap: 4, fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
                          See Detail <ArrowUpRight size={14} />
                       </Link>
                     </div>
