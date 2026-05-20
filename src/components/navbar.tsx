@@ -127,15 +127,15 @@ export function Navbar() {
                                 src="/asset/Landing_page_image/stanch_tech_logo.png"
                                 alt="STANCH TECH"
                                 style={{ 
-                                    height: 55, 
+                                    height: "clamp(35px, 8vw, 55px)", 
                                     width: "auto", 
                                     objectFit: "contain", 
                                     marginRight: -2,
                                     filter: "brightness(0) invert(1)"
                                 }}
                             />
-                            <span style={{
-                                fontSize: "16px",
+                            <span className="logo-text" style={{
+                                fontSize: "clamp(13px, 3.5vw, 16px)",
                                 fontWeight: 900,
                                 letterSpacing: "0.1em",
                                 color: "#fff",

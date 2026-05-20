@@ -444,11 +444,11 @@ export default function HomePage() {
 
       {/* ─── 08. TESTIMONIALS ─── */}
       <section className="section-pad" style={{ background: "#F8F9FE" }}>
-         <div style={{ textAlign: "center", marginBottom: 80 }}>
+         <div style={{ textAlign: "center", marginBottom: "clamp(40px, 8vw, 80px)" }}>
             <span className="section-label" style={{ color: "var(--accent)" }}>Client Success</span>
             <h2 className="responsive-title">Voice of Excellence</h2>
          </div>
-         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
             {[
               {
                 quote: "Stanch Tech has consistently delivered high-fidelity spares even in the most demanding timelines. Their expertise in marine engine salvaging is unmatched.",
@@ -469,7 +469,7 @@ export default function HomePage() {
                 initial: "A"
               }
             ].map((t, i) => (
-              <div key={i} className="premium-card" style={{ padding: "60px 48px", background: "#fff", display: "flex", flexDirection: "column" }}>
+              <div key={i} className="premium-card" style={{ padding: "clamp(32px, 5vw, 60px) clamp(24px, 5vw, 48px)", background: "#fff", display: "flex", flexDirection: "column" }}>
                  <div style={{ display: "flex", gap: 4, marginBottom: 32, color: "#FFB800" }}>
                     {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
                  </div>
