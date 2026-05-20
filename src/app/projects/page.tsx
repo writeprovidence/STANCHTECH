@@ -182,22 +182,27 @@ export default function ProjectsPage() {
       </section>
 
       {/* ─── FILTERS ─── */}
-      <section style={{ padding: "40px 5%", borderBottom: "1px solid #f1f5f9" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+      <section style={{ padding: "clamp(24px, 5vw, 40px) 5%", borderBottom: "1px solid #f1f5f9" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 16px)", flexWrap: "wrap" }}>
           {CATEGORIES.map(cat => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
               style={{
-                padding: "10px 24px",
-                borderRadius: 0,
+                padding: "clamp(8px, 2vw, 12px) clamp(16px, 4vw, 32px)",
+                borderRadius: 4,
                 border: "1px solid",
-                borderColor: activeCategory === cat ? "#0b1a2e" : "#e5e7eb",
-                background: activeCategory === cat ? "#0b1a2e" : "transparent",
+                borderColor: activeCategory === cat ? "#2563eb" : "#e5e7eb",
+                background: activeCategory === cat ? "#2563eb" : "transparent",
                 color: activeCategory === cat ? "#fff" : "#6b7280",
                 fontWeight: 600,
+                fontSize: "clamp(13px, 3vw, 15px)",
                 cursor: "pointer",
-                transition: "all 0.2s"
+                transition: "all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1)",
+                whiteSpace: "nowrap",
+                flex: "1 1 auto",
+                maxWidth: "100%",
+                textAlign: "center"
               }}
             >
               {cat}
