@@ -4,7 +4,8 @@ import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { PRODUCTS } from "@/data/products";
-import { Filter, ChevronRight, ChevronDown, ChevronUp, Star, Plus, Minus, Search, X, SlidersHorizontal } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { Filter, ChevronRight, ChevronDown, ChevronUp, Star, Plus, Minus, Search, X, SlidersHorizontal, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function ShopContent() {
@@ -13,6 +14,31 @@ function ShopContent() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [selectedFilters, setSelectedFilters] = useState([]);
+    const [products, setProducts] = useState(PRODUCTS);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Fetch dynamic products from Supabase
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .order('id', { ascending: false });
+
+                if (error) throw error;
+                if (data && data.length > 0) {
+                    setProducts(data);
+                }
+            } catch (err) {
+                console.error("Error fetching products:", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     // Auto-scroll to top on mount
     useEffect(() => {
@@ -23,11 +49,14 @@ function ShopContent() {
         setSelectedFilters(prev => 
             prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
         );
+        setSelectedFilters(prev => 
+            prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
+        );
         setCurrentPage(1); // Reset to first page on filter change
     };
 
     // Filter products based on selected categories, price, and condition
-    const filteredProducts = PRODUCTS.filter(product => {
+    const filteredProducts = products.filter(product => {
         if (selectedFilters.length === 0) return true;
         
         const categoryFilters = ["Fuel Injectors", "Turbos", "Controllers", "Filters", "Hardware"];

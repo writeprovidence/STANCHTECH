@@ -12,7 +12,7 @@ function SignupContent() {
           elements: {
             card: "shadow-none border-2 border-black rounded-none w-full max-w-[450px]",
             logoBox: "hidden",
-            headerTitle: "font-['Neue_Machina'] !text-2xl uppercase tracking-wider",
+            headerTitle: "font-['Space_Grotesk'] !text-2xl uppercase tracking-wider",
             headerSubtitle: "font-['Darker_Grotesque'] !text-xl text-gray-500 font-bold",
             formButtonPrimary: "bg-black hover:bg-gray-800 rounded-none !h-14 !text-base font-bold uppercase tracking-widest",
             formFieldInput: "border-2 border-black rounded-none !h-14 !text-lg focus:ring-0 focus:border-blue-600 transition-all font-['Darker_Grotesque'] font-bold",

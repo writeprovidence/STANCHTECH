@@ -3,8 +3,9 @@
 import React, { use, useState } from "react";
 import Image from "next/image";
 import { PRODUCTS } from "@/data/products";
+import { supabase } from "@/lib/supabase";
 import Link from "next/link";
-import { ChevronRight, Star, Minus, Plus, Facebook, Instagram, MessageCircle, Linkedin, Twitter, Heart } from "lucide-react";
+import { ChevronRight, Star, Minus, Plus, Facebook, Instagram, MessageCircle, Linkedin, Twitter, Heart, Loader2 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -13,15 +14,47 @@ const MotionImage = motion(Image);
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = React.use(params);
     const productId = parseInt(resolvedParams.id);
-    const product = PRODUCTS.find(p => p.id === productId) || PRODUCTS[0];
     
+    const [product, setProduct] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
     const [activeImage, setActiveImage] = useState(0);
     const [activeTab, setActiveTab] = useState('description');
     const { addToCart } = useCart();
 
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('id', productId)
+                    .single();
+
+                if (error) throw error;
+                if (data) {
+                    setProduct(data);
+                } else {
+                    // Fallback to local if not found in DB
+                    const localProduct = PRODUCTS.find(p => p.id === productId);
+                    if (localProduct) setProduct(localProduct);
+                }
+            } catch (err) {
+                console.error("Error fetching product:", err);
+                // Fallback to local on error
+                const localProduct = PRODUCTS.find(p => p.id === productId);
+                if (localProduct) setProduct(localProduct);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchProduct();
+    }, [productId]);
+
     const relatedProducts = PRODUCTS.filter(p => p.id !== productId).slice(0, 4);
 
+    if (isLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-blue-600" size={48} /></div>;
     if (!product) return <div className="pt-40 text-center">Product not found</div>;
 
     const formattedPrice = product.price.toLocaleString(undefined, { minimumFractionDigits: 2 });

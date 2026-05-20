@@ -34,7 +34,7 @@ export default function OrdersPage() {
                 </div>
                 
                 <div className="relative z-10 text-center">
-                    <h1 className="text-6xl font-900 text-white mb-6 tracking-tight" style={{ fontFamily: "'Neue Machina', sans-serif", letterSpacing: "-0.04em" }}>My Orders</h1>
+                    <h1 className="text-6xl font-900 text-white mb-6 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.04em" }}>My Orders</h1>
                     <div className="flex items-center justify-center gap-3 text-sm font-bold uppercase tracking-[0.2em]">
                         <Link href="/shop" className="text-white hover:text-blue-400 transition-colors" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "16px" }}>Shop</Link>
                         <ChevronRight size={14} className="text-blue-400" />
@@ -51,7 +51,7 @@ export default function OrdersPage() {
                                 <Package size={48} />
                             </div>
                             <div className="space-y-4">
-                                <h2 className="text-4xl font-900 text-gray-900 tracking-tight" style={{ fontFamily: "'Neue Machina', sans-serif" }}>No orders yet</h2>
+                                <h2 className="text-4xl font-900 text-gray-900 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>No orders yet</h2>
                                 <p className="text-gray-400 font-bold text-lg" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>You haven't placed any orders with us yet.</p>
                             </div>
                             <Link href="/shop" className="px-16 py-5 bg-gray-900 text-white rounded-xl font-900 uppercase tracking-[0.2em] text-[12px] hover:bg-blue-600 transition-all shadow-xl shadow-gray-200" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
@@ -61,7 +61,7 @@ export default function OrdersPage() {
                     ) : (
                         <div className="space-y-10">
                             <div className="flex items-center justify-between border-b-2 border-gray-50 pb-8">
-                                <h2 className="text-2xl font-900 text-gray-900" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Recent Purchases ({orders.length})</h2>
+                                <h2 className="text-2xl font-900 text-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Recent Purchases ({orders.length})</h2>
                                 <button className="text-sm font-bold text-blue-600 hover:text-gray-900 transition-colors uppercase tracking-widest" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Download All Invoices</button>
                             </div>
 
@@ -90,7 +90,7 @@ export default function OrdersPage() {
                                                         </div>
                                                     )}
                                                 </div>
-                                                <h3 className="text-3xl font-800 text-gray-900" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                                                <h3 className="text-3xl font-800 text-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                                                     {order.items.length} {order.items.length === 1 ? 'Part' : 'Parts'} Purchased
                                                 </h3>
                                                 <div className="flex gap-4">

@@ -80,7 +80,7 @@ function StatCard({ label, value, sub, icon, accent, trend }: { label: string; v
         </div>
       </div>
       <div>
-        <span style={{ fontSize: '32px', fontWeight: 900, color: '#111', fontFamily: "'Neue Machina', sans-serif", lineHeight: 1 }}>{value}</span>
+        <span style={{ fontSize: '32px', fontWeight: 900, color: '#111', fontFamily: "'Space Grotesk', sans-serif", lineHeight: 1 }}>{value}</span>
         {sub && <p style={{ fontSize: '13px', color: '#9ca3af', marginTop: '4px', fontFamily: "'Darker Grotesque', sans-serif" }}>{sub}</p>}
       </div>
       {trend && (
@@ -335,7 +335,7 @@ export default function AdminDashboard() {
             <div style={{ width: '56px', height: '56px', background: BRAND_BLUE, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <Shield size={28} color="#fff" />
             </div>
-            <h1 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '24px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', marginBottom: '8px' }}>ADMIN ACCESS</h1>
+            <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', marginBottom: '8px' }}>ADMIN ACCESS</h1>
             <p style={{ fontSize: '15px', color: '#6b7280' }}>StanchTech Control Panel — Restricted</p>
           </div>
 
@@ -374,7 +374,7 @@ export default function AdminDashboard() {
             )}
             <button
               onClick={checkPin}
-              style={{ width: '100%', padding: '14px', background: '#7047eb', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif", letterSpacing: '0.05em', transition: 'opacity 0.2s' }}
+              style={{ width: '100%', padding: '14px', background: '#7047eb', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', fontFamily: "'Space Grotesk', sans-serif", letterSpacing: '0.05em', transition: 'opacity 0.2s' }}
               onMouseOver={e => (e.currentTarget.style.opacity = '0.9')}
               onMouseOut={e => (e.currentTarget.style.opacity = '1')}
             >
@@ -454,7 +454,7 @@ export default function AdminDashboard() {
           </div>
           {!sidebarCollapsed && (
             <div>
-              <p style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '13px', fontWeight: 900, letterSpacing: '0.08em', color: '#fff' }}>STANCHTECH</p>
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '13px', fontWeight: 900, letterSpacing: '0.08em', color: '#fff' }}>STANCHTECH</p>
               <p style={{ fontSize: '10px', color: '#4b5563', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Admin Panel</p>
             </div>
           )}
@@ -537,7 +537,7 @@ export default function AdminDashboard() {
               <BarChart3 size={20} />
             </button>
             <div>
-              <h1 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '16px', fontWeight: 900, color: '#111', letterSpacing: '-0.01em', marginBottom: '1px' }}>
+              <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '16px', fontWeight: 900, color: '#111', letterSpacing: '-0.01em', marginBottom: '1px' }}>
                 {activeTab === 'overview' && 'Dashboard Overview'}
                 {activeTab === 'orders' && 'Order Management'}
                 {activeTab === 'products' && 'Product Catalog'}
@@ -604,7 +604,7 @@ export default function AdminDashboard() {
                 <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflowX: 'auto' }}>
 
                   <div style={{ padding: '20px 24px', borderBottom: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '14px', fontWeight: 900, color: '#111' }}>Recent Orders</h3>
+                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '14px', fontWeight: 900, color: '#111' }}>Recent Orders</h3>
                     <button onClick={() => setActiveTab('orders')} style={{ fontSize: '12px', color: '#7047eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>View all →</button>
                   </div>
                   {orders.length === 0 ? (
@@ -625,7 +625,7 @@ export default function AdminDashboard() {
                             onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#f9fafb'}
                             onMouseOut={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
                           >
-                            <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 700, color: '#7047eb', fontFamily: "'Neue Machina', sans-serif" }}>{o.id}</td>
+                            <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 700, color: '#7047eb', fontFamily: "'Space Grotesk', sans-serif" }}>{o.id}</td>
                             <td style={{ padding: '12px 16px', fontSize: '13px', color: '#374151' }}>{o.billing?.billingFirstName} {o.billing?.billingLastName}</td>
                             <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 700, color: '#111' }}>{fmt(o.total)}</td>
                             <td style={{ padding: '12px 16px' }}><StatusBadge status={o.status} /></td>
@@ -639,7 +639,7 @@ export default function AdminDashboard() {
 
                 {/* Category Distribution */}
                 <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '14px', fontWeight: 900, color: '#111' }}>Product Categories</h3>
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '14px', fontWeight: 900, color: '#111' }}>Product Categories</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                     {Object.entries(categoryTotals).map(([cat, count]) => (
                       <div key={cat}>
@@ -727,7 +727,7 @@ export default function AdminDashboard() {
                             onMouseOver={e => { if (selectedOrder?.id !== o.id) (e.currentTarget as HTMLElement).style.background = '#f9fafb'; }}
                             onMouseOut={e => { if (selectedOrder?.id !== o.id) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
                           >
-                            <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 800, color: BRAND_BLUE, fontFamily: "'Neue Machina', sans-serif", whiteSpace: 'nowrap' }}>{o.id}</td>
+                            <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 800, color: BRAND_BLUE, fontFamily: "'Space Grotesk', sans-serif", whiteSpace: 'nowrap' }}>{o.id}</td>
                             <td style={{ padding: '12px 16px' }}>
                               <p style={{ fontSize: '13px', fontWeight: 700, color: '#0b1a2e', marginBottom: '1px' }}>{o.billing?.billingFirstName} {o.billing?.billingLastName}</p>
                               <p style={{ fontSize: '11px', color: '#9ca3af' }}>{o.billing?.email}</p>
@@ -758,14 +758,14 @@ export default function AdminDashboard() {
                 <div className="order-detail-panel admin-panel-overlay" style={{ width: '340px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', display: 'flex', flexDirection: 'column', overflowY: 'auto', maxHeight: 'calc(100vh - 128px)', position: 'sticky', top: 0 }}>
 
                   <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '13px', fontWeight: 900, color: '#111' }}>Order Details</h3>
+                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '13px', fontWeight: 900, color: '#111' }}>Order Details</h3>
                     <button onClick={() => setSelectedOrder(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af' }}><X size={16} /></button>
                   </div>
 
                   <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
                     <div>
                       <p style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '4px' }}>Order ID</p>
-                      <p style={{ fontSize: '15px', fontWeight: 900, color: '#7047eb', fontFamily: "'Neue Machina', sans-serif" }}>{selectedOrder.id}</p>
+                      <p style={{ fontSize: '15px', fontWeight: 900, color: '#7047eb', fontFamily: "'Space Grotesk', sans-serif" }}>{selectedOrder.id}</p>
                       <p style={{ fontSize: '12px', color: '#9ca3af', marginTop: '2px' }}>{fmtDate(selectedOrder.date)}</p>
                     </div>
 
@@ -831,7 +831,7 @@ export default function AdminDashboard() {
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '8px', borderTop: '1px solid #f3f4f6' }}>
                         <span style={{ fontSize: '14px', fontWeight: 800, color: '#111' }}>Total</span>
-                        <span style={{ fontSize: '14px', fontWeight: 900, color: '#111', fontFamily: "'Neue Machina', sans-serif" }}>{fmt(selectedOrder.total)}</span>
+                        <span style={{ fontSize: '14px', fontWeight: 900, color: '#111', fontFamily: "'Space Grotesk', sans-serif" }}>{fmt(selectedOrder.total)}</span>
                       </div>
                     </div>
                   </div>
@@ -869,7 +869,7 @@ export default function AdminDashboard() {
                         category: 'Hardware',
                         condition: 'Genuine New'
                       })}
-                      style={{ padding: '9px 16px', background: BRAND_BLUE, color: '#fff', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Neue Machina', sans-serif" }}
+                      style={{ padding: '9px 16px', background: BRAND_BLUE, color: '#fff', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Space Grotesk', sans-serif" }}
                     >
                       <Plus size={16} /> ADD PRODUCT
                     </button>
@@ -899,7 +899,7 @@ export default function AdminDashboard() {
                           <td style={{ padding: '10px 12px' }}>
                             <p style={{ fontSize: '13px', fontWeight: 700, color: '#111', marginBottom: '1px' }}>{p.name}</p>
                           </td>
-                          <td style={{ padding: '10px 12px', fontSize: '12px', color: '#9ca3af', fontFamily: "'Neue Machina', sans-serif" }}>{p.sku}</td>
+                          <td style={{ padding: '10px 12px', fontSize: '12px', color: '#9ca3af', fontFamily: "'Space Grotesk', sans-serif" }}>{p.sku}</td>
                           <td style={{ padding: '10px 12px' }}>
                             <span style={{ fontSize: '11px', fontWeight: 700, background: '#ede9fe', color: '#7047eb', padding: '2px 8px', borderRadius: '4px' }}>{p.category}</span>
                           </td>
@@ -934,7 +934,7 @@ export default function AdminDashboard() {
               {editingProduct && (
                 <div className="admin-panel-overlay" style={{ width: '320px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden', position: 'sticky', top: 0, maxHeight: 'calc(100vh - 128px)', overflowY: 'auto' }}>
                   <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '13px', fontWeight: 900, color: '#111' }}>
+                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '13px', fontWeight: 900, color: '#111' }}>
                       {products.find(x => x.id === editingProduct.id) ? 'Edit Product' : 'Add New Product'}
                     </h3>
                     <button onClick={() => setEditingProduct(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af' }}><X size={16} /></button>
@@ -1029,7 +1029,7 @@ export default function AdminDashboard() {
           {activeTab === 'customers' && (
             <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden' }}>
               <div style={{ padding: '20px 24px', borderBottom: '1px solid #f3f4f6' }}>
-                <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '14px', fontWeight: 900, color: '#111' }}>All Customers</h3>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '14px', fontWeight: 900, color: '#111' }}>All Customers</h3>
                 <p style={{ fontSize: '13px', color: '#9ca3af', marginTop: '2px' }}>Derived from order history</p>
               </div>
 
@@ -1108,7 +1108,7 @@ export default function AdminDashboard() {
           {activeTab === 'settings' && (
             <div style={{ maxWidth: 640 }}>
               <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '4px', padding: '24px' }}>
-                <h2 style={{ fontSize: '18px', fontWeight: 800, fontFamily: "'Neue Machina', sans-serif", marginBottom: '8px' }}>Security Settings</h2>
+                <h2 style={{ fontSize: '18px', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", marginBottom: '8px' }}>Security Settings</h2>
                 <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '24px' }}>Update your dashboard access PIN.</p>
                 
                 <form 
@@ -1172,20 +1172,20 @@ export default function AdminDashboard() {
                   <div style={{ width: '64px', height: '64px', background: '#fee2e2', color: '#dc2626', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
                     <AlertCircle size={32} />
                   </div>
-                  <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>Delete Product?</h3>
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>Delete Product?</h3>
                   <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: 1.6, marginBottom: '32px' }}>
                     Are you sure you want to delete <span style={{ fontWeight: 800, color: '#111' }}>{productToDelete.name}</span>? This action is permanent and cannot be undone.
                   </p>
                   <div style={{ display: 'flex', gap: '12px' }}>
                     <button
                       onClick={() => setProductToDelete(null)}
-                      style={{ flex: 1, padding: '14px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#4b5563', cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif" }}
+                      style={{ flex: 1, padding: '14px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#4b5563', cursor: 'pointer', fontFamily: "'Space Grotesk', sans-serif" }}
                     >
                       CANCEL
                     </button>
                     <button
                       onClick={() => deleteProduct(productToDelete.id)}
-                      style={{ flex: 1, padding: '14px', background: '#111', border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#fff', cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif" }}
+                      style={{ flex: 1, padding: '14px', background: '#111', border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#fff', cursor: 'pointer', fontFamily: "'Space Grotesk', sans-serif" }}
                     >
                       CONFIRM DELETE
                     </button>
@@ -1222,20 +1222,20 @@ export default function AdminDashboard() {
                       <div style={{ width: '64px', height: '64px', background: '#e0e7ff', color: BRAND_BLUE, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
                         <RefreshCcw size={32} />
                       </div>
-                      <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>Database Synchronization</h3>
+                      <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>Database Synchronization</h3>
                       <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: 1.6, marginBottom: '32px' }}>
                         This will securely push all localized application data (products and orders) to the live Supabase Postgres Database. Are you ready to continue?
                       </p>
                       <div style={{ display: 'flex', gap: '12px' }}>
                         <button
                           onClick={() => setMigrationModal({ open: false, status: 'idle' })}
-                          style={{ flex: 1, padding: '14px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#4b5563', cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif" }}
+                          style={{ flex: 1, padding: '14px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#4b5563', cursor: 'pointer', fontFamily: "'Space Grotesk', sans-serif" }}
                         >
                           CANCEL
                         </button>
                         <button
                           onClick={executeMigration}
-                          style={{ flex: 1, padding: '14px', background: BRAND_BLUE, border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#fff', cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif" }}
+                          style={{ flex: 1, padding: '14px', background: BRAND_BLUE, border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#fff', cursor: 'pointer', fontFamily: "'Space Grotesk', sans-serif" }}
                         >
                           PROCEED
                         </button>
@@ -1246,7 +1246,7 @@ export default function AdminDashboard() {
                     <div style={{ padding: '20px 0' }}>
                       <div className="spinner" style={{ border: '4px solid rgba(0,0,0,0.1)', borderTop: `4px solid ${BRAND_BLUE}`, borderRadius: '50%', width: '48px', height: '48px', margin: '0 auto 24px', animation: 'spin 1s linear infinite' }}></div>
                       <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
-                      <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '18px', fontWeight: 800, color: '#111' }}>Synchronizing Data...</h3>
+                      <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '18px', fontWeight: 800, color: '#111' }}>Synchronizing Data...</h3>
                       <p style={{ fontSize: '14px', color: '#6b7280', marginTop: '8px' }}>Please do not close this window.</p>
                     </div>
                   )}
@@ -1255,7 +1255,7 @@ export default function AdminDashboard() {
                       <div style={{ width: '64px', height: '64px', background: migrationModal.status === 'success' ? '#dcfce7' : '#fee2e2', color: migrationModal.status === 'success' ? '#16a34a' : '#dc2626', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
                         {migrationModal.status === 'success' ? <Shield size={32} /> : <X size={32} />}
                       </div>
-                      <h3 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>
+                      <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>
                         {migrationModal.status === 'success' ? 'Success' : 'Action Failed'}
                       </h3>
                       <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: 1.6, marginBottom: '32px' }}>
@@ -1263,7 +1263,7 @@ export default function AdminDashboard() {
                       </p>
                       <button
                         onClick={() => setMigrationModal({ open: false, status: 'idle' })}
-                        style={{ width: '100%', padding: '14px', background: '#111', border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#fff', cursor: 'pointer', fontFamily: "'Neue Machina', sans-serif" }}
+                        style={{ width: '100%', padding: '14px', background: '#111', border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 800, color: '#fff', cursor: 'pointer', fontFamily: "'Space Grotesk', sans-serif" }}
                       >
                         CLOSE
                       </button>

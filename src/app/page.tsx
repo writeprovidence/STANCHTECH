@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle, MapPin, Package } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PRODUCTS } from "@/data/products";
+import { supabase } from "@/lib/supabase";
 
 const HERO_SLIDES = [
   {
@@ -47,6 +48,26 @@ const PROJECT_SLIDES = [
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentProjectSlide, setCurrentProjectSlide] = useState(0);
+  const [products, setProducts] = useState(PRODUCTS);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .order('id', { ascending: false });
+
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setProducts(data);
+        }
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -242,10 +263,9 @@ export default function HomePage() {
                  <span className="section-label" style={{ color: "var(--accent)" }}>Proven Performance</span>
                  <h2 className="responsive-title" style={{ color: "#fff" }}>Featured Projects</h2>
               </div>
-
            </div>
            <div className="two-col-grid" style={{ gridTemplateColumns: "1.4fr 0.6fr", gap: 64, alignItems: "stretch", overflow: "hidden", borderRadius: 0 }}>
-              <Link href={`/projects/${PROJECT_SLIDES[currentProjectSlide].id}`} style={{ display: "block", height: 420, overflow: "hidden", position: "relative", borderRadius: 0, cursor: "pointer", textDecoration: "none" }}>
+              <div style={{ display: "block", height: 420, overflow: "hidden", position: "relative", borderRadius: 0 }}>
                  <AnimatePresence mode="wait">
                     <motion.div
                        key={currentProjectSlide}
@@ -255,14 +275,14 @@ export default function HomePage() {
                        transition={{ duration: 0.5 }}
                        style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
                     >
-                       <img src={PROJECT_SLIDES[currentProjectSlide].image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s ease" }} />
+                       <img src={PROJECT_SLIDES[currentProjectSlide].image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: 60, background: "linear-gradient(to top, rgba(11,26,46,0.9) 0%, transparent 100%)" }}>
                           <span className="section-label" style={{ color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].category}</span>
                           <h3 style={{ fontSize: 32, fontWeight: 700, fontFamily: "var(--font-heading)", color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].title}</h3>
                        </div>
                     </motion.div>
                  </AnimatePresence>
-              </Link>
+              </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 32, justifyContent: "space-between" }}>
                   <AnimatePresence mode="wait">
                      <motion.div
@@ -279,7 +299,7 @@ export default function HomePage() {
                      </motion.div>
                   </AnimatePresence>
 
-                  {/* Rectangular Slider controls in the right-hand block */}
+                  {/* Rectangular Slider controls */}
                   <div style={{ display: "flex", gap: 32, marginTop: "auto" }}>
                      {PROJECT_SLIDES.map((_, idx) => (
                         <div key={idx} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
@@ -303,7 +323,7 @@ export default function HomePage() {
                      ))}
                   </div>
               </div>
-        </div>
+         </div>
         </div>
       </section>
 
@@ -374,9 +394,9 @@ export default function HomePage() {
             </motion.div>
          </div>
          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
-            {PRODUCTS.slice(0, 3).map((product) => (
-              <div key={product.id} className="premium-card" style={{ padding: 24 }}>
-                 <div style={{ height: 240, background: "#f8f9fa", marginBottom: 24, overflow: "hidden" }}>
+            {products.slice(0, 3).map((product) => (
+              <div key={product.id} className="premium-card" style={{ padding: "40px 32px", background: "#fff", display: "flex", flexDirection: "column" }}>
+                 <div style={{ width: "100%", height: 240, overflow: "hidden", marginBottom: 32, display: "flex", alignItems: "center", justifyContent: "center", background: "#f9fafb" }}>
                     <img src={Array.isArray(product.image) ? product.image[0] : product.image || "/asset/Landing_page_image/marine_spares.png"} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                  </div>
                  <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 12, fontFamily: "var(--font-heading)" }}>{product.name}</h3>
@@ -436,7 +456,6 @@ export default function HomePage() {
             ))}
          </div>
       </section>
-
 
       {/* ─── 09. FINAL CTA ─── */}
       <section style={{ 
