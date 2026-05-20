@@ -25,7 +25,7 @@ const inputStyle: React.CSSProperties = {
   borderRadius: '5px',
   outline: 'none',
   fontSize: '15px',
-  fontFamily: "'Darker Grotesque', sans-serif",
+  fontFamily: "var(--font-body)",
   fontWeight: 600,
   color: '#25252d',
   background: '#fff',
@@ -42,7 +42,7 @@ const labelStyle: React.CSSProperties = {
   marginBottom: '4px',
   textTransform: 'uppercase',
   letterSpacing: '0.05em',
-  fontFamily: "'Darker Grotesque', sans-serif"
+  fontFamily: "var(--font-body)"
 };
 
 export default function ProfilePage() {
@@ -228,7 +228,7 @@ function ProfileContent() {
                 letterSpacing: '0.08em',
                 color: '#111',
                 textTransform: 'uppercase',
-                fontFamily: "'Darker Grotesque', sans-serif"
+                fontFamily: "var(--font-body)"
               }}
             >
               My Account
@@ -253,7 +253,7 @@ function ProfileContent() {
                   fontSize: '15px',
                   color: activeTab === item.id ? '#111' : '#374151',
                   background: activeTab === item.id ? '#f5f5f5' : 'transparent',
-                  fontFamily: "'Darker Grotesque', sans-serif",
+                  fontFamily: "var(--font-body)",
                   transition: 'background 0.15s',
                   fontWeight: activeTab === item.id ? 800 : 700,
                   textTransform: 'uppercase',
@@ -290,7 +290,7 @@ function ProfileContent() {
                 fontSize: '15px',
                 color: '#374151',
                 background: 'transparent',
-                fontFamily: "'Neue Machina', sans-serif",
+                fontFamily: "var(--font-heading)",
                 transition: 'background 0.15s',
                 fontWeight: 800,
                 textTransform: 'uppercase',
@@ -345,7 +345,7 @@ function ProfileContent() {
                           autoFocus
                         />
                       ) : (
-                        <span style={{ fontSize: '18px', color: '#111827', flex: 1, fontFamily: "'Darker Grotesque', sans-serif", fontWeight: 600 }}>{email}</span>
+                        <span style={{ fontSize: '18px', color: '#111827', flex: 1, fontFamily: "var(--font-body)", fontWeight: 600 }}>{email}</span>
                       )}
                       <button
                         onClick={() => {
@@ -362,7 +362,7 @@ function ProfileContent() {
                           border: 'none',
                           background: 'transparent',
                           cursor: 'pointer',
-                          fontFamily: "'Neue Machina', sans-serif",
+                          fontFamily: "var(--font-heading)",
                           fontWeight: 800,
                           textTransform: 'uppercase',
                           letterSpacing: '0.05em',
@@ -383,12 +383,12 @@ function ProfileContent() {
                     style={{ background: '#fff', border: '1px solid #e5e7eb', padding: '32px 28px', display: 'flex', flexDirection: 'column', gap: '24px', boxSizing: 'border-box', flex: 1, borderRadius: '0' }}
                   >
                     {/* Card Header */}
-                    <span style={{ fontSize: '13px', color: '#111', fontWeight: 600, display: 'block', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb', fontFamily: "'Darker Grotesque', sans-serif", textTransform: 'uppercase', letterSpacing: '0.08em' }}>Addresses</span>
+                    <span style={{ fontSize: '13px', color: '#111', fontWeight: 600, display: 'block', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb', fontFamily: "var(--font-body)", textTransform: 'uppercase', letterSpacing: '0.08em' }}>Addresses</span>
 
                     {/* — Customer Address — */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span style={{ fontSize: '16px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "'Darker Grotesque', sans-serif" }}>Customer Address</span>
+                        <span style={{ fontSize: '16px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "var(--font-body)" }}>Customer Address</span>
                         {!isAddingAddress && !userAddress && (
                           <button onClick={handleAddAddress} style={{ fontSize: '16px', color: '#2563eb', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: 0, fontWeight: 700 }}>+ Add</button>
                         )}
@@ -402,9 +402,9 @@ function ProfileContent() {
                           <span style={{ position: 'absolute', bottom: 0, right: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderRight: '2px solid #111827' }} />
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div>
-                              <p style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "'Darker Grotesque', sans-serif" }}>{userAddress.firstName} {userAddress.lastName}</p>
-                              <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '6px', lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>{userAddress.deliveryAddress}, {userAddress.state}, {userAddress.areaCouncil}</p>
-                              <p style={{ fontSize: '18px', color: '#6b7280', fontFamily: "'Darker Grotesque', sans-serif" }}>{userAddress.phone}</p>
+                              <p style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "var(--font-body)" }}>{userAddress.firstName} {userAddress.lastName}</p>
+                              <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '6px', lineHeight: 1.6, fontFamily: "var(--font-body)" }}>{userAddress.deliveryAddress}, {userAddress.state}, {userAddress.areaCouncil}</p>
+                              <p style={{ fontSize: '18px', color: '#6b7280', fontFamily: "var(--font-body)" }}>{userAddress.phone}</p>
                             </div>
                             <button onClick={() => { setAddressForm(userAddress); setIsAddingAddress(true); }} style={{ color: '#2563eb', fontSize: '14px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 800 }}>Edit</button>
                           </div>
@@ -495,7 +495,7 @@ function ProfileContent() {
                     {/* — Shipping Address — */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span style={{ fontSize: '16px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "'Darker Grotesque', sans-serif" }}>Shipping Address</span>
+                        <span style={{ fontSize: '16px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "var(--font-body)" }}>Shipping Address</span>
                         {!isAddingShipping && !shippingAddress && (
                           <button onClick={handleAddShipping} style={{ fontSize: '16px', color: '#2563eb', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: 0, fontWeight: 700 }}>+ Add</button>
                         )}
@@ -509,9 +509,9 @@ function ProfileContent() {
                           <span style={{ position: 'absolute', bottom: 0, right: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderRight: '2px solid #111827' }} />
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div>
-                              <p style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "'Darker Grotesque', sans-serif" }}>{shippingAddress.firstName} {shippingAddress.lastName}</p>
-                              <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '6px', lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>{shippingAddress.deliveryAddress}, {shippingAddress.state}, {shippingAddress.areaCouncil}</p>
-                              <p style={{ fontSize: '18px', color: '#6b7280', fontFamily: "'Darker Grotesque', sans-serif" }}>{shippingAddress.phone}</p>
+                              <p style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "var(--font-body)" }}>{shippingAddress.firstName} {shippingAddress.lastName}</p>
+                              <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '6px', lineHeight: 1.6, fontFamily: "var(--font-body)" }}>{shippingAddress.deliveryAddress}, {shippingAddress.state}, {shippingAddress.areaCouncil}</p>
+                              <p style={{ fontSize: '18px', color: '#6b7280', fontFamily: "var(--font-body)" }}>{shippingAddress.phone}</p>
                             </div>
                             <button onClick={() => { setShippingForm(shippingAddress); setIsAddingShipping(true); }} style={{ color: '#2563eb', fontSize: '14px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 800 }}>Edit</button>
                           </div>
@@ -654,7 +654,7 @@ function ProfileContent() {
                                   <img src={order.items[0]?.image} alt="" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                                 </div>
                                 <div>
-                                  <p style={{ fontSize: '14px', fontWeight: 800, color: '#111827', marginBottom: '4px', fontFamily: "'Darker Grotesque', sans-serif" }}>Order {order.id}</p>
+                                  <p style={{ fontSize: '14px', fontWeight: 800, color: '#111827', marginBottom: '4px', fontFamily: "var(--font-body)" }}>Order {order.id}</p>
                                   <p style={{ fontSize: '13px', color: '#6b7280' }}>
                                     {new Date(order.date).toLocaleDateString()} • {order.items.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0)} {order.items.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0) === 1 ? 'item' : 'items'}
                                   </p>
@@ -667,7 +667,7 @@ function ProfileContent() {
                                 </div>
                               </div>
                               <div style={{ textAlign: 'right' }}>
-                                <p style={{ fontSize: '16px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "'Darker Grotesque', sans-serif" }}>₦ {order.total.toLocaleString()}</p>
+                                <p style={{ fontSize: '16px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "var(--font-body)" }}>₦ {order.total.toLocaleString()}</p>
                                 <button style={{ color: '#2563eb', fontSize: '13px', border: 'none', background: 'transparent', cursor: 'pointer', fontWeight: 500 }}>View Details</button>
                               </div>
                             </div>
@@ -801,7 +801,7 @@ function ProfileContent() {
                 <div style={{ width: '48px', height: '48px', background: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <XCircle style={{ width: '24px', height: '24px', color: '#ef4444' }} />
                 </div>
-                <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#111', fontFamily: "'Neue Machina', sans-serif", textTransform: 'uppercase', letterSpacing: '-0.02em' }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#111', fontFamily: "var(--font-heading)", textTransform: 'uppercase', letterSpacing: '-0.02em' }}>
                   Confirm Deletion
                 </h3>
               </div>

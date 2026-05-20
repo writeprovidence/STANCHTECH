@@ -60,7 +60,7 @@ export function ProductCard({ product }) {
                 <div className="flex items-center justify-between mt-auto">
                     <div className="flex flex-col">
                         <span className="text-sm text-gray-400 font-bold uppercase tracking-widest leading-none mb-1">Price</span>
-                        <span className="text-2xl font-black text-secondary" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>${product.price.toFixed(2)}</span>
+                        <span className="text-2xl font-black text-secondary" style={{ fontFamily: "var(--font-body)" }}>${product.price.toFixed(2)}</span>
                     </div>
 
                     <button

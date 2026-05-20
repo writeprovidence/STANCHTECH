@@ -67,7 +67,7 @@ export default function CheckoutPage() {
   const watchShippingState = watch('shippingState');
 
   const [sameAsBilling, setSameAsBilling] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bank' | 'opay'>('cod');
+  const [paymentMethod, setPaymentMethod] = useState<'bank' | 'opay' | 'cod'>('bank');
   const [bankExpanded, setBankExpanded] = useState(false);
   const [opayExpanded, setOpayExpanded] = useState(false);
   const [deliveryMethod, setDeliveryMethod] = useState<'home' | 'store'>('home');
@@ -266,7 +266,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="flex justify-center w-full min-h-screen bg-white" style={{ fontFamily: "'Darker Grotesque', sans-serif", paddingLeft: '20px', paddingRight: '20px' }}>
+    <div className="flex justify-center w-full min-h-screen bg-white" style={{ fontFamily: "var(--font-body)", paddingLeft: '20px', paddingRight: '20px' }}>
       <style jsx global>{`
         nav { display: none !important; }
         input[type="text"], input[type="email"], input[type="tel"] {
@@ -287,7 +287,7 @@ export default function CheckoutPage() {
           {/* Left Column */}
           <div className="flex flex-col w-full relative">
             <div className="hidden lg:block absolute right-[-80px] top-[-80px] bottom-[-100px] border-r border-[#F2F2F2]"></div>
-            <h1 className="text-[24px] font-semibold text-black" style={{ marginBottom: '56px', fontFamily: "'Neue Machina', sans-serif" }}>CHECKOUT</h1>
+            <h1 className="text-[24px] font-semibold text-black" style={{ marginBottom: '56px', fontFamily: "var(--font-heading)" }}>CHECKOUT</h1>
             
             {!isAuth && (
               <>
@@ -308,7 +308,7 @@ export default function CheckoutPage() {
             {/* Customer Email */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[18px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Customer email address</h2>
+                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Customer email address</h2>
 
               </div>
               <div style={{ width: '100%' }}>
@@ -326,7 +326,7 @@ export default function CheckoutPage() {
             {/* Customer Address */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[18px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Customer address</h2>
+                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Customer address</h2>
 
               </div>
               <div style={{ width: '100%' }}>
@@ -452,7 +452,7 @@ export default function CheckoutPage() {
             {/* Shipping Address */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[18px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Shipping address</h2>
+                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Shipping address</h2>
 
               </div>
               <label className="flex items-center cursor-pointer" style={{ gap: '12px', marginBottom: '16px' }}>
@@ -582,7 +582,7 @@ export default function CheckoutPage() {
             {/* Delivery Options */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[18px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Delivery options</h2>
+                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Delivery options</h2>
               </div>
               <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                 <button
@@ -593,10 +593,10 @@ export default function CheckoutPage() {
                       ? 'border-[#7047eb] bg-white'
                       : 'border-[#bdbdbd] bg-[#f9f9f9]'
                   }`}
-                  style={{ width: '187px', height: '75px', paddingLeft: '16px', paddingTop: '16px', boxSizing: 'border-box' }}
+                  style={{ width: '220px', height: '75px', paddingLeft: '16px', paddingTop: '16px', boxSizing: 'border-box' }}
                 >
-                  <div className="font-medium text-[18px] text-[#25252d] mb-1">Home delivery</div>
-                  <div className="text-[17px] text-[#828282]">Takes 3-5 business days</div>
+                  <div className="font-medium text-[16px] text-[#25252d] mb-1">Home delivery</div>
+                  <div className="text-[14px] text-[#828282]">Takes 3-5 business days</div>
                   {deliveryMethod === 'home' && (
                     <div className="absolute right-3 top-3 w-5 h-5">
                       <svg className="w-full h-full" fill="none" viewBox="0 0 20 20">
@@ -615,10 +615,10 @@ export default function CheckoutPage() {
                       ? 'border-[#7047eb] bg-white'
                       : 'border-[#bdbdbd] bg-[#f9f9f9]'
                   }`}
-                  style={{ width: '187px', height: '75px', paddingLeft: '16px', paddingTop: '16px', boxSizing: 'border-box' }}
+                  style={{ width: '220px', height: '75px', paddingLeft: '16px', paddingTop: '16px', boxSizing: 'border-box' }}
                 >
-                  <div className="font-medium text-[18px] text-[#25252d] mb-1">In-store pickup</div>
-                  <div className="text-[17px] text-[#828282]">Pick from store location</div>
+                  <div className="font-medium text-[16px] text-[#25252d] mb-1">In-store pickup</div>
+                  <div className="text-[14px] text-[#828282]">Pick from store location</div>
                   {deliveryMethod === 'store' && (
                     <div className="absolute right-3 top-3 w-5 h-5">
                       <svg className="w-full h-full" fill="none" viewBox="0 0 20 20">
@@ -661,7 +661,7 @@ export default function CheckoutPage() {
           {/* Right Column - Order Summary */}
           <div>
             <div className="flex justify-between items-center" style={{ marginBottom: '32px' }}>
-              <h2 className="text-[18px] text-[#25252d]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Order Summary({cartCount})</h2>
+              <h2 className="text-[18px] text-[#25252d]" style={{ fontFamily: "var(--font-heading)" }}>Order Summary({cartCount})</h2>
               <div className="flex items-center gap-3">
                 <button type="button" className="text-[#016fd0] text-[17px] hover:underline" onClick={() => setIsCartOpen(true)}>
                   edit cart
@@ -686,11 +686,11 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-start" style={{ marginBottom: '8px' }}>
-                      <p className="text-[17px] text-[#19191d]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                      <p className="text-[17px] text-[#19191d]" style={{ fontFamily: "var(--font-body)" }}>
                         {item.name}
                         {(item as any).stock === 0 && <span className="text-red-500 font-bold ml-2 text-[14px] whitespace-nowrap">(Out of stock)</span>}
                       </p>
-                      <p className="text-[17px] text-black whitespace-nowrap ml-2" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>₦ {(item.price * item.quantity).toLocaleString()}</p>
+                      <p className="text-[17px] text-black whitespace-nowrap ml-2" style={{ fontFamily: "var(--font-body)" }}>₦ {(item.price * item.quantity).toLocaleString()}</p>
                     </div>
                     <p className="text-[17px] text-black">Qty: {item.quantity}</p>
                   </div>
@@ -720,40 +720,28 @@ export default function CheckoutPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
               <div className="flex justify-between text-[17px]">
                 <span className="text-black">Subtotal</span>
-                <span className="text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>₦ {cartTotal.toLocaleString()}</span>
+                <span className="text-black" style={{ fontFamily: "var(--font-body)" }}>₦ {cartTotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-[17px]">
                 <span className="text-black">Shipping</span>
-                 <span className="text-black font-semibold" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>₦ 0.00</span>
+                 <span className="text-black font-semibold" style={{ fontFamily: "var(--font-body)" }}>₦ 0.00</span>
               </div>
             </div>
 
               <div style={{ borderTop: '1px solid #e0e0e0', paddingTop: '24px', marginBottom: '48px' }}>
                 <div className="flex justify-between text-[17px] font-medium">
                   <span className="text-black">Total</span>
-                  <span className="text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>₦ {cartTotal.toLocaleString()}</span>
+                  <span className="text-black" style={{ fontFamily: "var(--font-body)" }}>₦ {cartTotal.toLocaleString()}</span>
                 </div>
               </div>
 
             {/* Payment Options */}
             <div style={{ marginTop: '120px', marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '24px' }}>
-                <h2 className="text-[18px] text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Payment options</h2>
+                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Payment options</h2>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div className="flex items-start gap-3 cursor-pointer" onClick={() => { setPaymentMethod('cod'); setBankExpanded(false); }}>
-                   <input
-                    type="radio"
-                    name="payment"
-                    checked={paymentMethod === 'cod'}
-                    readOnly
-                    className="mt-0.5 w-4 h-4 accent-[#7047eb] pointer-events-none"
-                  />
-                  <div>
-                    <div className="text-[18px] text-black mb-1">Cash On Delivery</div>
-                    <div className="text-[17px] text-[#828282]">Pay with cash upon delivery.</div>
-                  </div>
-                </div>
+
 
                 <div className="flex items-start gap-3 cursor-pointer" onClick={() => {
                   if (paymentMethod !== 'bank') {
@@ -805,7 +793,7 @@ export default function CheckoutPage() {
                         <button
                           type="button"
                           onClick={(e) => { e.preventDefault(); shareViaWhatsApp(); }}
-                          className="w-full bg-[#25D366] text-white rounded-[6px] h-[44px] text-[17px] font-medium hover:bg-[#1fbd5a] transition-colors flex justify-center items-center gap-2 mt-2"
+                          className="w-full bg-[#25D366] text-white rounded-[6px] h-[44px] text-[10px] font-bold uppercase tracking-widest hover:bg-[#1fbd5a] transition-all flex justify-center items-center gap-2 mt-2"
                         >
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 13.96 2.56 15.78 3.53 17.31L2.24 21.05C2.12 21.4 2.45 21.73 2.8 21.61L6.61 20.37C8.16 21.4 10.01 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17.15 15.34C16.92 15.98 16.03 16.5 15.46 16.59C14.98 16.66 14.33 16.74 12.08 15.8C9.21 14.59 7.35 11.66 7.21 11.47C7.07 11.28 6.05 9.93 6.05 8.52C6.05 7.11 6.77 6.42 7.05 6.13C7.28 5.89 7.66 5.8 8.01 5.8C8.12 5.8 8.22 5.8 8.31 5.85C8.61 6.02 9.08 7.15 9.14 7.29C9.2 7.42 9.27 7.58 9.18 7.74C9.09 7.9 9.01 7.98 8.87 8.14C8.73 8.3 8.6 8.44 8.45 8.62C8.29 8.82 8.12 9.03 8.32 9.38C8.51 9.73 9.18 10.82 10.17 11.69C11.45 12.82 12.47 13.18 12.86 13.34C13.24 13.5 13.68 13.47 13.94 13.19C14.28 12.82 14.68 12.24 15.09 11.66C15.38 11.25 15.75 11.33 16.1 11.46C16.45 11.59 18.25 12.48 18.6 12.65C18.95 12.83 19.18 12.92 19.27 13.07C19.36 13.22 19.36 13.96 19.04 14.86L17.15 15.34Z" />
@@ -829,8 +817,8 @@ export default function CheckoutPage() {
                     <div className="flex items-center gap-2" style={{ marginBottom: '4px' }}>
                       {/* OPay wordmark */}
                       <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '46px', height: '16px' }}>
-                        <text x="0" y="16" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="17" fill="#9ca3af">O</text>
-                        <text x="13" y="16" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="17" fill="#9ca3af">Pay</text>
+                        <text x="0" y="16" fontFamily="var(--font-heading)" fontWeight="900" fontSize="17" fill="#9ca3af">O</text>
+                        <text x="13" y="16" fontFamily="var(--font-heading)" fontWeight="900" fontSize="17" fill="#9ca3af">Pay</text>
                       </svg>
                       <span className="bg-[#f3f4f6] text-[#9ca3af] text-[9px] font-bold px-1.5 py-0.5 rounded-[5px] tracking-wide border border-[#e5e7eb]">COMING SOON</span>
                     </div>
@@ -843,7 +831,7 @@ export default function CheckoutPage() {
 
             {/* Review & Place Order */}
             <div style={{ marginTop: '60px', marginBottom: '150px' }}>
-              <h2 className="text-[18px] text-black" style={{ marginBottom: '16px', fontFamily: "'Neue Machina', sans-serif" }}>Review & Place Order</h2>
+              <h2 className="text-[18px] text-black" style={{ marginBottom: '16px', fontFamily: "var(--font-heading)" }}>Review & Place Order</h2>
               <p className="text-[18px] text-[#645a5c]" style={{ marginBottom: '24px' }}>
                 Please review the order details and payment details before proceeding to confirm your order
               </p>
@@ -879,7 +867,7 @@ export default function CheckoutPage() {
                 type="submit"
                 disabled={isSubmitting || cartItems.length === 0 || !isFormValid}
                 className="w-full h-14 bg-black text-white font-bold uppercase tracking-[0.2em] text-xs hover:bg-blue-600 transition-all flex items-center justify-center gap-3 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
-                style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
+                style={{ fontFamily: "var(--font-body)" }}
               >
                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : (
                   <>

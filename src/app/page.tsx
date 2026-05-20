@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle, MapPin, Package } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { PRODUCTS } from "@/data/products";
 
 const HERO_SLIDES = [
@@ -20,483 +20,447 @@ const HERO_SLIDES = [
   }
 ];
 
+const PROJECT_SLIDES = [
+  {
+    id: "project-1",
+    category: "Offshore Supply Support",
+    title: "Engine Overhaul for Supply Fleet",
+    image: "/asset/Landing_page_image/vessel.png",
+    detail: "Providing full-spectrum maintenance for deep-sea vessels. This project involved a complete rebuild of twin KTA50 engines under a strict 14-day harbor window."
+  },
+  {
+    id: "project-2",
+    category: "Industrial Power Operations",
+    title: "Generator Rehabilitation",
+    image: "/asset/Landing_page_image/low_hour_engine.jpeg",
+    detail: "Comprehensive diagnostic and restore operations on high-capacity industrial generators to ensure uninterrupted power supply for offshore platforms."
+  },
+  {
+    id: "project-3",
+    category: "Marine Engineering",
+    title: "Propulsion System Upgrade",
+    image: "/asset/Landing_page_image/marine_spares.png",
+    detail: "Sourcing and integration of OEM genuine parts for an overarching propulsion system refit, maximizing vessel efficiency and reducing future downtime."
+  }
+];
+
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [exitSlide, setExitSlide] = useState(null);
+  const [currentProjectSlide, setCurrentProjectSlide] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => {
-        setExitSlide(prev);
-        return (prev + 1) % HERO_SLIDES.length;
-      });
-    }, 4500);
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => {
-    setExitSlide(prev);
-    return (prev + 1) % HERO_SLIDES.length;
-  });
-  const prevSlide = () => setCurrentSlide((prev) => {
-    setExitSlide(prev);
-    return (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
-  });
+  useEffect(() => {
+    const projectTimer = setInterval(() => {
+      setCurrentProjectSlide((prev) => (prev + 1) % PROJECT_SLIDES.length);
+    }, 6000);
+    return () => clearInterval(projectTimer);
+  }, []);
 
   return (
-    <div style={{ overflowX: "hidden" }}>
+    <div style={{ overflowX: "hidden", background: "#fff" }}>
 
-      {/* ─── HERO ─── */}
+      {/* ─── 01. REDESIGNED HERO ─── */}
       <section style={{
         position: "relative",
-        height: "85vh",
-        minHeight: 650,
+        height: "95vh",
+        minHeight: 800,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         color: "#fff",
         overflow: "hidden",
       }}>
-        {/* Dark overlay */}
-        <div style={{ 
-          position: "absolute", 
-          inset: 0, 
-          background: "rgba(0,0,0,0.3)", 
-          transition: "background 0.9s ease-in-out",
-          zIndex: 5
-        }} />
-        {/* Background image slider */}
-        {HERO_SLIDES.map((slide, index) => {
-          const isCurrent = index === currentSlide;
-          const isExit    = index === exitSlide;
-          return (
-            <img
-              key={slide.image}
-              src={slide.image}
-              alt="Stanch Tech Marine"
-              onTransitionEnd={() => { if (isExit) setExitSlide(null); }}
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
-                transform: "scale(1.15)",
-                zIndex: isExit ? 2 : isCurrent ? 1 : 0,
-                opacity: isExit ? 0 : 1,
-                transition: isExit ? "opacity 0.9s ease-in-out" : "none",
-              }}
-            />
-          );
-        })}
-
-        <div className="hero-content-wrapper" style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px", maxWidth: 1000, width: "100%" }}>
-          <h1 className="hero-headline" style={{ 
-            color: "#fff", 
-            display: "flex", 
-            flexDirection: "column", 
-            alignItems: "center", 
-            fontWeight: 500, 
-            fontFamily: "'Neue Machina', sans-serif", 
-            letterSpacing: "-0.03em", 
-            lineHeight: 0.9,
-            fontSize: "60px",
-            textTransform: "none" 
-          }}>
-            <span style={{ display: "block", whiteSpace: "nowrap" }}>Next-Level Marine and</span>
-            <span style={{ display: "block", whiteSpace: "nowrap" }}>Industrial Maintenance</span>
-          </h1>
-          <p className="hero-description" style={{
-            color: "rgba(255,255,255,0.9)",
-            fontFamily: "'Darker Grotesque', sans-serif",
-            fontSize: "24px",
-            maxWidth: 850,
-            margin: "24px auto 0",
-            lineHeight: 1.6,
-            fontWeight: 700,
-            minHeight: "120px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
-          }}>
-            {HERO_SLIDES[currentSlide].description}
-          </p>
-
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: "-15px" }}>
-            <Link href="/contact" className="hero-btn-primary">
-              Request Service
-            </Link>
-            <Link href="/shop" target="_blank" className="hero-btn-secondary" style={{ border: "2px solid #ffffff", borderColor: "#ffffff", fontFamily: "'Neue Machina', sans-serif", fontWeight: 400 }}>
-              View Inventory
-            </Link>
-          </div>
-
-          {/* Dots */}
-          <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 44 }}>
-            {HERO_SLIDES.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                style={{ 
-                  display: "inline-block", 
-                  width: 32, 
-                  height: 3, 
-                  background: index === currentSlide ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.18)",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                  transition: "all 0.3s ease",
-                  borderRadius: 1
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Arrows */}
-        <button onClick={prevSlide} aria-label="Previous slide" className="slider-arrow" style={{ position: "absolute", left: 28, top: "50%", zIndex: 12 }}>
-          <ChevronLeft size={24} strokeWidth={2.5} />
-        </button>
-        <button onClick={nextSlide} aria-label="Next slide" className="slider-arrow" style={{ position: "absolute", right: 28, top: "50%", zIndex: 12 }}>
-          <ChevronRight size={24} strokeWidth={2.5} />
-        </button>
-      </section>
-
-      <section style={{ 
-        background: "rgba(194, 217, 234, 0.34)", 
-        color: "#0b1a2e", 
-        display: "flex", 
-        flexDirection: "column", 
-        justifyContent: "flex-start",
-        paddingTop: "140px",
-        paddingBottom: "100px"
-      }}>
-        {/* ─── CORE BUSINESS AREAS ─── */}
-        <div style={{ textAlign: "center", padding: "0 5% 80px" }}>
-          <h2 className="responsive-title font-darker font-bold" style={{ fontWeight: 500, marginBottom: 14, letterSpacing: "-0.03em", color: "#0b1a2e", fontFamily: "'Neue Machina', sans-serif" }}>
-            Core Business Areas
-          </h2>
-          <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.78)", maxWidth: 840, margin: "0 auto", fontFamily: "'Darker Grotesque', sans-serif" }}>
-            Applying professional technical support to maintain, upgrade and perform on board technical services. We offer our clients a
-            wide range of marine and industrial maintenance solutions.
-          </p>
-        </div>
-
-        {/* ─── CUMMINS ENGINES ─── */}
-        <div style={{ overflow: "hidden", padding: "100px 5%" }}>
-          <div className="two-col-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "center", maxWidth: 1400, margin: "0 auto" }}>
-            {/* Text LEFT */}
-            <div style={{ maxWidth: 840 }}>
-              <h2 className="font-bold" style={{ 
-                fontSize: "38px", 
-                lineHeight: 1.1, 
-                letterSpacing: "-0.02em", 
-                textTransform: "uppercase",
-                marginBottom: "20px",
-                color: "#0b1a2e",
-                fontFamily: "'Neue Machina', sans-serif",
-                fontWeight: 800
-              }}>
-                <span style={{ display: "block" }}>Cummins engines</span>
-                <span style={{ display: "block" }}>maintenance and</span>
-                <span style={{ display: "block" }}>repair services</span>
-              </h2>
-               <p className="section-body darker-regular" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 36, lineHeight: 1.55, fontFamily: "'Darker Grotesque', sans-serif", fontWeight: 500, fontSize: "20px", maxWidth: 480 }}>
-                <span style={{ display: "block", whiteSpace: "nowrap" }}>Cummins engine maintenance and repair services, ensuring</span>
-                <span style={{ display: "block", whiteSpace: "nowrap" }}>optimal performance, reliability and extended</span>
-                <span style={{ display: "block", whiteSpace: "nowrap" }}>lifespan through expert diagnostics.</span>
-              </p>
-              <Link href="/contact" className="cummins-cta">
-                Request Service <ArrowUpRight size={18} strokeWidth={2} />
-              </Link>
-            </div>
-            {/* Image RIGHT */}
-            <div className="reverse-mobile" style={{ height: "506px", width: "100%", maxWidth: "100%", overflow: "hidden", position: "relative", borderRadius: "15px", flexShrink: 0 }}>
-              <img 
-                src="/asset/Landing_page_image/cummin_engine.png" 
-                alt="Cummins Engines Maintenance" 
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "left center", display: "block", mixBlendMode: "multiply" }} 
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── MARINE VESSEL INSPECTION ─── */}
-      <section style={{ background: "#FFFFFF", color: "#0b1a2e", display: "flex", alignItems: "center", padding: "120px 5%" }}>
-        <div className="two-col-grid" style={{ gap: 60, alignItems: "center", maxWidth: 1400, gridTemplateColumns: "1fr 1fr" }}>
-          {/* Image LEFT - Vessel Presentation */}
-          <div className="reverse-mobile" style={{ height: "506px", width: "100%", maxWidth: "100%", overflow: "hidden", position: "relative", borderRadius: "15px", flexShrink: 0 }}>
-            <img 
-              src="/asset/Landing_page_image/vessel.png" 
-              alt="Marine Vessel Inspection" 
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} 
-            />
-          </div>
-          {/* Text RIGHT */}
-          <div className="vessel-text-container" style={{ maxWidth: 840 }}>
-              <h2 className="font-bold" style={{ 
-                fontSize: "38px", 
-                lineHeight: 1.1, 
-                letterSpacing: "-0.02em", 
-                textTransform: "uppercase",
-                marginBottom: "20px",
-                color: "#0b1a2e",
-                fontFamily: "'Neue Machina', sans-serif",
-                fontWeight: 800
-              }}>
-                <span style={{ display: "block" }}>Vessel Inspection,</span>
-                <span style={{ display: "block" }}>Maintenance</span>
-                <span style={{ display: "block" }}>&amp; Repairs.</span>
-              </h2>
-              <p className="section-body darker-regular" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 36, lineHeight: 1.55, fontFamily: "'Darker Grotesque', sans-serif", maxWidth: 480, fontWeight: 500, fontSize: "21px" }}>
-                Ensure vessel safety and performance through thorough inspection, routine maintenance, and reliable repairs. We prevent breakdowns and keep operations running smoothly.
-              </p>
-              <Link href="/contact" className="cummins-cta">
-                Request Service <ArrowUpRight size={18} strokeWidth={2} />
-              </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── SPARES & SUPPORT ─── */}
-      <section style={{ background: "rgba(194, 217, 234, 0.34)", color: "#0b1a2e", display: "flex", alignItems: "center", padding: "100px 5%" }}>
-        <div className="two-col-grid" style={{ gap: 60, alignItems: "center", maxWidth: 1400, gridTemplateColumns: "1fr 1fr" }}>
-          {/* Text LEFT */}
-          <div style={{ maxWidth: 840 }}>
-            <h2 className="font-bold" style={{ 
-              fontSize: "38px", 
-              lineHeight: 1.1, 
-              letterSpacing: "-0.02em", 
-              textTransform: "uppercase",
-              marginBottom: "20px",
-              color: "#0b1a2e",
-              fontFamily: "'Neue Machina', sans-serif",
-              fontWeight: 800
-            }}>
-              <span style={{ display: "block" }}>Sales of Genuine</span>
-              <span style={{ display: "block" }}>Cummins Engine</span>
-              <span style={{ display: "block" }}>Spares</span>
-            </h2>
-            <p className="section-body darker-regular" style={{ color: "rgba(11,26,46,0.72)", marginBottom: 36, lineHeight: 1.55, fontFamily: "'Darker Grotesque', sans-serif", maxWidth: 480, fontWeight: 500, fontSize: "21px" }}>
-              We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems.
-            </p>
-            <Link href="/shop" target="_blank" className="cummins-cta">
-              View Inventory <ArrowUpRight size={18} strokeWidth={2} />
-            </Link>
-          </div>
-          {/* Image RIGHT - Industrial Spares Mastery */}
-          <div className="reverse-mobile" style={{ height: "506px", width: "100%", maxWidth: "100%", overflow: "hidden", position: "relative", borderRadius: "15px", flexShrink: 0 }}>
-              <img 
-                src="/asset/Landing_page_image/marine_spares.png" 
-                alt="Professional Marine and Industrial Spares" 
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-              />
-          </div>
-        </div>
-      </section>
-
-      {/* ─── FEATURED PRODUCTS ─── */}
-      {/* ─── FEATURED PRODUCTS ─── */}
-      <section className="section-pad" style={{ 
-        backgroundImage: 'url("/asset/Landing_page_image/product_card.png")', 
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        color: "#0b1a2e", 
-        position: "relative",
-        paddingTop: 120
-      }}>
-        {/* Header */}
-        <div className="fp-header section-header-flex" style={{ maxWidth: 1400, margin: "0 auto 40px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", paddingTop: 0 }}>
-          <div style={{ maxWidth: 880 }}>
-            <h2 className="responsive-title" style={{ fontSize: "clamp(28px, 6vw, 42px)", fontWeight: 500, letterSpacing: "-0.03em", textTransform: "none", lineHeight: 0.9, marginBottom: 8, fontFamily: "'Neue Machina', sans-serif" }}>
-              Featured products
-            </h2>
-            <p className="responsive-subtitle" style={{ fontSize: "clamp(16px, 4vw, 20px)", color: "rgba(11,26,46,0.72)", fontWeight: 400, fontFamily: "'Darker Grotesque', sans-serif" }}>
-              Our products help to reduce downtime and ensure operations run smoothly.
-            </p>
-          </div>
-          {/* Button aligned to the RIGHT within the 1400px container */}
-          <Link
-            href="/shop"
-            target="_blank"
-            className="hero-btn-secondary responsive-btn-center no-caps"
-            style={{ 
-              background: "transparent", 
-              border: "1px solid #0b1a2e", 
-              color: "#0b1a2e", 
-              marginTop: 24,
+        {/* Cinematic Backdrop */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 1, background: "rgba(0,0,0,0.45)" }} />
+        {HERO_SLIDES.map((slide, index) => (
+          <motion.div
+            key={slide.image}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ 
+              opacity: index === currentSlide ? 1 : 0,
+              scale: index === currentSlide ? 1 : 1.1,
+              transition: { duration: 1.5, ease: "easeInOut" }
             }}
+            style={{ position: "absolute", inset: 0, zIndex: 0 }}
           >
-            Explore Full catalog <ArrowUpRight size={18} strokeWidth={2} />
-          </Link>
+            <img src={slide.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </motion.div>
+        ))}
+
+        <div style={{ position: "relative", zIndex: 10, textAlign: "center", maxWidth: 1100, padding: "0 24px" }}>
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="section-label" 
+            style={{ color: "#fff", opacity: 0.8 }}
+          >
+            Engineering Excellence & Marine Support
+          </motion.span>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="responsive-title" 
+            style={{ color: "#fff", marginBottom: 32, textShadow: "0 10px 30px rgba(0,0,0,0.3)" }}
+          >
+            Building High-Performance <br />
+            Marine Systems
+          </motion.h1>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="responsive-subtitle" 
+            style={{ color: "rgba(255,255,255,0.9)", maxWidth: 700, margin: "0 auto 48px" }}
+          >
+            {HERO_SLIDES[currentSlide].description}
+          </motion.p>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            style={{ display: "flex", gap: 20, justifyContent: "center" }}
+          >
+            <Link href="/contact" className="hero-btn-primary">
+              Explore Inventory
+            </Link>
+            <Link href="/projects" className="hero-btn-secondary" style={{ backdropFilter: "blur(10px)", background: "rgba(255,255,255,0.1)" }}>
+              View Our Portfolio
+            </Link>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Cards - Sophisticated Tech Presentation */}
-        <div className="products-grid" style={{ maxWidth: 1400, margin: "0 auto", gap: 32, position: "relative" }}>
-          {/* Card 1 */}
-          <div className="product-item-card" style={{ 
-            position: "relative",
-            background: "#FFFFFF",
-            overflow: "hidden"
-          }}>
-            {/* Left Image Area (The 'White Card') */}
-            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "#FFFFFF" }}>
-              <img 
-                src={PRODUCTS[1].image} 
-                alt={PRODUCTS[1].name} 
-                style={{ width: "100%", height: "100%", objectFit: "contain" }}
-              />
-            </div>
-            {/* Right Specs Area */}
-            <div style={{ flex: 1, background: "#0b1a2e", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>{PRODUCTS[1].name}</h3>
-              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• High-Pressure Performance</li>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Saltwater Corrosion Resistant</li>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• 24-Month Active Warranty</li>
-              </ul>
-              <Link href={`/shop/${PRODUCTS[1].id}`} target="_blank" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
-                Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
-              </Link>
-            </div>
+      {/* ─── 02. STATS BAR ─── */}
+      <section style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "40px 5%" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 32 }}>
+           {[
+             { label: "Technical Support", icon: <MessageCircle size={24} /> },
+             { label: "Spares Inventory", icon: <Package size={24} /> },
+             { label: "Onsite Maintenance", icon: <MapPin size={24} /> },
+             { label: "Expert Consultancy", icon: <Star size={24} /> }
+           ].map((item, i) => (
+             <div key={i} style={{ display: "flex", alignItems: "center", gap: 16, color: "var(--navy)" }}>
+                <div style={{ color: "var(--accent)" }}>{item.icon}</div>
+                <span style={{ fontWeight: 700, letterSpacing: "0.02em", textTransform: "uppercase", fontSize: 12, fontFamily: "var(--font-heading)" }}>{item.label}</span>
+             </div>
+           ))}
+        </div>
+      </section>
+
+      {/* ─── 03. INTRO / STATS ─── */}
+      <section style={{ padding: "140px 5%", background: "#fff" }}>
+        <div className="two-col-grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 100 }}>
+          <div style={{ borderLeft: "4px solid var(--accent)", paddingLeft: 40 }}>
+             <span className="section-label">Our Philosophy</span>
+             <h2 className="responsive-title" style={{ fontSize: 48, marginBottom: 24 }}>
+                Precision is our foundation, <br />
+                performance is our <span style={{ color: "var(--accent)" }}>legacy.</span>
+             </h2>
+             <p className="responsive-subtitle">
+                We bring over a decade of technical expertise to the marine and industrial sectors, ensuring your operations never miss a beat. From complex engine overhauls to critical spares logistics.
+             </p>
+             <Link href="/about" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 40, color: "var(--navy)", fontWeight: 700, textDecoration: "none" }}>
+                LEARN MORE ABOUT OUR MISSION <ArrowUpRight size={18} color="var(--accent)" />
+             </Link>
           </div>
-
-          {/* Card 2 */}
-          <div className="product-item-card" style={{ 
-            position: "relative",
-            background: "#FFFFFF",
-            overflow: "hidden"
-          }}>
-            {/* Left Image Area (The 'White Card') */}
-            <div style={{ flex: "0 0 340px", display: "flex", alignItems: "center", justifyContent: "center", padding: "30px", background: "#FFFFFF" }}>
-              <img 
-                src={PRODUCTS[0].image} 
-                alt={PRODUCTS[0].name} 
-                style={{ width: "100%", height: "100%", objectFit: "contain" }}
-              />
-            </div>
-            {/* Right Specs Area */}
-            <div style={{ flex: 1, background: "#105C7A", padding: "25px 44px 55px 44px", color: "#fff", display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", textAlign: "left" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 16, letterSpacing: "-0.02em", fontFamily: "'Neue Machina', sans-serif" }}>{PRODUCTS[0].name}</h3>
-              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Ultra-Fine Fuel Atomization</li>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• OEM Grade Compatibility</li>
-                <li style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.72)", textAlign: "left", whiteSpace: "nowrap", fontFamily: "'Darker Grotesque', sans-serif" }}>• Optimized Fuel Efficiency</li>
-              </ul>
-              <Link href={`/shop/${PRODUCTS[0].id}`} target="_blank" className="hero-btn-secondary no-caps" style={{ width: "fit-content", background: "transparent", border: "1px solid #fff", color: "#fff", padding: "10px 24px", whiteSpace: "nowrap" }}>
-                Explore Product <ArrowUpRight size={13} strokeWidth={2.5} />
-              </Link>
-            </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }}>
+             {[
+               { val: "8+", label: "Years Experience" },
+               { val: "100+", label: "Projects Completed" },
+               { val: "4.8/5", label: "Client Satisfaction" },
+               { val: "98%", label: "Repeat Business" },
+             ].map((stat, i) => (
+               <div key={i}>
+                  <h3 style={{ fontSize: 48, fontWeight: 700, color: "var(--navy)", marginBottom: 8, letterSpacing: "-0.04em", fontFamily: "var(--font-heading)" }}>{stat.val}</h3>
+                  <p style={{ color: "#6b7280", fontWeight: 500, fontSize: 16 }}>{stat.label}</p>
+               </div>
+             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── TESTIMONIALS ─── */}
-      <section className="section-pad" style={{ background: "#f8fafc", color: "#0b1a2e", overflow: "hidden" }}>
+      {/* ─── 04. REDESIGNED SERVICES GRID ─── */}
+      <section style={{ padding: "0 5% 140px", background: "#fff" }}>
+        <div style={{ textAlign: "center", marginBottom: 80 }}>
+           <span className="section-label">What We Do</span>
+           <h2 className="responsive-title">Engineered to Perfection</h2>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
+           {[
+             { num: "01", title: "Cummins engines maintenance and repair services", img: "/asset/Landing_page_image/cummin_engine.png", desc: "Cummins engine maintenance and repair services, ensuring optimal performance, reliability and extended lifespan through expert diagnostics." },
+             { num: "02", title: "Vessel Inspection, Maintenance & Repairs.", img: "/asset/Landing_page_image/vessel.png", desc: "Ensure vessel safety and performance through thorough inspection, routine maintenance, and reliable repairs. We prevent breakdowns and keep operations running smoothly." },
+             { num: "03", title: "Sales of Genuine Cummins Engine Spares", img: "/asset/Landing_page_image/marine_spares.png", desc: "We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems." }
+           ].map((service, i) => (
+             <div key={i} className="premium-card" style={{ display: "flex", flexDirection: "column" }}>
+                <span className="card-number">{service.num}/</span>
+                <h3 style={{ fontSize: 28, fontWeight: 700, marginBottom: 20, fontFamily: "var(--font-heading)" }}>{service.title}</h3>
+                <p style={{ color: "#6b7280", lineHeight: 1.6, marginBottom: 32 }}>{service.desc}</p>
+                <div style={{ height: 260, overflow: "hidden", marginBottom: -40, marginLeft: -40, marginRight: -40, marginTop: "auto" }}>
+                   <img src={service.img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+             </div>
+           ))}
+        </div>
+      </section>
+
+      {/* ─── 05. WHY STANCHTECH? ─── */}
+      <section style={{ background: "#F8F9FE", padding: "140px 5%" }}>
+         <div style={{ textAlign: "center", marginBottom: 160 }}>
+            <span className="section-label">Excellence Guaranteed</span>
+            <h2 className="responsive-title">Why StanchTech?</h2>
+         </div>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
+            {[
+              { title: "Unmatched Expertise", desc: "Our technicians are certified specialists for high-power marine diesel systems." },
+              { title: "24/7 Deployment", desc: "Breakdowns don't wait. Our support teams are ready for rapid onsite response." },
+              { title: "Genuine Guarantee", desc: "We exclusively utilize and supply OEM-certified parts for total reliability." },
+              { title: "Integrated Logistics", desc: "From shipping to installation, we handle the entire hardware lifecycle." }
+            ].map((item, i) => (
+              <div key={i} style={{ borderLeft: "2px solid var(--accent)", paddingLeft: 24 }}>
+                 <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16, fontFamily: "var(--font-heading)" }}>{item.title}</h3>
+                 <p style={{ color: "#6b7280", lineHeight: 1.6 }}>{item.desc}</p>
+              </div>
+            ))}
+         </div>
+      </section>
+
+      {/* ─── 06. CASE STUDIES ─── */}
+      <section style={{ background: "#0b1a2e", color: "#fff", padding: "140px 5%" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-          {/* Header - Minimalist Pattern */}
-          <div className="hq-header section-header-flex" style={{ maxWidth: 1400, margin: "0 auto 80px", display: "flex", justifyContent: "space-between", alignItems: "flex-end", textAlign: "left" }}>
-            <div style={{ maxWidth: 880 }}>
-              <span style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: "0.45em", textTransform: "uppercase", color: "#2563eb", marginBottom: 20, opacity: 0.8 }}>
-                Trust in Precision
-              </span>
-              <h2 className="responsive-title" style={{ fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, textTransform: "none", marginBottom: 28, fontFamily: "'Neue Machina', sans-serif" }}>
-                Built on Trust, Driven by <br />
-                <span style={{ fontStyle: "italic", fontWeight: 300, color: "#c8d0da", fontFamily: "'Darker Grotesque', sans-serif" }}>Engineering Excellence.</span>
-              </h2>
-              <p className="responsive-subtitle" style={{ color: "rgba(11,26,46,0.65)", fontWeight: 700, marginBottom: 40, fontFamily: "'Darker Grotesque', sans-serif" }}>
-                Our commitment to excellence is reflected in the success stories and technical milestones achieved alongside our partners.
-              </p>
+           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 80 }}>
+              <div>
+                 <span className="section-label" style={{ color: "var(--accent)" }}>Proven Performance</span>
+                 <h2 className="responsive-title" style={{ color: "#fff" }}>Featured Projects</h2>
+              </div>
+
+           </div>
+           <div className="two-col-grid" style={{ gridTemplateColumns: "1.4fr 0.6fr", gap: 64, alignItems: "stretch", overflow: "hidden", borderRadius: 0 }}>
+              <Link href={`/projects/${PROJECT_SLIDES[currentProjectSlide].id}`} style={{ display: "block", height: 420, overflow: "hidden", position: "relative", borderRadius: 0, cursor: "pointer", textDecoration: "none" }}>
+                 <AnimatePresence mode="wait">
+                    <motion.div
+                       key={currentProjectSlide}
+                       initial={{ opacity: 0, x: -50 }}
+                       animate={{ opacity: 1, x: 0 }}
+                       exit={{ opacity: 0, x: 50 }}
+                       transition={{ duration: 0.5 }}
+                       style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
+                    >
+                       <img src={PROJECT_SLIDES[currentProjectSlide].image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s ease" }} />
+                       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: 60, background: "linear-gradient(to top, rgba(11,26,46,0.9) 0%, transparent 100%)" }}>
+                          <span className="section-label" style={{ color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].category}</span>
+                          <h3 style={{ fontSize: 32, fontWeight: 700, fontFamily: "var(--font-heading)", color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].title}</h3>
+                       </div>
+                    </motion.div>
+                 </AnimatePresence>
+              </Link>
+              <div style={{ display: "flex", flexDirection: "column", gap: 32, justifyContent: "space-between" }}>
+                  <AnimatePresence mode="wait">
+                     <motion.div
+                        key={currentProjectSlide}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.5 }}
+                     >
+                        <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16 }}>Technical Detail</h3>
+                        <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
+                           {PROJECT_SLIDES[currentProjectSlide].detail}
+                        </p>
+                     </motion.div>
+                  </AnimatePresence>
+
+                  {/* Rectangular Slider controls in the right-hand block */}
+                  <div style={{ display: "flex", gap: 32, marginTop: "auto" }}>
+                     {PROJECT_SLIDES.map((_, idx) => (
+                        <div key={idx} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                           <button 
+                              onClick={() => setCurrentProjectSlide(idx)}
+                              style={{ 
+                                 width: 64, 
+                                 height: 4, 
+                                 background: currentProjectSlide === idx ? "var(--accent)" : "rgba(255,255,255,0.3)",
+                                 border: "none",
+                                 cursor: "pointer",
+                                 padding: 0,
+                                 transition: "background 0.3s"
+                              }}
+                              aria-label={`Go to slide ${idx + 1}`}
+                           />
+                           <span style={{ fontSize: 15, fontWeight: 600, color: currentProjectSlide === idx ? "#fff" : "rgba(255,255,255,0.4)", fontFamily: "var(--font-heading)" }}>
+                              0{idx + 1}
+                           </span>
+                        </div>
+                     ))}
+                  </div>
+              </div>
+        </div>
+        </div>
+      </section>
+
+      {/* ─── 07. WORK PROCESS ─── */}
+      <section style={{ padding: "140px 5%", background: "#fff" }}>
+         <div style={{ maxWidth: 800 }}>
+            <span className="section-label">The Blueprint</span>
+            <h2 className="responsive-title" style={{ marginBottom: 40 }}>Our Technical Process</h2>
+            <p className="responsive-subtitle" style={{ marginBottom: 80 }}>
+               We follow a rigorous, documented workflow to ensure every job meets international marine safety standards.
+            </p>
+         </div>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40 }}>
+            {[
+              { step: "01", title: "Site Audit", desc: "Comprehensive onsite diagnostic using advanced thermal imaging and fluid analysis." },
+              { step: "02", title: "Strategy", desc: "Detailed engineering proposal with transparent lead times and spare parts verification." },
+              { step: "03", title: "Execution", desc: "Clean-room standard mechanical assembly and precision tuning by certified engineers." },
+              { step: "04", title: "Validation", desc: "Sea-trial performance testing and full system calibration before documentation handover." }
+            ].map((p, i) => (
+              <div key={i} style={{ borderTop: "1px solid #eee", paddingTop: 40 }}>
+                 <span style={{ fontSize: 15, fontWeight: 700, color: "var(--accent)", display: "block", marginBottom: 20 }}>PHASE {p.step}</span>
+                 <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 16, fontFamily: "var(--font-heading)" }}>{p.title}</h3>
+                 <p style={{ color: "#6b7280", lineHeight: 1.6 }}>{p.desc}</p>
+              </div>
+            ))}
+         </div>
+      </section>
+
+      {/* ─── 04.5 FEATURED PRODUCTS ─── */}
+      <section style={{ padding: "0 5% 140px", background: "#fff" }}>
+         <div style={{ position: "relative", marginBottom: 80, maxWidth: 1400, margin: "0 auto 80px" }}>
+            <div style={{ textAlign: "center" }}>
+               <span className="section-label" style={{ color: "var(--accent)" }}>Spare Inventory</span>
+               <h2 className="responsive-title">Featured Spares</h2>
+               <p className="responsive-subtitle" style={{ maxWidth: 700, margin: "24px auto 0" }}>
+                  Our spares help to reduce downtime and ensure operations run smoothly.
+               </p>
             </div>
-            <Link
-              href="/contact"
-              className="hero-btn-secondary no-caps"
-              style={{
-                border: "1px solid #0b1a2e",
-                color: "#0b1a2e",
-                background: "transparent",
-                marginBottom: 8,
-                flexShrink: 0,
-                marginTop: 60
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="catalog-btn-wrapper"
+              style={{ 
+                position: "absolute",
+                right: 0,
+                bottom: 0,
+                zIndex: 20
               }}
             >
-              Partner with us <ArrowUpRight size={18} strokeWidth={2} />
-            </Link>
-          </div>
-
-          {/* Testimonials Grid - Cinematic Entry Motion */}
-          <div className="testi-grid testi-board-animation" style={{ 
-            display: "grid", 
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", 
-            gap: 32 
-          }}>
-            {[
-              { 
-                name: "Eloka", 
-                role: "E.D Operations", 
-                company: "Fymak marine and oil services", 
-                initial: "E", 
-                quote: "Stanch Tech has consistently delivered high-fidelity spares even in the most demanding timelines. Their expertise in marine engine salvaging is unmatched." 
-              },
-              { 
-                name: "Anozie", 
-                role: "Technical Manager", 
-                company: "Felz Marine services", 
-                initial: "A", 
-                quote: "Their diagnostic precision and routine maintenance programs reduced our engine downtime by over 35%. A truly professional team that understands heavy machinery maintenance." 
-              },
-              { 
-                name: "Andy", 
-                role: "MD/CEO", 
-                company: "Gelose Marine Services Ltd", 
-                initial: "A", 
-                quote: "From basic routine maintenance to complex engine overhauls, the experience was seamless. Their technical team consistently ensures our engines run at peak efficiency." 
-              }
-            ].map((t, idx) => (
-              <motion.div 
-                key={idx} 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: idx * 0.2, ease: "easeOut" }}
-                style={{ 
-                  background: "#fff", 
-                  padding: "44px", 
-                  borderRadius: 24, 
-                  border: "1px solid #e2e8f0", 
-                  display: "flex", 
-                  flexDirection: "column", 
-                  justifyContent: "space-between",
-                  minHeight: 380,
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.03)"
-                }}
-                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.08)" }}
-              >
-                <div>
-                  <div style={{ display: "flex", gap: 4, marginBottom: 20 }}>
-                    {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="#fbbf24" stroke="#fbbf24" />)}
-                  </div>
-                  <p style={{ fontSize: 20, fontWeight: 500, lineHeight: 1.55, color: "#0b1a2e", fontStyle: "italic", marginBottom: 32, letterSpacing: "-0.01em", fontFamily: "'Darker Grotesque', sans-serif" }}>
-                    "{t.quote}"
-                  </p>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                  <div style={{ width: 48, height: 48, borderRadius: "50%", background: "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 900, color: "#0b1a2e" }}>
-                    {t.initial}
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <p style={{ fontSize: 16, fontWeight: 900, color: "#0b1a2e", marginBottom: 2 }}>{t.name}</p>
-                    <p style={{ fontSize: 14, fontWeight: 700, color: "rgba(11,26,46,0.9)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                      {t.role} <span style={{ opacity: 0.5 }}>|</span> {t.company}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
+              <Link href="/shop" className="catalog-link" style={{ 
+                display: "inline-flex", 
+                alignItems: "center", 
+                gap: 10, 
+                padding: "12px 24px", 
+                border: "1px solid #111", 
+                borderRadius: 0, 
+                textDecoration: "none", 
+                fontWeight: 500,
+                fontSize: 15,
+                whiteSpace: "nowrap",
+                fontFamily: "var(--font-heading)",
+                color: "inherit",
+                background: "inherit",
+                transition: "all 0.3s ease"
+              }}>
+                 Explore Full catalog <ArrowUpRight size={18} />
+              </Link>
+            </motion.div>
+         </div>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
+            {PRODUCTS.slice(0, 3).map((product) => (
+              <div key={product.id} className="premium-card" style={{ padding: 24 }}>
+                 <div style={{ height: 240, background: "#f8f9fa", marginBottom: 24, overflow: "hidden" }}>
+                    <img src={Array.isArray(product.image) ? product.image[0] : product.image || "/asset/Landing_page_image/marine_spares.png"} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                 </div>
+                 <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 12, fontFamily: "var(--font-heading)" }}>{product.name}</h3>
+                 <p style={{ color: "#6b7280", fontSize: 16, marginBottom: 24, flex: 1 }}>{product.description?.substring(0, 80)}...</p>
+                 <Link href={`/shop/${product.id}`} className="hero-btn-primary" style={{ width: "100%", height: 44, fontSize: 15, background: "var(--navy)" }}>
+                    BUY SPARE
+                 </Link>
+              </div>
             ))}
-          </div>
-        </div>
+         </div>
+      </section>
+
+      {/* ─── 08. TESTIMONIALS ─── */}
+      <section style={{ padding: "140px 5%", background: "#F8F9FE" }}>
+         <div style={{ textAlign: "center", marginBottom: 80 }}>
+            <span className="section-label" style={{ color: "var(--accent)" }}>Client Success</span>
+            <h2 className="responsive-title">Voice of Excellence</h2>
+         </div>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
+            {[
+              {
+                quote: "Stanch Tech has consistently delivered high-fidelity spares even in the most demanding timelines. Their expertise in marine engine salvaging is unmatched.",
+                author: "Eloka",
+                role: "E.D OPERATIONS | FYMAK MARINE AND OIL SERVICES",
+                initial: "E"
+              },
+              {
+                quote: "Their diagnostic precision and routine maintenance programs reduced our engine downtime by over 35%. A truly professional team that understands heavy machinery maintenance.",
+                author: "Anozie",
+                role: "TECHNICAL MANAGER | FELZ MARINE SERVICES",
+                initial: "A"
+              },
+              {
+                quote: "From basic routine maintenance to complex engine overhauls, the experience was seamless. Their technical team consistently ensures our engines run at peak efficiency.",
+                author: "Andy",
+                role: "MD/CEO | GELOSE MARINE SERVICES LTD",
+                initial: "A"
+              }
+            ].map((t, i) => (
+              <div key={i} className="premium-card" style={{ padding: "60px 48px", background: "#fff", display: "flex", flexDirection: "column" }}>
+                 <div style={{ display: "flex", gap: 4, marginBottom: 32, color: "#FFB800" }}>
+                    {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
+                 </div>
+                 <p style={{ fontSize: 18, lineHeight: 1.8, color: "var(--navy)", fontStyle: "italic", marginBottom: 48, flex: 1 }}>
+                    "{t.quote}"
+                 </p>
+                 <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+                    <div style={{ width: 56, height: 56, borderRadius: "50%", background: "var(--faded-accent)", color: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 20 }}>
+                       {t.initial}
+                    </div>
+                    <div>
+                       <h4 style={{ fontSize: 18, fontWeight: 700, margin: 0, fontFamily: "var(--font-heading)" }}>{t.author}</h4>
+                       <span style={{ fontSize: 14, fontWeight: 700, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.05em", display: "block", marginTop: 4 }}>{t.role}</span>
+                    </div>
+                 </div>
+              </div>
+            ))}
+         </div>
+      </section>
+
+
+      {/* ─── 09. FINAL CTA ─── */}
+      <section style={{ 
+        background: "#0b1a2e", 
+        padding: "160px 5%", 
+        textAlign: "center", 
+        color: "#fff",
+        backgroundImage: 'linear-gradient(rgba(11,26,46,0.9), rgba(11,26,46,0.9)), url("/asset/Landing_page_image/support.png")',
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed"
+      }}>
+         <motion.div
+           initial={{ opacity: 0, scale: 0.95 }}
+           whileInView={{ opacity: 1, scale: 1 }}
+           viewport={{ once: true }}
+         >
+           <h2 className="responsive-title" style={{ fontSize: 56, marginBottom: 32, color: "#fff" }}>Ready to Optimize Your Fleet?</h2>
+           <p className="responsive-subtitle" style={{ color: "rgba(255,255,255,0.7)", maxWidth: 640, margin: "0 auto 48px" }}>
+              Join hundreds of marine operators who trust StanchTech for precision engineering and mission-critical support.
+           </p>
+           <Link href="/contact" className="hero-btn-primary" style={{ border: "none", width: 240, height: 56, fontSize: 16 }}>
+              CONTACT US TODAY
+           </Link>
+         </motion.div>
       </section>
     </div>
   );

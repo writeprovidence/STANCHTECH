@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { Plus, Minus, MapPin, Globe, ArrowRight } from "lucide-react";
+import { Plus, Minus, MapPin, Globe, ArrowRight, Mail, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
@@ -40,7 +40,7 @@ export default function ContactPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="mb-4"
-                            style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "clamp(30px, 8vw, 64px)", fontWeight: 700, lineHeight: 1.0, letterSpacing: "-0.02em" }}
+                            style={{ fontFamily: "var(--font-body)", fontSize: "clamp(30px, 8vw, 64px)", fontWeight: 700, lineHeight: 1.0, letterSpacing: "-0.02em" }}
                         >
                             <span style={{ display: "block", color: "#0b1a2e", marginBottom: "2px", whiteSpace: "nowrap" }}>
                                 <span style={{ color: "#105C7A", fontWeight: 900 }}>Contact</span> Our experts to
@@ -53,7 +53,7 @@ export default function ContactPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "20px", color: "#334155", fontWeight: 500, lineHeight: 1.4, maxWidth: "480px", marginTop: "40px", marginBottom: "32px" }}
+                            style={{ fontFamily: "var(--font-body)", fontSize: "20px", color: "#334155", fontWeight: 500, lineHeight: 1.4, maxWidth: "480px", marginTop: "40px", marginBottom: "32px" }}
                         >
                             Collaborate with us to provide dependable marine and industrial maintenance services, ensuring optimal performance, reduced downtime, and expert support for your operations.
                         </motion.p>
@@ -77,7 +77,7 @@ export default function ContactPage() {
             </section>
 
             {/* --- OFFICE & MAP SECTION --- */}
-            <section id="address" className="bg-[#fafafc] relative overflow-hidden" style={{ padding: "140px 10vw", minHeight: "800px" }}>
+            <section id="address" className="bg-white relative overflow-hidden" style={{ padding: "140px 10vw", minHeight: "800px" }}>
                 <div className="container mx-auto max-w-6xl flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
                     
                     {/* Office Info Side */}
@@ -88,26 +88,54 @@ export default function ContactPage() {
                             viewport={{ once: true }}
                             className="flex flex-col items-start pt-8 lg:pt-20"
                         >
-                            <h4 style={{ color: "#2563eb", letterSpacing: "0.2em", fontSize: "14px", fontWeight: 800, textTransform: "uppercase", marginBottom: "32px", fontFamily: "'Neue Machina', sans-serif" }}>
-                                Our Presence
-                            </h4>
-                            <div style={{ marginBottom: "48px" }}>
-                                <h2 style={{ fontFamily: "var(--font-serif), Georgia, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 900, lineHeight: 0.9, color: "#111827", letterSpacing: "-0.03em", margin: 0 }}>
-                                    VISIT
-                                </h2>
-                                <h2 style={{ fontFamily: "var(--font-serif), Georgia, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 900, fontStyle: "italic", lineHeight: 0.9, color: "#8ea2b6", letterSpacing: "-0.03em", margin: 0 }}>
-                                    OUR HQ.
+                            <div style={{ position: "relative", paddingLeft: 32, borderLeft: "4px solid #fb5b17", marginBottom: 60 }}>
+                                <h2 style={{ fontFamily: "var(--font-serif), Georgia, serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 900, lineHeight: 1.0, color: "#111827", letterSpacing: "-0.03em", margin: 0 }}>
+                                    VISIT <span style={{ display: "block", fontStyle: "italic", color: "#8ea2b6" }}>OUR OFFICE.</span>
                                 </h2>
                             </div>
-                            <p style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "22px", color: "#64748b", fontWeight: 500, lineHeight: 1.3, marginBottom: "48px", maxWidth: "420px" }}>
-                                Km16 PHC - ABA Express Way,<br />
-                                Adjacent Dubi, Port harcourt,<br />
-                                Rivers state, Nigeria
-                            </p>
-                            
-                            <a href="https://maps.google.com" target="_blank" className="flex items-center gap-3 text-[#2563eb] hover:text-blue-800 transition-colors uppercase" style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "16px", fontWeight: 900, letterSpacing: "0.1em" }}>
-                                Open in Google Maps <ArrowRight className="w-5 h-5" />
-                            </a>
+
+                            <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>
+                                {/* Address Block */}
+                                <div style={{ display: "flex", gap: 20 }}>
+                                    <div style={{ width: 44, height: 44, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                        <MapPin size={18} color="#fb5b17" />
+                                    </div>
+                                    <div>
+                                        <p style={{ color: "#9ca3af", fontSize: 10, fontWeight: 800, textTransform: "uppercase", marginBottom: 6, letterSpacing: "0.1em" }}>Address</p>
+                                        <p style={{ fontFamily: "var(--font-body)", fontSize: "17px", color: "#334155", fontWeight: 500, lineHeight: 1.5 }}>
+                                            Km16 PHC - ABA Express Way,<br />
+                                            Adjacent Dubi, Port Harcourt,<br />
+                                            Rivers State, Nigeria
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Email Block */}
+                                <div style={{ display: "flex", gap: 20 }}>
+                                    <div style={{ width: 44, height: 44, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                         <Mail size={18} color="#fb5b17" />
+                                    </div>
+                                    <div>
+                                        <p style={{ color: "#9ca3af", fontSize: 10, fontWeight: 800, textTransform: "uppercase", marginBottom: 6, letterSpacing: "0.1em" }}>Email</p>
+                                        <p style={{ fontSize: 17, fontWeight: 700, color: "#0b1a2e" }}>stanchtechltd@gmail.com</p>
+                                    </div>
+                                </div>
+
+                                {/* Phone Block */}
+                                <div style={{ display: "flex", gap: 20 }}>
+                                    <div style={{ width: 44, height: 44, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                         <Phone size={18} color="#fb5b17" />
+                                    </div>
+                                    <div>
+                                        <p style={{ color: "#9ca3af", fontSize: 10, fontWeight: 800, textTransform: "uppercase", marginBottom: 6, letterSpacing: "0.1em" }}>Contact Support</p>
+                                        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                                            <p style={{ fontSize: 16, fontWeight: 700, color: "#0b1a2e" }}>+234 (0) 705 962 3727</p>
+                                            <p style={{ fontSize: 16, fontWeight: 700, color: "#0b1a2e" }}>+234 (0) 803 734 0959</p>
+                                            <p style={{ fontSize: 16, fontWeight: 700, color: "#0b1a2e" }}>+234 (0) 808 529 0298</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </motion.div>
                     </div>
 
@@ -116,17 +144,17 @@ export default function ContactPage() {
                 </div>
 
                 {/* Map Side (Right Half) */}
-                <div className="w-full lg:w-[50vw] lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 mt-16 lg:mt-0 flex justify-end z-0">
+                <div className="w-full lg:w-[48vw] lg:absolute lg:right-[3%] lg:top-1/2 lg:-translate-y-1/2 mt-16 lg:mt-0 flex justify-end z-20">
                     <motion.div 
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="w-full bg-white p-3 md:p-5 rounded-l-[40px] shadow-[-20px_20px_50px_rgba(0,0,0,0.08)] relative" 
-                        style={{ aspectRatio: "4/3", maxWidth: "900px", minHeight: "500px" }}
+                        className="w-full bg-white p-3 relative" 
+                        style={{ aspectRatio: "4/3", maxWidth: "900px", minHeight: "500px", borderRadius: 0 }} 
                     >
-                        <div className="w-full h-full rounded-[32px] rounded-r-none overflow-hidden bg-gray-100 grayscale-[0.5] hover:grayscale-0 transition-all duration-700 pointer-events-auto border border-gray-100/50 block">
+                        <div className="w-full h-full overflow-hidden bg-gray-100 transition-all duration-700 pointer-events-auto border border-gray-100/50 block" style={{ borderRadius: 0 }}>
                             <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127164.2155827376!2d6.93665780516641!3d4.793740266009659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1069ce5a18351053%3A0xc023c7270966a3a7!2sPort%20Harcourt!5e0!3m2!1sen!2sng!4v1711660000000!5m2!1sen!2sng" 
+                                src="https://maps.google.com/maps?q=Km16%20PHC%20-%20ABA%20Express%20Way,Port%20Harcourt,Nigeria&t=&z=15&ie=UTF8&iwloc=a&output=embed&gestureHandling=greedy" 
                                 width="100%" 
                                 height="100%" 
                                 style={{ border: 0 }} 
@@ -146,7 +174,7 @@ export default function ContactPage() {
                             initial={{ opacity: 0, y: -20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "clamp(42px, 8vw, 70px)", fontWeight: 900, lineHeight: 1.0, color: "#0b1a2e", textAlign: "left" }}
+                            style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(42px, 8vw, 70px)", fontWeight: 900, lineHeight: 1.0, color: "#0b1a2e", textAlign: "left" }}
                         >
                             Frequently Asked Questions
                         </motion.h2>
@@ -161,8 +189,8 @@ export default function ContactPage() {
                                     style={{ paddingBottom: "24px" }}
                                 >
                                     <div className="flex items-center gap-6 md:gap-8 pr-4">
-                                        <span style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "24px", fontWeight: 900, color: "#0b1a2e", opacity: 0.5 }}>{faq.id}</span>
-                                        <span style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "26px", fontWeight: 700, color: "#0b1a2e", lineHeight: 1.3, maxWidth: "440px", display: "inline-block" }} className="group-hover:text-blue-600 transition-colors">
+                                        <span style={{ fontFamily: "var(--font-heading)", fontSize: "24px", fontWeight: 900, color: "#0b1a2e", opacity: 0.5 }}>{faq.id}</span>
+                                        <span style={{ fontFamily: "var(--font-body)", fontSize: "26px", fontWeight: 700, color: "#0b1a2e", lineHeight: 1.3, maxWidth: "440px", display: "inline-block" }} className="group-hover:text-blue-600 transition-colors">
                                             {faq.question}
                                         </span>
                                     </div>
@@ -178,7 +206,7 @@ export default function ContactPage() {
                                             exit={{ height: 0, opacity: 0 }}
                                             className="overflow-hidden"
                                         >
-                                            <p style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "19px", fontWeight: 500, color: "#334155", lineHeight: 1.6, paddingBottom: "40px", paddingLeft: "56px", paddingRight: "16px" }}>
+                                            <p style={{ fontFamily: "var(--font-body)", fontSize: "19px", fontWeight: 500, color: "#334155", lineHeight: 1.6, paddingBottom: "40px", paddingLeft: "56px", paddingRight: "16px" }}>
                                                 {faq.answer}
                                             </p>
                                         </motion.div>

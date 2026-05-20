@@ -31,9 +31,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* --- PREMIUM BREADCRUMB --- */}
             <div className="border-b border-gray-100 bg-white">
                 <div style={{ paddingLeft: "5vw", paddingRight: "5vw" }} className="h-16 flex items-center gap-4">
-                    <Link href="/shop" className="text-gray-400 hover:text-black transition-colors font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Shop</Link>
+                    <Link href="/shop" className="text-gray-400 hover:text-black transition-colors font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "var(--font-body)" }}>Shop</Link>
                     <ChevronRight size={12} className="text-gray-300" />
-                    <span className="text-black font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{product.name}</span>
+                    <span className="text-black font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "var(--font-body)" }}>{product.name}</span>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             {/* MAIN IMAGE */}
                             <div className="flex-1 border border-gray-50 flex items-center justify-center relative group overflow-hidden" style={{ background: "#f8fafc", aspectRatio: "1 / 1" }}>
                                 <div className="absolute top-8 right-8 z-10">
-                                    <span className="bg-black text-white px-4 py-1 text-[12px] font-900 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                    <span className="bg-black text-white px-4 py-1 text-[12px] font-900 uppercase tracking-[0.2em]" style={{ fontFamily: "var(--font-body)" }}>
                                         {product.condition}
                                     </span>
                                 </div>
@@ -118,26 +118,26 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     <div className="w-full lg:w-[45%] space-y-10">
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
-                                <span className="text-blue-600 font-bold uppercase tracking-[0.3em] text-[12px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{product.category}</span>
+                                <span className="text-blue-600 font-bold uppercase tracking-[0.3em] text-[12px]" style={{ fontFamily: "var(--font-body)" }}>{product.category}</span>
                                 <div className="h-px w-8 bg-blue-100" />
                             </div>
-                            <h1 className="text-5xl font-800 text-black uppercase leading-[1.1]" style={{ fontFamily: "'Neue Machina', sans-serif" }}>
+                            <h1 className="text-5xl font-800 text-black uppercase leading-[1.1]" style={{ fontFamily: "var(--font-heading)" }}>
                                 {product.name}
                             </h1>
                             <div className="flex items-center gap-6" style={{ marginTop: "16px" }}>
-                                <span className="text-4xl font-800 text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <span className="text-4xl font-800 text-black" style={{ fontFamily: "var(--font-body)" }}>
                                     ₦{product.price.toLocaleString()}
                                 </span>
                                 <div className="h-6 w-px bg-gray-100" />
                                 <div className="flex gap-1 text-[#FFDA5B]">
                                     {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" strokeWidth={0} />)}
-                                    <span className="text-gray-400 text-[13px] font-bold uppercase tracking-widest ml-2" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>(12 Reviews)</span>
+                                    <span className="text-gray-400 text-[13px] font-bold uppercase tracking-widest ml-2" style={{ fontFamily: "var(--font-body)" }}>(12 Reviews)</span>
                                 </div>
                             </div>
                         </div>
 
                         <div className="space-y-6" style={{ marginTop: "32px" }}>
-                            <p className="text-gray-500 text-lg leading-relaxed max-w-xl" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                            <p className="text-gray-500 text-lg leading-relaxed max-w-xl" style={{ fontFamily: "var(--font-body)" }}>
                                 {product.description}
                             </p>
                         </div>
@@ -153,7 +153,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                     >
                                         <Minus size={16} />
                                     </button>
-                                    <span className="w-12 text-center font-900 text-lg" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{quantity}</span>
+                                    <span className="w-12 text-center font-900 text-lg" style={{ fontFamily: "var(--font-body)" }}>{quantity}</span>
                                     <button 
                                         onClick={() => setQuantity(quantity + 1)}
                                         className="w-14 h-full flex items-center justify-center hover:bg-black hover:text-white transition-all"
@@ -164,7 +164,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                 <button 
                                     onClick={() => addToCart({ ...product, quantity })}
                                     className="flex-1 h-14 bg-black text-white font-bold uppercase tracking-[0.2em] text-[13px] hover:bg-blue-600 transition-all flex items-center justify-center gap-3"
-                                    style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
+                                    style={{ fontFamily: "var(--font-body)" }}
                                 >
                                     Add To Cart <ChevronRight size={16} />
                                 </button>
@@ -173,10 +173,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             <div className="flex items-center justify-between py-6" style={{ marginTop: "32px" }}>
                                 <div className="flex items-center gap-3">
                                     <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
-                                    <span className="text-[13px] font-900 uppercase tracking-widest text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>In Stock</span>
+                                    <span className="text-[13px] font-900 uppercase tracking-widest text-black" style={{ fontFamily: "var(--font-body)" }}>In Stock</span>
                                 </div>
                                 <div className="flex gap-4 items-center">
-                                    <span className="text-[13px] font-900 uppercase tracking-widest text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Share Product</span>
+                                    <span className="text-[13px] font-900 uppercase tracking-widest text-black" style={{ fontFamily: "var(--font-body)" }}>Share Product</span>
                                     <div className="flex gap-5 items-center">
                                         <Facebook size={18} color="#1877F2" strokeWidth={2} className="cursor-pointer hover:scale-110 transition-transform" />
                                         <Instagram size={18} color="#E4405F" strokeWidth={2} className="cursor-pointer hover:scale-110 transition-transform" />
@@ -200,7 +200,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`pb-4 relative text-[15px] font-900 uppercase tracking-[0.3em] transition-all ${activeTab === tab ? 'text-black' : 'text-gray-300'}`}
-                                style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
+                                style={{ fontFamily: "var(--font-body)" }}
                             >
                                 {tab}
                             </button>
@@ -218,7 +218,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             {activeTab === 'description' && (
                                 <div className="space-y-16">
                                     <div className="max-w-4xl">
-                                        <p className="text-xl text-gray-500 leading-relaxed font-medium" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                        <p className="text-xl text-gray-500 leading-relaxed font-medium" style={{ fontFamily: "var(--font-body)" }}>
                                             Precision-engineered for heavy-duty performance, our spare parts undergo rigorous testing to exceed OEM standards. Built with premium materials to withstand corrosive marine environments and intense vibration, these highly reliable replacements effortlessly integrate into your existing systems to maximize operational uptime and minimize your long-term maintenance costs.
                                         </p>
                                     </div>
@@ -250,8 +250,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                         ['Warranty', '12 Months Limited']
                                     ].map(([label, val]) => (
                                         <div key={label} className="flex items-center justify-between py-5 border-b border-gray-100">
-                                            <span className="text-[16px] font-bold uppercase tracking-widest text-gray-400" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{label}</span>
-                                            <span className="text-[17px] font-900 uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{val}</span>
+                                            <span className="text-[16px] font-bold uppercase tracking-widest text-gray-400" style={{ fontFamily: "var(--font-body)" }}>{label}</span>
+                                            <span className="text-[17px] font-900 uppercase" style={{ fontFamily: "var(--font-body)" }}>{val}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -269,15 +269,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-xs">{(review.name).charAt(0)}</div>
                                                     <div>
-                                                        <p className="text-[17px] font-900 uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{review.name}</p>
-                                                        <p className="text-[15px] text-gray-400 uppercase tracking-widest" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{review.date}</p>
+                                                        <p className="text-[17px] font-900 uppercase" style={{ fontFamily: "var(--font-body)" }}>{review.name}</p>
+                                                        <p className="text-[15px] text-gray-400 uppercase tracking-widest" style={{ fontFamily: "var(--font-body)" }}>{review.date}</p>
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-1 text-[#FFDA5B]">
                                                     {[...Array(5)].map((_, i) => <Star key={i} size={10} fill={i < review.rating ? "currentColor" : "none"} strokeWidth={i < review.rating ? 0 : 2} />)}
                                                 </div>
                                             </div>
-                                            <p className="text-lg text-gray-500 leading-relaxed font-medium" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{review.comment}</p>
+                                            <p className="text-lg text-gray-500 leading-relaxed font-medium" style={{ fontFamily: "var(--font-body)" }}>{review.comment}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -290,7 +290,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* --- RELATED PARTS --- */}
             <section style={{ marginTop: "100px", paddingLeft: "5vw", paddingRight: "5vw", paddingBottom: "160px" }}>
                 <div className="flex flex-col items-center justify-center px-4 text-center" style={{ marginBottom: "120px" }}>
-                    <h2 className="text-[36px] font-800 text-black" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Related Spares</h2>
+                    <h2 className="text-[36px] font-800 text-black" style={{ fontFamily: "var(--font-heading)" }}>Related Spares</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {relatedProducts.map((p, index) => (
@@ -301,7 +301,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
                         >
                             {/* Genuine Badge */}
-                            <div className="absolute top-6 left-6 px-3 py-1 bg-blue-50 text-blue-600 text-[16px] font-900 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                            <div className="absolute top-6 left-6 px-3 py-1 bg-blue-50 text-blue-600 text-[16px] font-900 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "var(--font-body)" }}>
                                 {p.condition}
                             </div>
 
@@ -314,11 +314,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             </div>
 
                             <div style={{ width: "100%", marginTop: "auto", textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "4px" }}>
-                                <p className="text-black font-800 text-lg leading-tight uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <p className="text-black font-800 text-lg leading-tight uppercase" style={{ fontFamily: "var(--font-body)" }}>
                                     {p.name}
                                 </p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", paddingTop: "4px", marginTop: "4px" }}>
-                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "'Darker Grotesque', sans-serif", color: "#000000" }}>
+                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "var(--font-body)", color: "#000000" }}>
                                         ₦{p.price.toLocaleString()}
                                     </span>
                                     <div className="w-8 h-8 rounded-full border border-gray-100 flex flex-shrink-0 items-center justify-center text-gray-300 group-hover:border-black group-hover:text-black transition-all">
@@ -331,7 +331,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </div>
                 
                 <div className="flex justify-center" style={{ marginTop: "120px" }}>
-                    <Link href="/shop" className="text-[15px] font-900 uppercase tracking-[0.3em] hover:text-blue-600 transition-all" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                    <Link href="/shop" className="text-[15px] font-900 uppercase tracking-[0.3em] hover:text-blue-600 transition-all" style={{ fontFamily: "var(--font-body)" }}>
                         View Full catalog
                     </Link>
                 </div>

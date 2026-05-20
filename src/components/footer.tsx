@@ -12,156 +12,129 @@ export function Footer() {
     if (isAuthPage) return null;
 
     return (
-      <>
-        <footer style={{ background: "#060D17", color: "#fff", padding: "120px 4vw 60px 4vw", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-          {/* Section 2: Main Footer Grid */}
-          <section>
+      <footer style={{ background: "#060D17", color: "#fff", paddingTop: 0 }}>
 
-          <div className="footer-grid">
-            {/* Column 1: Logo & Vision */}
-            <div className="footer-col">
-              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <Link href="/" target={isShopArea ? "_blank" : "_self"} style={{ display: "flex", alignItems: "center", gap: 0, textDecoration: "none" }}>
-                  <img 
-                    src="/asset/Landing_page_image/stanch_tech_logo.png" 
-                    alt="Stanch Tech" 
-                    style={{ height: 55, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", marginRight: -2 }} 
-                  />
-                  <span style={{
-                    fontSize: 14,
-                    fontWeight: 900,
-                    letterSpacing: "0.1em",
-                    color: "#fff",
-                    textTransform: "uppercase",
-                    lineHeight: 1,
-                    fontFamily: "'Darker Grotesque', sans-serif"
-                  }}>
-                    STANCHTECH
-                  </span>
-                </Link>
-              </div>
-              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.7, marginBottom: 32, fontFamily: "'Darker Grotesque', sans-serif" }}>
-                Nigeria's premier partner for marine engine <br />
-                salvaging, diagnostic precision, and technical <br />
-                maintenance solutions.
+
+        {/* ─── MAIN FOOTER LINKS ─── */}
+        <section style={{ padding: "100px 5% 60px" }}>
+          <div className="footer-grid-wrapper" style={{
+            display: "grid",
+            gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
+            gap: 64,
+            maxWidth: 1400,
+            margin: "0 auto",
+            alignItems: "start"
+          }}>
+            {/* ── Column 1: Brand ── */}
+            <div>
+              <Link href="/" className="footer-logo-link" style={{ display: "flex", alignItems: "center", gap: 4, textDecoration: "none", marginBottom: 32 }}>
+                <img src="/asset/Landing_page_image/stanch_tech_logo.png" alt="ST" style={{ height: 55, filter: "brightness(0) invert(1)" }} />
+                <span style={{ fontSize: 16, fontWeight: 900, letterSpacing: "0.1em", color: "#fff", fontFamily: "var(--font-heading)", textTransform: "uppercase" }}>STANCHTECH</span>
+              </Link>
+              <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.7, marginBottom: 32, fontSize: 15 }}>
+                 Nigeria's premier partner for marine engine salvaging, diagnostic precision, and technical maintenance solutions. Committed to engineering excellence since 2018.
               </p>
-              <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
-                <a href="#" style={{ color: "#1877F2", transition: "transform 0.3s ease", display: "inline-flex" }} onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"} onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}>
-                  <Facebook size={24} fill="#1877F2" strokeWidth={0} />
-                </a>
-                <a href="#" style={{ color: "#E1306C", transition: "transform 0.3s ease", display: "inline-flex" }} onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"} onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}>
-                  <Instagram size={24} />
-                </a>
-                <a href="https://wa.me/2348037340959" style={{ color: "#25D366", transition: "transform 0.3s ease", display: "inline-flex" }} onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"} onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-                  </svg>
-                </a>
+              <div style={{ display: "flex", gap: 16 }}>
+                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ color: "#1877F2" }}>
+                    <Facebook size={20} />
+                 </a>
+                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ color: "#E1306C" }}>
+                    <Instagram size={20} />
+                 </a>
+                 <a href="https://wa.me/2348037340959" target="_blank" rel="noopener noreferrer" style={{ color: "#25D366" }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                 </a>
               </div>
             </div>
-
-            {/* Column 2: Navigation */}
-            <div className="footer-col">
-              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Quick Links</p>
-              </div>
-              <nav style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {["HOME", "ABOUT", "SHOP", "CONTACT"].map((link) => {
-                  let target = "_self";
-                  if (isShopArea) {
-                      target = link === "SHOP" ? "_self" : "_blank";
-                  } else {
-                      target = link === "SHOP" ? "_blank" : "_self";
-                  }
-                  
-                  return (
-                    <Link 
-                      key={link} 
-                      href={link === "HOME" ? "/"  : link === "CONTACT" ? "/contact" : link === "ABOUT" ? "/about" : "/shop"} 
-                      target={target}
-                      onClick={(e) => {
-                        if (link === "ABOUT" && pathname === "/about") {
-                          e.preventDefault();
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                      }}
-                      style={{ color: "#fff", textDecoration: "none", fontSize: 16, fontWeight: 500, opacity: 0.8, fontFamily: "'Darker Grotesque', sans-serif" }} 
-                      className="footer-link"
-                    >
-                      {link}
-                    </Link>
-                  );
-                })}
-              </nav>
+ 
+            {/* ── Column 2: Company ── */}
+            <div>
+               <h4 style={{ fontSize: 14, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", marginBottom: 32 }}>Company</h4>
+               <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: 16 }}>
+                  {[
+                    { label: "Home", href: "/" },
+                    { label: "About", href: "/about" },
+                    { label: "Portfolio", href: "/projects" },
+                    { label: "Contact", href: "/contact" }
+                  ].map((link, i) => (
+                    <li key={i}>
+                      <Link 
+                        href={link.href} 
+                        className="footer-link-animated" 
+                        style={{ color: "#fff", textDecoration: "none", fontSize: 15 }}
+                        onClick={(e) => {
+                          if (link.label === "About") {
+                            setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 100);
+                          }
+                        }}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+               </ul>
             </div>
-
-            {/* Column 3: Contact Us */}
-            <div className="footer-col">
-              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Contact Us</p>
-              </div>
-              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 20, lineHeight: 1.6 }}>
-                <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
-                  Km16 PHC - ABA Express Way,<br />
-                  Adjacent Dubi, Port Harcourt,<br />
+ 
+            {/* ── Column 3: Contact ── */}
+            <div className="footer-contact-column">
+               <h4 style={{ fontSize: 14, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", marginBottom: 32 }}>Contact Us</h4>
+               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>
+                  Km16 PHC - ABA Express Way, <br />
+                  Adjacent Dubi, Port Harcourt, <br />
                   Rivers State, Nigeria
-                </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <p style={{ color: "#fff", fontFamily: "'Darker Grotesque', sans-serif" }}>stanchtechltd@gmail.com</p>
-                  <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>+234 (0) 705 962 3727</p>
-                  <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>+234 (0) 803 734 0959</p>
-                  <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>+234 (0) 808 529 0298</p>
-                  <p style={{ marginTop: 10, color: "#fff", fontFamily: "'Darker Grotesque', sans-serif" }}>WeChat ID: wxid_jh8kewt3w34u22</p>
-                </div>
-              </div>
+               </p>
+               <p style={{ color: "#fff", fontSize: 15, fontWeight: 700 }}>+234 (0) 705 962 3727</p>
+               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15 }}>stanchtechltd@gmail.com</p>
             </div>
-
-            {/* Column 4: Emergency Support */}
-            <div className="footer-col">
-              <div style={{ height: 82, display: "flex", alignItems: "center", marginBottom: 32 }}>
-                <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", margin: 0, fontFamily: "'Darker Grotesque', sans-serif" }}>Emergency Support</p>
-              </div>
-              <div className="footer-content-col" style={{ color: "rgba(255,255,255,0.8)", fontSize: 16, fontWeight: 500, display: "flex", flexDirection: "column", gap: 24 }}>
-                <p style={{ lineHeight: 1.6, fontFamily: "'Darker Grotesque', sans-serif" }}>
+ 
+            {/* ── Column 4: Emergency ── */}
+            <div>
+               <h4 style={{ fontSize: 14, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", marginBottom: 32 }}>Emergency Support</h4>
+               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, lineHeight: 1.7, marginBottom: 28 }}>
                   Standby emergency services available. Every call is treated with urgency.
-                </p>
-                <Link 
-                  href="/contact" 
-                  target={isShopArea ? "_blank" : "_self"}
-                  className="hero-btn-secondary no-caps"
-                  style={{ 
-                    display: "flex", 
-                    alignItems: "center", 
-                    gap: 10, 
-                    width: "fit-content", 
-                    padding: "12px 24px", 
-                    border: "1px solid rgba(255,255,255,0.3)", 
-                    borderRadius: 8, 
-                    color: "#fff", 
-                    textDecoration: "none",
-                    transition: "all 0.3s ease"
-                  }}
-                  onMouseOver={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "#fff"; }}
-                  onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
-                >
-                  Reach Us <ArrowUpRight size={16} />
-                </Link>
-              </div>
+               </p>
+               <Link href="/contact" className="hero-btn-secondary" style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 12,
+                  width: "200px",
+                  height: "48px",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  color: "#fff",
+                  textDecoration: "none",
+                  fontWeight: 600,
+                  fontSize: 15,
+                  transition: "all 0.3s ease",
+                  borderRadius: 0
+               }}>
+                  Reach us <ArrowUpRight size={18} />
+               </Link>
             </div>
           </div>
 
           {/* Bottom Bar */}
-          <div className="footer-bottom-bar" style={{ maxWidth: 1320, margin: "80px auto 0", paddingTop: 40, borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(255,255,255,0.4)", fontSize: 13, fontWeight: 500, fontFamily: "'Darker Grotesque', sans-serif" }}>
-            <p style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>&copy; {new Date().getFullYear()} Stanch Tech. All rights reserved.</p>
-            <div style={{ display: "flex", gap: 40 }}>
-              <span style={{ cursor: "pointer", fontFamily: "'Darker Grotesque', sans-serif" }}>Privacy Policy</span>
-              <span style={{ cursor: "pointer", fontFamily: "'Darker Grotesque', sans-serif" }}>Terms of Service</span>
-            </div>
+          <div style={{ 
+            maxWidth: 1400, 
+            margin: "80px auto 0", 
+            paddingTop: 40, 
+            borderTop: "1px solid rgba(255,255,255,0.05)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: 13,
+            color: "rgba(255,255,255,0.3)"
+          }}>
+             <p>&copy; {new Date().getFullYear()} Stanch Tech. All rights reserved.</p>
+             <div style={{ display: "flex", gap: 32 }}>
+                <span>Privacy Policy</span>
+                <span>Terms of Service</span>
+             </div>
           </div>
         </section>
       </footer>
-    </>
-  );
+    );
 }
 
 

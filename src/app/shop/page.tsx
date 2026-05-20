@@ -11,7 +11,7 @@ function ShopContent() {
     const [activeFaq, setActiveFaq] = useState(null);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 36;
+    const itemsPerPage = 10;
     const [selectedFilters, setSelectedFilters] = useState([]);
 
     // Auto-scroll to top on mount
@@ -88,14 +88,14 @@ function ShopContent() {
     ];
 
     return (
-        <div className="bg-[#F8FAFC] min-h-screen pt-20">
+        <div className="bg-[#F8FAFC] min-h-screen pt-20" style={{ fontFamily: "var(--font-body)" }}>
             <section className={`relative h-[320px] flex flex-col items-center justify-center overflow-hidden transition-all duration-500 ${isFilterOpen ? 'blur-[1px] opacity-80' : ''}`}>
                 <div className="absolute inset-0 z-0">
                     <img src="/asset/shop_image/spare_background.png" alt="Shop Background" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-[#0b1a2e]/40" />
                 </div>
                 <div className="relative z-10 text-center w-full max-w-4xl px-6">
-                    <h1 className="text-6xl md:text-7xl font-800 text-white" style={{ fontFamily: "'Neue Machina', sans-serif", letterSpacing: "-0.04em" }}>Explore Spares</h1>
+                    <h1 className="text-6xl md:text-7xl font-800 text-white" style={{ fontFamily: "var(--font-heading)", letterSpacing: "-0.04em" }}>Explore Spares</h1>
                 </div>
             </section>
 
@@ -110,10 +110,10 @@ function ShopContent() {
                                 {isFilterOpen ? <X size={20} /> : <SlidersHorizontal size={18} />}
                             </div>
                             <div className="flex items-baseline gap-4">
-                                <span className="font-900 uppercase tracking-[0.2em] text-black" style={{ fontFamily: "'Darker Grotesque', sans-serif", fontSize: "14px" }}>
+                                <span className="font-900 uppercase tracking-[0.2em] text-black" style={{ fontFamily: "var(--font-body)", fontSize: "14px" }}>
                                     {isFilterOpen ? "Close" : "Filter"} 
                                 </span>
-                                <span className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mt-0.5" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <span className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mt-0.5" style={{ fontFamily: "var(--font-body)" }}>
                                     ({shopProducts.length} product)
                                 </span>
                             </div>
@@ -131,13 +131,13 @@ function ShopContent() {
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
                                     {/* Part Type */}
                                     <div>
-                                        <h4 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>01. Category</h4>
+                                        <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>01. Category</h4>
                                         <div className="flex flex-col gap-6">
                                             {["Fuel Injectors", "Turbos", "Controllers", "Filters", "Hardware"].map(cat => (
                                                 <label key={cat} className="flex items-center gap-4 cursor-pointer group">
                                                     <input type="checkbox" className="hidden" checked={selectedFilters.includes(cat)} onChange={() => toggleFilter(cat)} />
                                                     <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(cat) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
-                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(cat) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{cat}</span>
+                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(cat) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "var(--font-body)" }}>{cat}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -145,13 +145,13 @@ function ShopContent() {
 
                                     {/* Price Range */}
                                     <div>
-                                        <h4 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>02. Budget</h4>
+                                        <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>02. Budget</h4>
                                         <div className="flex flex-col gap-6">
                                             {["Under 50k NGN", "50k - 200k NGN", "200k - 500k NGN", "Over 500k NGN"].map(range => (
                                                 <label key={range} className="flex items-center gap-4 cursor-pointer group">
                                                     <input type="checkbox" className="hidden" checked={selectedFilters.includes(range)} onChange={() => toggleFilter(range)} />
                                                     <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(range) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
-                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(range) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{range}</span>
+                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(range) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "var(--font-body)" }}>{range}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -159,13 +159,13 @@ function ShopContent() {
 
                                     {/* Condition */}
                                     <div>
-                                        <h4 style={{ fontFamily: "'Neue Machina', sans-serif", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>03. Condition</h4>
+                                        <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "10px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.3em", color: "#9ca3af", marginBottom: "28px" }}>03. Condition</h4>
                                         <div className="flex flex-col gap-6">
                                             {["Genuine New", "OEM Standard", "Refurbished", "Used / Tested"].map(cond => (
                                                 <label key={cond} className="flex items-center gap-4 cursor-pointer group">
                                                     <input type="checkbox" className="hidden" checked={selectedFilters.includes(cond)} onChange={() => toggleFilter(cond)} />
                                                     <div className={`w-4 h-4 border-2 transition-all duration-300 ${selectedFilters.includes(cond) ? 'bg-black border-black scale-110' : 'border-gray-200 group-hover:border-black'}`} />
-                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(cond) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{cond}</span>
+                                                    <span className={`text-[13px] font-bold uppercase tracking-widest transition-colors ${selectedFilters.includes(cond) ? 'text-black' : 'text-gray-400 group-hover:text-black'}`} style={{ fontFamily: "var(--font-body)" }}>{cond}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -173,8 +173,8 @@ function ShopContent() {
                                 </div>
 
                                 <div style={{ marginTop: "32px", paddingTop: "24px", borderTop: "1px solid #f9fafb", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                                    <button onClick={() => setSelectedFilters([])} className="text-[11px] font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors">Reset All Filters</button>
-                                    <button onClick={() => setIsFilterOpen(false)} className="hero-btn-primary">Apply Filters</button>
+                                    <button onClick={() => setSelectedFilters([])} className="text-[11px] font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors" style={{ fontFamily: "var(--font-body)" }}>Reset All Filters</button>
+                                    <button onClick={() => setIsFilterOpen(false)} className="hero-btn-primary" style={{ fontFamily: "var(--font-heading)" }}>Apply Filters</button>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +194,7 @@ function ShopContent() {
                             style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
                         >
                             {/* Genuine Badge */}
-                            <div className="absolute top-6 left-6 text-blue-600 text-[16px] font-900 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                            <div className="absolute top-6 left-6 text-blue-600 text-[16px] font-900 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "var(--font-body)" }}>
                                 {product.condition}
                             </div>
 
@@ -207,11 +207,11 @@ function ShopContent() {
                             </div>
 
                             <div style={{ width: "100%", marginTop: "auto", textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "4px" }}>
-                                <p className="text-gray-500 font-800 text-lg leading-tight uppercase" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                <p className="text-gray-500 font-800 text-[18px] leading-tight uppercase" style={{ fontFamily: "var(--font-body)" }}>
                                     {product.name}
                                 </p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", paddingTop: "4px", marginTop: "4px" }}>
-                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "'Darker Grotesque', sans-serif", color: "#000000" }}>
+                                    <span className="font-[800] text-[18px]" style={{ fontFamily: "var(--font-heading)", color: "#000000" }}>
                                         ₦{product.price.toLocaleString()}
                                     </span>
                                     <div className="w-8 h-8 rounded-full border border-gray-100 flex flex-shrink-0 items-center justify-center text-gray-300 group-hover:border-black group-hover:text-black transition-all">
@@ -231,7 +231,8 @@ function ShopContent() {
                         </button>
 
                         <button 
-                            className="w-12 h-12 flex items-center justify-center rounded-[4px] font-bold text-sm bg-[#0b1a2e] text-white shadow-lg shadow-blue-100/20 font-sans"
+                            className="w-12 h-12 flex items-center justify-center rounded-[4px] font-bold text-sm bg-[#0b1a2e] text-white shadow-lg shadow-blue-100/20"
+                            style={{ fontFamily: "var(--font-heading)" }}
                         >
                             1
                         </button>

@@ -32,7 +32,7 @@ export function ShoppingCart() {
                         style={{ padding: "32px" }}
                     >
                         <div className="flex items-center justify-between border-b border-gray-100" style={{ paddingBottom: "34px", marginBottom: "42px" }}>
-                            <h2 className="text-2xl font-black text-gray-900" style={{ fontFamily: "'Neue Machina', sans-serif" }}>Shopping Cart</h2>
+                            <h2 className="text-2xl font-black text-gray-900" style={{ fontFamily: "var(--font-heading)" }}>Shopping Cart</h2>
                             <button onClick={() => setIsCartOpen(false)} className="text-gray-400 hover:text-gray-900 transition-colors">
                                 <X size={24} />
                             </button>
@@ -41,12 +41,12 @@ export function ShoppingCart() {
                         <div className="flex-1 overflow-y-auto pr-4 -mr-4 space-y-12">
                             {cartItems.length === 0 ? (
                                 <div className="text-center py-20 flex flex-col items-center gap-6">
-                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-[13px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Your cart is empty</p>
+                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-[13px]" style={{ fontFamily: "var(--font-body)" }}>Your cart is empty</p>
                                     <Link 
                                         href="/shop" 
                                         onClick={() => setIsCartOpen(false)}
                                         className="text-blue-600 font-bold uppercase tracking-widest text-[12px] hover:underline flex items-center gap-2"
-                                        style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
+                                        style={{ fontFamily: "var(--font-body)" }}
                                     >
                                         Return to Shop
                                     </Link>
@@ -65,7 +65,7 @@ export function ShoppingCart() {
                                                 />
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="font-bold text-gray-900 truncate mb-1" style={{ fontSize: '15px', fontFamily: "'Neue Machina', sans-serif" }}>{item.name}</h3>
+                                                <h3 className="font-bold text-gray-900 truncate mb-1" style={{ fontSize: '15px', fontFamily: "var(--font-heading)" }}>{item.name}</h3>
                                                 <div className="flex items-center justify-between" style={{ marginTop: "16px" }}>
                                                     <div className="flex items-center border-2 border-black h-8 bg-white" style={{ width: "fit-content" }}>
                                                         <button 
@@ -75,7 +75,7 @@ export function ShoppingCart() {
                                                         >
                                                             <Minus size={14} />
                                                         </button>
-                                                        <span className="w-8 text-center font-900 text-[14px]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>{item.quantity}</span>
+                                                        <span className="w-8 text-center font-900 text-[14px]" style={{ fontFamily: "var(--font-body)" }}>{item.quantity}</span>
                                                         <button 
                                                             type="button"
                                                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
@@ -85,7 +85,7 @@ export function ShoppingCart() {
                                                         </button>
                                                     </div>
                                                     <div className="flex items-center gap-3">
-                                                        <span className="text-[16px] font-[800] text-black whitespace-nowrap" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>₦ {item.price.toLocaleString()}</span>
+                                                        <span className="text-[16px] font-[800] text-black whitespace-nowrap" style={{ fontFamily: "var(--font-body)" }}>₦ {item.price.toLocaleString()}</span>
                                                         <button 
                                                             onClick={() => removeFromCart(item.id)}
                                                             className="text-gray-400 hover:text-red-600 transition-colors p-1 flex items-center justify-center"
@@ -108,14 +108,14 @@ export function ShoppingCart() {
                         {cartItems.length > 0 && (
                             <div className="mt-auto">
                                 <div className="flex justify-between items-center mb-4">
-                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Subtotal</span>
-                                    <span className="text-black" style={{ fontSize: '22px', fontWeight: 900, fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "var(--font-body)" }}>Subtotal</span>
+                                    <span className="text-black" style={{ fontSize: '22px', fontWeight: 900, fontFamily: "var(--font-body)" }}>
                                         ₦ {cartTotal.toLocaleString()}
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center" style={{ marginBottom: "26px" }}>
-                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>Shipping</span>
-                                    <span className="text-[13px] font-bold text-gray-500 uppercase tracking-[0.1em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
+                                    <span className="text-[14px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "var(--font-body)" }}>Shipping</span>
+                                    <span className="text-[13px] font-bold text-gray-500 uppercase tracking-[0.1em]" style={{ fontFamily: "var(--font-body)" }}>
                                         Calculated at checkout
                                     </span>
                                 </div>
@@ -126,7 +126,7 @@ export function ShoppingCart() {
                                             href="/checkout" 
                                             onClick={() => setIsCartOpen(false)}
                                             className="w-full h-14 bg-black text-white font-bold uppercase tracking-[0.2em] text-[13px] hover:bg-blue-600 transition-all shadow-xl shadow-black/10 flex items-center justify-center gap-3"
-                                            style={{ fontFamily: "'Darker Grotesque', sans-serif" }}
+                                            style={{ fontFamily: "var(--font-body)" }}
                                         >
                                             PROCEED TO CHECKOUT <ChevronRight size={16} />
                                         </Link>
