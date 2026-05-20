@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useState } from "react";
+import React, { use, useState, useEffect } from "react";
 import Image from "next/image";
 import { PRODUCTS } from "@/data/products";
 import { supabase } from "@/lib/supabase";
