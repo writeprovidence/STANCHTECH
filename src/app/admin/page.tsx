@@ -287,7 +287,19 @@ export default function AdminDashboard() {
         await supabase.from('products').delete().gt('id', -1);
         // Insert local batch (removing id to let Supabase generate new serial ones if needed, 
         // OR keeping them if we want to preserve IDs. Usually keeping them is better for links.)
-        const { error: pError } = await supabase.from('products').insert(products.map(({ id, ...p }) => p));
+        const { error: pError } = await supabase.from('products').insert(products.map(p => ({
+          name: p.name,
+          price: Number(p.price) || 0,
+          currency: p.currency || '₦',
+          image: p.image || '',
+          images: p.images || [],
+          description: p.description || '',
+          sku: p.sku || '',
+          category: p.category || '',
+          condition: p.condition || '',
+          stock: typeof p.stock === 'number' ? p.stock : 1,
+          is_featured: p.is_featured || false,
+        })));
         if (pError) throw pError;
       }
 
@@ -355,19 +367,45 @@ export default function AdminDashboard() {
   const saveProduct = async (p: AdminProduct) => {
     setIsLoading(true);
     try {
-      const { id, ...pData } = p;
+      // Build a clean payload with ONLY columns that exist in the Supabase products table.
+      // DB columns: id, name, price, currency, image, images, description, sku, category, condition, stock, is_featured, created_at
+      const dbPayload: Record<string, any> = {
+        name: p.name,
+        price: Number(p.price) || 0,
+        currency: p.currency || '₦',
+        image: p.image || '',
+        images: p.images || [],
+        description: p.description || '',
+        sku: p.sku || '',
+        category: p.category || '',
+        condition: p.condition || '',
+        stock: typeof p.stock === 'number' ? p.stock : 1,
+        is_featured: p.is_featured || false,
+      };
+
       const exists = products.find(x => x.id === p.id);
-      
+
+      let error: any = null;
       if (exists) {
-        await supabase.from('products').update(pData).eq('id', id);
+        const res = await supabase.from('products').update(dbPayload).eq('id', p.id);
+        error = res.error;
       } else {
-        await supabase.from('products').insert([pData]);
+        const res = await supabase.from('products').insert([dbPayload]);
+        error = res.error;
+      }
+
+      if (error) {
+        console.error('Supabase save error:', error);
+        showToast(`Failed to save: ${error.message}`, 'error');
+        return;
       }
 
       await loadData();
       setEditingProduct(null);
-    } catch (err) {
+      showToast(exists ? 'Product updated successfully!' : 'Product added successfully!', 'success');
+    } catch (err: any) {
       console.error('Save error:', err);
+      showToast(`Error: ${err.message || 'Unknown error'}`, 'error');
     } finally {
       setIsLoading(false);
     }
