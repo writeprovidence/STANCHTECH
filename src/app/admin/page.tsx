@@ -24,7 +24,7 @@ interface Order {
   status: 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
   total: number;
   items: { id: number; name: string; price: number; quantity: number; image?: string }[];
-  billing: { billingFirstName: string; billingLastName: string; email: string; billingPhone: string; billingAddress: string; billingState: string; billingCity: string };
+  billing: { billingFirstName: string; billingLastName: string; email: string; billingPhone: string; billingAddress: string; billingState: string; billingCity: string; deliveryMethod?: string };
   paymentMethod: string;
   deliveryMethod: string;
 }

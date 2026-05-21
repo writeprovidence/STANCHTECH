@@ -90,7 +90,7 @@ export function Navbar() {
         { name: "HOME", href: "/" },
         { name: "ABOUT", href: "/about" },
         { name: "PORTFOLIO", href: "/projects" },
-        { name: "SHOP", href: "/shop" },
+        { name: "SHOP", href: "/shop", target: "_blank" },
         { name: "CONTACT", href: "/contact" },
     ];
 
@@ -157,6 +157,8 @@ export function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
+                                    target={link.target || "_self"}
+                                    rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
                                     style={{
                                         fontSize: 15,
                                         fontWeight: 800,
@@ -447,6 +449,8 @@ export function Navbar() {
                                         <Link
                                             key={link.name}
                                             href={link.href}
+                                            target={link.target || "_self"}
+                                            rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
                                             onClick={() => setMobileMenuOpen(false)}
                                             style={{
                                                 color: "#000",
