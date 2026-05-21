@@ -6,6 +6,7 @@ import { useUser, useClerk } from "@clerk/nextjs";
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { NIGERIAN_STATES } from '../checkout/nigeria-data';
+import { supabase } from '@/lib/supabase';
 
 interface Address {
   id: string;
@@ -125,36 +126,50 @@ function ProfileContent() {
     return products;
   };
 
-  const handleSubmitReview = () => {
+  const handleSubmitReview = async () => {
     if (!reviewComment.trim()) { alert("Please write a comment"); return; }
     setIsSubmittingReview(true);
     
-    // Create new review object
+    const reviewerName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : 
+      (userAddress ? `${userAddress.firstName} ${userAddress.lastName}` : 'Verified Buyer');
+    const reviewerEmail = user?.primaryEmailAddress?.emailAddress || '';
+
     const newReview = {
-      productId: String(reviewingProduct.id),
-      name: user ? `${user.firstName} ${user.lastName}` : (userAddress ? `${userAddress.firstName} ${userAddress.lastName}` : "Verified Buyer"),
-      date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+      product_id: String(reviewingProduct.id),
+      user_name: reviewerName || 'Verified Buyer',
+      user_email: reviewerEmail,
       rating: reviewRating,
       comment: reviewComment
     };
 
-    // Simulate API call
-    setTimeout(() => {
-      // 1. Mark as locally submitted for the profile view
-      const newSubmitted = [...submittedReviews, String(reviewingProduct.id)];
-      setSubmittedReviews(newSubmitted);
-      localStorage.setItem('stanchtech_submitted_reviews', JSON.stringify(newSubmitted));
+    try {
+      const { error } = await supabase.from('reviews').insert([newReview]);
       
-      // 2. Save to global reviews list for product page reflection
-      const existingGlobalReviews = JSON.parse(localStorage.getItem('stanchtech_global_reviews') || '[]');
-      localStorage.setItem('stanchtech_global_reviews', JSON.stringify([newReview, ...existingGlobalReviews]));
+      if (error) {
+        console.error('Supabase review insert error:', error.message);
+        // Fallback: save to localStorage if DB fails
+        const existingGlobal = JSON.parse(localStorage.getItem('stanchtech_global_reviews') || '[]');
+        localStorage.setItem('stanchtech_global_reviews', JSON.stringify([{
+          ...newReview,
+          productId: newReview.product_id,
+          name: newReview.user_name,
+          date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+        }, ...existingGlobal]));
+        alert('Review saved locally. Will sync when database is available.');
+      }
+    } catch (err) {
+      console.error('Review submission failed:', err);
+    }
 
-      setIsSubmittingReview(false);
-      setReviewingProduct(null);
-      setReviewRating(5);
-      setReviewComment('');
-      // alert("Review submitted successfully!");
-    }, 1000);
+    // Mark as submitted in localStorage
+    const newSubmitted = [...submittedReviews, String(reviewingProduct.id)];
+    setSubmittedReviews(newSubmitted);
+    localStorage.setItem('stanchtech_submitted_reviews', JSON.stringify(newSubmitted));
+
+    setIsSubmittingReview(false);
+    setReviewingProduct(null);
+    setReviewRating(5);
+    setReviewComment('');
   };
 
   const menuItems = [

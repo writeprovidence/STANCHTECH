@@ -21,8 +21,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     const [activeTab, setActiveTab] = useState('specification');
     const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
     const [canReview, setCanReview] = useState(false);
-    const [userRating, setUserRating] = useState(5);
-    const [userComment, setUserComment] = useState("");
     const [dynamicReviews, setDynamicReviews] = useState<any[]>([]);
     const { addToCart } = useCart();
     const { user } = useUser();
@@ -125,10 +123,38 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
         if (product) {
             checkReviewEligibility();
-            // Load dynamic reviews from public store
-            const allGlobal = JSON.parse(localStorage.getItem('stanchtech_global_reviews') || '[]');
-            const productSpecific = allGlobal.filter((r: any) => String(r.productId) === String(productId));
-            setDynamicReviews(productSpecific);
+
+            // Load reviews from Supabase (real-time, cross-device)
+            const fetchReviews = async () => {
+                try {
+                    const { data, error } = await supabase
+                        .from('reviews')
+                        .select('*')
+                        .eq('product_id', String(productId))
+                        .order('created_at', { ascending: false });
+
+                    if (data && !error) {
+                        const shaped = data.map((r: any) => ({
+                            name: r.user_name,
+                            date: new Date(r.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+                            rating: r.rating,
+                            comment: r.comment
+                        }));
+                        setDynamicReviews(shaped);
+                    } else {
+                        // Fallback to localStorage if DB unavailable
+                        const allGlobal = JSON.parse(localStorage.getItem('stanchtech_global_reviews') || '[]');
+                        const productSpecific = allGlobal.filter((r: any) => String(r.productId || r.product_id) === String(productId));
+                        setDynamicReviews(productSpecific.map((r: any) => ({ ...r, name: r.name || r.user_name })));
+                    }
+                } catch {
+                    const allGlobal = JSON.parse(localStorage.getItem('stanchtech_global_reviews') || '[]');
+                    const productSpecific = allGlobal.filter((r: any) => String(r.productId || r.product_id) === String(productId));
+                    setDynamicReviews(productSpecific.map((r: any) => ({ ...r, name: r.name || r.user_name })));
+                }
+            };
+
+            fetchReviews();
         }
     }, [productId, userEmail, product]);
 
