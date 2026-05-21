@@ -43,6 +43,7 @@ interface AdminProduct {
   stock?: number;
   shippingFee?: number;
   quantity?: number;
+  is_featured?: boolean;
 }
 
 // ─── Admin PIN ───────────────────────────────────────────────────────────────
@@ -972,6 +973,7 @@ export default function AdminDashboard() {
                         condition: 'Genuine Part',
                         shippingFee: 0,
                         quantity: 0,
+                        is_featured: false,
                       })}
                       style={{ padding: '9px 16px', background: BRAND_BLUE, color: '#fff', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "var(--font-heading)" }}
                     >
@@ -1003,18 +1005,18 @@ export default function AdminDashboard() {
                           <td style={{ padding: '10px 12px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                               <p style={{ fontSize: '13px', fontWeight: 700, color: '#111', marginBottom: '1px' }}>{p.name}</p>
-                              {products.slice(0, 3).some(fp => fp.id === p.id) && (
+                              {p.is_featured && (
                                 <span style={{ 
                                   fontSize: '10px', 
                                   fontWeight: 900, 
-                                  background: '#000', 
+                                  background: BRAND_BLUE, 
                                   color: '#fff', 
                                   padding: '2px 6px', 
                                   borderRadius: '2px',
                                   fontFamily: "var(--font-heading)",
                                   letterSpacing: '0.05em'
                                 }}>
-                                  LIVE ON STORE
+                                  FEATURED
                                 </span>
                               )}
                             </div>
@@ -1144,6 +1146,17 @@ export default function AdminDashboard() {
                       >
                         {['In Stock', 'Out of Stock'].map(c => <option key={c}>{c}</option>)}
                       </select>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px', background: '#f5f7ff', borderRadius: '8px', marginBottom: '10px', border: `1px solid ${BRAND_BLUE}20` }}>
+                      <input 
+                        type="checkbox" 
+                        id="is_featured"
+                        checked={editingProduct.is_featured || false}
+                        onChange={e => setEditingProduct({ ...editingProduct, is_featured: e.target.checked })}
+                        style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                      />
+                      <label htmlFor="is_featured" style={{ fontSize: '12px', fontWeight: 700, color: BRAND_BLUE, cursor: 'pointer', fontFamily: "var(--font-heading)" }}>FEATURE ON HOMEPAGE</label>
                     </div>
 
                     <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>

@@ -381,130 +381,144 @@ export default function HomePage() {
       </section>
 
       {/* ─── 07.5 FEATURED SPARES ─── */}
-      <section className="section-pad" style={{ background: "#fff", color: "#0b1a2e", paddingTop: "clamp(20px, 3vw, 40px)" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 60, position: "relative" }}>
-            <span className="section-label" style={{ color: "var(--accent)" }}>SPARE INVENTORY</span>
-            <h2 className="responsive-title" style={{ marginBottom: 16 }}>Featured Spares</h2>
-            <p style={{ color: "rgba(11,26,46,0.68)", fontSize: 20, maxWidth: 560, margin: "0 auto", fontFamily: "var(--font-body)" }}>
-              Our spares help to reduce downtime and ensure operations run smoothly.
-            </p>
-            <Link
-              href="/shop"
-              className="spare-catalog-btn"
-              style={{
-                position: "absolute",
-                right: 0,
-                top: "50%",
-                transform: "translateY(-50%)",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                border: "1.5px solid #0b1a2e",
-                padding: "12px 28px",
-                fontWeight: 700,
-                fontSize: 14,
-                color: "#0b1a2e",
-                textDecoration: "none",
-                background: "transparent",
-                whiteSpace: "nowrap",
-                transition: "all 0.25s ease"
-              }}
-            >
-              Explore Full catalog <ArrowUpRight size={16} strokeWidth={2} />
-            </Link>
-            <style>{`
-              .spare-catalog-btn:hover {
-                background: #0b1a2e !important;
-                color: #fff !important;
-              }
-              .spare-catalog-btn:hover svg { stroke: #fff; }
-              @media (max-width: 900px) {
-                .spare-catalog-btn {
-                  position: static !important;
-                  transform: none !important;
-                  display: inline-flex !important;
-                  margin-top: 20px !important;
-                }
-              }
-            `}</style>
-          </div>
+      {(() => {
+        const featured = products.filter(p => p.is_featured);
+        const fromDb = products.length > 0;
+        
+        // If DB has products but none are featured, hide the section
+        if (fromDb && featured.length === 0) return null;
 
-          <div style={{ 
-            display: "grid", 
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
-            gap: 32 
-          }}>
-            {(products.length > 0 ? products : [
+        const displayProducts = fromDb 
+          ? featured 
+          : [
               { id: 1, name: "Fuel Injector SS-90", description: "High-precision fuel injector designed for Cummins marine engines. Ensures optimal fuel atomization.", image: "/asset/Landing_page_image/marine_spares.png" },
               { id: 2, name: "Marine Turbo X1", description: "Heavy-duty marine turbocharger built for durability in harsh environments. Provides superior boost.", image: "/asset/Landing_page_image/low_hour_engine.jpeg" },
               { id: 3, name: "Engine Controller", description: "Advanced electronic control unit for precise engine management and monitoring.", image: "/asset/Landing_page_image/support.png" }
-            ]).slice(0, 3).map((product, idx) => (
-              <div 
-                key={product.id || idx} 
-                style={{ 
-                  background: "#fff", 
-                  padding: 24, 
-                  display: "flex", 
-                  flexDirection: "column",
-                  border: "1px solid #eee"
-                }}
-              >
-                <div style={{ 
-                  width: "100%",
-                  minHeight: 220,
-                  background: "#f8fafc",
-                  marginBottom: 20,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "24px 32px",
-                  overflow: "hidden"
-                }}>
-                  <img 
-                    src={(Array.isArray(product.image) ? product.image[0] : product.image) || "/asset/Landing_page_image/marine_spares.png"} 
-                    alt={product.name} 
-                    style={{ maxWidth: "100%", maxHeight: 180, objectFit: "contain", display: "block" }}
-                  />
-                </div>
+            ];
 
-                <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                  <h3 style={{ fontSize: 22, fontWeight: 800, marginBottom: 12, color: "#0b1a2e", fontFamily: "var(--font-heading)" }}>
-                    {product.name}
-                  </h3>
-                  <p style={{ 
-                    fontSize: 15, 
-                    color: "#64748b", 
-                    lineHeight: 1.6, 
-                    marginBottom: 32
-                  }}>
-                    {product.description}
-                  </p>
-                  
-                  <Link 
-                    href={`/shop/${product.id}`}
+        return (
+          <section className="section-pad" style={{ background: "#fff", color: "#0b1a2e", paddingTop: "clamp(20px, 3vw, 40px)" }}>
+            <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+              <div style={{ textAlign: "center", marginBottom: 60, position: "relative" }}>
+                <span className="section-label" style={{ color: "var(--accent)" }}>SPARE INVENTORY</span>
+                <h2 className="responsive-title" style={{ marginBottom: 16 }}>Featured Spares</h2>
+                <p style={{ color: "rgba(11,26,46,0.68)", fontSize: 20, maxWidth: 560, margin: "0 auto", fontFamily: "var(--font-body)" }}>
+                  Our spares help to reduce downtime and ensure operations run smoothly.
+                </p>
+                <Link
+                  href="/shop"
+                  className="spare-catalog-btn"
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    border: "1.5px solid #0b1a2e",
+                    padding: "12px 28px",
+                    fontWeight: 700,
+                    fontSize: 14,
+                    color: "#0b1a2e",
+                    textDecoration: "none",
+                    background: "transparent",
+                    whiteSpace: "nowrap",
+                    transition: "all 0.25s ease"
+                  }}
+                >
+                  Explore Full catalog <ArrowUpRight size={16} strokeWidth={2} />
+                </Link>
+                <style>{`
+                  .spare-catalog-btn:hover {
+                    background: #0b1a2e !important;
+                    color: #fff !important;
+                  }
+                  .spare-catalog-btn:hover svg { stroke: #fff; }
+                  @media (max-width: 900px) {
+                    .spare-catalog-btn {
+                      position: static !important;
+                      transform: none !important;
+                      display: inline-flex !important;
+                      margin-top: 20px !important;
+                    }
+                  }
+                `}</style>
+              </div>
+
+              <div style={{ 
+                display: "grid", 
+                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
+                gap: 32 
+              }}>
+                {displayProducts.slice(0, 3).map((product, idx) => (
+                  <div 
+                    key={product.id || idx} 
                     style={{ 
-                      background: "#0b1a2e",
-                      color: "#fff",
-                      padding: "14px 28px",
-                      textAlign: "center",
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.1em",
-                      fontSize: 13,
-                      display: "block",
-                      width: "100%",
-                      marginTop: "auto"
+                      background: "#fff", 
+                      padding: 24, 
+                      display: "flex", 
+                      flexDirection: "column",
+                      border: "1px solid #eee"
                     }}
                   >
-                    BUY SPARE
-                  </Link>
-                </div>
+                    <div style={{ 
+                      width: "100%",
+                      minHeight: 220,
+                      background: "#f8fafc",
+                      marginBottom: 20,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "24px 32px",
+                      overflow: "hidden"
+                    }}>
+                      <img 
+                        src={(Array.isArray(product.image) ? product.image[0] : product.image) || "/asset/Landing_page_image/marine_spares.png"} 
+                        alt={product.name} 
+                        style={{ maxWidth: "100%", maxHeight: 180, objectFit: "contain", display: "block" }}
+                      />
+                    </div>
+
+                    <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                      <h3 style={{ fontSize: 22, fontWeight: 800, marginBottom: 12, color: "#0b1a2e", fontFamily: "var(--font-heading)" }}>
+                        {product.name}
+                      </h3>
+                      <p style={{ 
+                        fontSize: 15, 
+                        color: "#64748b", 
+                        lineHeight: 1.6, 
+                        marginBottom: 32
+                      }}>
+                        {product.description}
+                      </p>
+                      
+                      <Link 
+                        href={`/shop/${product.id}`}
+                        style={{ 
+                          background: "#0b1a2e",
+                          color: "#fff",
+                          padding: "14px 28px",
+                          textAlign: "center",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.1em",
+                          fontSize: 13,
+                          display: "block",
+                          width: "100%",
+                          marginTop: "auto"
+                        }}
+                      >
+                        BUY SPARE
+                      </Link>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ─── 08. TESTIMONIALS ─── */}
       <section className="section-pad" style={{ background: "#F8F9FE" }}>
