@@ -287,30 +287,30 @@ export default function HomePage() {
                  <h2 className="responsive-title" style={{ color: "#fff" }}>Featured Projects</h2>
               </div>
            </div>
-           <div className="two-col-grid" style={{ alignItems: "stretch", overflow: "hidden", borderRadius: 0 }}>
-              <div style={{ display: "block", height: "clamp(300px, 60vw, 420px)", overflow: "hidden", position: "relative", borderRadius: 0 }}>
-                 <AnimatePresence mode="wait">
-                    <motion.div
-                       key={currentProjectSlide}
-                       initial={{ opacity: 0, x: -50 }}
-                       animate={{ opacity: 1, x: 0 }}
-                       exit={{ opacity: 0, x: 50 }}
-                       transition={{ duration: 0.5 }}
-                       style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
-                    >
-                       <Image 
-                         src={PROJECT_SLIDES[currentProjectSlide].image} 
-                         alt={PROJECT_SLIDES[currentProjectSlide].title} 
-                         fill 
-                         style={{ objectFit: "cover" }} 
-                       />
-                       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "clamp(24px, 5vw, 60px)", background: "linear-gradient(to top, rgba(11,26,46,0.9) 0%, transparent 100%)" }}>
-                          <span className="section-label" style={{ color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].category}</span>
-                          <h3 style={{ fontSize: "clamp(22px, 4vw, 32px)", fontWeight: 700, fontFamily: "var(--font-heading)", color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].title}</h3>
-                       </div>
-                    </motion.div>
-                 </AnimatePresence>
-              </div>
+           <div style={{ display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 72, alignItems: "stretch", overflow: "hidden", borderRadius: 0, maxWidth: 1400, margin: "0 auto" }}>
+              <Link href={`/projects/${PROJECT_SLIDES[currentProjectSlide].id}`} style={{ display: "block", height: "clamp(300px, 60vw, 420px)", overflow: "hidden", position: "relative", borderRadius: 0 }}>
+                  <AnimatePresence mode="wait">
+                     <motion.div
+                        key={currentProjectSlide}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 50 }}
+                        transition={{ duration: 0.5 }}
+                        style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
+                     >
+                        <Image 
+                          src={PROJECT_SLIDES[currentProjectSlide].image} 
+                          alt={PROJECT_SLIDES[currentProjectSlide].title} 
+                          fill 
+                          style={{ objectFit: "cover" }} 
+                        />
+                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "clamp(24px, 5vw, 60px)", background: "linear-gradient(to top, rgba(11,26,46,0.9) 0%, transparent 100%)" }}>
+                           <span className="section-label" style={{ color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].category}</span>
+                           <h3 style={{ fontSize: "clamp(22px, 4vw, 32px)", fontWeight: 700, fontFamily: "var(--font-heading)", color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].title}</h3>
+                        </div>
+                     </motion.div>
+                  </AnimatePresence>
+              </Link>
               <div style={{ display: "flex", flexDirection: "column", gap: 32, justifyContent: "space-between" }}>
                   <AnimatePresence mode="wait">
                      <motion.div
@@ -380,66 +380,130 @@ export default function HomePage() {
          </div>
       </section>
 
-      {/* ─── 04.5 FEATURED PRODUCTS ─── */}
-      <section className="section-pad" style={{ background: "#fff", paddingTop: 0 }}>
-         <div style={{ position: "relative", marginBottom: 60, maxWidth: 1400, margin: "0 auto 60px" }}>
-            <div style={{ textAlign: "center" }}>
-               <span className="section-label" style={{ color: "var(--accent)" }}>Spare Inventory</span>
-               <h2 className="responsive-title">Featured Spares</h2>
-               <p className="responsive-subtitle" style={{ maxWidth: 700, margin: "24px auto 0" }}>
-                  Our spares help to reduce downtime and ensure operations run smoothly.
-               </p>
-            </div>
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="catalog-btn-wrapper"
-              style={{ 
+      {/* ─── 07.5 FEATURED SPARES ─── */}
+      <section className="section-pad" style={{ background: "#fff", color: "#0b1a2e", paddingTop: "clamp(20px, 3vw, 40px)" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 60, position: "relative" }}>
+            <span className="section-label" style={{ color: "var(--accent)" }}>SPARE INVENTORY</span>
+            <h2 className="responsive-title" style={{ marginBottom: 16 }}>Featured Spares</h2>
+            <p style={{ color: "rgba(11,26,46,0.68)", fontSize: 20, maxWidth: 560, margin: "0 auto", fontFamily: "var(--font-body)" }}>
+              Our spares help to reduce downtime and ensure operations run smoothly.
+            </p>
+            <Link
+              href="/shop"
+              className="spare-catalog-btn"
+              style={{
                 position: "absolute",
                 right: 0,
-                bottom: 0,
-                zIndex: 20
+                top: "50%",
+                transform: "translateY(-50%)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                border: "1.5px solid #0b1a2e",
+                padding: "12px 28px",
+                fontWeight: 700,
+                fontSize: 14,
+                color: "#0b1a2e",
+                textDecoration: "none",
+                background: "transparent",
+                whiteSpace: "nowrap",
+                transition: "all 0.25s ease"
               }}
             >
-              <Link href="/shop" className="catalog-link" style={{ 
-                display: "inline-flex", 
-                alignItems: "center", 
-                gap: 10, 
-                padding: "12px 24px", 
-                border: "1px solid #111", 
-                borderRadius: 0, 
-                textDecoration: "none", 
-                fontWeight: 500,
-                fontSize: 15,
-                whiteSpace: "nowrap",
-                fontFamily: "var(--font-heading)",
-                color: "inherit",
-                background: "inherit",
-                transition: "all 0.3s ease"
-              }}>
-                 Explore Full catalog <ArrowUpRight size={18} />
-              </Link>
-            </motion.div>
-         </div>
-         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
-            {products.slice(0, 3).map((product) => (
-              <div key={product.id} className="premium-card" style={{ padding: "40px 32px", background: "#fff", display: "flex", flexDirection: "column" }}>
-                 <div style={{ width: "100%", height: 240, position: "relative", overflow: "hidden", marginBottom: 32, display: "flex", alignItems: "center", justifyContent: "center", background: "#f9fafb" }}>
-                    <Image 
-                      src={Array.isArray(product.image) ? product.image[0] : product.image || "/asset/Landing_page_image/marine_spares.png"} 
-                      alt={product.name} 
-                      fill 
-                      style={{ objectFit: "contain" }} 
-                    />
-                 </div>
-                 <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 12, fontFamily: "var(--font-heading)" }}>{product.name}</h3>
-                 <p style={{ color: "#4b5563", fontSize: 16, marginBottom: 24, flex: 1 }}>{product.description?.substring(0, 80)}...</p>
-                 <Link href={`/shop/${product.id}`} className="hero-btn-primary" style={{ width: "100%", height: 44, fontSize: 15, background: "var(--navy)" }}>
+              Explore Full catalog <ArrowUpRight size={16} strokeWidth={2} />
+            </Link>
+            <style>{`
+              .spare-catalog-btn:hover {
+                background: #0b1a2e !important;
+                color: #fff !important;
+              }
+              .spare-catalog-btn:hover svg { stroke: #fff; }
+              @media (max-width: 900px) {
+                .spare-catalog-btn {
+                  position: static !important;
+                  transform: none !important;
+                  display: inline-flex !important;
+                  margin-top: 20px !important;
+                }
+              }
+            `}</style>
+          </div>
+
+          <div style={{ 
+            display: "grid", 
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
+            gap: 32 
+          }}>
+            {(products.length > 0 ? products : [
+              { id: 1, name: "Fuel Injector SS-90", description: "High-precision fuel injector designed for Cummins marine engines. Ensures optimal fuel atomization.", image: "/asset/Landing_page_image/marine_spares.png" },
+              { id: 2, name: "Marine Turbo X1", description: "Heavy-duty marine turbocharger built for durability in harsh environments. Provides superior boost.", image: "/asset/Landing_page_image/low_hour_engine.jpeg" },
+              { id: 3, name: "Engine Controller", description: "Advanced electronic control unit for precise engine management and monitoring.", image: "/asset/Landing_page_image/support.png" }
+            ]).slice(0, 3).map((product, idx) => (
+              <div 
+                key={product.id || idx} 
+                style={{ 
+                  background: "#fff", 
+                  padding: 24, 
+                  display: "flex", 
+                  flexDirection: "column",
+                  border: "1px solid #eee"
+                }}
+              >
+                <div style={{ 
+                  width: "100%",
+                  minHeight: 220,
+                  background: "#f8fafc",
+                  marginBottom: 20,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "24px 32px",
+                  overflow: "hidden"
+                }}>
+                  <img 
+                    src={(Array.isArray(product.image) ? product.image[0] : product.image) || "/asset/Landing_page_image/marine_spares.png"} 
+                    alt={product.name} 
+                    style={{ maxWidth: "100%", maxHeight: 180, objectFit: "contain", display: "block" }}
+                  />
+                </div>
+
+                <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                  <h3 style={{ fontSize: 22, fontWeight: 800, marginBottom: 12, color: "#0b1a2e", fontFamily: "var(--font-heading)" }}>
+                    {product.name}
+                  </h3>
+                  <p style={{ 
+                    fontSize: 15, 
+                    color: "#64748b", 
+                    lineHeight: 1.6, 
+                    marginBottom: 32
+                  }}>
+                    {product.description}
+                  </p>
+                  
+                  <Link 
+                    href={`/shop/${product.id}`}
+                    style={{ 
+                      background: "#0b1a2e",
+                      color: "#fff",
+                      padding: "14px 28px",
+                      textAlign: "center",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      fontSize: 13,
+                      display: "block",
+                      width: "100%",
+                      marginTop: "auto"
+                    }}
+                  >
                     BUY SPARE
-                 </Link>
+                  </Link>
+                </div>
               </div>
             ))}
-         </div>
+          </div>
+        </div>
       </section>
 
       {/* ─── 08. TESTIMONIALS ─── */}

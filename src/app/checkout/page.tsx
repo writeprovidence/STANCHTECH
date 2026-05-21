@@ -6,6 +6,7 @@ import { Copy, Loader2, Check, ArrowLeft, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCart } from "@/context/cart-context";
 import { useUser } from "@clerk/nextjs";
+import { supabase } from '@/lib/supabase';
 import { svgPaths } from './svg-paths';
 import { NIGERIAN_STATES } from './nigeria-data';
 
@@ -38,6 +39,7 @@ export default function CheckoutPage() {
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasProfileAddress, setHasProfileAddress] = useState(false);
+  const shippingFee = cartItems.reduce((acc, item: any) => acc + (Number(item.shippingFee) || 0) * item.quantity, 0);
 
   const { register, handleSubmit, setValue, watch, reset } = useForm<CheckoutFormData>({
     defaultValues: {
@@ -73,6 +75,8 @@ export default function CheckoutPage() {
   const [deliveryMethod, setDeliveryMethod] = useState<'home' | 'store'>('home');
   const [promoExpanded, setPromoExpanded] = useState(false);
   const [copiedAccount, setCopiedAccount] = useState(false);
+
+
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -677,7 +681,7 @@ export default function CheckoutPage() {
             <div className="max-h-[400px] overflow-y-auto pr-2" style={{ display: 'flex', flexDirection: 'column', gap: '32px', marginBottom: '32px' }}>
               {cartItems.map((item) => (
                 <div key={item.id} className="flex" style={{ gap: '16px' }}>
-                  <div className="w-[66px] h-[93px] overflow-hidden bg-gray-50 flex-shrink-0 flex items-center justify-center">
+                  <div className="w-[66px] h-[93px] overflow-hidden bg-transparent flex-shrink-0 flex items-center justify-center">
                     <img 
                       src={item.image || "/asset/checkout/705687d37a1bd0160f34e53cdcb38e492d45e74c.png"} 
                       alt={item.name} 
@@ -688,7 +692,7 @@ export default function CheckoutPage() {
                     <div className="flex justify-between items-start" style={{ marginBottom: '8px' }}>
                       <p className="text-[17px] text-[#19191d]" style={{ fontFamily: "var(--font-body)" }}>
                         {item.name}
-                        {(item as any).stock === 0 && <span className="text-red-500 font-bold ml-2 text-[14px] whitespace-nowrap">(Out of stock)</span>}
+                        {(item as any).stock === 0 && <span className="text-red-500 font-bold ml-2 text-[14px] whitespace-nowrap"> (Out of stock)</span>}
                       </p>
                       <p className="text-[17px] text-black whitespace-nowrap ml-2" style={{ fontFamily: "var(--font-body)" }}>₦ {(item.price * item.quantity).toLocaleString()}</p>
                     </div>
@@ -698,40 +702,22 @@ export default function CheckoutPage() {
               ))}
             </div>
 
-            <div style={{ borderTop: '1px solid #e0e0e0', paddingTop: '24px', marginBottom: '24px' }}>
-              <button
-                type="button"
-                onClick={() => setPromoExpanded(!promoExpanded)}
-                className="text-[#016fd0] text-[17px] hover:underline"
-                style={{ marginBottom: '16px' }}
-              >
-                + Enter a promo code
-              </button>
-              {promoExpanded && (
-                <input
-                  type="text"
-                  placeholder="Promo code"
-                  className="w-full border border-[#d3d3d3] rounded-[5px] px-3 h-[33px] text-[17px] focus:outline-none focus:border-[#7047eb]"
-                />
-              )}
-            </div>
-
             {/* Summary */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', borderTop: '1px solid #e0e0e0', paddingTop: '24px', gap: '16px', marginBottom: '24px' }}>
               <div className="flex justify-between text-[17px]">
                 <span className="text-black">Subtotal</span>
                 <span className="text-black" style={{ fontFamily: "var(--font-body)" }}>₦ {cartTotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-[17px]">
                 <span className="text-black">Shipping</span>
-                 <span className="text-black font-semibold" style={{ fontFamily: "var(--font-body)" }}>₦ 0.00</span>
+                 <span className="text-black font-semibold" style={{ fontFamily: "var(--font-body)" }}>{shippingFee === 0 ? '₦ 0.00' : `₦ ${shippingFee.toLocaleString()}`}</span>
               </div>
             </div>
 
               <div style={{ borderTop: '1px solid #e0e0e0', paddingTop: '24px', marginBottom: '48px' }}>
                 <div className="flex justify-between text-[17px] font-medium">
                   <span className="text-black">Total</span>
-                  <span className="text-black" style={{ fontFamily: "var(--font-body)" }}>₦ {cartTotal.toLocaleString()}</span>
+                  <span className="text-black" style={{ fontFamily: "var(--font-body)" }}>₦ {(cartTotal + shippingFee).toLocaleString()}</span>
                 </div>
               </div>
 
@@ -843,13 +829,13 @@ export default function CheckoutPage() {
                     type="checkbox"
                     className="mt-0.5 w-4 h-4 border border-[#d3d3d3] rounded-[5px] accent-[#7047eb]"
                   />
-                  <span className="text-[17px] text-[#25252d]">
+                  <span className="text-[12px] text-[#25252d]">
                     I agree to the{' '}
-                    <button type="button" className="text-[#7047eb] hover:underline">Terms & conditions</button>
+                    <button type="button" className="text-[12px] text-[#7047eb] hover:underline">Terms & conditions</button>
                     ,{' '}
-                    <button type="button" className="text-[#7047eb] hover:underline">Privacy policy</button>
+                    <button type="button" className="text-[12px] text-[#7047eb] hover:underline">Privacy policy</button>
                     {' '}&{' '}
-                    <button type="button" className="text-[#7047eb] hover:underline">Return policy</button>
+                    <button type="button" className="text-[12px] text-[#7047eb] hover:underline">Return policy</button>
                   </span>
                 </label>
 
@@ -859,7 +845,7 @@ export default function CheckoutPage() {
                     type="checkbox"
                     className="mt-0.5 w-4 h-4 border border-[#d3d3d3] rounded-[5px] accent-[#7047eb]"
                   />
-                  <span className="text-[17px] text-[#25252d]">Sign me up to the email list</span>
+                  <span className="text-[12px] text-[#25252d]">Sign me up to the email list</span>
                 </label>
               </div>
 

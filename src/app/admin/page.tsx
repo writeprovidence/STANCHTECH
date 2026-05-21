@@ -41,6 +41,8 @@ interface AdminProduct {
   category: string;
   condition: string;
   stock?: number;
+  shippingFee?: number;
+  quantity?: number;
 }
 
 // ─── Admin PIN ───────────────────────────────────────────────────────────────
@@ -305,15 +307,30 @@ export default function AdminDashboard() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !editingProduct) return;
+
     const reader = new FileReader();
     reader.onloadend = () => {
-      const dataUrl = reader.result as string;
-      const currentImages = editingProduct.images || [];
-      setEditingProduct({ 
-        ...editingProduct, 
-        image: editingProduct.image || dataUrl,
-        images: [...currentImages, dataUrl] 
-      });
+      // Compress image before storing to avoid Supabase payload limits
+      const img = new window.Image();
+      img.onload = () => {
+        const MAX_W = 800;
+        const MAX_H = 800;
+        let { width, height } = img;
+        if (width > MAX_W) { height = Math.round(height * MAX_W / width); width = MAX_W; }
+        if (height > MAX_H) { width = Math.round(width * MAX_H / height); height = MAX_H; }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d')!.drawImage(img, 0, 0, width, height);
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+        const currentImages = editingProduct.images?.filter(i => !i.startsWith('https://images.unsplash.com')) || [];
+        setEditingProduct({
+          ...editingProduct,
+          image: compressedDataUrl,  // Always update to the newly uploaded image
+          images: [...currentImages, compressedDataUrl]
+        });
+      };
+      img.src = reader.result as string;
     };
     reader.readAsDataURL(file);
   };
@@ -910,6 +927,7 @@ export default function AdminDashboard() {
           {activeTab === 'products' && (
             <div style={{ display: 'flex', gap: '24px' }}>
               <div style={{ flex: 1, minWidth: 0 }}>
+                {/* Inventory Summary removed from here and moved to Overview */}
                 {/* Toolbar */}
                 <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden' }}>
                   <div className="mobile-stack" style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', gap: '12px', alignItems: 'center' }}>
@@ -932,14 +950,16 @@ export default function AdminDashboard() {
                       onClick={() => setEditingProduct({
                         id: Math.max(0, ...products.map(p => p.id)) + 1,
                         name: '',
-                        price: 0,
+                        price: '' as unknown as number,
                         currency: '₦',
                         image: 'https://images.unsplash.com/photo-1590674899484-d564fa070e6c?auto=format&fit=crop&q=80&w=200',
                         images: ['https://images.unsplash.com/photo-1590674899484-d564fa070e6c?auto=format&fit=crop&q=80&w=200'],
                         description: '',
                         sku: `SS${String(Math.max(0, ...products.map(p => p.id)) + 1).padStart(3, '0')}`,
                         category: 'QSK 60',
-                        condition: 'Genuine Part'
+                        condition: 'Genuine Part',
+                        shippingFee: 0,
+                        quantity: 0,
                       })}
                       style={{ padding: '9px 16px', background: BRAND_BLUE, color: '#fff', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "var(--font-heading)" }}
                     >
@@ -1057,13 +1077,15 @@ export default function AdminDashboard() {
                     {[
                       { label: 'Product Name', key: 'name', type: 'text' },
                       { label: 'Price (₦)', key: 'price', type: 'number' },
-                      { label: 'Description', key: 'description', type: 'textarea' },
+                      { label: 'Shipping Fee (₦)', key: 'shippingFee', type: 'number' },
+                      { label: 'Total Units Added', key: 'quantity', type: 'number' },
+                      { label: 'Specification', key: 'description', type: 'textarea' },
                     ].map(field => (
                       <div key={field.key}>
                         <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#6b7280', display: 'block', marginBottom: '5px' }}>{field.label}</label>
                         {field.type === 'textarea' ? (
                           <textarea
-                            value={(editingProduct as any)[field.key]}
+                            value={(editingProduct as any)[field.key] ?? ''}
                             onChange={e => setEditingProduct({ ...editingProduct, [field.key]: e.target.value })}
                             rows={3}
                             style={{ width: '100%', padding: '8px 10px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '16px', outline: 'none', resize: 'vertical', boxSizing: 'border-box', color: '#111', fontFamily: "var(--font-heading)" }}
@@ -1071,8 +1093,8 @@ export default function AdminDashboard() {
                         ) : (
                           <input
                             type={field.type}
-                            value={(editingProduct as any)[field.key]}
-                            onChange={e => setEditingProduct({ ...editingProduct, [field.key]: field.type === 'number' ? Number(e.target.value) : e.target.value })}
+                            value={(editingProduct as any)[field.key] ?? ''}
+                            onChange={e => setEditingProduct({ ...editingProduct, [field.key]: field.type === 'number' ? (e.target.value === '' ? '' as unknown as number : Number(e.target.value)) : e.target.value })}
                             style={{ width: '100%', padding: '8px 10px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box', color: '#111' }}
                           />
                         )}
@@ -1098,6 +1120,17 @@ export default function AdminDashboard() {
                         style={{ width: '100%', padding: '8px 10px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', color: '#111', background: '#fff' }}
                       >
                         {['Genuine Part', 'OEM', 'Rerun/Reman', 'Used'].map(c => <option key={c}>{c}</option>)}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#6b7280', display: 'block', marginBottom: '5px' }}>Stock Status</label>
+                      <select
+                        value={typeof editingProduct.stock === 'number' && editingProduct.stock === 0 ? 'Out of Stock' : 'In Stock'}
+                        onChange={e => setEditingProduct({ ...editingProduct, stock: e.target.value === 'In Stock' ? 1 : 0 })}
+                        style={{ width: '100%', padding: '8px 10px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', color: '#111', background: '#fff' }}
+                      >
+                        {['In Stock', 'Out of Stock'].map(c => <option key={c}>{c}</option>)}
                       </select>
                     </div>
 

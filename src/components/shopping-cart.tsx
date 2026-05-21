@@ -55,7 +55,7 @@ export function ShoppingCart() {
                                 cartItems.map((item, idx) => (
                                     <div key={item.id} className="flex flex-col gap-4" style={{ marginBottom: idx === cartItems.length - 1 ? "0" : "8px" }}>
                                         <div className="flex gap-4 group">
-                                            <div className="w-20 h-20 bg-[#E8F3FA] rounded-xl flex items-center justify-center p-4 flex-shrink-0">
+                                            <div className="w-20 h-20 bg-transparent rounded-xl flex items-center justify-center p-4 flex-shrink-0">
                                                 <Image 
                                                     src={item.image || "/asset/spare_parts/Part3.png"} 
                                                     alt={item.name} 

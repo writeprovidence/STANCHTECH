@@ -199,7 +199,7 @@ function ShopContent() {
                         <Link 
                             href={`/shop/${product.id}`} 
                             key={index} 
-                            className="group relative bg-white border border-gray-100 text-left transition-all duration-700 hover:-translate-y-2 flex flex-col items-center"
+                            className="group relative bg-white border border-gray-100 text-left transition-all duration-700 flex flex-col items-center"
                             style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
                         >
                             {/* Genuine Badge */}
@@ -207,11 +207,11 @@ function ShopContent() {
                                 {product.condition}
                             </div>
 
-                            <div className="w-full aspect-square mb-6 transition-transform duration-700 group-hover:scale-105 flex items-center justify-center p-8">
+                            <div className="w-full aspect-square mb-6 flex items-center justify-center p-8">
                                 <img 
-                                    src={product.image} 
+                                    src={(Array.isArray(product.image) ? product.image[0] : product.image) || "/asset/Landing_page_image/marine_spares.png"} 
                                     alt={product.name} 
-                                    className="w-[80%] h-[80%] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-700 opacity-80 group-hover:opacity-100" 
+                                    className="w-[80%] h-[80%] object-contain transition-all duration-700" 
                                 />
                             </div>
 

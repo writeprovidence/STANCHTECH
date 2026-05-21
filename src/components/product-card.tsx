@@ -23,12 +23,12 @@ export function ProductCard({ product }) {
             viewport={{ once: true }}
             className="group relative h-full flex flex-col bg-white rounded-[2rem] p-6 card-hover border border-gray-100/50"
         >
-            <div className="relative aspect-[4/5] w-full mb-6 overflow-hidden rounded-2xl bg-muted/30">
+            <div className="relative aspect-[4/5] w-full mb-6 overflow-hidden rounded-2xl">
                 <Image
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="object-contain group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 {product.isNew && (
                     <span className="absolute top-4 left-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 transparent-blur rounded-full">
