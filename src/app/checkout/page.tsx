@@ -170,6 +170,17 @@ export default function CheckoutPage() {
     if (!data.billingAddress) { alert("Delivery address is required."); return; }
     if (!data.billingState) { alert("State is required."); return; }
     if (!data.billingCity) { alert("Area Council is required."); return; }
+    
+    // Shipping field validation
+    if (!sameAsBilling) {
+      if (!data.shippingFirstName) { alert("Shipping First name is required."); return; }
+      if (!data.shippingLastName) { alert("Shipping Last name is required."); return; }
+      if (!data.shippingPhone) { alert("Shipping Phone number is required."); return; }
+      if (!data.shippingAddress) { alert("Shipping address is required."); return; }
+      if (!data.shippingState) { alert("Shipping State is required."); return; }
+      if (!data.shippingCity) { alert("Shipping Area Council is required."); return; }
+    }
+
     if (!data.agreeToTerms) { alert("Please agree to the terms and conditions"); return; }
 
     if (!isAuth) {
@@ -221,7 +232,7 @@ export default function CheckoutPage() {
       id: Date.now().toString()
     }));
 
-    // Success logic: save the order to localStorage for the orders page
+    // Success logic: save the order to localStorage for the orders page and directly to Supabase
     const newOrder = {
       id: `ORD-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
       date: new Date().toISOString(),
@@ -233,9 +244,33 @@ export default function CheckoutPage() {
       deliveryMethod
     };
 
+    // Save to local storage for quick access
     const existingOrders = JSON.parse(localStorage.getItem("orders") || "[]");
     localStorage.setItem("orders", JSON.stringify([newOrder, ...existingOrders]));
     localStorage.setItem("stanchtech_checkout_profile", JSON.stringify(data));
+
+    // Save directly to Supabase (omit columns that don't exist in the remote schema)
+    try {
+      // Pack the extra info into the billing JSONB object so it persists in Supabase schema-free
+      const supabaseOrderPayload = {
+         ...newOrder,
+         billing: { 
+            ...newOrder.billing, 
+            paymentMethod: newOrder.paymentMethod, 
+            deliveryMethod: newOrder.deliveryMethod 
+         }
+      };
+      
+      delete (supabaseOrderPayload as any).paymentMethod;
+      delete (supabaseOrderPayload as any).deliveryMethod;
+
+      const { error } = await supabase.from('orders').insert([supabaseOrderPayload]);
+      if (error) {
+        console.error("Error saving order to Supabase:", error.message);
+      }
+    } catch (err) {
+      console.error("Failed to connect to Supabase:", err);
+    }
 
     clearCart();
     setIsSubmitting(false);
@@ -801,7 +836,6 @@ export default function CheckoutPage() {
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2" style={{ marginBottom: '4px' }}>
-                      {/* OPay wordmark */}
                       <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '46px', height: '16px' }}>
                         <text x="0" y="16" fontFamily="var(--font-heading)" fontWeight="900" fontSize="17" fill="#9ca3af">O</text>
                         <text x="13" y="16" fontFamily="var(--font-heading)" fontWeight="900" fontSize="17" fill="#9ca3af">Pay</text>

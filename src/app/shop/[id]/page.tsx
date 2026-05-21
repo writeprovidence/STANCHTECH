@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ChevronRight, Star, Minus, Plus, Facebook, Instagram, Loader2 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUser } from "@clerk/nextjs";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = React.use(params);
@@ -19,7 +20,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     const [activeImage, setActiveImage] = useState(0);
     const [activeTab, setActiveTab] = useState('specification');
     const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+    const [canReview, setCanReview] = useState(false);
+    const [userRating, setUserRating] = useState(5);
+    const [userComment, setUserComment] = useState("");
+    const [dynamicReviews, setDynamicReviews] = useState<any[]>([]);
     const { addToCart } = useCart();
+    const { user } = useUser();
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -58,7 +65,72 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             } catch {}
         };
         fetchRelated();
-    }, [productId]);
+
+        // Check if user has purchased and received this product (Live DB & Local Fallback)
+        const checkReviewEligibility = async () => {
+            let hasDelivered = false;
+            console.log("Review eligibility check started for:", productId, product?.name);
+
+            // 1. Local storage check (Instant sync)
+            try {
+                const rawOrders = localStorage.getItem('orders');
+                if (rawOrders) {
+                    const orders = JSON.parse(rawOrders);
+                    hasDelivered = orders.some((o: any) => {
+                        const isDelivered = o.status === 'Delivered';
+                        const productMatches = o.items?.some((i: any) => 
+                            String(i.id) === String(productId) || 
+                            String(i.name).toLowerCase() === String(product?.name).toLowerCase()
+                        );
+                        return isDelivered && productMatches;
+                    });
+                }
+            } catch (e) {}
+
+            // 2. Live Supabase check (Cross-device sync)
+            if (!hasDelivered) {
+                try {
+                    const rawProfile = localStorage.getItem('stanchtech_checkout_profile');
+                    const guestEmail = rawProfile ? JSON.parse(rawProfile).email : null;
+                    const emailToCheck = userEmail || guestEmail;
+
+                    console.log("Checking DB with email:", emailToCheck);
+
+                    if (emailToCheck) {
+                        const { data, error } = await supabase
+                            .from('orders')
+                            .select('*')
+                            .eq('status', 'Delivered');
+                        
+                        if (data && !error) {
+                            hasDelivered = data.some((o: any) => {
+                                const orderEmail = o.billing?.email || o.billing?.emailAddress || o.email || o.billing?.billingEmail;
+                                const emailMatches = orderEmail?.toLowerCase() === emailToCheck.toLowerCase();
+                                const productMatches = o.items?.some((i: any) => 
+                                    String(i.id) === String(productId) || 
+                                    String(i.name).toLowerCase() === String(product?.name).toLowerCase()
+                                );
+                                return emailMatches && productMatches;
+                            });
+                        }
+                    }
+                } catch (err) {
+                    console.error("Supabase review check error:", err);
+                }
+            }
+
+            console.log("Eligibility Result:", hasDelivered);
+            if (hasDelivered) setCanReview(true);
+        };
+
+        if (product) {
+            checkReviewEligibility();
+            // Load dynamic reviews from public store
+            const allGlobal = JSON.parse(localStorage.getItem('stanchtech_global_reviews') || '[]');
+            const productSpecific = allGlobal.filter((r: any) => String(r.productId) === String(productId));
+            setDynamicReviews(productSpecific);
+        }
+    }, [productId, userEmail, product]);
 
     if (isLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-blue-600" size={48} /></div>;
     if (!product) return <div className="pt-40 text-center">Product not found</div>;
@@ -294,6 +366,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                             {activeTab === 'reviews' && (
                                 <div style={{ paddingBottom: "160px" }}>
                                     {[
+                                        ...dynamicReviews,
                                         { name: "John D.", date: "April 12, 2026", rating: 5, comment: "Excellent replacement part. Fitted perfectly and resolved our machine issues instantly. Will definitely source from StanchTech again." },
                                         { name: "Captain H.", date: "March 28, 2026", rating: 5, comment: "Incredibly fast shipping. The parts look pristine and the build quality is obviously premium as described." },
                                         { name: "Mike T.", date: "March 15, 2026", rating: 4, comment: "Good quality, though it took a slight bit of adjustment to fit my specific engine correctly. Very satisfied overall." }
@@ -301,17 +374,17 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                                         <div key={i} className="space-y-6 border-b border-gray-50" style={{ paddingTop: i === 0 ? "0px" : "24px", paddingBottom: "24px" }}>
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-xs">{review.name.charAt(0)}</div>
+                                                    <div className="w-12 h-12 rounded-full bg-[#f8fafc] border border-gray-100 flex items-center justify-center font-bold text-black text-xs shadow-sm">{review.name.charAt(0)}</div>
                                                     <div>
-                                                        <p className="text-[17px] font-900 uppercase" style={{ fontFamily: "var(--font-body)" }}>{review.name}</p>
-                                                        <p className="text-[15px] text-gray-400 uppercase tracking-widest" style={{ fontFamily: "var(--font-body)" }}>{review.date}</p>
+                                                        <p className="text-[15px] font-900 uppercase" style={{ fontFamily: "var(--font-heading)", color: '#111' }}>{review.name}</p>
+                                                        <p className="text-[12px] text-gray-400 font-bold uppercase tracking-widest mt-1" style={{ fontFamily: "var(--font-body)" }}>{review.date}</p>
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-1 text-[#FFDA5B]">
-                                                    {[...Array(5)].map((_, j) => <Star key={j} size={10} fill={j < review.rating ? "currentColor" : "none"} strokeWidth={j < review.rating ? 0 : 2} />)}
+                                                    {[...Array(5)].map((_, j) => <Star key={j} size={11} fill={j < review.rating ? "currentColor" : "none"} strokeWidth={j < review.rating ? 0 : 2} />)}
                                                 </div>
                                             </div>
-                                            <p className="text-lg text-gray-500 leading-relaxed font-medium" style={{ fontFamily: "var(--font-body)" }}>{review.comment}</p>
+                                            <p className="text-[16px] text-gray-500 leading-relaxed font-medium max-w-2xl" style={{ fontFamily: "var(--font-body)" }}>{review.comment}</p>
                                         </div>
                                     ))}
                                 </div>

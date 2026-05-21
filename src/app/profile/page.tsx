@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { User, Package, MessageSquare, XCircle, LogOut, Info, Loader2 } from 'lucide-react';
+import { User, Package, MessageSquare, XCircle, LogOut, Info, Loader2, Star, Check } from 'lucide-react';
 import { useUser, useClerk } from "@clerk/nextjs";
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -78,6 +78,11 @@ function ProfileContent() {
   const [shippingErrors, setShippingErrors] = useState<Record<string, boolean>>({});
   const [orders, setOrders] = useState<any[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
+  const [reviewingProduct, setReviewingProduct] = useState<any>(null);
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewComment, setReviewComment] = useState('');
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+  const [submittedReviews, setSubmittedReviews] = useState<string[]>([]);
 
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
@@ -99,8 +104,58 @@ function ProfileContent() {
     
     const savedOrders = localStorage.getItem('orders');
     if (savedOrders) setOrders(JSON.parse(savedOrders));
+
+    const savedSubmitted = localStorage.getItem('stanchtech_submitted_reviews');
+    if (savedSubmitted) setSubmittedReviews(JSON.parse(savedSubmitted));
+
     setHasMounted(true);
   }, [isLoaded, user, router]);
+
+  const getEligibleProducts = () => {
+    const products: any[] = [];
+    orders.forEach(order => {
+      if (order.status === 'Delivered') {
+        order.items?.forEach((item: any) => {
+          if (!products.find(p => p.id === item.id)) {
+            products.push({ ...item, orderId: order.id });
+          }
+        });
+      }
+    });
+    return products;
+  };
+
+  const handleSubmitReview = () => {
+    if (!reviewComment.trim()) { alert("Please write a comment"); return; }
+    setIsSubmittingReview(true);
+    
+    // Create new review object
+    const newReview = {
+      productId: String(reviewingProduct.id),
+      name: user ? `${user.firstName} ${user.lastName}` : (userAddress ? `${userAddress.firstName} ${userAddress.lastName}` : "Verified Buyer"),
+      date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+      rating: reviewRating,
+      comment: reviewComment
+    };
+
+    // Simulate API call
+    setTimeout(() => {
+      // 1. Mark as locally submitted for the profile view
+      const newSubmitted = [...submittedReviews, String(reviewingProduct.id)];
+      setSubmittedReviews(newSubmitted);
+      localStorage.setItem('stanchtech_submitted_reviews', JSON.stringify(newSubmitted));
+      
+      // 2. Save to global reviews list for product page reflection
+      const existingGlobalReviews = JSON.parse(localStorage.getItem('stanchtech_global_reviews') || '[]');
+      localStorage.setItem('stanchtech_global_reviews', JSON.stringify([newReview, ...existingGlobalReviews]));
+
+      setIsSubmittingReview(false);
+      setReviewingProduct(null);
+      setReviewRating(5);
+      setReviewComment('');
+      // alert("Review submitted successfully!");
+    }, 1000);
+  };
 
   const menuItems = [
     { id: 'profile', label: 'Profile', icon: User },
@@ -703,15 +758,110 @@ function ProfileContent() {
                       paddingBottom: '16px',
                       borderBottom: '1px solid #e5e7eb'
                     }}>
-                      My Reviews
+                      {reviewingProduct ? `Reviewing: ${reviewingProduct.name}` : 'Product Reviews'}
                     </span>
                   </div>
-                  <div style={{ padding: '48px', flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
-                    <MessageSquare style={{ width: '48px', height: '48px', color: '#d1d5db' }} strokeWidth={1.5} />
-                    <div style={{ textAlign: 'center' }}>
-                      <p style={{ fontSize: '16px', fontWeight: 500, color: '#111827', marginBottom: '8px' }}>No reviews yet</p>
-                      <p style={{ fontSize: '14px', color: '#6b7280' }}>You haven't reviewed any products yet.</p>
-                    </div>
+
+                  <div style={{ padding: '28px', flex: 1 }}>
+                    {reviewingProduct ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                        <button 
+                          onClick={() => setReviewingProduct(null)}
+                          style={{ alignSelf: 'flex-start', color: '#6b7280', fontSize: '13px', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          ← Back to list
+                        </button>
+
+                        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', padding: '16px', background: '#f9fafb' }}>
+                          <img src={reviewingProduct.image} style={{ width: '60px', height: '60px', objectFit: 'contain' }} alt="" />
+                          <div>
+                            <p style={{ fontSize: '16px', fontWeight: 800, color: '#111827', fontFamily: "var(--font-body)" }}>{reviewingProduct.name}</p>
+                            <p style={{ fontSize: '12px', color: '#9ca3af' }}>From Order {reviewingProduct.orderId}</p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <p style={{ ...labelStyle, marginBottom: '12px' }}>Your Rating</p>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            {[1, 2, 3, 4, 5].map(star => (
+                              <button key={star} onClick={() => setReviewRating(star)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                                <Star size={24} fill={star <= reviewRating ? "#FFDA5B" : "none"} stroke={star <= reviewRating ? "#FFDA5B" : "#cbd5e1"} strokeWidth={star <= reviewRating ? 0 : 2} />
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <p style={{ ...labelStyle, marginBottom: '8px' }}>Your Review</p>
+                          <textarea 
+                            value={reviewComment}
+                            onChange={(e) => setReviewComment(e.target.value)}
+                            placeholder="How is the performance of this part?"
+                            style={{ ...inputStyle, height: '120px', paddingTop: '12px', resize: 'none' }}
+                          />
+                        </div>
+
+                        <button 
+                          onClick={handleSubmitReview}
+                          disabled={isSubmittingReview}
+                          style={{
+                            width: '100%',
+                            height: '48px',
+                            background: '#111',
+                            color: '#fff',
+                            border: 'none',
+                            fontSize: '14px',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.1em',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '8px'
+                          }}
+                        >
+                          {isSubmittingReview ? <Loader2 className="animate-spin" size={18} /> : 'Submit Review'}
+                        </button>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                        {getEligibleProducts().length > 0 ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '8px' }}>Select a product from your delivered orders to share your feedback.</p>
+                            {getEligibleProducts().map((product, idx) => {
+                              const alreadySubmitted = submittedReviews.includes(String(product.id));
+                              return (
+                                <div key={idx} style={{ padding: '16px', border: '1px solid #f3f4f6', background: '#f9fafb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                                    <img src={product.image} alt="" style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#fff', padding: '4px' }} />
+                                    <span style={{ fontSize: '14px', fontWeight: 700, color: '#111827', fontFamily: "var(--font-body)" }}>{product.name}</span>
+                                  </div>
+                                  {alreadySubmitted ? (
+                                    <span style={{ fontSize: '12px', color: '#16a34a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}><Check size={14}/> Reviewed</span>
+                                  ) : (
+                                    <button 
+                                      onClick={() => setReviewingProduct(product)}
+                                      style={{ padding: '8px 16px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '12px', fontWeight: 700, cursor: 'pointer', textTransform: 'uppercase' }}
+                                    >
+                                      Write Review
+                                    </button>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <div style={{ height: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
+                            <MessageSquare style={{ width: '48px', height: '48px', color: '#d1d5db' }} strokeWidth={1.5} />
+                            <div style={{ textAlign: 'center' }}>
+                              <p style={{ fontSize: '16px', fontWeight: 500, color: '#111827', marginBottom: '8px' }}>No products to review</p>
+                              <p style={{ fontSize: '14px', color: '#6b7280' }}>Only products from delivered orders can be reviewed.</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

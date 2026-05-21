@@ -796,7 +796,7 @@ export default function AdminDashboard() {
                     <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
                       <thead>
                         <tr style={{ background: '#f9fafb' }}>
-                          {['Order ID', 'Customer', 'Items', 'Total', 'Payment', 'Status', ''].map((h, i) => (
+                          {['Order ID', 'Customer', 'Items', 'Total', 'Payment', 'Delivery', 'Status', ''].map((h, i) => (
                             <th key={i} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', whiteSpace: 'nowrap' }}>{h}</th>
                           ))}
                         </tr>
@@ -820,7 +820,10 @@ export default function AdminDashboard() {
                             </td>
                             <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 800, color: '#111', whiteSpace: 'nowrap' }}>{fmt(o.total)}</td>
                             <td style={{ padding: '12px 16px', fontSize: '12px', color: '#6b7280', textTransform: 'capitalize' }}>
-                              {o.paymentMethod === 'cod' ? 'Cash on Delivery' : o.paymentMethod === 'bank' ? 'Bank Transfer' : 'OPay'}
+                              {o.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Bank Transfer'}
+                            </td>
+                            <td style={{ padding: '12px 16px', fontSize: '12px', color: '#6b7280', fontWeight: 700 }}>
+                              {(o.deliveryMethod || o.billing?.deliveryMethod) === 'pickup' ? 'In-store Pickup' : 'Home Delivery'}
                             </td>
                             <td style={{ padding: '12px 16px' }}><StatusBadge status={o.status} /></td>
                             <td style={{ padding: '12px 16px' }}>
@@ -884,6 +887,15 @@ export default function AdminDashboard() {
                         <p style={{ color: '#6b7280' }}>{selectedOrder.billing?.email}</p>
                         <p style={{ color: '#6b7280' }}>{selectedOrder.billing?.billingPhone}</p>
                         <p style={{ color: '#6b7280', marginTop: '4px' }}>{selectedOrder.billing?.billingAddress}, {selectedOrder.billing?.billingCity}, {selectedOrder.billing?.billingState}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>Delivery Option</p>
+                      <div style={{ background: '#f9fafb', borderRadius: '6px', padding: '12px', fontSize: '13px', lineHeight: 1.7 }}>
+                        <p style={{ fontWeight: 800, color: '#111', textTransform: 'uppercase', fontSize: '12px' }}>
+                          {(selectedOrder.deliveryMethod || selectedOrder.billing?.deliveryMethod) === 'pickup' ? '📦 IN-STORE PICKUP' : '🚚 HOME DELIVERY'}
+                        </p>
                       </div>
                     </div>
 
