@@ -59,6 +59,7 @@ export default function HomePage() {
         const { data: allData, error: allError } = await supabase
           .from('products')
           .select('*')
+          .neq('is_hidden', true)
           .order('id', { ascending: false });
 
         if (!allError) {
@@ -70,6 +71,7 @@ export default function HomePage() {
           .from('products')
           .select('*')
           .eq('is_featured', true)
+          .neq('is_hidden', true)
           .order('id', { ascending: false })
           .limit(3);
 

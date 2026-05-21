@@ -24,6 +24,7 @@ function ShopContent() {
                 const { data, error } = await supabase
                     .from('products')
                     .select('*')
+                    .neq('is_hidden', true)
                     .order('id', { ascending: false });
 
                 if (error) throw error;

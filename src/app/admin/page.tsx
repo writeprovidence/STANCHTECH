@@ -44,6 +44,7 @@ interface AdminProduct {
   shippingFee?: number;
   quantity?: number;
   is_featured?: boolean;
+  is_hidden?: boolean;
 }
 
 // ─── Admin PIN ───────────────────────────────────────────────────────────────
@@ -287,7 +288,7 @@ export default function AdminDashboard() {
         await supabase.from('products').delete().gt('id', -1);
         // Insert local batch (removing id to let Supabase generate new serial ones if needed, 
         // OR keeping them if we want to preserve IDs. Usually keeping them is better for links.)
-        const { error: pError } = await supabase.from('products').insert(products.map(p => ({
+        const insertPayload = products.map(p => ({
           name: p.name,
           price: Number(p.price) || 0,
           currency: p.currency || '₦',
@@ -299,7 +300,17 @@ export default function AdminDashboard() {
           condition: p.condition || '',
           stock: typeof p.stock === 'number' ? p.stock : 1,
           is_featured: p.is_featured || false,
-        })));
+          is_hidden: p.is_hidden || false,
+        }));
+        let { error: pError } = await supabase.from('products').insert(insertPayload);
+        
+        // Graceful fallback if is_hidden column doesn't exist yet
+        if (pError && pError.message.includes('is_hidden')) {
+          const fallbackPayload = insertPayload.map(({ is_hidden, ...rest }) => rest);
+          const retry = await supabase.from('products').insert(fallbackPayload);
+          pError = retry.error;
+        }
+        
         if (pError) throw pError;
       }
 
@@ -383,16 +394,29 @@ export default function AdminDashboard() {
         is_featured: p.is_featured || false,
       };
 
+      const payloadWithHidden = { ...dbPayload, is_hidden: p.is_hidden || false };
+
       const exists = products.find(x => x.id === p.id);
 
       let error: any = null;
-      if (exists) {
-        const res = await supabase.from('products').update(dbPayload).eq('id', p.id);
-        error = res.error;
-      } else {
-        const res = await supabase.from('products').insert([dbPayload]);
-        error = res.error;
+      
+      const doSave = async (payload: any) => {
+        if (exists) {
+          return await supabase.from('products').update(payload).eq('id', p.id);
+        } else {
+          return await supabase.from('products').insert([payload]);
+        }
+      };
+
+      let res = await doSave(payloadWithHidden);
+      
+      // Graceful fallback if is_hidden column doesn't exist yet in Supabase
+      if (res.error && res.error.message.includes('is_hidden')) {
+        console.warn("is_hidden column not found in database yet, falling back to save without it.");
+        res = await doSave(dbPayload);
       }
+      
+      error = res.error;
 
       if (error) {
         console.error('Supabase save error:', error);
@@ -1012,6 +1036,7 @@ export default function AdminDashboard() {
                         shippingFee: 0,
                         quantity: 0,
                         is_featured: false,
+                        is_hidden: false,
                       })}
                       style={{ padding: '9px 16px', background: BRAND_BLUE, color: '#fff', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "var(--font-heading)" }}
                     >
@@ -1055,6 +1080,20 @@ export default function AdminDashboard() {
                                   letterSpacing: '0.05em'
                                 }}>
                                   FEATURED
+                                </span>
+                              )}
+                              {p.is_hidden && (
+                                <span style={{ 
+                                  fontSize: '10px', 
+                                  fontWeight: 900, 
+                                  background: '#ef4444', 
+                                  color: '#fff', 
+                                  padding: '2px 6px', 
+                                  borderRadius: '2px',
+                                  fontFamily: "var(--font-heading)",
+                                  letterSpacing: '0.05em'
+                                }}>
+                                  HIDDEN
                                 </span>
                               )}
                             </div>
@@ -1195,6 +1234,17 @@ export default function AdminDashboard() {
                         style={{ width: '18px', height: '18px', cursor: 'pointer' }}
                       />
                       <label htmlFor="is_featured" style={{ fontSize: '12px', fontWeight: 700, color: BRAND_BLUE, cursor: 'pointer', fontFamily: "var(--font-heading)" }}>FEATURE ON HOMEPAGE</label>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px', background: editingProduct.is_hidden ? '#fef2f2' : '#f9fafb', borderRadius: '8px', marginBottom: '10px', border: editingProduct.is_hidden ? `1px solid #ef444420` : '1px solid #e5e7eb' }}>
+                      <input 
+                        type="checkbox" 
+                        id="is_hidden"
+                        checked={editingProduct.is_hidden || false}
+                        onChange={e => setEditingProduct({ ...editingProduct, is_hidden: e.target.checked })}
+                        style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                      />
+                      <label htmlFor="is_hidden" style={{ fontSize: '12px', fontWeight: 700, color: editingProduct.is_hidden ? '#dc2626' : '#6b7280', cursor: 'pointer', fontFamily: "var(--font-heading)" }}>HIDE FROM STOREFRONT</label>
                     </div>
 
                     <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
