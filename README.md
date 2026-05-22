@@ -1,6 +1,6 @@
 # StanchTech
 
-A full-stack e-commerce web application for automotive spare parts. Built with modern web technologies, StanchTech provides a premium storefront experience, real-time inventory management, and a powerful admin dashboard.
+STANCHTECH is a dependable marine and industrial maintenance solutions provider, built on a foundation of honesty, open-mindedness, and exceptional service delivery. We play a pivotal role in extending Cummins' expertise and technological advancements to the market we serve, along with a comprehensive array of related technologies.
 
 🌐 **Live Site:** [https://stanchtech.vercel.app](https://stanchtech.vercel.app)
 
