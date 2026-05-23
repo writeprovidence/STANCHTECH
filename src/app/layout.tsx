@@ -5,6 +5,7 @@ import { CartProvider } from "@/context/cart-context";
 import localFont from 'next/font/local'
 
 import { ClerkProvider } from '@clerk/nextjs'
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const spaceGrotesk = localFont({
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ShoppingCart />
           </CartProvider>
         </ClerkProvider>
+        <Analytics />
       </body>
     </html>
   );
