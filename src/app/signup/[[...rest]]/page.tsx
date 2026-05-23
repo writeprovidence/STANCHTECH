@@ -29,6 +29,8 @@ function SignupContent() {
         signInUrl="/login"
         path="/signup"
         routing="path"
+        forceRedirectUrl="/shop"
+        fallbackRedirectUrl="/shop"
       />
     </div>
   );

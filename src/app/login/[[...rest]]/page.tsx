@@ -36,6 +36,7 @@ function LoginContent() {
         path="/login"
         routing="path"
         forceRedirectUrl={redirectTo}
+        fallbackRedirectUrl="/shop"
       />
     </div>
   );
