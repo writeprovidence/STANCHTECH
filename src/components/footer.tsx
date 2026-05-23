@@ -12,7 +12,7 @@ export function Footer() {
     if (isAuthPage) return null;
 
     return (
-      <footer style={{ background: "#060D17", color: "#fff", paddingTop: 0 }}>
+      <footer style={{ background: "#060D17", color: "#fff", paddingTop: 0, marginTop: "160px" }}>
 
 
         {/* ─── MAIN FOOTER LINKS ─── */}
@@ -117,19 +117,21 @@ export function Footer() {
           {/* Bottom Bar */}
           <div style={{ 
             maxWidth: 1400, 
-            margin: "80px auto 0", 
-            paddingTop: 40, 
+            margin: "120px auto 0", 
+            paddingTop: 60, 
             borderTop: "1px solid rgba(255,255,255,0.05)",
             display: "flex",
+            flexWrap: "wrap",
+            gap: "40px",
             justifyContent: "space-between",
             alignItems: "center",
-            fontSize: 13,
+            fontSize: 14,
             color: "rgba(255,255,255,0.3)"
           }}>
              <p>&copy; {new Date().getFullYear()} Stanch Tech. All rights reserved.</p>
-             <div style={{ display: "flex", gap: 32 }}>
-                <span>Privacy Policy</span>
-                <span>Terms of Service</span>
+             <div style={{ display: "flex", gap: "80px", marginLeft: "auto" }}>
+                <Link href="/privacy" style={{ color: "inherit", textDecoration: "none" }} className="hover:text-white transition-colors">Privacy Policy</Link>
+                <Link href="/terms" style={{ color: "inherit", textDecoration: "none" }} className="hover:text-white transition-colors">Terms of Service</Link>
              </div>
           </div>
         </section>

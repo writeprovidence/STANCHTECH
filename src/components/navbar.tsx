@@ -8,7 +8,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight, PenLine, LogOut, Heart } from "lucide-react";
-import { PRODUCTS } from "@/data/products";
+import { supabase } from "@/lib/supabase";
 
 export function Navbar() {
     const router = useRouter();
@@ -31,15 +31,27 @@ export function Navbar() {
     const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
-        if (searchQuery.trim() === "") {
-            setSearchResults([]);
-            return;
-        }
-        const filtered = PRODUCTS.filter(p => 
-            p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.category.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setSearchResults(filtered);
+        const fetchResults = async () => {
+            if (searchQuery.trim() === "") {
+                setSearchResults([]);
+                return;
+            }
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .neq('is_hidden', true)
+                    .or(`name.ilike.%${searchQuery}%,category.ilike.%${searchQuery}%`)
+                    .limit(10);
+                
+                if (data) setSearchResults(data);
+            } catch (err) {
+                console.error("Error searching products:", err);
+            }
+        };
+
+        const timer = setTimeout(() => fetchResults(), 300);
+        return () => clearTimeout(timer);
     }, [searchQuery]);
 
     const handleSearchSubmit = (e) => {
@@ -563,8 +575,8 @@ export function Navbar() {
                                                 gap: "20px"
                                             }}
                                         >
-                                            <div style={{ width: "48px", height: "48px", background: "rgba(255,255,255,0.05)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                <img src={product.image} alt="" style={{ width: "32px", height: "32px", objectFit: "contain" }} />
+                                            <div style={{ width: "48px", height: "48px", background: "rgba(255,255,255,0.05)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+                                                <img src={Array.isArray(product.image) ? product.image[0] : product.image || "/asset/checkout/705687d37a1bd0160f34e53cdcb38e492d45e74c.png"} alt="" style={{ width: "32px", height: "32px", objectFit: "contain" }} />
                                             </div>
                                             <div style={{ flex: 1 }}>
                                                 <h3 style={{ color: "#fff", fontSize: "18px", fontWeight: 700, fontFamily: "var(--font-heading)" }}>{product.name}</h3>

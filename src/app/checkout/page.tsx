@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Copy, Loader2, Check, ArrowLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from "@/context/cart-context";
 import { useUser } from "@clerk/nextjs";
@@ -83,8 +84,7 @@ export default function CheckoutPage() {
     
     setIsAuth(isSignedIn);
 
-    const savedUserAddressStr = localStorage.getItem("stanchtech_user_address");
-    const savedShippingAddressStr = localStorage.getItem("stanchtech_shipping_address");
+    const savedUserAddressStr = localStorage.getItem("stanchtech_shipping_address");
     const savedProfileStr = localStorage.getItem("stanchtech_checkout_profile");
     
     let baseData = {};
@@ -117,19 +117,7 @@ export default function CheckoutPage() {
       setHasProfileAddress(false);
     }
 
-    if (savedShippingAddressStr) {
-      try {
-        const shipAddr = JSON.parse(savedShippingAddressStr);
-        initialData.shippingFirstName = shipAddr.firstName;
-        initialData.shippingLastName = shipAddr.lastName;
-        initialData.shippingPhone = shipAddr.phone;
-        initialData.shippingAdditionalPhone = shipAddr.additionalPhone;
-        initialData.shippingAddress = shipAddr.deliveryAddress;
-        initialData.shippingLandmark = shipAddr.landmark;
-        initialData.shippingState = shipAddr.state;
-        initialData.shippingCity = shipAddr.areaCouncil;
-      } catch (e) {}
-    }
+
 
     reset(initialData);
   }, [isLoaded, isSignedIn, user, reset]);
@@ -163,7 +151,6 @@ export default function CheckoutPage() {
     if (cartItems.length === 0) return;
 
     // Required field validation (additional phone is optional)
-    if (!data.email) { alert("Email is required."); return; }
     if (!data.billingFirstName) { alert("First name is required."); return; }
     if (!data.billingLastName) { alert("Last name is required."); return; }
     if (!data.billingPhone) { alert("Phone number is required."); return; }
@@ -172,14 +159,6 @@ export default function CheckoutPage() {
     if (!data.billingCity) { alert("Area Council is required."); return; }
     
     // Shipping field validation
-    if (!sameAsBilling) {
-      if (!data.shippingFirstName) { alert("Shipping First name is required."); return; }
-      if (!data.shippingLastName) { alert("Shipping Last name is required."); return; }
-      if (!data.shippingPhone) { alert("Shipping Phone number is required."); return; }
-      if (!data.shippingAddress) { alert("Shipping address is required."); return; }
-      if (!data.shippingState) { alert("Shipping State is required."); return; }
-      if (!data.shippingCity) { alert("Shipping Area Council is required."); return; }
-    }
 
     if (!data.agreeToTerms) { alert("Please agree to the terms and conditions"); return; }
 
@@ -192,7 +171,7 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Sync billing address back to profile (one address limit)
+    // Sync shipping address back to profile
     const profileAddress = {
       firstName: data.billingFirstName,
       lastName: data.billingLastName,
@@ -204,33 +183,7 @@ export default function CheckoutPage() {
       areaCouncil: data.billingCity,
       id: Date.now().toString()
     };
-    localStorage.setItem("stanchtech_user_address", JSON.stringify(profileAddress));
-
-    // Sync shipping address back to profile
-    const shippingData = sameAsBilling ? {
-      firstName: data.billingFirstName,
-      lastName: data.billingLastName,
-      phone: data.billingPhone,
-      additionalPhone: data.billingAdditionalPhone,
-      deliveryAddress: data.billingAddress,
-      landmark: data.billingLandmark,
-      state: data.billingState,
-      areaCouncil: data.billingCity,
-    } : {
-      firstName: data.shippingFirstName,
-      lastName: data.shippingLastName,
-      phone: data.shippingPhone,
-      additionalPhone: data.shippingAdditionalPhone,
-      deliveryAddress: data.shippingAddress,
-      landmark: data.shippingLandmark,
-      state: data.shippingState,
-      areaCouncil: data.shippingCity,
-    };
-
-    localStorage.setItem("stanchtech_shipping_address", JSON.stringify({
-      ...shippingData,
-      id: Date.now().toString()
-    }));
+    localStorage.setItem("stanchtech_shipping_address", JSON.stringify(profileAddress));
 
     // Success logic: save the order to localStorage for the orders page and directly to Supabase
     const newOrder = {
@@ -278,21 +231,12 @@ export default function CheckoutPage() {
   };
   const formValues = watch();
   const isFormValid = !!(
-    formValues.email &&
     formValues.billingFirstName &&
     formValues.billingLastName &&
     formValues.billingPhone &&
     formValues.billingAddress &&
     formValues.billingState &&
     formValues.billingCity &&
-    (sameAsBilling || (
-      formValues.shippingFirstName &&
-      formValues.shippingLastName &&
-      formValues.shippingPhone &&
-      formValues.shippingAddress &&
-      formValues.shippingState &&
-      formValues.shippingCity
-    )) &&
     formValues.agreeToTerms
   );
 
@@ -344,28 +288,12 @@ export default function CheckoutPage() {
               </>
             )}
 
-            {/* Customer Email */}
+
+
+            {/* Shipping Address */}
             <div style={{ marginBottom: '48px' }}>
               <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Customer email address</h2>
-
-              </div>
-              <div style={{ width: '100%' }}>
-                <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', letterSpacing: '0.05em' }}>Email Address <span style={{ color: 'red' }}>*</span></label>
-                <input
-                  {...register('email')}
-                  type="email"
-                  placeholder=""
-                  style={{ width: '100%' }}
-                  className="border rounded-[5px] px-4 h-[52px] text-[18px] text-[#25252d] focus:outline-none border-[#d3d3d3] focus:border-[#7047eb] bg-white"
-                />
-              </div>
-            </div>
-
-            {/* Customer Address */}
-            <div style={{ marginBottom: '48px' }}>
-              <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Customer address</h2>
+                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Shipping address</h2>
 
               </div>
               <div style={{ width: '100%' }}>
@@ -488,135 +416,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Shipping Address */}
-            <div style={{ marginBottom: '48px' }}>
-              <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
-                <h2 className="text-[18px] text-black" style={{ fontFamily: "var(--font-heading)" }}>Shipping address</h2>
 
-              </div>
-              <label className="flex items-center cursor-pointer" style={{ gap: '12px', marginBottom: '16px' }}>
-                <input
-                  type="checkbox"
-                  checked={sameAsBilling}
-                  onChange={(e) => handleSameAsBillingChange(e.target.checked)}
-                  className="w-[16px] h-[15px] border border-[#d3d3d3] rounded-[5px] accent-[#7047eb]"
-                />
-                <span className="text-[17px] text-[#25252d]">Same as customer address</span>
-              </label>
-              <div style={{ width: '100%' }}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
-                  <div>
-                    <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>First Name <span style={{ color: 'red' }}>*</span></label>
-                    <input
-                      {...register('shippingFirstName')}
-                      type="text"
-                      readOnly={sameAsBilling}
-                      placeholder=""
-                      className={`border rounded-[5px] px-4 h-[52px] text-[18px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
-                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                      }`}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Last Name <span style={{ color: 'red' }}>*</span></label>
-                    <input
-                      {...register('shippingLastName')}
-                      type="text"
-                      readOnly={sameAsBilling}
-                      placeholder=""
-                      className={`border rounded-[5px] px-4 h-[52px] text-[18px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
-                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                      }`}
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginBottom: '16px' }}>
-                  <div>
-                    <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Phone Number <span style={{ color: 'red' }}>*</span></label>
-                    <input
-                      {...register('shippingPhone')}
-                      type="tel"
-                      readOnly={sameAsBilling}
-                      placeholder=""
-                      className={`border rounded-[5px] px-4 h-[52px] text-[18px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
-                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                      }`}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Additional Phone</label>
-                    <input
-                      {...register('shippingAdditionalPhone')}
-                      type="tel"
-                      readOnly={sameAsBilling}
-                      placeholder=""
-                      className={`border rounded-[5px] px-4 h-[52px] text-[18px] placeholder:text-[#d3d3d3] focus:outline-none w-full ${
-                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                      }`}
-                    />
-                  </div>
-                </div>
-
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Address</label>
-                  <input
-                      {...register('shippingAddress')}
-                      type="text"
-                      readOnly={sameAsBilling}
-                      placeholder=""
-                      className={`w-full border rounded-[5px] px-4 h-[52px] text-[18px] placeholder:text-[#d3d3d3] focus:outline-none ${
-                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                      }`}
-                  />
-                </div>
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Landmark</label>
-                  <input
-                      {...register('shippingLandmark')}
-                      type="text"
-                      readOnly={sameAsBilling}
-                      placeholder=""
-                      className={`w-full border rounded-[5px] px-4 h-[52px] text-[18px] placeholder:text-[#d3d3d3] focus:outline-none ${
-                          sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white'
-                      }`}
-                  />
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                    <div>
-                      <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>State <span style={{ color: 'red' }}>*</span></label>
-                      <select
-                          {...register('shippingState')}
-                          disabled={sameAsBilling}
-                          className={`border rounded-[5px] px-4 h-[52px] text-[18px] focus:outline-none w-full ${
-                              sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white cursor-pointer'
-                          }`}
-                      >
-                        <option value="">Select State</option>
-                        {Object.keys(NIGERIAN_STATES).map(state => (
-                          <option key={state} value={state}>{state}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label style={{ fontSize: '16px', fontWeight: 600, color: '#374151', display: 'block', marginBottom: '4px', textTransform: 'none', letterSpacing: '0.05em' }}>Local Council <span style={{ color: 'red' }}>*</span></label>
-                      <select
-                          {...register('shippingCity')}
-                          disabled={sameAsBilling || (!watchShippingState && !sameAsBilling)}
-                          className={`border rounded-[5px] px-4 h-[52px] text-[18px] focus:outline-none w-full ${
-                              sameAsBilling ? 'pointer-events-none bg-white opacity-60' : 'border-[#d3d3d3] focus:border-[#7047eb] bg-white cursor-pointer'
-                          }`}
-                      >
-                        <option value="">Select Area Council</option>
-                        {watchShippingState && NIGERIAN_STATES[watchShippingState]?.map(lga => (
-                          <option key={lga} value={lga}>{lga}</option>
-                        ))}
-                      </select>
-                    </div>
-                </div>
-              </div>
-            </div>
 
             {/* Delivery Options */}
             <div style={{ marginBottom: '48px' }}>
@@ -865,11 +665,11 @@ export default function CheckoutPage() {
                   />
                   <span className="text-[12px] text-[#25252d]">
                     I agree to the{' '}
-                    <button type="button" className="text-[12px] text-[#7047eb] hover:underline">Terms & conditions</button>
+                    <Link href="/terms" target="_blank" className="text-[12px] text-[#7047eb] hover:underline">Terms & conditions</Link>
                     ,{' '}
-                    <button type="button" className="text-[12px] text-[#7047eb] hover:underline">Privacy policy</button>
+                    <Link href="/privacy" target="_blank" className="text-[12px] text-[#7047eb] hover:underline">Privacy policy</Link>
                     {' '}&{' '}
-                    <button type="button" className="text-[12px] text-[#7047eb] hover:underline">Return policy</button>
+                    <Link href="/return-policy" target="_blank" className="text-[12px] text-[#7047eb] hover:underline">Return policy</Link>
                   </span>
                 </label>
 

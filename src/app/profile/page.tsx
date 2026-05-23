@@ -61,21 +61,14 @@ function ProfileContent() {
   const [email, setEmail] = useState('');
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [tempEmail, setTempEmail] = useState('');
-  const [userAddress, setUserAddress] = useState<Address | null>(null);
   const [shippingAddress, setShippingAddress] = useState<Address | null>(null);
-  const [isAddingAddress, setIsAddingAddress] = useState(false);
   const [isAddingShipping, setIsAddingShipping] = useState(false);
-  const [addressForm, setAddressForm] = useState({
-    firstName: '', lastName: '', phone: '', additionalPhone: '',
-    deliveryAddress: '', landmark: '', state: '', areaCouncil: '',
-  });
   const [shippingForm, setShippingForm] = useState({
     firstName: '', lastName: '', phone: '', additionalPhone: '',
     deliveryAddress: '', landmark: '', state: '', areaCouncil: '',
   });
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [formErrors, setFormErrors] = useState<Record<string, boolean>>({});
   const [shippingErrors, setShippingErrors] = useState<Record<string, boolean>>({});
   const [orders, setOrders] = useState<any[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
@@ -98,8 +91,6 @@ function ProfileContent() {
       }
     }
     
-    const saved = localStorage.getItem("stanchtech_user_address");
-    if (saved) setUserAddress(JSON.parse(saved));
     const savedShipping = localStorage.getItem("stanchtech_shipping_address");
     if (savedShipping) setShippingAddress(JSON.parse(savedShipping));
     
@@ -131,7 +122,7 @@ function ProfileContent() {
     setIsSubmittingReview(true);
     
     const reviewerName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : 
-      (userAddress ? `${userAddress.firstName} ${userAddress.lastName}` : 'Verified Buyer');
+      (shippingAddress ? `${shippingAddress.firstName} ${shippingAddress.lastName}` : 'Verified Buyer');
     const reviewerEmail = user?.primaryEmailAddress?.emailAddress || '';
 
     const newReview = {
@@ -182,32 +173,6 @@ function ProfileContent() {
   const handleSaveEmail = () => {
     setEmail(tempEmail);
     setIsEditingEmail(false);
-  };
-
-  const handleAddAddress = () => {
-    setIsAddingAddress(true);
-    setAddressForm({
-      firstName: userAddress?.firstName || '', lastName: userAddress?.lastName || '',
-      phone: userAddress?.phone || '', additionalPhone: userAddress?.additionalPhone || '',
-      deliveryAddress: userAddress?.deliveryAddress || '', landmark: userAddress?.landmark || '',
-      state: userAddress?.state || '', areaCouncil: userAddress?.areaCouncil || '',
-    });
-  };
-
-  const handleSaveAddress = () => {
-    const errors: Record<string, boolean> = {};
-    if (!addressForm.firstName) errors.firstName = true;
-    if (!addressForm.lastName) errors.lastName = true;
-    if (!addressForm.phone) errors.phone = true;
-    if (!addressForm.deliveryAddress) errors.deliveryAddress = true;
-    if (!addressForm.state) errors.state = true;
-    if (!addressForm.areaCouncil) errors.areaCouncil = true;
-    if (Object.keys(errors).length > 0) { setFormErrors(errors); return; }
-    setFormErrors({});
-    const newAddress = { ...addressForm, id: userAddress?.id || Date.now().toString() };
-    setUserAddress(newAddress);
-    localStorage.setItem("stanchtech_user_address", JSON.stringify(newAddress));
-    setIsAddingAddress(false);
   };
 
   const handleAddShipping = () => {
@@ -455,112 +420,7 @@ function ProfileContent() {
                     {/* Card Header */}
                     <span style={{ fontSize: '13px', color: '#111', fontWeight: 600, display: 'block', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb', fontFamily: "var(--font-body)", textTransform: 'uppercase', letterSpacing: '0.08em' }}>Addresses</span>
 
-                    {/* — Customer Address — */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span style={{ fontSize: '16px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "var(--font-body)" }}>Customer Address</span>
-                        {!isAddingAddress && !userAddress && (
-                          <button onClick={handleAddAddress} style={{ fontSize: '16px', color: '#2563eb', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: 0, fontWeight: 700 }}>+ Add</button>
-                        )}
-                      </div>
 
-                      {!isAddingAddress && userAddress && (
-                        <div style={{ position: 'relative', padding: '24px' }}>
-                          <span style={{ position: 'absolute', top: 0, left: 0, width: '14px', height: '14px', borderTop: '2px solid #111827', borderLeft: '2px solid #111827' }} />
-                          <span style={{ position: 'absolute', top: 0, right: 0, width: '14px', height: '14px', borderTop: '2px solid #111827', borderRight: '2px solid #111827' }} />
-                          <span style={{ position: 'absolute', bottom: 0, left: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderLeft: '2px solid #111827' }} />
-                          <span style={{ position: 'absolute', bottom: 0, right: 0, width: '14px', height: '14px', borderBottom: '2px solid #111827', borderRight: '2px solid #111827' }} />
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                            <div>
-                              <p style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginBottom: '8px', fontFamily: "var(--font-body)" }}>{userAddress.firstName} {userAddress.lastName}</p>
-                              <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '6px', lineHeight: 1.6, fontFamily: "var(--font-body)" }}>{userAddress.deliveryAddress}, {userAddress.state}, {userAddress.areaCouncil}</p>
-                              <p style={{ fontSize: '18px', color: '#6b7280', fontFamily: "var(--font-body)" }}>{userAddress.phone}</p>
-                            </div>
-                            <button onClick={() => { setAddressForm(userAddress); setIsAddingAddress(true); }} style={{ color: '#2563eb', fontSize: '14px', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 800 }}>Edit</button>
-                          </div>
-                        </div>
-                      )}
-                      {!isAddingAddress && !userAddress && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#9ca3af' }}>
-                          <Info style={{ width: '16px', height: '16px' }} strokeWidth={1.5} />
-                          <span style={{ fontSize: '14px' }}>No customer address added</span>
-                        </div>
-                      )}
-                      {isAddingAddress && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <div>
-                              <label style={labelStyle}>First Name <span style={{ color: 'red' }}>*</span></label>
-                              <input type="text" value={addressForm.firstName} onChange={(e) => { setAddressForm({ ...addressForm, firstName: e.target.value }); setFormErrors(p => ({ ...p, firstName: false })); }} style={{ ...inputStyle, border: formErrors.firstName ? '1px solid #ef4444' : inputStyle.border }} />
-                            </div>
-                            <div>
-                              <label style={labelStyle}>Last Name <span style={{ color: 'red' }}>*</span></label>
-                              <input type="text" value={addressForm.lastName} onChange={(e) => { setAddressForm({ ...addressForm, lastName: e.target.value }); setFormErrors(p => ({ ...p, lastName: false })); }} style={{ ...inputStyle, border: formErrors.lastName ? '1px solid #ef4444' : inputStyle.border }} />
-                            </div>
-                          </div>
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <div>
-                              <label style={labelStyle}>Phone Number <span style={{ color: 'red' }}>*</span></label>
-                              <input type="tel" value={addressForm.phone} onChange={(e) => { setAddressForm({ ...addressForm, phone: e.target.value }); setFormErrors(p => ({ ...p, phone: false })); }} style={{ ...inputStyle, border: formErrors.phone ? '1px solid #ef4444' : inputStyle.border }} />
-                            </div>
-                            <div>
-                              <label style={labelStyle}>Additional Phone</label>
-                              <input type="tel" value={addressForm.additionalPhone} onChange={(e) => setAddressForm({ ...addressForm, additionalPhone: e.target.value })} style={inputStyle} />
-                            </div>
-                          </div>
-                          <div>
-                            <label style={labelStyle}>Address <span style={{ color: 'red' }}>*</span></label>
-                            <input type="text" value={addressForm.deliveryAddress} onChange={(e) => { setAddressForm({ ...addressForm, deliveryAddress: e.target.value }); setFormErrors(p => ({ ...p, deliveryAddress: false })); }} style={{ ...inputStyle, width: '100%', boxSizing: 'border-box', border: formErrors.deliveryAddress ? '1px solid #ef4444' : inputStyle.border }} />
-                          </div>
-                          <div>
-                            <label style={labelStyle}>Landmark</label>
-                            <input type="text" value={addressForm.landmark} onChange={(e) => setAddressForm({ ...addressForm, landmark: e.target.value })} style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }} />
-                          </div>
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                            <div>
-                                <label style={labelStyle}>State <span style={{ color: 'red' }}>*</span></label>
-                                <select 
-                                  value={addressForm.state} 
-                                  onChange={(e) => { 
-                                    setAddressForm({ ...addressForm, state: e.target.value, areaCouncil: '' }); 
-                                    setFormErrors(p => ({ ...p, state: false })); 
-                                  }} 
-                                  style={{ ...inputStyle, border: formErrors.state ? '1px solid #ef4444' : inputStyle.border, cursor: 'pointer' }}
-                                >
-                                  <option value="">Select State</option>
-                                  {Object.keys(NIGERIAN_STATES).map(state => (
-                                    <option key={state} value={state}>{state}</option>
-                                  ))}
-                                </select>
-                            </div>
-                            <div>
-                                <label style={labelStyle}>Area Council <span style={{ color: 'red' }}>*</span></label>
-                                <select 
-                                  value={addressForm.areaCouncil} 
-                                  onChange={(e) => { 
-                                    setAddressForm({ ...addressForm, areaCouncil: e.target.value }); 
-                                    setFormErrors(p => ({ ...p, areaCouncil: false })); 
-                                  }} 
-                                  style={{ ...inputStyle, border: formErrors.areaCouncil ? '1px solid #ef4444' : inputStyle.border, cursor: 'pointer' }}
-                                  disabled={!addressForm.state}
-                                >
-                                  <option value="">Select Area Council</option>
-                                  {addressForm.state && NIGERIAN_STATES[addressForm.state]?.map(lga => (
-                                    <option key={lga} value={lga}>{lga}</option>
-                                  ))}
-                                </select>
-                            </div>
-                          </div>
-                          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', paddingTop: '8px' }}>
-                            <button onClick={() => setIsAddingAddress(false)} style={{ padding: '8px 32px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Cancel</button>
-                            <button onClick={handleSaveAddress} style={{ padding: '8px 32px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>Save</button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Divider */}
-                    <div style={{ borderTop: '1px solid #f3f4f6' }} />
 
                     {/* — Shipping Address — */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

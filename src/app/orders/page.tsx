@@ -120,11 +120,29 @@ export default function OrdersPage() {
                 </div>
             </section>
 
-            <div className="container mx-auto px-10 md:px-24 py-12 border-t border-gray-50 mt-auto flex flex-wrap gap-8 text-[12px] font-bold text-gray-400 uppercase tracking-[0.2em]" style={{ fontFamily: "'Darker Grotesque', sans-serif" }}>
-                <Link href="#" className="hover:text-blue-600 transition-colors">Refund policy</Link>
-                <Link href="#" className="hover:text-blue-600 transition-colors">Privacy policy</Link>
-                <Link href="#" className="hover:text-blue-600 transition-colors">Terms of service</Link>
-                <div className="ml-auto text-gray-300">© 2024 Stanch Tech Limited</div>
+            <div style={{
+                borderTop: "1px solid #f9fafb",
+                marginTop: "160px",
+                paddingTop: "60px",
+                paddingBottom: "100px",
+                paddingLeft: "40px",
+                paddingRight: "40px",
+                fontFamily: "'Darker Grotesque', sans-serif",
+                fontSize: "13px",
+                fontWeight: "bold",
+                color: "#9ca3af",
+                textTransform: "uppercase",
+                letterSpacing: "0.2em",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                gap: "80px",
+                flexWrap: "wrap"
+            }}>
+                <Link href="/return-policy" style={{ textDecoration: "none", color: "inherit" }}>Refund policy</Link>
+                <Link href="/privacy" style={{ textDecoration: "none", color: "inherit" }}>Privacy policy</Link>
+                <Link href="/terms" style={{ textDecoration: "none", color: "inherit" }}>Terms of service</Link>
+                <div style={{ color: "#d1d5db", marginLeft: "40px" }}>© 2024 Stanch Tech Limited</div>
             </div>
         </div>
     );
