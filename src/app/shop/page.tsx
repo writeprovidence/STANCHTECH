@@ -7,6 +7,7 @@ import { PRODUCTS } from "@/data/products";
 import { supabase } from "@/lib/supabase";
 import { Filter, ChevronRight, ChevronDown, ChevronUp, Star, Plus, Minus, Search, X, SlidersHorizontal, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 function ShopContent() {
     const [activeFaq, setActiveFaq] = useState(null);
@@ -195,24 +196,49 @@ function ShopContent() {
             <div style={{ height: isFilterOpen ? "0px" : "12px", background: "#F8FAFC" }} className="transition-all duration-500" />
 
             <div className={`transition-all duration-500 ${isFilterOpen ? 'blur-[3px] opacity-70 pointer-events-none' : ''}`} style={{ paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "16px", paddingBottom: "100px", background: "#F8FAFC" }}>
+
+                {/* Skeleton grid while loading */}
+                {isLoading ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {Array.from({ length: 8 }).map((_, i) => (
+                            <div key={i} className="bg-white border border-gray-100 flex flex-col items-center animate-pulse"
+                                style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}>
+                                <div className="w-full aspect-square mb-6 bg-gray-100 rounded-lg" />
+                                <div className="w-full flex flex-col gap-3">
+                                    <div className="h-4 bg-gray-100 rounded w-3/4" />
+                                    <div className="h-5 bg-gray-100 rounded w-1/2" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {shopProducts.map((product, index) => (
+                    {shopProducts.map((product, index) => {
+                        const imgSrc = (Array.isArray(product.image) ? product.image[0] : product.image) || "/asset/Landing_page_image/marine_spares.png";
+                        const isAboveFold = index < 4;
+                        return (
                         <Link 
                             href={`/shop/${product.id}`} 
-                            key={index} 
-                            className="group relative bg-white border border-gray-100 text-left transition-all duration-700 flex flex-col items-center"
+                            key={product.id ?? index} 
+                            className="group relative bg-white border border-gray-100 text-left transition-all duration-700 flex flex-col items-center hover:shadow-lg"
                             style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
                         >
-                            {/* Genuine Badge */}
+                            {/* Condition Badge */}
                             <div className="absolute top-6 left-6 text-blue-600 text-[16px] font-900 uppercase tracking-widest opacity-100 transition-opacity duration-300 z-10" style={{ fontFamily: "var(--font-body)" }}>
                                 {product.condition}
                             </div>
 
-                            <div className="w-full aspect-square mb-6 flex items-center justify-center p-8">
-                                <img 
-                                    src={(Array.isArray(product.image) ? product.image[0] : product.image) || "/asset/Landing_page_image/marine_spares.png"} 
-                                    alt={product.name} 
-                                    className="w-[80%] h-[80%] object-contain transition-all duration-700" 
+                            <div className="w-full aspect-square mb-6 flex items-center justify-center p-8 relative">
+                                <Image
+                                    src={imgSrc}
+                                    alt={product.name}
+                                    fill
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                    className="object-contain transition-all duration-700 group-hover:scale-105 p-8"
+                                    priority={isAboveFold}
+                                    loading={isAboveFold ? "eager" : "lazy"}
+                                    placeholder="empty"
+                                    unoptimized={!imgSrc.startsWith('https://')}
                                 />
                             </div>
 
@@ -230,8 +256,10 @@ function ShopContent() {
                                 </div>
                             </div>
                         </Link>
-                    ))}
+                        );
+                    })}
                 </div>
+                )}
                 <div style={{ height: "64px" }} />
                 {totalPages > 1 && (
                     <div className="flex justify-center items-center gap-4">
@@ -273,9 +301,33 @@ function ShopContent() {
     );
 }
 
+function ShopLoadingSkeleton() {
+    return (
+        <div className="bg-[#F8FAFC] min-h-screen pt-20" style={{ fontFamily: "var(--font-body)" }}>
+            {/* Hero skeleton */}
+            <div className="h-[320px] bg-[#0b1a2e] animate-pulse" />
+            {/* Grid skeleton */}
+            <div style={{ paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "32px", paddingBottom: "100px", background: "#F8FAFC" }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {Array.from({ length: 8 }).map((_, i) => (
+                        <div key={i} className="bg-white border border-gray-100 flex flex-col items-center animate-pulse"
+                            style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}>
+                            <div className="w-full aspect-square mb-6 bg-gray-100 rounded-lg" />
+                            <div className="w-full flex flex-col gap-3">
+                                <div className="h-4 bg-gray-100 rounded w-3/4" />
+                                <div className="h-5 bg-gray-100 rounded w-1/2" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function ShopPage() {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<ShopLoadingSkeleton />}>
             <ShopContent />
         </Suspense>
     );
