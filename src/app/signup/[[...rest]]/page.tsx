@@ -12,14 +12,14 @@ function SignupContent() {
           elements: {
             card: "shadow-none border-2 border-black rounded-none w-full max-w-[450px]",
             logoBox: "hidden",
-            headerTitle: "font-['Space_Grotesk'] !text-2xl uppercase tracking-wider",
-            headerSubtitle: "font-['Darker_Grotesque'] !text-xl text-gray-500 font-bold",
+            headerTitle: "!text-2xl uppercase tracking-wider",
+            headerSubtitle: "!text-xl text-gray-500 font-bold",
             formButtonPrimary: "bg-black hover:bg-gray-800 rounded-none !h-14 !text-base font-bold uppercase tracking-widest",
-            formFieldInput: "border-2 border-black rounded-none !h-14 !text-lg focus:ring-0 focus:border-blue-600 transition-all font-['Darker_Grotesque'] font-bold",
+            formFieldInput: "border-2 border-black rounded-none !h-14 !text-lg focus:ring-0 focus:border-blue-600 transition-all font-bold",
             footerActionText: "!text-base",
             footerActionLink: "text-blue-600 hover:text-blue-800 font-bold !text-base",
             identityPreviewText: "font-bold !text-base",
-            formFieldLabel: "font-['Darker_Grotesque'] !text-base font-black uppercase text-gray-700",
+            formFieldLabel: "!text-base font-black uppercase text-gray-700",
             // Hide phone number related elements
             formField__phoneNumber: "hidden",
             phoneInput: "hidden",

@@ -31,7 +31,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${darkerGrotesque.variable}`}>
       <body suppressHydrationWarning className="antialiased selection:bg-primary/20 selection:text-primary min-h-screen">
-        <ClerkProvider>
+        <ClerkProvider
+          appearance={{
+            variables: {
+              fontFamily: 'var(--font-heading)'
+            }
+          }}
+        >
           <CartProvider>
             <Navbar />
             <main style={{ minHeight: "100vh" }}>
