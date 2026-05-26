@@ -195,7 +195,7 @@ function ShopContent() {
 
             <div style={{ height: isFilterOpen ? "0px" : "12px", background: "#F8FAFC" }} className="transition-all duration-500" />
 
-            <div className={`transition-all duration-500 ${isFilterOpen ? 'blur-[3px] opacity-70 pointer-events-none' : ''}`} style={{ paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "16px", paddingBottom: "100px", background: "#F8FAFC" }}>
+            <div className={`transition-all duration-500 ${isFilterOpen ? 'blur-[3px] opacity-70 pointer-events-none' : ''}`} style={{ paddingLeft: "5vw", paddingRight: "5vw", paddingTop: "16px", paddingBottom: "60px", background: "#F8FAFC" }}>
 
                 {/* Skeleton grid while loading */}
                 {isLoading ? (
@@ -260,7 +260,7 @@ function ShopContent() {
                     })}
                 </div>
                 )}
-                <div style={{ height: "64px" }} />
+                <div style={{ height: "60px" }} />
                 {totalPages > 1 && (
                     <div className="flex justify-center items-center gap-4">
                         <button 
@@ -295,7 +295,7 @@ function ShopContent() {
                         </button>
                     </div>
                 )}
-                <div style={{ height: "100px" }} />
+                <div style={{ height: "80px" }} />
             </div>
         </div>
     );

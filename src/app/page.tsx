@@ -215,7 +215,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 03. INTRO / STATS ─── */}
-      <section className="section-pad" style={{ background: "#fff" }}>
+      <section className="section-pad" style={{ background: "#fff", paddingBottom: 60 }}>
         <div className="two-col-grid">
           <div style={{ borderLeft: "4px solid var(--accent)", paddingLeft: 40 }}>
              <span className="section-label">Our Philosophy</span>
@@ -247,7 +247,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 04. REDESIGNED SERVICES GRID ─── */}
-      <section className="section-pad" style={{ background: "#fff", paddingTop: 0 }}>
+      <section className="section-pad" style={{ background: "#fff", paddingTop: 60 }}>
         <div style={{ textAlign: "center", marginBottom: 60 }}>
            <span className="section-label">What We Do</span>
            <h2 className="responsive-title">Engineered to Perfection</h2>
@@ -297,7 +297,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 06. CASE STUDIES ─── */}
-      <section style={{ background: "#0b1a2e", color: "#fff", padding: "140px 5%" }}>
+      <section style={{ background: "#0b1a2e", color: "#fff", padding: "180px 5%" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 80 }}>
               <div>
@@ -400,7 +400,7 @@ export default function HomePage() {
 
       {/* ─── 07.5 FEATURED SPARES ─── */}
       {dbLoaded && featuredProducts.length > 0 && (
-        <section className="section-pad" style={{ background: "#fff", color: "#0b1a2e", paddingTop: 0, marginTop: "-40px" }}>
+        <section className="section-pad" style={{ background: "#fff", color: "#0b1a2e", paddingTop: 60, marginTop: "-40px" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: 60, position: "relative" }}>
               <span className="section-label" style={{ color: "var(--accent)" }}>SPARE INVENTORY</span>
@@ -562,7 +562,8 @@ export default function HomePage() {
         color: "#fff",
         backgroundImage: 'linear-gradient(rgba(11,26,46,0.9), rgba(11,26,46,0.9)), url("/asset/Landing_page_image/support.png")',
         backgroundSize: "cover",
-        backgroundAttachment: "fixed"
+        backgroundAttachment: "fixed",
+        paddingBottom: "60px"
       }}>
          <motion.div
            initial={{ opacity: 0, scale: 0.95 }}

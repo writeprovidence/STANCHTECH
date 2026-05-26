@@ -37,7 +37,6 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { cartItems, cartCount, cartTotal, clearCart, setIsCartOpen } = useCart();
   const { isLoaded, isSignedIn, user } = useUser();
-  const [isAuth, setIsAuth] = useState<boolean | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasProfileAddress, setHasProfileAddress] = useState(false);
   const shippingFee = cartItems.reduce((acc, item: any) => acc + (Number(item.shippingFee) || 0) * item.quantity, 0);
@@ -82,8 +81,6 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (!isLoaded) return;
     
-    setIsAuth(isSignedIn);
-
     const savedUserAddressStr = localStorage.getItem("stanchtech_shipping_address");
     const savedProfileStr = localStorage.getItem("stanchtech_checkout_profile");
     
@@ -100,7 +97,7 @@ export default function CheckoutPage() {
       agreeToTerms: (baseData as any).agreeToTerms || false,
     };
 
-    if (savedUserAddressStr) {
+    if (savedUserAddressStr && isSignedIn) {
       setHasProfileAddress(true);
       try {
         const addr = JSON.parse(savedUserAddressStr);
@@ -148,7 +145,14 @@ export default function CheckoutPage() {
   };
 
   const onSubmit: SubmitHandler<CheckoutFormData> = async (data) => {
-    if (cartItems.length === 0) return;
+    console.log("Place Order clicked!");
+    console.log("isSignedIn:", isSignedIn);
+    console.log("cartItems:", cartItems);
+    
+    if (cartItems.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
 
     // Required field validation (additional phone is optional)
     if (!data.billingFirstName) { alert("First name is required."); return; }
@@ -158,11 +162,10 @@ export default function CheckoutPage() {
     if (!data.billingState) { alert("State is required."); return; }
     if (!data.billingCity) { alert("Area Council is required."); return; }
     
-    // Shipping field validation
-
     if (!data.agreeToTerms) { alert("Please agree to the terms and conditions"); return; }
 
-    if (!isAuth) {
+    if (!isSignedIn) {
+      console.log("Redirecting to login...");
       localStorage.setItem("stanchtech_checkout_profile", JSON.stringify(data));
       router.push("/login?next=/checkout");
       return;
@@ -240,7 +243,7 @@ export default function CheckoutPage() {
     formValues.agreeToTerms
   );
 
-  if (isAuth === null) {
+  if (!isLoaded) {
       return (
         <div className="fixed inset-0 bg-white z-[9999] flex items-center justify-center">
           <Loader2 className="w-8 h-8 animate-spin text-black" />
@@ -265,14 +268,14 @@ export default function CheckoutPage() {
           background-position: right 16px center;
         }
       `}</style>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[1100px] mx-auto" style={{ paddingTop: '80px', paddingBottom: '100px', paddingLeft: '24px', paddingRight: '24px' }}>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[1100px] mx-auto" style={{ paddingTop: '80px', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px' }}>
         <div className="flex flex-col lg:grid lg:grid-cols-[minmax(auto,459px)_380px] lg:gap-[160px] gap-12">
           {/* Left Column */}
           <div className="flex flex-col w-full relative">
-            <div className="hidden lg:block absolute right-[-80px] top-[-80px] bottom-[-100px] border-r border-[#F2F2F2]"></div>
+            <div className="hidden lg:block absolute right-[-80px] top-[-80px] bottom-[-60px] border-r border-[#F2F2F2]"></div>
             <h1 className="text-[24px] font-semibold text-black" style={{ marginBottom: '56px', fontFamily: "var(--font-heading)" }}>CHECKOUT</h1>
             
-            {!isAuth && (
+            {!isSignedIn && (
               <>
                 <div className="bg-[#fff5ea] border border-[#ffe4c7] rounded-[5px] flex items-center justify-start mb-[48px] w-full lg:w-[459px] h-[32px] box-border" style={{ paddingLeft: '32px' }}>
                   <p className="text-[17px] text-[#25252d]">
@@ -564,7 +567,7 @@ export default function CheckoutPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
 
-                <div className="flex items-start gap-3 cursor-pointer" onClick={() => {
+                <div className="flex items-center gap-3 cursor-pointer" onClick={() => {
                   if (paymentMethod !== 'bank') {
                     setPaymentMethod('bank');
                     setBankExpanded(true);
@@ -577,10 +580,26 @@ export default function CheckoutPage() {
                     name="payment"
                     checked={paymentMethod === 'bank'}
                     readOnly
-                    className="mt-0.5 w-4 h-4 accent-[#7047eb] pointer-events-none"
+                    className="w-4 h-4 accent-[#7047eb] pointer-events-none flex-shrink-0"
                   />
                   <div className="flex-1">
-                    <div className="text-[18px] text-black" style={{ marginBottom: '4px' }}>Direct bank transfer</div>
+                    <div className="flex items-center gap-3 flex-wrap" style={{ marginBottom: '4px' }}>
+                      <div className="text-[18px] text-black">Direct bank transfer</div>
+                      {/* Tooltip hint — visible when account is NOT yet showing */}
+                      {!(paymentMethod === 'bank' && bankExpanded) && (
+                        <span
+                          className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#7047eb] border border-[#7047eb]/30 bg-[#7047eb]/5 rounded-full px-2.5 py-1 animate-pulse select-none"
+                          style={{ fontFamily: "var(--font-body)" }}
+                        >
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                          </svg>
+                          Click to view account
+                        </span>
+                      )}
+                    </div>
                     <div className="text-[17px] text-[#828282]" style={{ marginBottom: '12px' }}>Make payment directly through bank account.</div>
                     
                     {paymentMethod === 'bank' && bankExpanded && (
@@ -627,7 +646,7 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* OPay — Coming Soon */}
-                <div className="flex items-start gap-3 cursor-not-allowed opacity-50 select-none">
+                <div className="flex items-center gap-3 cursor-not-allowed opacity-50 select-none">
                   <input
                     type="radio"
                     name="payment"
@@ -650,7 +669,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Review & Place Order */}
-            <div style={{ marginTop: '60px', marginBottom: '150px' }}>
+            <div style={{ marginTop: '60px', marginBottom: '80px' }}>
               <h2 className="text-[18px] text-black" style={{ marginBottom: '16px', fontFamily: "var(--font-heading)" }}>Review & Place Order</h2>
               <p className="text-[18px] text-[#645a5c]" style={{ marginBottom: '24px' }}>
                 Please review the order details and payment details before proceeding to confirm your order

@@ -12,18 +12,14 @@ export function Footer() {
     if (isAuthPage) return null;
 
     return (
-      <footer style={{ background: "#060D17", color: "#fff", paddingTop: 0, marginTop: "160px" }}>
+      <footer style={{ background: "#060D17", color: "#fff", paddingTop: 0, marginTop: "0" }}>
 
 
         {/* ─── MAIN FOOTER LINKS ─── */}
-        <section style={{ padding: "100px 5% 60px" }}>
-          <div className="footer-grid-wrapper" style={{
-            display: "grid",
-            gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
-            gap: 64,
+        <section style={{ padding: "60px 5% 60px" }}>
+          <div className="footer-grid-wrapper grid grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-16 items-start" style={{
             maxWidth: 1400,
-            margin: "0 auto",
-            alignItems: "start"
+            margin: "0 auto"
           }}>
             {/* ── Column 1: Brand ── */}
             <div>
@@ -50,13 +46,13 @@ export function Footer() {
             </div>
  
             {/* ── Column 2: Company ── */}
-            <div>
+            <div style={{ paddingTop: 20 }}>
                <h4 style={{ fontSize: 14, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", marginBottom: 32 }}>Company</h4>
                <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: 16 }}>
                   {[
-                    { label: "Home", href: "/" },
                     { label: "About", href: "/about" },
                     { label: "Portfolio", href: "/projects" },
+                    { label: "Shop", href: "/shop" },
                     { label: "Contact", href: "/contact" }
                   ].map((link, i) => (
                     <li key={i}>
@@ -78,7 +74,7 @@ export function Footer() {
             </div>
  
             {/* ── Column 3: Contact ── */}
-            <div className="footer-contact-column">
+            <div className="footer-contact-column" style={{ paddingTop: 20 }}>
                <h4 style={{ fontSize: 14, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", marginBottom: 32 }}>Contact Us</h4>
                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>
                   Km16 PHC - ABA Express Way, <br />
@@ -90,7 +86,7 @@ export function Footer() {
             </div>
  
             {/* ── Column 4: Emergency ── */}
-            <div>
+            <div style={{ paddingTop: 20 }}>
                <h4 style={{ fontSize: 14, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", marginBottom: 32 }}>Emergency Support</h4>
                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, lineHeight: 1.7, marginBottom: 28 }}>
                   Standby emergency services available. Every call is treated with urgency.

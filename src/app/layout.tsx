@@ -37,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               fontFamily: 'var(--font-heading)'
             }
           }}
+          telemetry={false}
         >
           <CartProvider>
             <Navbar />

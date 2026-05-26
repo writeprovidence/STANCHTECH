@@ -66,7 +66,7 @@ export default function AboutPage() {
         {
             id: "01",
             question: "How can I get in touch with the team?",
-            answer: "You can reach us via email at stanchtechltd@gmail.com, or call our customer support lines for immediate assistance. We are available on WhatsApp and WeChat as well."
+            answer: "You can reach us via email at stanchtechltd@gmail.com, or call our customer support lines for immediate assistance. We are available on WhatsApp as well."
         },
         {
             id: "02",
@@ -139,7 +139,7 @@ export default function AboutPage() {
             {/* MISSION STATEMENTS & STATS */}
             <section style={{ 
                 background: "rgba(132, 185, 224, 0.34)", 
-                padding: "64px 10vw 120px",
+                padding: "160px 10vw",
                 minHeight: "auto",
                 display: "flex",
                 flexDirection: "column",
@@ -214,7 +214,7 @@ export default function AboutPage() {
                 backgroundImage: 'url("/asset/about_image/our_values.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                padding: "140px 10vw",
+                padding: "160px 10vw",
                 position: "relative"
             }}>
                 <div style={{ position: "absolute", inset: 0, background: "rgba(11,26,46,0.7)", zIndex: 1 }} />
@@ -244,7 +244,7 @@ export default function AboutPage() {
             </section>
 
             {/* OUR SERVICES */}
-            <section style={{ padding: "80px 10vw 140px", background: "#F8FAFC" }}>
+            <section style={{ padding: "160px 10vw", background: "#F8FAFC" }}>
                 <div className="container mx-auto">
                     <div style={{ marginBottom: "64px" }}>
                         <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e" }}>Our Services</h2>
@@ -268,7 +268,7 @@ export default function AboutPage() {
             </section>
 
             {/* OUR TEAM */}
-            <section style={{ padding: "140px 10vw", background: "rgba(150, 195, 228, 0.25)" }}>
+            <section style={{ padding: "160px 10vw", background: "rgba(150, 195, 228, 0.25)" }}>
                 <div className="container mx-auto">
                     <div style={{ marginBottom: "80px" }}>
                         <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", lineHeight: 1, marginBottom: "24px" }}>Our Team</h2>
@@ -296,63 +296,13 @@ export default function AboutPage() {
             </section>
 
             {/* PARTNERS */}
-            <section style={{ padding: "120px 10vw", background: "#ffffff" }}>
+            <section style={{ padding: "200px 10vw 120px", background: "#ffffff" }}>
                 <div className="container mx-auto text-left">
                     <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", marginBottom: "12px" }}>Our Partners</h2>
                     <p style={{ marginBottom: "80px", color: "#64748b", fontWeight: 700, fontSize: "20px", fontFamily: "var(--font-body)" }}>Our partners in delivering reliable marine and industrial maintenance solutions.</p>
                     
                     <div className="flex flex-wrap justify-start items-center gap-24">
                         <img src="/asset/Landing_page_image/partners.png" alt="Collaborative Partners" className="h-32 w-auto object-contain hover:opacity-80 transition-all duration-700" />
-                    </div>
-                </div>
-            </section>
-
-            {/* FAQ SECTION */}
-            <section style={{ 
-                background: "rgba(150, 195, 228, 0.25)",
-                padding: "140px 10vw",
-                minHeight: "835px"
-            }}>
-                <div className="container mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24">
-                    <div className="lg:w-1/3">
-                        <h2 style={{ fontSize: "clamp(42px, 8vw, 70px)", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", lineHeight: 1.0 }}>
-                            Frequently Asked Questions
-                        </h2>
-                    </div>
-                    <div className="w-full lg:w-1/2 border-t border-[#0b1a2e]/20" style={{ maxWidth: "600px", marginLeft: "auto", marginRight: "0" }}>
-                        {faqs.map((faq, index) => (
-                            <div key={faq.id} className="border-b border-[#0b1a2e]/20" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
-                                <button 
-                                    onClick={() => setActiveFaq(activeFaq === index ? null : index)}
-                                    className="w-full text-left group flex items-center justify-between"
-                                    style={{ paddingBottom: "24px" }}
-                                >
-                                    <div className="flex items-center gap-6 md:gap-8 pr-4">
-                                        <span style={{ fontFamily: "var(--font-heading)", fontSize: "24px", fontWeight: 900, color: "#0b1a2e", opacity: 0.5 }}>{faq.id}</span>
-                                        <span style={{ fontFamily: "var(--font-body)", fontSize: "26px", fontWeight: 700, color: "#0b1a2e", lineHeight: 1.3, maxWidth: "440px", display: "inline-block" }} className="group-hover:text-blue-600 transition-colors">
-                                            {faq.question}
-                                        </span>
-                                    </div>
-                                    <div className={`flex-shrink-0 p-2 rounded-full border ${activeFaq === index ? 'bg-[#0b1a2e] border-[#0b1a2e] text-white' : 'border-[#0b1a2e]/30'} transition-all`}>
-                                        {activeFaq === index ? <Minus size={20} /> : <Plus size={20} />}
-                                    </div>
-                                </button>
-                                <AnimatePresence>
-                                    {activeFaq === index && (
-                                        <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: "auto", opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            className="overflow-hidden"
-                                        >
-                                            <p style={{ fontFamily: "var(--font-body)", fontSize: "19px", fontWeight: 500, color: "#334155", lineHeight: 1.6, paddingBottom: "40px", paddingLeft: "56px", paddingRight: "16px" }}>
-                                                {faq.answer}
-                                            </p>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </section>

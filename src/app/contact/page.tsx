@@ -8,7 +8,7 @@ const faqs = [
     {
         id: "01",
         question: "How can I get in touch with the team?",
-        answer: "You can reach us via email at stanchtechltd@gmail.com, or call our customer support lines for immediate assistance. We are available on WhatsApp and WeChat as well."
+        answer: "You can reach us via email at stanchtechltd@gmail.com, or call our customer support lines for immediate assistance. We are available on WhatsApp as well."
     },
     {
         id: "02",
@@ -77,7 +77,7 @@ export default function ContactPage() {
             </section>
 
             {/* --- OFFICE & MAP SECTION --- */}
-            <section id="address" className="bg-white relative overflow-hidden" style={{ padding: "140px 10vw", minHeight: "800px" }}>
+            <section id="address" className="bg-white relative overflow-hidden" style={{ padding: "160px 10vw", minHeight: "auto" }}>
                 <div className="container mx-auto max-w-6xl flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
                     
                     {/* Office Info Side */}
@@ -170,7 +170,7 @@ export default function ContactPage() {
             </section>
 
             {/* --- FAQ SECTION --- */}
-            <section style={{ backgroundColor: "rgba(150, 195, 228, 0.25)", padding: "128px 10vw" }}>
+            <section style={{ backgroundColor: "rgba(150, 195, 228, 0.25)", padding: "160px 10vw 60px" }}>
                 <div className="container mx-auto max-w-6xl flex flex-col lg:flex-row gap-16 lg:gap-24">
                     <div className="lg:w-1/3">
                         <motion.h2 

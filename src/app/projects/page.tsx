@@ -253,7 +253,7 @@ export default function ProjectsPage() {
 
 
       {/* ─── CTA ─── */}
-      <section style={{ padding: "120px 5% 140px", background: "#4B7A8D", color: "#fff", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section style={{ padding: "160px 5% 160px", background: "#4B7A8D", color: "#fff", textAlign: "center", position: "relative", overflow: "hidden" }}>
          <div style={{ maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 10 }}>
            <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, marginBottom: 24, fontFamily: "var(--font-heading)" }}>Ready to Bring your Portfolio <br /> to Life with Confidence?</h2>
            <div style={{ width: 100, height: 1, background: "rgba(255,255,255,0.3)", margin: "0 auto 40px" }} />
