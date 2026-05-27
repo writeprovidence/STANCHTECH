@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle, MapPin, Package } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle, MapPin, Package, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 
@@ -51,6 +51,7 @@ export default function HomePage() {
   const [products, setProducts] = useState<any[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
   const [dbLoaded, setDbLoaded] = useState(false);
+  const [localSearchQuery, setLocalSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -156,8 +157,8 @@ export default function HomePage() {
             className="responsive-title" 
             style={{ color: "#fff", marginBottom: 32, textShadow: "0 10px 30px rgba(0,0,0,0.3)" }}
           >
-            Building High-Performance <br />
-            Marine Systems
+            Your Trusted Partner in <br />
+            Marine & Industrial Excellence
           </motion.h1>
 
           <motion.p 
@@ -218,13 +219,12 @@ export default function HomePage() {
       <section className="section-pad" style={{ background: "#fff", paddingBottom: 60 }}>
         <div className="two-col-grid">
           <div style={{ borderLeft: "4px solid var(--accent)", paddingLeft: 40 }}>
-             <span className="section-label">Our Philosophy</span>
-             <h2 className="responsive-title" style={{ marginBottom: 24 }}>
-                Precision is our foundation, <br />
-                performance is our <span style={{ color: "var(--accent)" }}>legacy.</span>
+             <span className="section-label">First Class Service</span>
+             <h2 className="responsive-title" style={{ marginBottom: 24, fontSize: "clamp(32px, 5vw, 42px)" }}>
+                A leading <span style={{ color: "var(--accent)" }}>CUMMINS</span> engine part supplier in West Africa.
              </h2>
              <p className="responsive-subtitle">
-                We bring over a decade of technical expertise to the marine and industrial sectors, ensuring your operations never miss a beat. From complex engine overhauls to critical spares logistics.
+                We are regarded as a reliable source of quality replacement parts in Nigeria. We provide our services to the highest standards, assuring that our premium quality results in an affordable delivery without compromising on reliability.
              </p>
              <Link href="/about" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 40, color: "var(--navy)", fontWeight: 700, textDecoration: "none" }}>
                 LEARN MORE ABOUT OUR MISSION <ArrowUpRight size={18} color="var(--accent)" />
@@ -250,13 +250,13 @@ export default function HomePage() {
       <section className="section-pad" style={{ background: "#fff", paddingTop: 60 }}>
         <div style={{ textAlign: "center", marginBottom: 60 }}>
            <span className="section-label">What We Do</span>
-           <h2 className="responsive-title">Engineered to Perfection</h2>
+           <h2 className="responsive-title">Premium Cummins <br /> Engine Service Experts</h2>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
            {[
-             { num: "01", title: "Cummins engines maintenance and repair services", img: "/asset/Landing_page_image/cummin_engine.png", desc: "Cummins engine maintenance and repair services, ensuring optimal performance, reliability and extended lifespan through expert diagnostics." },
+             { num: "01", title: "Premium Parts for Construction, Industrial & Marine Equipment", img: "/asset/Landing_page_image/cummin_engine.png", desc: "With extensive knowledge of all CUMMINS engine models and a commitment to providing only the highest quality, affordable, replacement parts and services." },
              { num: "02", title: "Vessel Inspection, Maintenance & Repairs.", img: "/asset/Landing_page_image/vessel.png", desc: "Ensure vessel safety and performance through thorough inspection, routine maintenance, and reliable repairs. We prevent breakdowns and keep operations running smoothly." },
-             { num: "03", title: "Sales of Genuine Cummins Engine Spares", img: "/asset/Landing_page_image/marine_spares.png", desc: "We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems." }
+             { num: "03", title: "Expert Technical Support for Marine and Industrial Operations", img: "/asset/Landing_page_image/marine_spares.png", desc: "We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems." }
            ].map((service, i) => (
              <div key={i} className="premium-card" style={{ display: "flex", flexDirection: "column" }}>
                 <span className="card-number">{service.num}/</span>
@@ -283,10 +283,10 @@ export default function HomePage() {
          </div>
          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
             {[
+              { title: "Quality & Precision", desc: "We have built a strong reputation across Nigeria for providing high-quality parts, backed by an industry-leading 12-month warranty on our services." },
               { title: "Unmatched Expertise", desc: "Our technicians are certified specialists for high-power marine diesel systems." },
               { title: "24/7 Deployment", desc: "Breakdowns don't wait. Our support teams are ready for rapid onsite response." },
-              { title: "Genuine Guarantee", desc: "We exclusively utilize and supply OEM-certified parts for total reliability." },
-              { title: "Integrated Logistics", desc: "From shipping to installation, we handle the entire hardware lifecycle." }
+              { title: "Genuine Guarantee", desc: "We exclusively utilize and supply OEM-certified parts for total reliability." }
             ].map((item, i) => (
               <div key={i} style={{ borderLeft: "2px solid var(--accent)", paddingLeft: 24 }}>
                  <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16, fontFamily: "var(--font-heading)" }}>{item.title}</h3>
@@ -408,6 +408,7 @@ export default function HomePage() {
               <p style={{ color: "rgba(11,26,46,0.68)", fontSize: 20, maxWidth: 560, margin: "0 auto", fontFamily: "var(--font-body)" }}>
                 Our spares help to reduce downtime and ensure operations run smoothly.
               </p>
+
               <style>{`
                 .featured-product-card {
                   transition: all 0.3s ease;
@@ -497,7 +498,7 @@ export default function HomePage() {
                         marginTop: "auto"
                       }}
                     >
-                      BUY SPARE
+                      VIEW SPARE
                     </Link>
                   </div>
                 </div>
@@ -542,7 +543,7 @@ export default function HomePage() {
                     "{t.quote}"
                  </p>
                  <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                    <div style={{ width: 56, height: 56, borderRadius: "50%", background: "var(--faded-accent)", color: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 20 }}>
+                    <div style={{ width: 56, height: 56, borderRadius: "50%", background: "var(--faded-accent)", color: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 20, flexShrink: 0 }}>
                        {t.initial}
                     </div>
                     <div>

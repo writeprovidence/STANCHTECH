@@ -167,7 +167,7 @@ export default function CheckoutPage() {
     if (!isSignedIn) {
       console.log("Redirecting to login...");
       localStorage.setItem("stanchtech_checkout_profile", JSON.stringify(data));
-      router.push("/login?next=/checkout");
+      router.push("/login?next=/profile");
       return;
     }
 
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
                 <div className="bg-[#fff5ea] border border-[#ffe4c7] rounded-[5px] flex items-center justify-start mb-[48px] w-full lg:w-[459px] h-[32px] box-border" style={{ paddingLeft: '32px' }}>
                   <p className="text-[17px] text-[#25252d]">
                     Already have an account?{' '}
-                    <button type="button" className="text-[#7047eb] hover:underline" onClick={() => router.push('/login?next=/checkout')}>
+                    <button type="button" className="text-[#7047eb] hover:underline" onClick={() => router.push('/login?next=/profile')}>
                       Log in
                     </button>{' '}
                     for faster checkout

@@ -13,7 +13,7 @@ const faqs = [
     {
         id: "02",
         question: "Is there a direct phone number or email to reach the team?",
-        answer: "Yes, you can call us directly at +234 (0) 705 962 3727 or email us at stanchtechltd@gmail.com. Our various regional contact numbers are also listed in the footer."
+        answer: "Yes, you can call us directly at +234 (0) 803 734 0959 or email us at stanchtechltd@gmail.com. Our various regional contact numbers are also listed in the footer."
     },
     {
         id: "03",
@@ -129,7 +129,6 @@ export default function ContactPage() {
                                     <div>
                                         <p style={{ color: "#9ca3af", fontSize: 10, fontWeight: 800, textTransform: "uppercase", marginBottom: 6, letterSpacing: "0.1em" }}>Contact Support</p>
                                         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                                            <p style={{ fontSize: 16, fontWeight: 700, color: "#0b1a2e" }}>+234 (0) 705 962 3727</p>
                                             <p style={{ fontSize: 16, fontWeight: 700, color: "#0b1a2e" }}>+234 (0) 803 734 0959</p>
                                             <p style={{ fontSize: 16, fontWeight: 700, color: "#0b1a2e" }}>+234 (0) 808 529 0298</p>
                                         </div>

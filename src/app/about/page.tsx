@@ -12,7 +12,7 @@ export default function AboutPage() {
     const stats = [
         { label: "Founded", value: "2018" },
         { label: "Technical staff", value: "50+" },
-        { label: "Global partners", value: "12+" }
+        { label: "Partners", value: "12+" }
     ];
 
     const values = [
@@ -71,7 +71,7 @@ export default function AboutPage() {
         {
             id: "02",
             question: "Is there a direct phone number or email to reach the team?",
-            answer: "Yes, you can call us directly at +234 (0) 705 962 3727 or email us at stanchtechltd@gmail.com. Our various regional contact numbers are also listed in the footer."
+            answer: "Yes, you can call us directly at +234 (0) 803 734 0959 or email us at stanchtechltd@gmail.com. Our various regional contact numbers are also listed in the footer."
         },
         {
             id: "03",
@@ -90,82 +90,152 @@ export default function AboutPage() {
             
             {/* HERO SECTION */}
             <section style={{ 
-                height: "80vh", 
-                minHeight: "700px",
+                minHeight: "100vh",
                 position: "relative",
-                backgroundImage: 'url("/asset/about_image/built_on_excellence.png")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+                overflow: "hidden",
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
                 alignItems: "center",
-                textAlign: "center",
-                color: "#fff",
-                padding: "0 24px"
             }}>
-                <div style={{ position: "absolute", inset: 0, background: "rgba(11,26,46,0.55)" }} />
-                <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px" }}>
+                {/* Full background image */}
+                <div style={{ position: "absolute", inset: 0 }}>
+                    <img 
+                        src="/asset/about_image/built_on_excellence.png" 
+                        alt="" 
+                        style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} 
+                    />
+                    {/* Dark gradient overlay — left heavy for text legibility */}
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(105deg, rgba(11,26,46,0.96) 0%, rgba(11,26,46,0.82) 45%, rgba(11,26,46,0.3) 100%)" }} />
+                </div>
+
+                {/* Content */}
+                <div style={{ position: "relative", zIndex: 2, padding: "120px 15vw 120px 18vw", maxWidth: "1400px", width: "100%" }}>
+                    <span style={{ 
+                        display: "inline-block",
+                        color: "var(--accent, #3b82f6)", 
+                        fontWeight: 800, 
+                        textTransform: "uppercase", 
+                        letterSpacing: "0.25em", 
+                        fontSize: "14px", 
+                        fontFamily: "var(--font-body)",
+                        marginBottom: "32px"
+                    }}>
+                        About StanchTech
+                    </span>
+
                     <h1 style={{ 
-                        fontSize: "clamp(48px, 10vw, 130px)", 
+                        fontSize: "clamp(56px, 10vw, 140px)", 
                         fontWeight: 900, 
                         fontFamily: "var(--font-heading)",
-                        lineHeight: 0.9,
+                        lineHeight: 0.88,
                         letterSpacing: "-0.04em",
-                        marginBottom: "32px",
-                        padding: "0 10px"
+                        color: "#ffffff",
+                        marginBottom: "48px",
+                        maxWidth: "900px"
                     }}>
-                        BUILT ON<br className="sm:block hidden"/> EXCELLENCE
+                        BUILT ON<br/>
+                        <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.4)", color: "transparent" }}>
+                            EXCELLENCE.
+                        </span>
                     </h1>
+
+                    <div style={{ width: "60px", height: "3px", background: "var(--accent, #155DFC)", borderRadius: "2px", marginBottom: "40px" }} />
+
                     <p style={{ 
-                        fontSize: "clamp(18px, 4vw, 24px)", 
+                        fontSize: "clamp(17px, 2vw, 22px)", 
                         fontWeight: 300, 
                         fontFamily: "var(--font-body)",
-                        maxWidth: "900px",
-                        margin: "0 auto",
-                        lineHeight: 1.4,
-                        opacity: 0.95,
-                        padding: "0 10px"
+                        maxWidth: "620px",
+                        lineHeight: 1.75,
+                        color: "rgba(255,255,255,0.85)",
                     }}>
-                        STANCHTECH is a dependable marine and industrial maintenance solutions provider, 
-                        built on a foundation of honesty, open-mindedness, 
-                        and exceptional service delivery. We play a pivotal role in extending Cummins' 
-                        expertise and technological advancements to the market we serve, 
-                        along with a comprehensive array of related technologies.
+                        STANCH TECH is a dependable marine and industrial maintenance solutions provider, 
+                        built on a foundation of honesty and exceptional service delivery. We play a pivotal 
+                        role in extending Cummins' expertise and technological advancements to the markets we serve.
                     </p>
+
+                    <style>{`
+                        .about-btn-primary {
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 220px;
+                            height: 58px;
+                            background: var(--accent, #155DFC);
+                            color: #fff;
+                            font-weight: 800;
+                            font-size: 14px;
+                            text-transform: uppercase;
+                            letter-spacing: 0.1em;
+                            text-decoration: none;
+                            font-family: var(--font-body);
+                            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+                        }
+                        .about-btn-primary:hover {
+                            background: #0e44cc;
+                            transform: translateY(-2px);
+                            box-shadow: 0 12px 32px rgba(21, 93, 252, 0.5);
+                        }
+                        .about-btn-ghost {
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 220px;
+                            height: 58px;
+                            background: transparent;
+                            color: #fff;
+                            font-weight: 800;
+                            font-size: 14px;
+                            text-transform: uppercase;
+                            letter-spacing: 0.1em;
+                            text-decoration: none;
+                            font-family: var(--font-body);
+                            border: 1px solid rgba(255,255,255,0.3);
+                            transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+                        }
+                        .about-btn-ghost:hover {
+                            background: rgba(255,255,255,0.12);
+                            border-color: rgba(255,255,255,0.8);
+                            transform: translateY(-2px);
+                        }
+                    `}</style>
+                    <div style={{ display: "flex", gap: "24px", marginTop: "56px", flexWrap: "wrap" }}>
+                        <a href="/contact" className="about-btn-primary">
+                            Get In Touch
+                        </a>
+                        <a href="/shop" target="_blank" rel="noopener noreferrer" className="about-btn-ghost">
+                            Explore Inventory
+                        </a>
+                    </div>
                 </div>
+
+                {/* Bottom fade */}
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "120px", background: "linear-gradient(to top, rgba(255,255,255,0.05), transparent)" }} />
             </section>
 
             {/* MISSION STATEMENTS & STATS */}
-            <section style={{ 
-                background: "rgba(132, 185, 224, 0.34)", 
-                padding: "160px 10vw",
-                minHeight: "auto",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center"
-            }}>
-                <div className="container mx-auto">
-                    <p style={{ 
-                        fontSize: "32px", 
-                        fontWeight: 500, 
-                        fontFamily: "var(--font-body)",
-                        textAlign: "center",
-                        maxWidth: "1200px",
-                        margin: "0 auto 100px",
-                        color: "#0b1a2e",
-                        lineHeight: 1.15
-                    }}>
-                        Our mission to become a trusted global partner in<br/>
-                        marine and industrial maintenance, recognized for reliability,<br/>
-                        technical excellence, and proactive service solutions that extend equipment<br/>
-                        life and minimize operational risk.
-                    </p>
-                    
+            <section style={{ background: "#ffffff", padding: "160px 10vw", position: "relative", overflow: "hidden" }}>
+
+                {/* Background accent blob */}
+                <div style={{ position: "absolute", top: "-10%", right: "-10%", width: "600px", height: "600px", borderRadius: "50%", background: "rgba(84, 150, 255, 0.06)", pointerEvents: "none" }} />
+                <div style={{ position: "absolute", bottom: "-10%", left: "-5%", width: "400px", height: "400px", borderRadius: "50%", background: "rgba(84, 150, 255, 0.04)", pointerEvents: "none" }} />
+
+                <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+                    {/* Heading block */}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", marginBottom: "100px" }}>
+                        <span style={{ color: "var(--accent, #155DFC)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", fontSize: "13px", display: "block", marginBottom: "20px", fontFamily: "var(--font-body)" }}>Our Purpose</span>
+                        <h2 style={{ fontSize: "clamp(36px, 5vw, 58px)", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "32px", maxWidth: "780px" }}>
+                            Our Mission
+                        </h2>
+                        <div style={{ width: "48px", height: "4px", background: "var(--accent, #155DFC)", borderRadius: "2px", marginBottom: "32px" }} />
+                        <p style={{ fontSize: "clamp(17px, 2vw, 21px)", color: "#475569", fontFamily: "var(--font-body)", fontWeight: 400, lineHeight: 1.8, maxWidth: "820px" }}>
+                            To become a trusted global partner in marine and industrial maintenance — recognized for reliability, technical excellence, and proactive service solutions that extend equipment life and minimize operational risk.
+                        </p>
+                    </div>
+
+                    {/* Original stamp boxes */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-12 max-w-[1250px] mx-auto items-start">
                         <div className="flex flex-col items-center group w-full">
-                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4" style={{ 
+                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4 transition-transform duration-500 group-hover:-translate-y-3" style={{ 
                                 backgroundImage: 'url("/asset/about_image/founded.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
@@ -179,7 +249,7 @@ export default function AboutPage() {
                         </div>
 
                         <div className="flex flex-col items-center group w-full">
-                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4" style={{ 
+                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4 transition-transform duration-500 group-hover:-translate-y-3" style={{ 
                                 backgroundImage: 'url("/asset/about_image/team.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
@@ -193,7 +263,7 @@ export default function AboutPage() {
                         </div>
 
                         <div className="flex flex-col items-center group w-full">
-                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4" style={{ 
+                            <div className="relative w-full aspect-[381/265] max-w-[320px] sm:max-w-none flex flex-col justify-center items-center text-center px-4 transition-transform duration-500 group-hover:-translate-y-3" style={{ 
                                 backgroundImage: 'url("/asset/about_image/partners.png")',
                                 backgroundSize: "contain",
                                 backgroundRepeat: "no-repeat",
@@ -201,7 +271,7 @@ export default function AboutPage() {
                             }}>
                                 <span className="absolute top-[28%] text-[30px] sm:text-[clamp(20px,3.5vw,35px)] font-black text-[#0b1a2e]" style={{ fontFamily: "var(--font-body)" }}>15+</span>
                                 <p className="absolute bottom-[28%] text-[16px] sm:text-[clamp(12px,2.5vw,18px)] font-bold text-[#0b1a2e] w-[85%] leading-tight" style={{ fontFamily: "var(--font-body)" }}>
-                                    Global Technical Partners
+                                    Technical Partners
                                 </p>
                             </div>
                         </div>
@@ -210,32 +280,75 @@ export default function AboutPage() {
             </section>
 
             {/* CORE VALUES */}
-            <section style={{ 
-                backgroundImage: 'url("/asset/about_image/our_values.png")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                padding: "160px 10vw",
-                position: "relative"
-            }}>
-                <div style={{ position: "absolute", inset: 0, background: "rgba(11,26,46,0.7)", zIndex: 1 }} />
-                <div className="container mx-auto relative z-10">
-                    <h2 style={{ 
-                        fontSize: "35px", 
-                        fontWeight: 900, 
-                        fontFamily: "var(--font-heading)",
-                        marginBottom: "80px",
-                        color: "#fff"
-                    }}>Our Values</h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-24 gap-y-20">
+            <section style={{ padding: "160px 10vw", background: "#f8fafc", position: "relative", overflow: "hidden" }}>
+
+                {/* Subtle background image with strong overlay */}
+                <div style={{ position: "absolute", inset: 0, backgroundImage: 'url("/asset/about_image/our_values.png")', backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", opacity: 0.07 }} />
+
+                <div style={{ position: "relative", zIndex: 2, maxWidth: "1400px", margin: "0 auto" }}>
+                    {/* Heading */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "80px", flexWrap: "wrap", gap: "32px" }}>
+                        <div>
+                            <span style={{ color: "var(--accent, #155DFC)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", fontSize: "13px", display: "block", marginBottom: "16px", fontFamily: "var(--font-body)" }}>What We Stand For</span>
+                            <h2 style={{ fontSize: "clamp(36px, 5vw, 58px)", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", lineHeight: 1.05, letterSpacing: "-0.03em", margin: 0 }}>
+                                Our Values
+                            </h2>
+                        </div>
+                        <p style={{ fontSize: "18px", color: "#64748b", fontFamily: "var(--font-body)", fontWeight: 400, lineHeight: 1.7, maxWidth: "480px", margin: 0 }}>
+                            The principles that guide every decision we make and every service we deliver.
+                        </p>
+                    </div>
+
+                    {/* Value cards */}
+                    <style>{`
+                        .value-card {
+                            background: #ffffff;
+                            border: 1px solid #e2e8f0;
+                            padding: 40px 36px;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 24px;
+                            transition: all 0.4s ease;
+                            position: relative;
+                            overflow: hidden;
+                        }
+                        .value-card::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 4px;
+                            height: 0;
+                            background: var(--accent, #155DFC);
+                            transition: height 0.4s ease;
+                        }
+                        .value-card:hover {
+                            transform: translateY(-6px);
+                            box-shadow: 0 20px 48px rgba(11, 26, 46, 0.1);
+                            border-color: transparent;
+                        }
+                        .value-card:hover::before {
+                            height: 100%;
+                        }
+                        .value-card:hover .value-num {
+                            color: var(--accent, #155DFC);
+                        }
+                    `}</style>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {values.map((v, i) => (
-                            <div key={i} className="group flex flex-col gap-6 transition-all duration-500 hover:translate-y--2">
-                                <div style={{ height: "64px", width: "64px" }}>
-                                    <img src={v.icon} alt={v.title} className="w-full h-full object-contain" />
+                            <div key={i} className="value-card">
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                    <div style={{ width: "60px", height: "60px", flexShrink: 0 }}>
+                                        <img src={v.icon} alt={v.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                    </div>
+                                    <span className="value-num" style={{ fontSize: "48px", fontWeight: 900, color: "#f1f5f9", fontFamily: "var(--font-heading)", lineHeight: 1, transition: "color 0.4s ease", userSelect: "none" }}>
+                                        0{i + 1}
+                                    </span>
                                 </div>
-                                <div className="space-y-4">
-                                    <h4 style={{ fontSize: "18px", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#fff" }}>{v.title}</h4>
-                                    <p style={{ fontSize: "16px", fontWeight: 500, color: "rgba(255,255,255,0.7)", lineHeight: 1.4, fontFamily: "var(--font-body)" }}>{v.description}</p>
+                                <div>
+                                    <h4 style={{ fontSize: "20px", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", marginBottom: "12px" }}>{v.title}</h4>
+                                    <p style={{ fontSize: "16px", fontWeight: 400, color: "#64748b", lineHeight: 1.7, fontFamily: "var(--font-body)", margin: 0 }}>{v.description}</p>
                                 </div>
                             </div>
                         ))}
@@ -244,22 +357,40 @@ export default function AboutPage() {
             </section>
 
             {/* OUR SERVICES */}
-            <section style={{ padding: "160px 10vw", background: "#F8FAFC" }}>
+            <section style={{ padding: "160px 10vw", background: "#ffffff" }}>
                 <div className="container mx-auto">
-                    <div style={{ marginBottom: "64px" }}>
-                        <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e" }}>Our Services</h2>
-                        <p style={{ fontSize: "20px", color: "#64748b", fontWeight: 600, fontFamily: "var(--font-body)", marginTop: "10px", lineHeight: 1.5 }}>Delivering reliable marine and industrial solutions with quality, efficiency,<br/>and expert support</p>
+                    <div style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto 100px" }}>
+                        <span style={{ color: "var(--accent, #155DFC)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", fontSize: "14px", display: "block", marginBottom: "16px", fontFamily: "var(--font-body)" }}>Core Expertise</span>
+                        <h2 style={{ fontSize: "clamp(40px, 6vw, 56px)", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", marginBottom: "24px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+                            Our Services
+                        </h2>
+                        <p style={{ fontSize: "22px", color: "#64748b", fontWeight: 400, fontFamily: "var(--font-body)", lineHeight: 1.6 }}>
+                            Delivering reliable marine and industrial solutions with precision engineering.
+                        </p>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <div className="flex flex-col gap-y-32">
                         {services.map((s, i) => (
-                            <div key={i} className="group bg-white rounded-3xl overflow-hidden border border-slate-100 transition-all hover:shadow-2xl" style={{ display: "flex", flexDirection: "column" }}>
-                                <div style={{ height: "260px", overflow: "hidden", flexShrink: 0 }}>
-                                    <img src={s.img} alt={s.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                            <div key={i} className={`flex flex-col ${i % 2 !== 0 ? "lg:flex-row-reverse" : "lg:flex-row"} items-center gap-12 lg:gap-24 group`}>
+                                <div className="w-full lg:w-1/2">
+                                    <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden shadow-2xl bg-[#f8f9fa]">
+                                        <img src={s.img} alt={s.title} className="w-full h-full object-cover transition-transform duration-[1.5s] ease-in-out group-hover:scale-110" />
+                                        <div className="absolute inset-0 border border-black/5 rounded-[32px] pointer-events-none" />
+                                    </div>
                                 </div>
-                                <div style={{ height: "260px", padding: "36px 40px", display: "flex", flexDirection: "column", justifyContent: "center", overflow: "hidden" }}>
-                                    <h4 style={{ fontSize: "20px", fontWeight: 900, color: "#0b1a2e", textTransform: "uppercase", marginBottom: "16px", fontFamily: "var(--font-heading)", lineHeight: 1.2 }}>{s.title}</h4>
-                                    <p style={{ fontSize: "17px", color: "#64748b", fontWeight: 500, fontFamily: "var(--font-body)", lineHeight: 1.5 }}>{s.desc}</p>
+                                <div className="w-full lg:w-1/2 flex flex-col justify-center">
+                                    <span style={{ color: "#a1a1aa", fontWeight: 900, fontSize: "80px", lineHeight: 1, opacity: 0.2, marginBottom: "-20px", fontFamily: "var(--font-heading)", userSelect: "none" }}>
+                                        0{i + 1}
+                                    </span>
+                                    <h3 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 900, color: "#0b1a2e", marginBottom: "24px", fontFamily: "var(--font-heading)", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
+                                        {s.title}
+                                    </h3>
+                                    <p style={{ fontSize: "18px", color: "#475569", lineHeight: 1.8, fontFamily: "var(--font-body)", fontWeight: 400, maxWidth: "600px" }}>
+                                        {s.desc}
+                                    </p>
+                                    <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "10px", marginTop: "40px", fontSize: "16px", fontWeight: 800, color: "var(--accent, #155DFC)", textTransform: "uppercase", letterSpacing: "0.1em" }} className="hover:opacity-80 transition-opacity">
+                                        Request Service <ArrowRight size={20} strokeWidth={2.5} />
+                                    </Link>
                                 </div>
                             </div>
                         ))}
@@ -268,16 +399,22 @@ export default function AboutPage() {
             </section>
 
             {/* OUR TEAM */}
-            <section style={{ padding: "160px 10vw", background: "rgba(150, 195, 228, 0.25)" }}>
-                <div className="container mx-auto">
-                    <div style={{ marginBottom: "80px" }}>
-                        <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", lineHeight: 1, marginBottom: "24px" }}>Our Team</h2>
-                        <p style={{ maxWidth: "800px", fontSize: "22px", color: "#64748b", fontWeight: 500, fontFamily: "var(--font-body)", lineHeight: 1.4 }}>
-                            Our strength lies in our people. STANCH TECH is powered by highly trained engineers and technicians, selected for their technical competence and field experience.
+            <section style={{ padding: "160px 10vw", background: "#f8fafc", position: "relative", overflow: "hidden" }}>
+                {/* Decorative background element */}
+                <div style={{ position: "absolute", top: 0, right: 0, width: "50vw", height: "100%", background: "rgba(150, 195, 228, 0.15)", borderRadius: "200px 0 0 200px", transform: "translateX(20%)" }} />
+                
+                <div className="container mx-auto relative z-10">
+                    <div style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto 100px" }}>
+                        <span style={{ color: "var(--accent, #155DFC)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", fontSize: "14px", display: "block", marginBottom: "16px", fontFamily: "var(--font-body)" }}>The People Behind the Power</span>
+                        <h2 style={{ fontSize: "clamp(40px, 6vw, 56px)", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", marginBottom: "24px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+                            Our Technical Team
+                        </h2>
+                        <p style={{ fontSize: "22px", color: "#475569", fontWeight: 400, fontFamily: "var(--font-body)", lineHeight: 1.6 }}>
+                            Our strength lies in our people. STANCH TECH is powered by highly trained engineers and technicians, selected for their rigorous technical competence and deep field experience.
                         </p>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 pb-16">
                         {[
                             "/asset/about_image/team_4.png",
                             "/asset/about_image/team_picture_1.jpeg",
@@ -286,9 +423,9 @@ export default function AboutPage() {
                             "/asset/about_image/team_2.png",
                             "/asset/about_image/team_3.png"
                         ].map((img, i) => (
-                            <div key={i} style={{ aspectRatio: "1/1", borderRadius: "24px", overflow: "hidden" }}>
-                                <img src={img}
-                                     alt="Team action" className="w-full h-full object-cover transition-all duration-1000" />
+                            <div key={i} className={`relative overflow-hidden rounded-[32px] group shadow-sm hover:shadow-2xl transition-all duration-700 ${i % 3 === 1 ? 'lg:mt-16' : ''} ${i % 3 === 2 ? 'lg:mt-8' : ''}`} style={{ aspectRatio: "3/4", backgroundColor: "#e2e8f0" }}>
+                                <img src={img} alt="Team action" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2.5s] ease-out group-hover:scale-110" />
+                                <div className="absolute inset-0 bg-[#0b1a2e]/10 group-hover:bg-[#0b1a2e]/0 transition-colors duration-700 pointer-events-none" />
                             </div>
                         ))}
                     </div>
@@ -296,13 +433,62 @@ export default function AboutPage() {
             </section>
 
             {/* PARTNERS */}
-            <section style={{ padding: "200px 10vw 120px", background: "#ffffff" }}>
-                <div className="container mx-auto text-left">
-                    <h2 style={{ fontSize: "35px", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#0b1a2e", marginBottom: "12px" }}>Our Partners</h2>
-                    <p style={{ marginBottom: "80px", color: "#64748b", fontWeight: 700, fontSize: "20px", fontFamily: "var(--font-body)" }}>Our partners in delivering reliable marine and industrial maintenance solutions.</p>
-                    
-                    <div className="flex flex-wrap justify-start items-center gap-24">
-                        <img src="/asset/Landing_page_image/partners.png" alt="Collaborative Partners" className="h-32 w-auto object-contain hover:opacity-80 transition-all duration-700" />
+            <section style={{ padding: "160px 0", background: "#0b1a2e", color: "#ffffff", textAlign: "center", overflow: "hidden" }}>
+                <div style={{ padding: "0 10vw" }}>
+                    <span style={{ color: "var(--accent, #3b82f6)", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.2em", fontSize: "14px", display: "block", marginBottom: "24px", fontFamily: "var(--font-body)" }}>Collaborations</span>
+                    <h2 style={{ fontSize: "clamp(36px, 5vw, 52px)", fontWeight: 900, fontFamily: "var(--font-heading)", color: "#ffffff", marginBottom: "24px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+                        Trusted by Industry Leaders
+                    </h2>
+                    <p style={{ maxWidth: "600px", margin: "0 auto 80px", color: "rgba(255,255,255,0.7)", fontWeight: 400, fontSize: "20px", fontFamily: "var(--font-body)", lineHeight: 1.6 }}>
+                        We exclusively partner with the best in the business to deliver reliable marine and industrial maintenance solutions.
+                    </p>
+                </div>
+
+                {/* Marquee ticker */}
+                <style>{`
+                    @keyframes marquee {
+                        0%   { transform: translateX(0); }
+                        100% { transform: translateX(-50%); }
+                    }
+                    .partners-track {
+                        display: flex;
+                        width: max-content;
+                        animation: marquee 70s linear infinite;
+                    }
+                    .partners-track:hover {
+                        animation-play-state: paused;
+                    }
+                    .partners-item {
+                        flex-shrink: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 40px 24px;
+                    }
+                    .partners-item img {
+                        height: 100px;
+                        width: auto;
+                        object-fit: contain;
+                        opacity: 1;
+                        transition: transform 0.4s ease;
+                    }
+                    .partners-item:hover img {
+                        transform: scale(1.05);
+                    }
+                `}</style>
+
+                <div style={{ width: "100%", overflow: "hidden", marginTop: "40px" }}>
+                    <div className="partners-track">
+                        {[...Array(6)].map((_, i) => (
+                            <div key={i} className="partners-item">
+                                <img src="/asset/Landing_page_image/partners.png" alt="Partner" />
+                            </div>
+                        ))}
+                        {[...Array(6)].map((_, i) => (
+                            <div key={`dup-${i}`} className="partners-item">
+                                <img src="/asset/Landing_page_image/partners.png" alt="Partner" />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

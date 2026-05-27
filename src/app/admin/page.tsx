@@ -32,17 +32,14 @@ interface Order {
 interface AdminProduct {
   id: number;
   name: string;
-  price: number;
-  currency: string;
   image: string;
   images: string[];
   description: string;
   sku: string;
-  category: string;
+  category?: string;
+  weight?: string;
   condition: string;
   stock?: number;
-  shippingFee?: number;
-  quantity?: number;
   is_featured?: boolean;
   is_hidden?: boolean;
 }
@@ -104,7 +101,7 @@ export default function AdminDashboard() {
   const [showChangePin, setShowChangePin] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
   const [pinError, setPinError] = useState(false);
-  const [activeTab, setActiveTab] = useState<'overview' | 'orders' | 'products' | 'customers' | 'settings'>('overview');
+  const [activeTab, setActiveTab ] = useState<'overview' | 'products' | 'settings'>('products');
   const [dynamicPin, setDynamicPin] = useState(ADMIN_PIN);
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<AdminProduct[]>([]);
@@ -136,9 +133,6 @@ export default function AdminDashboard() {
     try {
       // 1. Fetch Products
       const { data: dbProducts, error: pError } = await supabase.from('products').select('*').order('id', { ascending: false });
-      
-      // 2. Fetch Orders
-      const { data: dbOrders, error: oError } = await supabase.from('orders').select('*').order('date', { ascending: false });
 
       if (dbProducts !== null && !pError) {
         setProducts(dbProducts);
@@ -149,14 +143,6 @@ export default function AdminDashboard() {
         if (overrides) {
           try { setProducts(JSON.parse(overrides)); } catch {}
         }
-      }
-
-      if (dbOrders !== null && !oError) {
-        setOrders(dbOrders);
-      } else if (oError) {
-        console.error('Orders fetch error:', oError);
-        const raw = localStorage.getItem('orders');
-        if (raw) try { setOrders(JSON.parse(raw)); } catch {}
       }
     } catch (err) {
       console.error('Supabase load error:', err);
@@ -199,17 +185,6 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (sessionStorage.getItem('stanch_admin') === '1') setIsAuthed(true);
   }, []);
-
-  const updateOrderStatus = async (orderId: string, status: Order['status']) => {
-    // 1. Update Supabase
-    const { error } = await supabase.from('orders').update({ status }).eq('id', orderId);
-    
-    // 2. Update local state
-    const updated = orders.map(o => o.id === orderId ? { ...o, status } : o);
-    setOrders(updated);
-    localStorage.setItem('orders', JSON.stringify(updated));
-    if (selectedOrder?.id === orderId) setSelectedOrder(prev => prev ? { ...prev, status } : prev);
-  };
 
   const deleteProduct = async (id: number) => {
     setIsLoading(true);
@@ -259,15 +234,8 @@ export default function AdminDashboard() {
       // Delete products (integer id)
       await supabase.from('products').delete().gt('id', -1);
       // Delete orders — use neq on a field that always has a value (works for string/UUID ids too)
-      await supabase.from('orders').delete().neq('id', '');
-      // Clear local state immediately
-      setProducts([]);
-      setOrders([]);
-      setSelectedOrder(null);
       // Clear ALL relevant localStorage keys
       localStorage.removeItem('admin_products');
-      localStorage.removeItem('admin_orders');
-      localStorage.removeItem('orders');
       showToast('All data has been permanently wiped. Dashboard is clean.', 'success');
     } catch (err) {
       console.error(err);
@@ -290,8 +258,6 @@ export default function AdminDashboard() {
         // OR keeping them if we want to preserve IDs. Usually keeping them is better for links.)
         const insertPayload = products.map(p => ({
           name: p.name,
-          price: Number(p.price) || 0,
-          currency: p.currency || '₦',
           image: p.image || '',
           images: p.images || [],
           description: p.description || '',
@@ -312,12 +278,6 @@ export default function AdminDashboard() {
         }
         
         if (pError) throw pError;
-      }
-
-      if (orders.length > 0) {
-        // Orders are more sensitive, maybe only upsert
-        const { error: oError } = await supabase.from('orders').upsert(orders);
-        if (oError) throw oError;
       }
 
       setMigrationModal({ open: true, status: 'success', message: 'Synchronization complete! Database is now identical to your dashboard.' });
@@ -382,19 +342,20 @@ export default function AdminDashboard() {
       // DB columns: id, name, price, currency, image, images, description, sku, category, condition, stock, is_featured, created_at
       const dbPayload: Record<string, any> = {
         name: p.name,
-        price: Number(p.price) || 0,
-        currency: p.currency || '₦',
         image: p.image || '',
         images: p.images || [],
         description: p.description || '',
         sku: p.sku || '',
         category: p.category || '',
+        weight: p.weight || '',
         condition: p.condition || '',
         stock: typeof p.stock === 'number' ? p.stock : 1,
         is_featured: p.is_featured || false,
       };
 
       const payloadWithHidden = { ...dbPayload, is_hidden: p.is_hidden || false };
+      const payloadLite = { ...dbPayload };
+      delete payloadLite.weight; // Fallback if weight col doesn't exist
 
       const exists = products.find(x => x.id === p.id);
 
@@ -410,10 +371,15 @@ export default function AdminDashboard() {
 
       let res = await doSave(payloadWithHidden);
       
-      // Graceful fallback if is_hidden column doesn't exist yet in Supabase
-      if (res.error && res.error.message.includes('is_hidden')) {
-        console.warn("is_hidden column not found in database yet, falling back to save without it.");
+      // Graceful fallback if is_hidden or weight column doesn't exist yet
+      if (res.error && (res.error.message.includes('is_hidden') || res.error.message.includes('weight'))) {
+        console.warn("Falling back due to missing column:", res.error.message);
+        // Try without is_hidden first
         res = await doSave(dbPayload);
+        if (res.error && res.error.message.includes('weight')) {
+           // Try without weight too
+           res = await doSave(payloadLite);
+        }
       }
       
       error = res.error;
@@ -446,31 +412,21 @@ export default function AdminDashboard() {
   };
 
   // ─── Computed stats ───────────────────────────────────────────────────────
-  const totalRevenue = orders.reduce((s, o) => s + (o.status !== 'Cancelled' ? o.total : 0), 0);
-  const pendingOrders = orders.filter(o => o.status === 'Processing').length;
-  const deliveredOrders = orders.filter(o => o.status === 'Delivered').length;
-  const uniqueCustomers = new Set(orders.map(o => o.billing?.email).filter(Boolean)).size;
+  const uniqueCustomers = 0; // Disabled
 
-  const filteredOrders = orders.filter(o => {
-    const q = searchOrders.toLowerCase();
-    const matchSearch = !q || o.id.toLowerCase().includes(q) ||
-      (o.billing?.billingFirstName + ' ' + o.billing?.billingLastName).toLowerCase().includes(q) ||
-      o.billing?.email?.toLowerCase().includes(q);
-    const matchStatus = filterStatus === 'All' || o.status === filterStatus;
-    return matchSearch && matchStatus;
-  });
+  const filteredOrders: any[] = [];
 
   const filteredProducts = products.filter(p => {
     const q = searchProducts.toLowerCase();
     return !q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
   });
 
-  // Category totals for mini chart
-  const categoryTotals = products.reduce((acc, p) => {
-    acc[p.category] = (acc[p.category] || 0) + 1;
+  // Condition totals for mini chart
+  const conditionTotals = products.reduce((acc, p) => {
+    acc[p.condition] = (acc[p.condition] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
-  const maxCat = Math.max(...Object.values(categoryTotals));
+  const maxCat = Math.max(0, ...Object.values(conditionTotals));
 
   // ─── PIN Guard ────────────────────────────────────────────────────────────
   if (!isAuthed) {
@@ -538,10 +494,8 @@ export default function AdminDashboard() {
 
   // ─── Dashboard ────────────────────────────────────────────────────────────
   const NAV = [
-    { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-    { id: 'orders', label: 'Orders', icon: ShoppingBag },
-    { id: 'products', label: 'Products', icon: Package },
-    { id: 'customers', label: 'Customers', icon: Users },
+    { id: 'products', label: 'Inventory', icon: Package },
+    { id: 'overview', label: 'Insights', icon: LayoutDashboard },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
@@ -630,9 +584,6 @@ export default function AdminDashboard() {
               >
                 <Icon size={18} style={{ flexShrink: 0 }} />
                 {!sidebarCollapsed && <span style={{ fontSize: '14px', fontWeight: active ? 800 : 600 }}>{item.label}</span>}
-                {!sidebarCollapsed && item.id === 'orders' && pendingOrders > 0 && (
-                  <span style={{ marginLeft: 'auto', background: '#ef4444', color: '#fff', borderRadius: '10px', padding: '1px 7px', fontSize: '11px', fontWeight: 800 }}>{pendingOrders}</span>
-                )}
               </button>
             );
           })}
@@ -685,9 +636,8 @@ export default function AdminDashboard() {
             <div>
               <h1 style={{ fontFamily: "var(--font-heading)", fontSize: '16px', fontWeight: 900, color: '#111', letterSpacing: '-0.01em', marginBottom: '1px' }}>
                 {activeTab === 'overview' && 'Dashboard Overview'}
-                {activeTab === 'orders' && 'Order Management'}
                 {activeTab === 'products' && 'Product Catalog'}
-                {activeTab === 'customers' && 'Customers'}
+                {activeTab === 'settings' && 'Settings'}
               </h1>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -737,57 +687,33 @@ export default function AdminDashboard() {
           {activeTab === 'overview' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
               {/* Stat Cards */}
-              <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
-                <StatCard label="Total Revenue" value={fmt(totalRevenue)} sub={`From ${orders.filter(o => o.status !== 'Cancelled').length} orders`} icon={TrendingUp} accent="#7047eb" trend={{ up: true, text: 'All time earnings' }} />
-                <StatCard label="Total Orders" value={String(orders.length)} sub={`${pendingOrders} pending`} icon={ShoppingBag} accent="#2563eb" />
-                <StatCard label="Products" value={String(products.length)} sub="In catalog" icon={Package} accent="#16a34a" />
-                <StatCard label="Customers" value={String(uniqueCustomers)} sub="Unique buyers" icon={Users} accent="#f59e0b" />
+              <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                <StatCard label="Total Inventory" value={String(products.length)} sub="Active spare parts" icon={Package} accent="#2563eb" />
+                <StatCard label="Featured Items" value={String(products.filter(p => p.is_featured).length)} sub="Showcased on shop" icon={TrendingUp} accent="#16a34a" />
+                <StatCard label="Visibility" value={String(products.filter(p => !p.is_hidden).length)} sub="Visible to public" icon={Eye} accent="#7047eb" />
               </div>
 
               {/* Two columns: recent orders + category chart */}
-              <div className="overview-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '20px' }}>
-                {/* Recent Orders */}
-                <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflowX: 'auto' }}>
-
-                  <div style={{ padding: '20px 24px', borderBottom: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <h3 style={{ fontFamily: "var(--font-heading)", fontSize: '14px', fontWeight: 900, color: '#111' }}>Recent Orders</h3>
-                    <button onClick={() => setActiveTab('orders')} style={{ fontSize: '12px', color: '#7047eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>View all →</button>
-                  </div>
-                  {orders.length === 0 ? (
-                    <div style={{ padding: '48px', textAlign: 'center', color: '#9ca3af', fontSize: '14px' }}>No orders yet</div>
-                  ) : (
-                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                      <thead>
-                        <tr style={{ background: '#f9fafb' }}>
-                          {['Order ID', 'Customer', 'Amount', 'Status', 'Date'].map((h, i) => (
-                            <th key={i} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', whiteSpace: 'nowrap' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {orders.slice(0, 8).map((o, i) => (
-                          <tr key={o.id} style={{ borderTop: '1px solid #f3f4f6', cursor: 'pointer' }}
-                            onClick={() => { setSelectedOrder(o); setActiveTab('orders'); }}
-                            onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#f9fafb'}
-                            onMouseOut={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
-                          >
-                            <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 700, color: '#7047eb', fontFamily: "var(--font-heading)" }}>{o.id}</td>
-                            <td style={{ padding: '12px 16px', fontSize: '13px', color: '#374151' }}>{o.billing?.billingFirstName} {o.billing?.billingLastName}</td>
-                            <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 700, color: '#111' }}>{fmt(o.total)}</td>
-                            <td style={{ padding: '12px 16px' }}><StatusBadge status={o.status} /></td>
-                            <td style={{ padding: '12px 16px', fontSize: '12px', color: '#9ca3af' }}>{fmtDate(o.date)}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
+                <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', padding: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '24px', textAlign: 'center' }}>
+                    <div style={{ width: '80px', height: '80px', background: '#f5f5f7', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Package size={40} color={BRAND_BLUE} />
+                    </div>
+                    <div>
+                        <h3 style={{ fontSize: '20px', fontWeight: 900, marginBottom: '8px' }}>Inventory Catalog Model</h3>
+                    </div>
+                    <button 
+                        onClick={() => setActiveTab('products')}
+                        style={{ padding: '12px 24px', background: BRAND_BLUE, color: '#white', border: 'none', borderRadius: '8px', fontWeight: 800, cursor: 'pointer' }}
+                    >
+                        MANAGE SPARES
+                    </button>
                 </div>
 
                 {/* Category Distribution */}
                 <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <h3 style={{ fontFamily: "var(--font-heading)", fontSize: '14px', fontWeight: 900, color: '#111' }}>Product Categories</h3>
+                  <h3 style={{ fontFamily: "var(--font-heading)", fontSize: '14px', fontWeight: 900, color: '#111' }}>Product Conditions</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                    {Object.entries(categoryTotals).map(([cat, count]) => (
+                    {Object.entries(conditionTotals).map(([cat, count]) => (
                       <div key={cat}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
                           <span style={{ fontSize: '13px', fontWeight: 700, color: '#374151' }}>{cat}</span>
@@ -802,207 +728,26 @@ export default function AdminDashboard() {
 
                   <div style={{ borderTop: '1px solid #f3f4f6', paddingTop: '16px', marginTop: 'auto' }}>
                     <p style={{ fontSize: '12px', color: '#9ca3af' }}>
-                      Order status breakdown
+                      Inventory Health
                     </p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
-                      {Object.entries(STATUS_META).map(([s, m]) => {
-                        const Icon = m.icon;
-                        const count = orders.filter(o => o.status === s).length;
-                        return (
-                          <div key={s} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              <Icon size={13} color={m.color} />
-                              <span style={{ fontSize: '13px', color: '#374151', fontWeight: 600 }}>{s}</span>
+                                <Package size={13} color={BRAND_BLUE} />
+                                <span style={{ fontSize: '13px', color: '#374151', fontWeight: 600 }}>Total Items</span>
                             </div>
-                            <span style={{ fontSize: '13px', fontWeight: 800, color: '#111' }}>{count}</span>
-                          </div>
-                        );
-                      })}
+                            <span style={{ fontSize: '13px', fontWeight: 800, color: '#111' }}>{products.length}</span>
+                        </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
-          {/* ═══════════════ ORDERS TAB ═══════════════ */}
-          {activeTab === 'orders' && (
-            <div style={{ display: 'flex', gap: '24px' }}>
-              {/* Orders list */}
-              <div style={{ flex: 1, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
-                {/* Toolbar */}
-                <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                  <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
-                    <Search size={14} color="#9ca3af" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
-                    <input
-                      value={searchOrders}
-                      onChange={e => setSearchOrders(e.target.value)}
-                      placeholder="Search by order ID, name or email…"
-                      style={{ width: '100%', padding: '9px 12px 9px 34px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', boxSizing: 'border-box', color: '#111' }}
-                    />
-                  </div>
-                  <select
-                    value={filterStatus}
-                    onChange={e => setFilterStatus(e.target.value)}
-                    style={{ padding: '9px 12px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', color: '#374151', background: '#fff', cursor: 'pointer' }}
-                  >
-                    {['All', 'Processing', 'Shipped', 'Delivered', 'Cancelled'].map(s => <option key={s}>{s}</option>)}
-                  </select>
-                </div>
-
-                {filteredOrders.length === 0 ? (
-                  <div style={{ padding: '64px', textAlign: 'center', color: '#9ca3af', fontSize: '15px' }}>
-                    {orders.length === 0 ? 'No orders have been placed yet.' : 'No orders match your filters.'}
-                  </div>
-                ) : (
-                  <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
-                      <thead>
-                        <tr style={{ background: '#f9fafb' }}>
-                          {['Order ID', 'Customer', 'Items', 'Total', 'Payment', 'Delivery', 'Status', ''].map((h, i) => (
-                            <th key={i} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', whiteSpace: 'nowrap' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredOrders.map(o => (
-                          <tr
-                            key={o.id}
-                            style={{ borderTop: '1px solid #f3f4f6', background: selectedOrder?.id === o.id ? '#f0f4ff' : 'transparent', cursor: 'pointer' }}
-                            onClick={() => setSelectedOrder(o)}
-                            onMouseOver={e => { if (selectedOrder?.id !== o.id) (e.currentTarget as HTMLElement).style.background = '#f9fafb'; }}
-                            onMouseOut={e => { if (selectedOrder?.id !== o.id) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
-                          >
-                            <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 800, color: BRAND_BLUE, fontFamily: "var(--font-heading)", whiteSpace: 'nowrap' }}>{o.id}</td>
-                            <td style={{ padding: '12px 16px' }}>
-                              <p style={{ fontSize: '13px', fontWeight: 700, color: '#0b1a2e', marginBottom: '1px' }}>{o.billing?.billingFirstName} {o.billing?.billingLastName}</p>
-                              <p style={{ fontSize: '11px', color: '#9ca3af' }}>{o.billing?.email}</p>
-                            </td>
-                            <td style={{ padding: '12px 16px', fontSize: '13px', color: '#6b7280' }}>
-                              {o.items?.reduce((s, i) => s + (i.quantity || 1), 0)} item(s)
-                            </td>
-                            <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 800, color: '#111', whiteSpace: 'nowrap' }}>{fmt(o.total)}</td>
-                            <td style={{ padding: '12px 16px', fontSize: '12px', color: '#6b7280', textTransform: 'capitalize' }}>
-                              {o.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Bank Transfer'}
-                            </td>
-                            <td style={{ padding: '12px 16px', fontSize: '12px', color: '#6b7280', fontWeight: 700 }}>
-                              {(o.deliveryMethod || o.billing?.deliveryMethod) === 'pickup' ? 'In-store Pickup' : 'Home Delivery'}
-                            </td>
-                            <td style={{ padding: '12px 16px' }}><StatusBadge status={o.status} /></td>
-                            <td style={{ padding: '12px 16px' }}>
-                              <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: '4px' }}>
-                                <Eye size={15} />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
-
-              {/* Order detail panel */}
-              {selectedOrder && (
-                <div className="order-detail-panel admin-panel-overlay" style={{ width: '340px', flexShrink: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', display: 'flex', flexDirection: 'column', overflowY: 'auto', maxHeight: 'calc(100vh - 128px)', position: 'sticky', top: 0 }}>
-
-                  <div style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h3 style={{ fontFamily: "var(--font-heading)", fontSize: '13px', fontWeight: 900, color: '#111' }}>Order Details</h3>
-                    <button onClick={() => setSelectedOrder(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af' }}><X size={16} /></button>
-                  </div>
-
-                  <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
-                    <div>
-                      <p style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '4px' }}>Order ID</p>
-                      <p style={{ fontSize: '15px', fontWeight: 900, color: '#7047eb', fontFamily: "var(--font-heading)" }}>{selectedOrder.id}</p>
-                      <p style={{ fontSize: '12px', color: '#9ca3af', marginTop: '2px' }}>{fmtDate(selectedOrder.date)}</p>
-                    </div>
-
-                    <div>
-                      <p style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>Update Status</p>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        {(['Processing', 'Shipped', 'Delivered', 'Cancelled'] as const).map(s => {
-                          const m = STATUS_META[s];
-                          return (
-                            <button
-                              key={s}
-                              onClick={() => updateOrderStatus(selectedOrder.id, s)}
-                              style={{
-                                width: '100%', padding: '8px 12px', borderRadius: '6px', border: `1.5px solid ${selectedOrder.status === s ? m.color : '#e5e7eb'}`,
-                                background: selectedOrder.status === s ? m.bg : '#fff', color: selectedOrder.status === s ? m.color : '#6b7280',
-                                fontSize: '13px', fontWeight: 700, cursor: 'pointer', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px', transition: 'all 0.15s',
-                                fontFamily: "var(--font-heading)",
-                              }}
-                            >
-                              {(() => { const Icon = m.icon; return <Icon size={13} />; })()}
-                              {s}
-                              {selectedOrder.status === s && <span style={{ marginLeft: 'auto', fontSize: '10px', fontWeight: 800 }}>CURRENT</span>}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div>
-                      <p style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>Customer</p>
-                      <div style={{ background: '#f9fafb', borderRadius: '6px', padding: '12px', fontSize: '13px', lineHeight: 1.7 }}>
-                        <p style={{ fontWeight: 800, color: '#111' }}>{selectedOrder.billing?.billingFirstName} {selectedOrder.billing?.billingLastName}</p>
-                        <p style={{ color: '#6b7280' }}>{selectedOrder.billing?.email}</p>
-                        <p style={{ color: '#6b7280' }}>{selectedOrder.billing?.billingPhone}</p>
-                        <p style={{ color: '#6b7280', marginTop: '4px' }}>{selectedOrder.billing?.billingAddress}, {selectedOrder.billing?.billingCity}, {selectedOrder.billing?.billingState}</p>
-                      </div>
-                    </div>
-
-                    <div>
-                      <p style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>Delivery Option</p>
-                      <div style={{ background: '#f9fafb', borderRadius: '6px', padding: '12px', fontSize: '13px', lineHeight: 1.7 }}>
-                        <p style={{ fontWeight: 800, color: '#111', textTransform: 'uppercase', fontSize: '12px' }}>
-                          {(selectedOrder.deliveryMethod || selectedOrder.billing?.deliveryMethod) === 'pickup' ? '📦 IN-STORE PICKUP' : '🚚 HOME DELIVERY'}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div>
-                      <p style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>Items ({selectedOrder.items?.length})</p>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        {selectedOrder.items?.map((item, i) => (
-                          <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', padding: '8px', background: '#f9fafb', borderRadius: '6px' }}>
-                            {item.image && <img src={item.image} style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#fff', borderRadius: '4px', padding: '4px' }} alt="" />}
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <p style={{ fontSize: '12px', fontWeight: 700, color: '#111', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</p>
-                              <p style={{ fontSize: '11px', color: '#9ca3af' }}>Qty: {item.quantity} × {fmt(item.price)}</p>
-                            </div>
-                            <p style={{ fontSize: '12px', fontWeight: 800, color: '#111', whiteSpace: 'nowrap' }}>{fmt(item.price * item.quantity)}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div style={{ borderTop: '1px solid #f3f4f6', paddingTop: '12px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                        <span style={{ fontSize: '13px', color: '#6b7280' }}>Subtotal</span>
-                        <span style={{ fontSize: '13px', color: '#111' }}>{fmt(selectedOrder.total)}</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                        <span style={{ fontSize: '13px', color: '#6b7280' }}>Shipping</span>
-                        <span style={{ fontSize: '13px', color: '#16a34a', fontWeight: 700 }}>Free</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '8px', borderTop: '1px solid #f3f4f6' }}>
-                        <span style={{ fontSize: '14px', fontWeight: 800, color: '#111' }}>Total</span>
-                        <span style={{ fontSize: '14px', fontWeight: 900, color: '#111', fontFamily: "var(--font-heading)" }}>{fmt(selectedOrder.total)}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
           )}
 
           {/* ═══════════════ PRODUCTS TAB ═══════════════ */}
           {activeTab === 'products' && (
             <div style={{ display: 'flex', gap: '24px' }}>
               <div style={{ flex: 1, minWidth: 0 }}>
-                {/* Inventory Summary removed from here and moved to Overview */}
                 {/* Toolbar */}
                 <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden' }}>
                   <div className="mobile-stack" style={{ padding: '16px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', gap: '12px', alignItems: 'center' }}>
@@ -1025,15 +770,12 @@ export default function AdminDashboard() {
                       onClick={() => setEditingProduct({
                         id: Math.max(0, ...products.map(p => p.id)) + 1,
                         name: '',
-                        price: '' as unknown as number,
-                        currency: '₦',
                         image: 'https://images.unsplash.com/photo-1590674899484-d564fa070e6c?auto=format&fit=crop&q=80&w=200',
                         images: ['https://images.unsplash.com/photo-1590674899484-d564fa070e6c?auto=format&fit=crop&q=80&w=200'],
                         description: '',
                         sku: `SS${String(Math.max(0, ...products.map(p => p.id)) + 1).padStart(3, '0')}`,
-                        category: 'QSK 60',
+                        weight: '',
                         condition: 'Genuine Part',
-                        shippingFee: 0,
                         quantity: 0,
                         is_featured: false,
                         is_hidden: false,
@@ -1049,7 +791,7 @@ export default function AdminDashboard() {
                     <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
                       <thead>
                         <tr style={{ background: '#f9fafb' }}>
-                          {['', 'Product', 'SKU', 'Engine Models', 'Condition', 'Price', ''].map((h, i) => (
+                          {['', 'Product', 'Condition', ''].map((h, i) => (
                             <th key={i} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', whiteSpace: 'nowrap' }}>{h}</th>
                           ))}
                         </tr>
@@ -1098,12 +840,7 @@ export default function AdminDashboard() {
                               )}
                             </div>
                           </td>
-                          <td style={{ padding: '10px 12px', fontSize: '12px', color: '#9ca3af', fontFamily: "var(--font-heading)" }}>{p.sku}</td>
-                          <td style={{ padding: '10px 12px' }}>
-                            <span style={{ fontSize: '11px', fontWeight: 700, background: '#ede9fe', color: '#7047eb', padding: '2px 8px', borderRadius: '4px' }}>{p.category}</span>
-                          </td>
                           <td style={{ padding: '10px 12px', fontSize: '12px', color: '#6b7280' }}>{p.condition}</td>
-                          <td style={{ padding: '10px 12px', fontSize: '13px', fontWeight: 800, color: '#111', whiteSpace: 'nowrap' }}>{fmt(p.price)}</td>
                           <td style={{ padding: '10px 16px' }}>
                             <div style={{ display: 'flex', gap: '6px' }}>
                               <button
@@ -1162,14 +899,12 @@ export default function AdminDashboard() {
                           <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload} />
                         </label>
                       </div>
-                      <p style={{ fontSize: '11px', color: '#9ca3af', marginTop: '12px', textAlign: 'center' }}>SKU: <span style={{ fontWeight: 800 }}>{editingProduct.sku}</span></p>
+
                     </div>
 
                     {[
                       { label: 'Product Name', key: 'name', type: 'text' },
-                      { label: 'Price (₦)', key: 'price', type: 'number' },
-                      { label: 'Shipping Fee (₦)', key: 'shippingFee', type: 'number' },
-                      { label: 'Total Units Added', key: 'quantity', type: 'number' },
+                      { label: 'Weight (kg)', key: 'weight', type: 'text' },
                       { label: 'Specification', key: 'description', type: 'textarea' },
                     ].map(field => (
                       <div key={field.key}>
@@ -1191,17 +926,6 @@ export default function AdminDashboard() {
                         )}
                       </div>
                     ))}
-
-                    <div>
-                      <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#6b7280', display: 'block', marginBottom: '5px' }}>Engine Models</label>
-                      <select
-                        value={editingProduct.category}
-                        onChange={e => setEditingProduct({ ...editingProduct, category: e.target.value })}
-                        style={{ width: '100%', padding: '8px 10px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', color: '#111', background: '#fff' }}
-                      >
-                        {['QSK 60', 'K-SERIES', 'B-SERIES', 'C-SERIES', 'KSM', 'QSM', 'QSL'].map(c => <option key={c}>{c}</option>)}
-                      </select>
-                    </div>
 
                     <div>
                       <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#6b7280', display: 'block', marginBottom: '5px' }}>Condition</label>
@@ -1259,84 +983,6 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* ═══════════════ CUSTOMERS TAB ═══════════════ */}
-          {activeTab === 'customers' && (
-            <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '2px', overflow: 'hidden' }}>
-              <div style={{ padding: '20px 24px', borderBottom: '1px solid #f3f4f6' }}>
-                <h3 style={{ fontFamily: "var(--font-heading)", fontSize: '14px', fontWeight: 900, color: '#111' }}>All Customers</h3>
-                <p style={{ fontSize: '13px', color: '#9ca3af', marginTop: '2px' }}>Derived from order history</p>
-              </div>
-
-              {orders.length === 0 ? (
-                <div style={{ padding: '64px', textAlign: 'center', color: '#9ca3af', fontSize: '15px' }}>
-                  <Users size={40} color="#e5e7eb" style={{ margin: '0 auto 16px' }} />
-                  <p>No customer data yet. Customers will appear here once orders are placed.</p>
-                </div>
-              ) : (() => {
-                // Build unique customers
-                const map = new Map<string, { name: string; email: string; phone: string; orderCount: number; totalSpent: number; lastOrder: string; state: string }>();
-                orders.forEach(o => {
-                  const email = o.billing?.email || 'unknown';
-                  const existing = map.get(email);
-                  if (existing) {
-                    existing.orderCount += 1;
-                    existing.totalSpent += (o.status !== 'Cancelled' ? (o.total || 0) : 0);
-                    if (new Date(o.date) > new Date(existing.lastOrder)) existing.lastOrder = o.date;
-                  } else {
-                    map.set(email, {
-                      name: `${o.billing?.billingFirstName || ''} ${o.billing?.billingLastName || ''}`.trim() || '—',
-                      email,
-                      phone: o.billing?.billingPhone || '—',
-                      orderCount: 1,
-                      totalSpent: (o.status !== 'Cancelled' ? (o.total || 0) : 0),
-                      lastOrder: o.date,
-                      state: o.billing?.billingState || '—',
-                    });
-                  }
-                });
-                const customers = Array.from(map.values()).sort((a, b) => b.totalSpent - a.totalSpent);
-
-                return (
-                  <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
-                    <thead>
-                      <tr style={{ background: '#f9fafb' }}>
-                        {['Customer', 'Email', 'Phone', 'State', 'Orders', 'Total Spent', 'Last Order'].map(h => (
-                          <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', whiteSpace: 'nowrap' }}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {customers.map((c, i) => (
-                        <tr key={c.email} style={{ borderTop: '1px solid #f3f4f6' }}
-                          onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#f9fafb'}
-                          onMouseOut={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
-                        >
-                          <td style={{ padding: '12px 16px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                              <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: `hsl(${(i * 47) % 360}, 60%, 92%)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                <span style={{ fontSize: '13px', fontWeight: 800, color: `hsl(${(i * 47) % 360}, 50%, 35%)` }}>{c.name[0]?.toUpperCase() || '?'}</span>
-                              </div>
-                              <span style={{ fontSize: '13px', fontWeight: 700, color: '#111' }}>{c.name}</span>
-                            </div>
-                          </td>
-                          <td style={{ padding: '12px 16px', fontSize: '15px', fontWeight: 600, color: '#111' }}>{c.email}</td>
-                          <td style={{ padding: '12px 16px', fontSize: '13px', color: '#6b7280' }}>{c.phone}</td>
-                          <td style={{ padding: '12px 16px', fontSize: '13px', color: '#6b7280' }}>{c.state}</td>
-                          <td style={{ padding: '12px 16px' }}>
-                            <span style={{ display: 'inline-flex', padding: '2px 8px', background: '#ede9fe', color: '#7047eb', borderRadius: '10px', fontSize: '12px', fontWeight: 800 }}>{c.orderCount}</span>
-                          </td>
-                          <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 800, color: '#111' }}>{fmt(c.totalSpent)}</td>
-                          <td style={{ padding: '12px 16px', fontSize: '12px', color: '#9ca3af' }}>{fmtDate(c.lastOrder)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                    </table>
-                  </div>
-                );
-              })()}
-            </div>
-          )}
 
           {/* ═══════════════ SETTINGS TAB ═══════════════ */}
           {activeTab === 'settings' && (

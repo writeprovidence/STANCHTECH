@@ -1,79 +1,48 @@
 'use client';
 
-import { useCart } from "@/context/cart-context";
-import { Plus, Check, Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
-export function ProductCard({ product }) {
-    const { addToCart } = useCart();
-    const [added, setAdded] = useState(false);
-
-    const handleAddToCart = () => {
-        addToCart(product);
-        setAdded(true);
-        setTimeout(() => setAdded(false), 2000);
-    };
-
+export function ProductCard({ product }: { product: any }) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="group relative h-full flex flex-col bg-white rounded-[2rem] p-6 card-hover border border-gray-100/50"
+            className="group relative h-full flex flex-col bg-white rounded-[2rem] p-6 card-hover border border-gray-100/50 shadow-sm"
         >
-            <div className="relative aspect-[4/5] w-full mb-6 overflow-hidden rounded-2xl">
+            <div className="relative aspect-[4/5] w-full mb-6 overflow-hidden rounded-2xl bg-gray-50">
                 <Image
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-contain group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="object-contain group-hover:scale-105 transition-transform duration-700 ease-out p-4"
                 />
-                {product.isNew && (
-                    <span className="absolute top-4 left-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 transparent-blur rounded-full">
-                        New
-                    </span>
-                )}
+                <span className="absolute top-4 left-4 bg-[#155DFC] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 transparent-blur rounded-full">
+                    {product.condition || "Genuine Part"}
+                </span>
             </div>
 
             <div className="flex-1 flex flex-col">
-                <div className="flex items-center gap-1 mb-2">
-                    <Star className="w-3 h-3 fill-accent text-accent" />
-                    <Star className="w-3 h-3 fill-accent text-accent" />
-                    <Star className="w-3 h-3 fill-accent text-accent" />
-                    <Star className="w-3 h-3 fill-accent text-accent" />
-                    <Star className="w-3 h-3 fill-accent text-accent" />
-                    <span className="text-[10px] font-bold text-gray-400 ml-1 uppercase tracking-widest leading-none mt-0.5">
-                        4.8 (120)
-                    </span>
-                </div>
-
-                <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-tight mb-2 group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-black text-gray-900 leading-tight mb-2 group-hover:text-[#155DFC] transition-colors line-clamp-2">
                     {product.name}
                 </h3>
 
-                <p className="text-sm text-gray-500 font-medium line-clamp-2 mb-4 leading-relaxed flex-1">
+                <p className="text-sm text-gray-500 font-medium line-clamp-2 mb-6 leading-relaxed flex-1">
                     {product.description}
                 </p>
 
-                <div className="flex items-center justify-between mt-auto">
-                    <div className="flex flex-col">
-                        <span className="text-sm text-gray-400 font-bold uppercase tracking-widest leading-none mb-1">Price</span>
-                        <span className="text-2xl font-black text-secondary" style={{ fontFamily: "var(--font-body)" }}>${product.price.toFixed(2)}</span>
-                    </div>
-
-                    <button
-                        onClick={handleAddToCart}
-                        className={`w-14 h-14 rounded-full flex items-center justify-center transition-all active:scale-95 shadow-lg group-hover:shadow-primary/25 ${added ? "bg-green-500 shadow-green-500/25" : "bg-primary shadow-primary/20"
-                            }`}
+                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+                    <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">Inquiry Only</span>
+                    <Link
+                        href={`/shop/${product.id}`}
+                        className="flex items-center gap-2 text-[#155DFC] font-black text-sm uppercase tracking-wider group/btn"
                     >
-                        {added ? (
-                            <Check className="text-white w-6 h-6 stroke-[3px]" />
-                        ) : (
-                            <Plus className="text-white w-6 h-6 stroke-[3px]" />
-                        )}
-                    </button>
+                        View Details
+                        <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                    </Link>
                 </div>
             </div>
         </motion.div>

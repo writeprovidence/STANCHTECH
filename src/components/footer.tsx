@@ -52,7 +52,7 @@ export function Footer() {
                   {[
                     { label: "About", href: "/about" },
                     { label: "Portfolio", href: "/projects" },
-                    { label: "Shop", href: "/shop" },
+                    { label: "Inventory", href: "/shop" },
                     { label: "Contact", href: "/contact" }
                   ].map((link, i) => (
                     <li key={i}>
@@ -81,7 +81,7 @@ export function Footer() {
                   Adjacent Dubi, Port Harcourt, <br />
                   Rivers State, Nigeria
                </p>
-               <p style={{ color: "#fff", fontSize: 15, fontWeight: 700 }}>+234 (0) 705 962 3727</p>
+               <p style={{ color: "#fff", fontSize: 15, fontWeight: 700 }}>+234 (0) 803 734 0959</p>
                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15 }}>stanchtechltd@gmail.com</p>
             </div>
  

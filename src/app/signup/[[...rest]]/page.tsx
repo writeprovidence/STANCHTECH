@@ -4,7 +4,12 @@ import React, { Suspense } from "react";
 import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
 
+import { useSearchParams } from "next/navigation";
+
 function SignupContent() {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("next") || "/shop";
+
   return (
     <div style={{ width: "100%", minHeight: "100vh", backgroundColor: "#ffffff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 16px" }}>
       <SignUp 
@@ -26,10 +31,10 @@ function SignupContent() {
             phoneNumberControl: "hidden",
           }
         }}
-        signInUrl="/login"
+        signInUrl={redirectTo ? `/login?next=${encodeURIComponent(redirectTo)}` : "/login"}
         path="/signup"
         routing="path"
-        forceRedirectUrl="/shop"
+        forceRedirectUrl={redirectTo}
         fallbackRedirectUrl="/shop"
       />
     </div>

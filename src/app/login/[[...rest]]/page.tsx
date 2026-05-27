@@ -32,7 +32,7 @@ function LoginContent() {
             phoneNumberControl: "hidden",
           }
         }}
-        signUpUrl="/signup"
+        signUpUrl={redirectTo ? `/signup?next=${encodeURIComponent(redirectTo)}` : "/signup"}
         path="/login"
         routing="path"
         forceRedirectUrl={redirectTo}
