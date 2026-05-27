@@ -729,7 +729,7 @@ export default function AdminDashboard() {
                         sku: `SS${String(Math.max(0, ...products.map(p => p.id)) + 1).padStart(3, '0')}`,
                         weight: '',
                         condition: 'Genuine Part',
-                        quantity: 0,
+                        stock: 0,
                         is_featured: false,
                         is_hidden: false,
                       })}
