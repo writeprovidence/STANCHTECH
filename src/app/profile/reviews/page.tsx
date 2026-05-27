@@ -36,7 +36,7 @@ export default function ReviewsPage() {
           </Link>
           <span className="text-gray-300">•</span>
           <Link 
-            href="/shop"
+            href="/spares"
             className="text-[13px] font-bold text-black border-b-2 border-black pb-1 hover:opacity-60 transition-opacity no-underline"
           >
             Catalog

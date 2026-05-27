@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 export function Footer() {
     const pathname = usePathname();
     const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
-    const isShopArea = pathname.startsWith('/shop') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders';
+    const isSparesArea = pathname.startsWith('/spares') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders';
 
     if (isAuthPage) return null;
 
@@ -52,7 +52,7 @@ export function Footer() {
                   {[
                     { label: "About", href: "/about" },
                     { label: "Portfolio", href: "/projects" },
-                    { label: "Inventory", href: "/shop" },
+                    { label: "Spares", href: "/spares" },
                     { label: "Contact", href: "/contact" }
                   ].map((link, i) => (
                     <li key={i}>

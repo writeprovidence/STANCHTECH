@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { PRODUCTS } from '@/data/products';
 import { supabase } from '@/lib/supabase';
-import { useUser } from '@clerk/nextjs';
+import { useUser, useClerk, SignIn } from '@clerk/nextjs';
 import {
   saveAdminProduct,
   deleteAdminProduct,
@@ -13,12 +12,12 @@ import {
   verifyAdminAccess
 } from '@/app/actions/admin';
 import {
-  LayoutDashboard, Package, ShoppingBag, Users, LogOut,
+  LayoutDashboard, Package, LogOut,
   TrendingUp, AlertCircle, Clock, CheckCircle2, Truck,
   ChevronRight, Search, Eye, EyeOff, Edit2, Trash2, X,
-  ArrowUpRight, ArrowDownRight, BarChart3, Filter,
-  Shield, Lock, RefreshCcw, Plus, Save, ChevronDown,
-  ExternalLink, MoreVertical, Circle, Settings
+  ArrowUpRight, ArrowDownRight, BarChart3,
+  Shield, Lock, RefreshCcw, Plus, Save,
+  ExternalLink, Circle, Settings
 } from 'lucide-react';
 
 // ─── Colors ─────────────────────────────────────────────────────────────────
@@ -27,17 +26,6 @@ const BRAND_NAVY = '#0b1a2e';
 const BRAND_ACCENT = '#2563eb';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
-interface Order {
-  id: string;
-  date: string;
-  status: 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
-  total: number;
-  items: { id: number; name: string; price: number; quantity: number; image?: string }[];
-  billing: { billingFirstName: string; billingLastName: string; email: string; billingPhone: string; billingAddress: string; billingState: string; billingCity: string; deliveryMethod?: string };
-  paymentMethod: string;
-  deliveryMethod: string;
-}
-
 interface AdminProduct {
   id: number;
   name: string;
@@ -57,27 +45,6 @@ interface AdminProduct {
 // PIN is no longer hardcoded. Auth is handled by Clerk + server-side email check.
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
-const fmt = (n: number) => `₦${n.toLocaleString()}`;
-const fmtDate = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-const STATUS_META: Record<string, { color: string; bg: string; icon: any }> = {
-  Processing: { color: '#d97706', bg: '#fef3c7', icon: Clock },
-  Shipped:    { color: '#2563eb', bg: '#dbeafe', icon: Truck },
-  Delivered:  { color: '#16a34a', bg: '#dcfce7', icon: CheckCircle2 },
-  Cancelled:  { color: '#dc2626', bg: '#fee2e2', icon: X },
-};
-
-// ─── Status Badge ────────────────────────────────────────────────────────────
-function StatusBadge({ status }: { status: string }) {
-  const m = STATUS_META[status] || { color: '#6b7280', bg: '#f3f4f6', icon: Circle };
-  const Icon = m.icon;
-  return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', padding: '3px 10px', borderRadius: '20px', background: m.bg, color: m.color, fontSize: '12px', fontWeight: 700, fontFamily: "var(--font-heading)", whiteSpace: 'nowrap' }}>
-      <Icon size={11} />
-      {status}
-    </span>
-  );
-}
-
 // ─── Stat Card ───────────────────────────────────────────────────────────────
 function StatCard({ label, value, sub, icon, accent, trend }: { label: string; value: string; sub?: string; icon: any; accent: string; trend?: { up: boolean; text: string } }) {
   const Icon = icon;
@@ -106,15 +73,12 @@ function StatCard({ label, value, sub, icon, accent, trend }: { label: string; v
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function AdminDashboard() {
   const { isSignedIn, user, isLoaded: clerkLoaded } = useUser();
+  const { signOut } = useClerk();
   const [isAuthed, setIsAuthed] = useState(false);
   const [authError, setAuthError] = useState('');
   const [activeTab, setActiveTab ] = useState<'overview' | 'products' | 'settings'>('products');
-  const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<AdminProduct[]>([]);
-  const [searchOrders, setSearchOrders] = useState('');
   const [searchProducts, setSearchProducts] = useState('');
-  const [filterStatus, setFilterStatus] = useState('All');
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
   const [productToDelete, setProductToDelete] = useState<AdminProduct | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -350,11 +314,6 @@ export default function AdminDashboard() {
     }
   };
 
-  // ─── Computed stats ───────────────────────────────────────────────────────
-  const uniqueCustomers = 0; // Disabled
-
-  const filteredOrders: any[] = [];
-
   const filteredProducts = products.filter(p => {
     const q = searchProducts.toLowerCase();
     return !q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
@@ -447,7 +406,7 @@ export default function AdminDashboard() {
 
   // ─── Dashboard ────────────────────────────────────────────────────────────
   const NAV = [
-    { id: 'products', label: 'Inventory', icon: Package },
+    { id: 'products', label: 'Spares', icon: Package },
     { id: 'overview', label: 'Insights', icon: LayoutDashboard },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
@@ -554,7 +513,7 @@ export default function AdminDashboard() {
             {!sidebarCollapsed && <span style={{ fontSize: '13px', fontWeight: 600 }}>Collapse</span>}
           </button>
 
-          <a href="/shop" target="_blank" rel="noreferrer" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: sidebarCollapsed ? '12px' : '10px 16px', borderRadius: '8px', textDecoration: 'none', color: '#4b5563', justifyContent: sidebarCollapsed ? 'center' : 'flex-start' }}
+          <a href="/spares" target="_blank" rel="noreferrer" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: sidebarCollapsed ? '12px' : '10px 16px', borderRadius: '8px', textDecoration: 'none', color: '#4b5563', justifyContent: sidebarCollapsed ? 'center' : 'flex-start' }}
             onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#1a1a1f'}
             onMouseOut={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
           >
@@ -563,7 +522,7 @@ export default function AdminDashboard() {
           </a>
 
           <button
-            onClick={() => { sessionStorage.removeItem('stanch_admin'); setIsAuthed(false); }}
+            onClick={() => { signOut({ redirectUrl: '/spares' }); }}
             style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: sidebarCollapsed ? '12px' : '10px 16px', borderRadius: '8px', border: 'none', cursor: 'pointer', background: 'transparent', color: '#dc2626', justifyContent: sidebarCollapsed ? 'center' : 'flex-start' }}
             onMouseOver={e => e.currentTarget.style.background = '#1a1a1f'}
             onMouseOut={e => e.currentTarget.style.background = 'transparent'}
@@ -641,8 +600,8 @@ export default function AdminDashboard() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
               {/* Stat Cards */}
               <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-                <StatCard label="Total Inventory" value={String(products.length)} sub="Active spare parts" icon={Package} accent="#2563eb" />
-                <StatCard label="Featured Items" value={String(products.filter(p => p.is_featured).length)} sub="Showcased on shop" icon={TrendingUp} accent="#16a34a" />
+                <StatCard label="Total Spares" value={String(products.length)} sub="Active spare parts" icon={Package} accent="#2563eb" />
+                <StatCard label="Featured Items" value={String(products.filter(p => p.is_featured).length)} sub="Showcased on Spares" icon={TrendingUp} accent="#16a34a" />
                 <StatCard label="Visibility" value={String(products.filter(p => !p.is_hidden).length)} sub="Visible to public" icon={Eye} accent="#7047eb" />
               </div>
 
@@ -652,7 +611,7 @@ export default function AdminDashboard() {
                         <Package size={40} color={BRAND_BLUE} />
                     </div>
                     <div>
-                        <h3 style={{ fontSize: '20px', fontWeight: 900, marginBottom: '8px' }}>Inventory Catalog Model</h3>
+                        <h3 style={{ fontSize: '20px', fontWeight: 900, marginBottom: '8px' }}>Spares Catalog Model</h3>
                     </div>
                     <button 
                         onClick={() => setActiveTab('products')}
@@ -681,7 +640,7 @@ export default function AdminDashboard() {
 
                   <div style={{ borderTop: '1px solid #f3f4f6', paddingTop: '16px', marginTop: 'auto' }}>
                     <p style={{ fontSize: '12px', color: '#9ca3af' }}>
-                      Inventory Health
+                      Spares Health
                     </p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -965,7 +924,7 @@ export default function AdminDashboard() {
                       <CheckCircle2 size={16} color="#16a34a" />
                       <span style={{ fontSize: '13px', fontWeight: 800, color: '#16a34a', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Authorized Admin</span>
                     </div>
-                    <p style={{ fontSize: '12px', color: '#15803d', marginTop: '6px' }}>This account has full access to the inventory catalog and admin operations.</p>
+                    <p style={{ fontSize: '12px', color: '#15803d', marginTop: '6px' }}>This account has full access to the spares catalog and admin operations.</p>
                   </div>
                 </div>
 
@@ -1013,9 +972,7 @@ export default function AdminDashboard() {
                     This will <strong style={{ color: '#dc2626' }}>permanently delete</strong> every record from your live Supabase database:
                   </p>
                   <ul style={{ fontSize: '13px', color: '#6b7280', lineHeight: 2, marginBottom: '28px', paddingLeft: '20px' }}>
-                    <li>🗑 All <strong style={{ color: '#111' }}>{products.length} products</strong> from the store</li>
-                    <li>🗑 All <strong style={{ color: '#111' }}>{orders.length} orders</strong> and order history</li>
-                    <li>🗑 All customer records derived from orders</li>
+                    <li>🗑 All <strong style={{ color: '#111' }}>{products.length} products</strong> from the spares catalog</li>
                     <li>🗑 All local cache and browser storage</li>
                   </ul>
                   <p style={{ fontSize: '12px', fontWeight: 700, color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '20px' }}>⚠ This action is irreversible and cannot be undone.</p>
@@ -1129,7 +1086,7 @@ export default function AdminDashboard() {
                       </div>
                       <h3 style={{ fontFamily: "var(--font-heading)", fontSize: '20px', fontWeight: 900, color: '#111', marginBottom: '12px' }}>Database Synchronization</h3>
                       <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: 1.6, marginBottom: '32px' }}>
-                        This will securely push all localized application data (products and orders) to the live Supabase Postgres Database. Are you ready to continue?
+                        This will securely push all localized application data (products) to the live Supabase Postgres Database. Are you ready to continue?
                       </p>
                       <div style={{ display: 'flex', gap: '12px' }}>
                         <button

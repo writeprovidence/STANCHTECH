@@ -202,8 +202,8 @@ export default function AboutPage() {
                         <a href="/contact" className="about-btn-primary">
                             Get In Touch
                         </a>
-                        <a href="/shop" target="_blank" rel="noopener noreferrer" className="about-btn-ghost">
-                            Explore Inventory
+                        <a href="/spares" target="_blank" rel="noopener noreferrer" className="about-btn-ghost">
+                            Explore Spares
                         </a>
                     </div>
                 </div>

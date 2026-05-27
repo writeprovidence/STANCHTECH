@@ -310,7 +310,7 @@ function ProfileContent() {
           >
             <button
               onClick={async () => {
-                await signOut({ redirectUrl: "/shop" });
+                await signOut({ redirectUrl: "/spares" });
               }}
               style={{
                 width: '100%',
@@ -569,8 +569,8 @@ function ProfileContent() {
                               <p style={{ fontSize: '16px', fontWeight: 500, color: '#111827', marginBottom: '8px' }}>No orders yet</p>
                               <p style={{ fontSize: '14px', color: '#6b7280' }}>You haven't placed any orders with us yet.</p>
                             </div>
-                            <button onClick={() => router.push('/shop')} style={{ padding: '10px 24px', background: '#111', color: '#fff', border: 'none', cursor: 'pointer', fontSize: '14px', borderRadius: '4px' }}>
-                              Start Shopping
+                            <button onClick={() => router.push('/spares')} style={{ padding: '10px 24px', background: '#111', color: '#fff', border: 'none', cursor: 'pointer', fontSize: '14px', borderRadius: '4px' }}>
+                              Start Sparesping
                             </button>
                           </div>
                         );
@@ -861,7 +861,7 @@ function ProfileContent() {
                     setIsDeleting(true);
                     localStorage.removeItem("stanchtech_user_address");
                     localStorage.removeItem('orders');
-                    await signOut({ redirectUrl: "/shop" });
+                    await signOut({ redirectUrl: "/spares" });
                   }}
                   disabled={isDeleting}
                   style={{

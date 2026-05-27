@@ -9,7 +9,7 @@ import "./globals.css";
 const spaceGrotesk = localFont({
   src: '../../public/fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf',
   variable: '--font-heading',
-  weight: '300 700', // Support the full range
+  weight: '300 700',
 })
 
 const darkerGrotesque = localFont({
@@ -17,8 +17,6 @@ const darkerGrotesque = localFont({
   variable: '--font-body',
   weight: '300 900',
 })
-
-
 
 export const metadata = {
   title: "STANCH TECH | Marine & Industrial Services",

@@ -51,7 +51,7 @@ const PROJECTS = [
       "/asset/Landing_page_image/support.png",
       "/asset/Landing_page_image/vessel.png"
     ],
-    process: ["Urgent needs assessment", "Global inventory synchronization", "Priority logistics and customs clearance", "Direct-to-platform delivery and installation"],
+    process: ["Urgent needs assessment", "Global spares synchronization", "Priority logistics and customs clearance", "Direct-to-platform delivery and installation"],
     testimonial: {
       quote: "The speed at which Stanch Tech moved to save our operations was incredible. Their logistics precision is world-class.",
       author: "Engr. Sarah John",
@@ -143,19 +143,19 @@ const PROJECTS = [
     location: "Onne Free Zone",
     date: "July 2023",
     client: "Hydro Nile Ltd",
-    description: "Comprehensive restoration and inventory management of critical engine spares for a specialized vessel fleet.",
-    about: "Hydro Nile had a large inventory of damaged or aged spares. Stanch Tech conducted a full restoration project, salvaging 85% of the components and re-certifying them for active duty.",
+    description: "Comprehensive restoration and spares management of critical engine spares for a specialized vessel fleet.",
+    about: "Hydro Nile had a large spares of damaged or aged spares. Stanch Tech conducted a full restoration project, salvaging 85% of the components and re-certifying them for active duty.",
     image: "/asset/Landing_page_image/marine_spares.png",
     secondImage: "/asset/Landing_page_image/low_hour_engine.jpeg",
     processDescription: "Precision component salvage and re-certification to maritime standards.",
-    highlights: ["85% component salvage rate", "Full inventory re-certification", "Significant cost savings", "Custom storage solution"],
+    highlights: ["85% component salvage rate", "Full spares re-certification", "Significant cost savings", "Custom storage solution"],
     highlightImages: [
       "/asset/Landing_page_image/marine_spares.png",
       "/asset/Landing_page_image/low_hour_engine.jpeg",
       "/asset/Landing_page_image/vessel.png",
       "/asset/Landing_page_image/support.png"
     ],
-    process: ["Inventory auditing", "Chemical cleaning and NDT testing", "Precision machining and repair", "Certification and packing"],
+    process: ["Spares auditing", "Chemical cleaning and NDT testing", "Precision machining and repair", "Certification and packing"],
     testimonial: {
       quote: "They saved us tens of thousands of dollars by restoring parts we thought were scrap. Their technical skill is impressive.",
       author: "Chief Engr. Mike",

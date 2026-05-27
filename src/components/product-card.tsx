@@ -37,7 +37,7 @@ export function ProductCard({ product }: { product: any }) {
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
                     <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">Inquiry Only</span>
                     <Link
-                        href={`/shop/${product.id}`}
+                        href={`/spares/${product.id}`}
                         className="flex items-center gap-2 text-[#155DFC] font-black text-sm uppercase tracking-wider group/btn"
                     >
                         View Details

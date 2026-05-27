@@ -3,7 +3,7 @@
 import { useCart } from "@/context/cart-context";
 import { useState } from "react";
 import Image from "next/image";
-import { Star, Minus, Plus, ShoppingBag, Settings, ShieldCheck, Wrench, ArrowRight } from "lucide-react";
+import { Star, Minus, Plus, SparespingBag, Settings, ShieldCheck, Wrench, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const PRODUCT = {
@@ -38,7 +38,7 @@ export default function ProductDetailPage() {
             <div className="container mx-auto px-6">
                 {/* Navigation Breadcrumb */}
                 <div className="flex items-center gap-4 mb-12 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                    <span className="hover:text-blue-600 cursor-pointer transition-colors">Shop</span>
+                    <span className="hover:text-blue-600 cursor-pointer transition-colors">Spares</span>
                     <span>/</span>
                     <span className="hover:text-blue-600 cursor-pointer transition-colors">{PRODUCT.category}</span>
                     <span>/</span>
@@ -119,7 +119,7 @@ export default function ProductDetailPage() {
                                     className={`flex-1 min-w-[200px] py-6 rounded-full font-black text-xl flex items-center justify-center gap-4 transition-all shadow-xl active:scale-95 ${added ? "bg-green-500 text-white shadow-green-500/20" : "bg-blue-600 text-white shadow-blue-600/20 hover:scale-[1.02]"
                                         }`}
                                 >
-                                    <ShoppingBag className="w-6 h-6" />
+                                    <SparespingBag className="w-6 h-6" />
                                     {added ? "Added to Cart!" : "Add to Cart"}
                                 </button>
                             </div>

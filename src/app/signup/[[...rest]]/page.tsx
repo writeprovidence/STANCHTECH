@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 
 function SignupContent() {
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("next") || "/shop";
+  const redirectTo = searchParams.get("next") || "/admin";
 
   return (
     <div style={{ width: "100%", minHeight: "100vh", backgroundColor: "#ffffff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 16px" }}>
@@ -35,7 +35,7 @@ function SignupContent() {
         path="/signup"
         routing="path"
         forceRedirectUrl={redirectTo}
-        fallbackRedirectUrl="/shop"
+        fallbackRedirectUrl="/admin"
       />
     </div>
   );

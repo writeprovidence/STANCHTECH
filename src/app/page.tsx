@@ -182,8 +182,8 @@ export default function HomePage() {
               flexWrap: "wrap"
             }}
           >
-            <Link href="/shop" className="hero-btn-primary" style={{ width: "min(100%, 220px)" }}>
-              Explore Inventory
+            <Link href="/spares" className="hero-btn-primary" style={{ width: "min(100%, 220px)" }}>
+              Explore Spares
             </Link>
             <Link href="/projects" className="hero-btn-secondary" style={{ backdropFilter: "blur(10px)", background: "rgba(255,255,255,0.1)", width: "min(100%, 220px)" }}>
               View Our Portfolio
@@ -203,7 +203,7 @@ export default function HomePage() {
         }}>
            {[
              { label: "Technical Support", icon: <MessageCircle size={24} /> },
-             { label: "Spares Inventory", icon: <Package size={24} /> },
+             { label: "Spares Catalog", icon: <Package size={24} /> },
              { label: "Onsite Maintenance", icon: <MapPin size={24} /> },
              { label: "Expert Consultancy", icon: <Star size={24} /> }
            ].map((item, i) => (
@@ -403,7 +403,7 @@ export default function HomePage() {
         <section className="section-pad" style={{ background: "#fff", color: "#0b1a2e", paddingTop: 60, marginTop: "-40px" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
             <div style={{ textAlign: "center", marginBottom: 60, position: "relative" }}>
-              <span className="section-label" style={{ color: "var(--accent)" }}>SPARE INVENTORY</span>
+              <span className="section-label" style={{ color: "var(--accent)" }}>SPARE CATALOG</span>
               <h2 className="responsive-title" style={{ marginBottom: 16 }}>Featured Spares</h2>
               <p style={{ color: "rgba(11,26,46,0.68)", fontSize: 20, maxWidth: 560, margin: "0 auto", fontFamily: "var(--font-body)" }}>
                 Our spares help to reduce downtime and ensure operations run smoothly.
@@ -483,7 +483,7 @@ export default function HomePage() {
                     </p>
                     
                     <Link 
-                      href={`/shop/${product.id}`}
+                      href={`/spares/${product.id}`}
                       style={{ 
                         background: "#0b1a2e",
                         color: "#fff",

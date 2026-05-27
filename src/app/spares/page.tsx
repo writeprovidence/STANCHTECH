@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SlidersHorizontal, X, ChevronRight, ChevronDown, Loader2, Search } from "lucide-react";
 import Image from "next/image";
 
-function ShopContent() {
+function SparesContent() {
     const searchParams = useSearchParams();
     const initialQuery = searchParams.get('q') || "";
     
@@ -78,7 +78,7 @@ function ShopContent() {
         });
 
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-    const shopProducts = filteredProducts.slice(
+    const SparesProducts = filteredProducts.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
@@ -94,13 +94,13 @@ function ShopContent() {
             {/* Hero */}
             <section className="relative h-[400px] flex flex-col items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <img src="/asset/shop_image/spare_background.png" alt="Shop Background" className="w-full h-full object-cover" />
+                    <img src="/asset/spares_image/spare_background.png" alt="Spares Background" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-[#0b1a2e]/60" />
                 </div>
                 <div className="relative z-10 text-center w-full max-w-4xl px-6 pt-20">
                     <h1 className="text-6xl md:text-7xl font-800 text-white" style={{ fontFamily: "var(--font-heading)", letterSpacing: "-0.04em" }}>Explore Spares</h1>
                     <p style={{ color: "rgba(255,255,255,0.7)", marginTop: "16px", fontSize: "18px", fontFamily: "var(--font-body)" }}>
-                        Browse our inventory — contact us directly to enquire or place an order.
+                        Browse our spares — contact us directly to enquire or place an order.
                     </p>
                     
                     {/* Prominent Search Bar */}
@@ -205,11 +205,11 @@ function ShopContent() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {shopProducts.map((product, index) => {
+                        {SparesProducts.map((product, index) => {
                             const imgSrc = (Array.isArray(product.image) ? product.image[0] : product.image) || "/asset/Landing_page_image/marine_spares.png";
                             return (
                                 <Link
-                                    href={`/shop/${product.id}`}
+                                    href={`/spares/${product.id}`}
                                     key={product.id ?? index}
                                     className="group relative bg-white border border-gray-100 text-left transition-all duration-700 flex flex-col items-center hover:shadow-lg hover:-translate-y-1"
                                     style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
@@ -280,7 +280,7 @@ function ShopContent() {
     );
 }
 
-function ShopLoadingSkeleton() {
+function SparesLoadingSkeleton() {
     return (
         <div className="bg-[#F8FAFC] min-h-screen pt-20">
             <div className="h-[320px] bg-[#0b1a2e] animate-pulse" />
@@ -300,10 +300,10 @@ function ShopLoadingSkeleton() {
     );
 }
 
-export default function ShopPage() {
+export default function SparesPage() {
     return (
-        <Suspense fallback={<ShopLoadingSkeleton />}>
-            <ShopContent />
+        <Suspense fallback={<SparesLoadingSkeleton />}>
+            <SparesContent />
         </Suspense>
     );
 }

@@ -59,7 +59,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     const currentImage = images[activeImage] || product.image;
 
     const whatsappMessage = encodeURIComponent(
-        `Hello STANCH TECH, I'm interested in the *${product.name}* from your inventory. Could you please provide pricing and availability?`
+        `Hello STANCH TECH, I'm interested in the *${product.name}* from your spares catalog. Could you please provide pricing and availability?`
     );
 
     return (
@@ -68,7 +68,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* Breadcrumb */}
             <div className="border-b border-gray-100 bg-white">
                 <div style={{ paddingLeft: "5vw", paddingRight: "5vw" }} className="h-16 flex items-center gap-4">
-                    <Link href="/shop" className="text-gray-400 hover:text-black transition-colors font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "var(--font-body)" }}>Inventory</Link>
+                    <Link href="/spares" className="text-gray-400 hover:text-black transition-colors font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "var(--font-body)" }}>Spares</Link>
                     <ChevronRight size={12} className="text-gray-300" />
                     <span className="text-black font-bold uppercase tracking-widest text-[12px]" style={{ fontFamily: "var(--font-body)" }}>{product.name}</span>
                 </div>
@@ -129,7 +129,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     <div className="w-full lg:w-[45%] space-y-8">
                         <div>
                             <span className="text-[12px] font-900 uppercase tracking-[0.25em] text-blue-600 block mb-4" style={{ fontFamily: "var(--font-body)" }}>
-                                Inventory Details
+                                Spare Details
                             </span>
                             <h1 className="text-4xl lg:text-5xl font-800 text-black uppercase leading-[1.1]" style={{ fontFamily: "var(--font-heading)" }}>
                                 {product.name}
@@ -286,7 +286,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {relatedProducts.map((p, index) => (
                             <Link
-                                href={`/shop/${p.id}`}
+                                href={`/spares/${p.id}`}
                                 key={index}
                                 className="group relative bg-white border border-gray-100 text-left transition-all duration-500 flex flex-col items-center hover:shadow-lg hover:-translate-y-1"
                                 style={{ paddingLeft: "2rem", paddingRight: "2rem", paddingTop: "3rem", paddingBottom: "2rem" }}
@@ -309,8 +309,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                         ))}
                     </div>
                     <div className="flex justify-center" style={{ marginTop: "80px" }}>
-                        <Link href="/shop" className="text-[15px] font-900 uppercase tracking-[0.3em] hover:text-blue-600 transition-all" style={{ fontFamily: "var(--font-body)" }}>
-                            View Full Inventory
+                        <Link href="/spares" className="text-[15px] font-900 uppercase tracking-[0.3em] hover:text-blue-600 transition-all" style={{ fontFamily: "var(--font-body)" }}>
+                            View Spares Catalog
                         </Link>
                     </div>
                 </section>
