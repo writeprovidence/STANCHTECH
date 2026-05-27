@@ -11,7 +11,6 @@ const isPublicRoute = createRouteMatcher([
   '/api/(.*)',
   '/cart',
   '/checkout',
-  '/admin(.*)',
   '/asset(.*)',
   '/fonts(.*)',
   '/privacy(.*)',
