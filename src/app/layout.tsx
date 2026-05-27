@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import localFont from 'next/font/local'
+import { ClerkProvider } from '@clerk/nextjs';
 
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -26,15 +27,17 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${darkerGrotesque.variable}`}>
-      <body suppressHydrationWarning className="antialiased selection:bg-primary/20 selection:text-primary min-h-screen">
-        <Navbar />
-        <main style={{ minHeight: "100vh" }}>
-          {children}
-        </main>
-        <Footer />
-        <Analytics />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${darkerGrotesque.variable}`}>
+        <body suppressHydrationWarning className="antialiased selection:bg-primary/20 selection:text-primary min-h-screen">
+          <Navbar />
+          <main style={{ minHeight: "100vh" }}>
+            {children}
+          </main>
+          <Footer />
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

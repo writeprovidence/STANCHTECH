@@ -3,6 +3,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { PRODUCTS } from '@/data/products';
 import { supabase } from '@/lib/supabase';
+import { useUser } from '@clerk/nextjs';
+import {
+  saveAdminProduct,
+  deleteAdminProduct,
+  deleteAllAdminProducts,
+  nukeAllAdminData,
+  executeMigrationAction,
+  verifyAdminAccess
+} from '@/app/actions/admin';
 import {
   LayoutDashboard, Package, ShoppingBag, Users, LogOut,
   TrendingUp, AlertCircle, Clock, CheckCircle2, Truck,
@@ -44,8 +53,8 @@ interface AdminProduct {
   is_hidden?: boolean;
 }
 
-// ─── Admin PIN ───────────────────────────────────────────────────────────────
-const ADMIN_PIN = 'STANCH2025';
+// ─── Admin Auth (Clerk-based) ────────────────────────────────────────────────
+// PIN is no longer hardcoded. Auth is handled by Clerk + server-side email check.
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 const fmt = (n: number) => `₦${n.toLocaleString()}`;
@@ -96,13 +105,10 @@ function StatCard({ label, value, sub, icon, accent, trend }: { label: string; v
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function AdminDashboard() {
-  const [pinInput, setPinInput] = useState('');
-  const [showLoginPin, setShowLoginPin] = useState(false);
-  const [showChangePin, setShowChangePin] = useState(false);
+  const { isSignedIn, user, isLoaded: clerkLoaded } = useUser();
   const [isAuthed, setIsAuthed] = useState(false);
-  const [pinError, setPinError] = useState(false);
+  const [authError, setAuthError] = useState('');
   const [activeTab, setActiveTab ] = useState<'overview' | 'products' | 'settings'>('products');
-  const [dynamicPin, setDynamicPin] = useState(ADMIN_PIN);
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [searchOrders, setSearchOrders] = useState('');
@@ -119,6 +125,26 @@ export default function AdminDashboard() {
   const [toastMessage, setToastMessage] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
   const [wipeModalOpen, setWipeModalOpen] = useState(false);
   const [nukeModalOpen, setNukeModalOpen] = useState(false);
+
+  // ─── Clerk-Based Admin Verification ─────────────────────────────────────
+  useEffect(() => {
+    if (!clerkLoaded) return;
+    if (!isSignedIn) {
+      setIsAuthed(false);
+      setAuthError('NOT_SIGNED_IN');
+      return;
+    }
+    // Verify admin access via server action
+    verifyAdminAccess().then(result => {
+      if (result.authorized) {
+        setIsAuthed(true);
+        setAuthError('');
+      } else {
+        setIsAuthed(false);
+        setAuthError(result.error || 'Forbidden');
+      }
+    });
+  }, [clerkLoaded, isSignedIn]);
 
   const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' = 'success') => {
     setToastMessage({ message, type });
@@ -156,51 +182,17 @@ export default function AdminDashboard() {
     loadData();
   }, [loadData]);
 
-  // Fetch custom PIN on mount unconditionally
-  useEffect(() => {
-    const fetchPin = async () => {
-      try {
-        const { data: dbSettings } = await supabase.from('site_settings').select('*').eq('key', 'admin_pin').single();
-        if (dbSettings?.value) setDynamicPin(dbSettings.value);
-      } catch {}
-    };
-    fetchPin();
-  }, []);
-
-  const checkPin = () => {
-    const localPinOverride = localStorage.getItem('CUSTOM_ADMIN_PIN');
-    const validPin = localPinOverride || dynamicPin;
-    
-    if (pinInput.trim().toUpperCase() === validPin) {
-      setIsAuthed(true);
-      setPinError(false);
-      sessionStorage.setItem('stanch_admin', '1');
-    } else {
-      setPinError(true);
-      setPinInput('');
-    }
-  };
-
-  // Check session
-  useEffect(() => {
-    if (sessionStorage.getItem('stanch_admin') === '1') setIsAuthed(true);
-  }, []);
-
   const deleteProduct = async (id: number) => {
     setIsLoading(true);
     try {
-      // 1. Update Supabase
-      const { error } = await supabase.from('products').delete().eq('id', id);
-      
-      if (error) {
-        showToast(`Failed to delete from Supabase: ${error.message}`, "error");
+      const result = await deleteAdminProduct(id);
+      if (!result.success) {
+        showToast(`Failed to delete: ${result.error}`, "error");
         return;
       }
 
-      // 2. Update local state
       const updated = products.filter(p => p.id !== id);
       setProducts(updated);
-      localStorage.setItem('admin_products', JSON.stringify(updated));
       setProductToDelete(null);
       showToast("Product deleted successfully", "success");
     } catch (err: any) {
@@ -214,13 +206,14 @@ export default function AdminDashboard() {
     setIsLoading(true);
     setWipeModalOpen(false);
     try {
-      // The fastest way to delete all is to delete where id > -1 (all of them)
-      await supabase.from('products').delete().gt('id', -1);
+      const result = await deleteAllAdminProducts();
+      if (!result.success) {
+        showToast(`Failed: ${result.error}`, "error");
+        return;
+      }
       setProducts([]);
-      localStorage.setItem('admin_products', JSON.stringify([]));
       showToast("All products have been permanently deleted.", "success");
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
       showToast("Failed to delete all products.", "error");
     } finally {
       setIsLoading(false);
@@ -231,14 +224,15 @@ export default function AdminDashboard() {
     setNukeModalOpen(false);
     setIsLoading(true);
     try {
-      // Delete products (integer id)
-      await supabase.from('products').delete().gt('id', -1);
-      // Delete orders — use neq on a field that always has a value (works for string/UUID ids too)
-      // Clear ALL relevant localStorage keys
+      const result = await nukeAllAdminData();
+      if (!result.success) {
+        showToast(`Failed: ${result.error}`, "error");
+        return;
+      }
+      setProducts([]);
       localStorage.removeItem('admin_products');
       showToast('All data has been permanently wiped. Dashboard is clean.', 'success');
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
       showToast('Failed to wipe all data.', 'error');
     } finally {
       setIsLoading(false);
@@ -248,14 +242,7 @@ export default function AdminDashboard() {
   const executeMigration = async () => {
     setMigrationModal(prev => ({ ...prev, status: 'syncing' }));
     try {
-      // To fix "once and for all": 
-      // 1. We want Supabase to match the local state exactly.
-      // 2. Clear current products in DB to avoid "zombies"
       if (products.length > 0) {
-        // Clear all first
-        await supabase.from('products').delete().gt('id', -1);
-        // Insert local batch (removing id to let Supabase generate new serial ones if needed, 
-        // OR keeping them if we want to preserve IDs. Usually keeping them is better for links.)
         const insertPayload = products.map(p => ({
           name: p.name,
           image: p.image || '',
@@ -268,16 +255,8 @@ export default function AdminDashboard() {
           is_featured: p.is_featured || false,
           is_hidden: p.is_hidden || false,
         }));
-        let { error: pError } = await supabase.from('products').insert(insertPayload);
-        
-        // Graceful fallback if is_hidden column doesn't exist yet
-        if (pError && pError.message.includes('is_hidden')) {
-          const fallbackPayload = insertPayload.map(({ is_hidden, ...rest }) => rest);
-          const retry = await supabase.from('products').insert(fallbackPayload);
-          pError = retry.error;
-        }
-        
-        if (pError) throw pError;
+        const result = await executeMigrationAction(insertPayload);
+        if (!result.success) throw new Error(result.error);
       }
 
       setMigrationModal({ open: true, status: 'success', message: 'Synchronization complete! Database is now identical to your dashboard.' });
@@ -338,8 +317,6 @@ export default function AdminDashboard() {
   const saveProduct = async (p: AdminProduct) => {
     setIsLoading(true);
     try {
-      // Build a clean payload with ONLY columns that exist in the Supabase products table.
-      // DB columns: id, name, price, currency, image, images, description, sku, category, condition, stock, is_featured, created_at
       const dbPayload: Record<string, any> = {
         name: p.name,
         image: p.image || '',
@@ -351,42 +328,14 @@ export default function AdminDashboard() {
         condition: p.condition || '',
         stock: typeof p.stock === 'number' ? p.stock : 1,
         is_featured: p.is_featured || false,
+        is_hidden: p.is_hidden || false,
       };
-
-      const payloadWithHidden = { ...dbPayload, is_hidden: p.is_hidden || false };
-      const payloadLite = { ...dbPayload };
-      delete payloadLite.weight; // Fallback if weight col doesn't exist
 
       const exists = products.find(x => x.id === p.id);
+      const result = await saveAdminProduct(dbPayload, !!exists, p.id);
 
-      let error: any = null;
-      
-      const doSave = async (payload: any) => {
-        if (exists) {
-          return await supabase.from('products').update(payload).eq('id', p.id);
-        } else {
-          return await supabase.from('products').insert([payload]);
-        }
-      };
-
-      let res = await doSave(payloadWithHidden);
-      
-      // Graceful fallback if is_hidden or weight column doesn't exist yet
-      if (res.error && (res.error.message.includes('is_hidden') || res.error.message.includes('weight'))) {
-        console.warn("Falling back due to missing column:", res.error.message);
-        // Try without is_hidden first
-        res = await doSave(dbPayload);
-        if (res.error && res.error.message.includes('weight')) {
-           // Try without weight too
-           res = await doSave(payloadLite);
-        }
-      }
-      
-      error = res.error;
-
-      if (error) {
-        console.error('Supabase save error:', error);
-        showToast(`Failed to save: ${error.message}`, 'error');
+      if (!result.success) {
+        showToast(`Failed to save: ${result.error}`, 'error');
         return;
       }
 
@@ -399,16 +348,6 @@ export default function AdminDashboard() {
     } finally {
       setIsLoading(false);
     }
-
-    // Still sync to local as a backup
-    let updated;
-    const existsLocal = products.find(x => x.id === p.id);
-    if (existsLocal) {
-      updated = products.map(x => x.id === p.id ? p : x);
-    } else {
-      updated = [p, ...products];
-    }
-    localStorage.setItem('admin_products', JSON.stringify(updated));
   };
 
   // ─── Computed stats ───────────────────────────────────────────────────────
@@ -428,8 +367,20 @@ export default function AdminDashboard() {
   }, {} as Record<string, number>);
   const maxCat = Math.max(0, ...Object.values(conditionTotals));
 
-  // ─── PIN Guard ────────────────────────────────────────────────────────────
-  if (!isAuthed) {
+  // ─── Auth Guard (Clerk-based) ──────────────────────────────────────────────
+  if (!clerkLoaded) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0f0f11', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: '40px', height: '40px', border: '3px solid #2a2a32', borderTopColor: BRAND_BLUE, borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 16px' }} />
+          <p style={{ color: '#6b7280', fontSize: '14px', fontFamily: "var(--font-heading)" }}>Loading...</p>
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isSignedIn) {
     return (
       <div style={{ minHeight: '100vh', background: '#0f0f11', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "var(--font-heading)" }}>
         <div style={{ width: '100%', maxWidth: '400px', padding: '0 24px' }}>
@@ -437,56 +388,58 @@ export default function AdminDashboard() {
             <div style={{ width: '56px', height: '56px', background: BRAND_BLUE, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <Shield size={28} color="#fff" />
             </div>
-            <h1 style={{ fontFamily: "var(--font-heading)", fontSize: '24px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', marginBottom: '8px' }}>ADMIN ACCESS</h1>
+            <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', marginBottom: '8px' }}>ADMIN ACCESS</h1>
             <p style={{ fontSize: '15px', color: '#6b7280' }}>StanchTech Control Panel — Restricted</p>
           </div>
 
-          <div style={{ background: '#1a1a1f', border: '1px solid #2a2a32', borderRadius: '12px', padding: '32px' }}>
-            <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', color: '#6b7280', display: 'block', marginBottom: '10px' }}>
-              Admin Passphrase
-            </label>
-            <div style={{ position: 'relative', marginBottom: '20px' }}>
-              <Lock size={15} color="#4b5563" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
-              <input
-                type={showLoginPin ? 'text' : 'password'}
-                value={pinInput}
-                onChange={e => { setPinInput(e.target.value); setPinError(false); }}
-                onKeyDown={e => e.key === 'Enter' && checkPin()}
-                placeholder="Enter passphrase"
-                autoFocus
-                style={{
-                  width: '100%', padding: '14px 40px 14px 40px', background: '#0f0f11', border: `1px solid ${pinError ? '#dc2626' : '#2a2a32'}`,
-                  borderRadius: '8px', color: '#fff', fontSize: '16px', outline: 'none', boxSizing: 'border-box',
-                  fontFamily: "var(--font-heading)", letterSpacing: '0.1em',
-                }}
-              />
-              <button 
-                type="button"
-                onClick={() => setShowLoginPin(!showLoginPin)}
-                style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', outline: 'none', padding: 0, color: '#4b5563', display: 'flex' }}
-              >
-                {showLoginPin ? <EyeOff size={15} /> : <Eye size={15} />}
-              </button>
-            </div>
-            {pinError && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#ef4444', fontSize: '13px', marginBottom: '16px' }}>
-                <AlertCircle size={13} />
-                Incorrect passphrase. Please try again.
-              </div>
-            )}
-            <button
-              onClick={checkPin}
-              style={{ width: '100%', padding: '14px', background: '#7047eb', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', fontFamily: "var(--font-heading)", letterSpacing: '0.05em', transition: 'opacity 0.2s' }}
-              onMouseOver={e => (e.currentTarget.style.opacity = '0.9')}
-              onMouseOut={e => (e.currentTarget.style.opacity = '1')}
+          <div style={{ background: '#1a1a1f', border: '1px solid #2a2a32', borderRadius: '12px', padding: '32px', textAlign: 'center' }}>
+            <Lock size={24} color="#4b5563" style={{ marginBottom: '16px' }} />
+            <p style={{ color: '#9ca3af', fontSize: '14px', marginBottom: '24px' }}>
+              You must be signed in with an authorized admin account to access this panel.
+            </p>
+            <a
+              href="/login"
+              style={{ display: 'inline-block', width: '100%', padding: '14px', background: '#7047eb', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', textDecoration: 'none', letterSpacing: '0.05em' }}
             >
-              ACCESS DASHBOARD
-            </button>
+              SIGN IN
+            </a>
           </div>
 
           <p style={{ textAlign: 'center', fontSize: '12px', color: '#374151', marginTop: '24px' }}>
             <a href="/" style={{ color: '#4b5563', textDecoration: 'none' }}>← Back to StanchTech</a>
           </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthed) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0f0f11', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "var(--font-heading)" }}>
+        <div style={{ width: '100%', maxWidth: '400px', padding: '0 24px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <div style={{ width: '56px', height: '56px', background: '#dc2626', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+              <Shield size={28} color="#fff" />
+            </div>
+            <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', marginBottom: '8px' }}>ACCESS DENIED</h1>
+            <p style={{ fontSize: '15px', color: '#6b7280' }}>StanchTech Control Panel — Restricted</p>
+          </div>
+
+          <div style={{ background: '#1a1a1f', border: '1px solid #2a2a32', borderRadius: '12px', padding: '32px', textAlign: 'center' }}>
+            <AlertCircle size={24} color="#ef4444" style={{ marginBottom: '16px' }} />
+            <p style={{ color: '#ef4444', fontSize: '14px', fontWeight: 700, marginBottom: '8px' }}>
+              Unauthorized Account
+            </p>
+            <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '24px' }}>
+              The account <strong style={{ color: '#9ca3af' }}>{user?.emailAddresses?.[0]?.emailAddress}</strong> is not authorized for admin access. Contact your system administrator.
+            </p>
+            <a
+              href="/"
+              style={{ display: 'inline-block', width: '100%', padding: '14px', background: '#2a2a32', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', textDecoration: 'none', letterSpacing: '0.05em' }}
+            >
+              RETURN TO WEBSITE
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -988,69 +941,51 @@ export default function AdminDashboard() {
           {activeTab === 'settings' && (
             <div style={{ maxWidth: 640 }}>
               <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '4px', padding: '24px' }}>
-                <h2 style={{ fontSize: '18px', fontWeight: 800, fontFamily: "var(--font-heading)", marginBottom: '8px' }}>Security Settings</h2>
-                <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '24px' }}>Update your dashboard access PIN.</p>
-                
-                <form 
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    setIsLoading(true);
-                    const fd = new FormData(e.currentTarget);
-                    const newPin = (fd.get('newPin') as string).trim().toUpperCase();
-                    
-                    if (newPin.length < 4) {
-                      showToast('PIN must be at least 4 characters.', 'error');
-                      setIsLoading(false);
-                      return;
-                    }
-                    
-                    try {
-                      // Attempt to store in Supabase globally
-                      const { error } = await supabase.from('site_settings').upsert({ key: 'admin_pin', value: newPin });
-                      if (error) throw error;
-                      showToast('PIN Changed successfully', 'success');
-                      localStorage.removeItem('CUSTOM_ADMIN_PIN');
-                      (e.target as HTMLFormElement).reset();
-                    } catch (err: any) {
-                      // Fallback to local storage if table doesn't exist
-                      console.warn('Could not save PIN to Supabase (missing site_settings table or config). Saving to local device storage instead.', err);
-                      localStorage.setItem('CUSTOM_ADMIN_PIN', newPin);
-                      showToast(`PIN updated locally! (Sync failed: ${err?.message || 'Unknown'})`, 'error');
-                    }
-                    
-                    setDynamicPin(newPin);
-                    setIsLoading(false);
-                  }}
-                  style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-                >
-                  <div>
-                    <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '6px' }}>New Access PIN</label>
-                    <div style={{ position: 'relative' }}>
-                      <input name="newPin" type={showChangePin ? 'text' : 'password'} placeholder="e.g. NEWPIN2025" required style={{ width: '100%', padding: '12px 40px 12px 16px', borderRadius: '4px', border: '1px solid #d1d5db', fontSize: '14px', fontFamily: "var(--font-heading)", textTransform: 'uppercase', boxSizing: 'border-box' }} />
-                      <button 
-                        type="button"
-                        onClick={() => setShowChangePin(!showChangePin)}
-                        style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', outline: 'none', padding: 0, color: '#9ca3af', display: 'flex' }}
-                      >
-                        {showChangePin ? <EyeOff size={15} /> : <Eye size={15} />}
-                      </button>
-                    </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#e0e7ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Shield size={24} color={BRAND_BLUE} />
                   </div>
-                  <button type="submit" disabled={isLoading} style={{ alignSelf: 'flex-start', background: BRAND_BLUE, color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '4px', fontWeight: 700, cursor: 'pointer', opacity: isLoading ? 0.7 : 1 }}>
-                    {isLoading ? 'Updating...' : 'Change PIN'}
-                  </button>
-                </form>
+                  <div>
+                    <h2 style={{ fontSize: '18px', fontWeight: 800, fontFamily: "var(--font-heading)", marginBottom: '4px' }}>Admin Account</h2>
+                    <p style={{ fontSize: '13px', color: '#6b7280' }}>Authenticated via Clerk · Role-based access control</p>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ padding: '16px', background: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+                    <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', display: 'block', marginBottom: '6px' }}>Signed in as</label>
+                    <p style={{ fontSize: '15px', fontWeight: 700, color: '#111' }}>{user?.emailAddresses?.[0]?.emailAddress || '—'}</p>
+                  </div>
+                  <div style={{ padding: '16px', background: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+                    <label style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', display: 'block', marginBottom: '6px' }}>Name</label>
+                    <p style={{ fontSize: '15px', fontWeight: 700, color: '#111' }}>{user?.fullName || user?.firstName || '—'}</p>
+                  </div>
+                  <div style={{ padding: '16px', background: '#dcfce7', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <CheckCircle2 size={16} color="#16a34a" />
+                      <span style={{ fontSize: '13px', fontWeight: 800, color: '#16a34a', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Authorized Admin</span>
+                    </div>
+                    <p style={{ fontSize: '12px', color: '#15803d', marginTop: '6px' }}>This account has full access to the inventory catalog and admin operations.</p>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: '24px', padding: '16px', background: '#f5f7ff', borderRadius: '8px', border: `1px solid ${BRAND_BLUE}20` }}>
+                  <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.6 }}>
+                    <strong style={{ color: '#374151' }}>Security Note:</strong> Admin access is controlled server-side via Clerk authentication and email verification. 
+                    To add or remove admin users, update the <code style={{ background: '#e5e7eb', padding: '2px 6px', borderRadius: '3px', fontSize: '11px' }}>ADMIN_EMAILS</code> environment variable.
+                  </p>
+                </div>
               </div>
 
               {/* ── Nuclear Danger Zone ── */}
               <div style={{ background: '#fff', border: '1px solid #ef4444', borderRadius: '4px', padding: '24px', marginTop: '24px' }}>
                 <h2 style={{ fontSize: '18px', fontWeight: 800, fontFamily: "var(--font-heading)", marginBottom: '8px', color: '#dc2626' }}>☢ Danger Zone</h2>
-                <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '24px' }}>Permanently remove ALL data from the live database including products, orders, and customers. This cannot be reversed.</p>
+                <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '24px' }}>Permanently remove ALL data from the live database including products. This cannot be reversed.</p>
 
                 <div style={{ padding: '16px', border: '1px solid #fee2e2', background: '#fef2f2', borderRadius: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
                   <div>
                     <h4 style={{ fontSize: '14px', fontWeight: 800, color: '#991b1b' }}>Full Database Reset</h4>
-                    <p style={{ fontSize: '12px', color: '#b91c1c', marginTop: '4px' }}>Wipes {products.length} products, {orders.length} orders, and all customer records.</p>
+                    <p style={{ fontSize: '12px', color: '#b91c1c', marginTop: '4px' }}>Wipes {products.length} products and all associated records.</p>
                   </div>
                   <button
                     onClick={() => setNukeModalOpen(true)}
