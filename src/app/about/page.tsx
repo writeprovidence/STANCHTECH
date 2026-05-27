@@ -133,7 +133,7 @@ export default function AboutPage() {
                         maxWidth: "900px"
                     }}>
                         BUILT ON<br/>
-                        <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.4)", color: "transparent" }}>
+                        <span style={{ color: "#ffffff" }}>
                             EXCELLENCE.
                         </span>
                     </h1>

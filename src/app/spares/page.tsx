@@ -92,35 +92,40 @@ function SparesContent() {
         <div className="bg-[#F8FAFC] min-h-screen" style={{ fontFamily: "var(--font-body)" }}>
 
             {/* Hero */}
-            <section className="relative h-[400px] flex flex-col items-center justify-center overflow-hidden">
+            <section className="relative min-h-[360px] md:h-[380px] flex flex-col items-center justify-center overflow-hidden py-16 md:py-0">
                 <div className="absolute inset-0 z-0">
                     <img src="/asset/spares_image/spare_background.png" alt="Spares Background" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-[#0b1a2e]/60" />
+                    <div className="absolute inset-0 bg-[#0b1a2e]/65" />
                 </div>
-                <div className="relative z-10 text-center w-full max-w-4xl px-6 pt-20">
-                    <h1 className="text-6xl md:text-7xl font-800 text-white" style={{ fontFamily: "var(--font-heading)", letterSpacing: "-0.04em" }}>Explore Spares</h1>
-                    <p style={{ color: "rgba(255,255,255,0.7)", marginTop: "16px", fontSize: "18px", fontFamily: "var(--font-body)" }}>
+                <div className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto px-5 md:px-8" style={{ paddingTop: "80px" }}>
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-800 text-white leading-tight" style={{ fontFamily: "var(--font-heading)", letterSpacing: "-0.03em" }}>Explore Spares</h1>
+                    <p className="text-sm sm:text-base md:text-lg" style={{ color: "rgba(255,255,255,0.75)", marginTop: "14px", fontFamily: "var(--font-body)", lineHeight: "1.6" }}>
                         Browse our spares — contact us directly to enquire or place an order.
                     </p>
                     
                     {/* Prominent Search Bar */}
-                    <div style={{ marginTop: "40px", maxWidth: "600px", margin: "40px auto 0", position: "relative" }}>
-                        <div style={{ background: "rgba(255,255,255,0.1)", backdropFilter: "blur(20px)", borderRadius: "100px", border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", padding: "6px 6px 6px 32px", boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}>
-                            <input 
-                                type="text"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder="Search by name, SKU or category..."
-                                style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "white", padding: "14px 20px", fontSize: "16px", fontFamily: "var(--font-body)", fontWeight: 500 }}
-                            />
-                            {searchQuery && (
-                                <button onClick={() => setSearchQuery("")} style={{ background: "none", border: "none", color: "white", opacity: 0.5, cursor: "pointer", marginRight: "10px" }}>
-                                    <X size={18} />
-                                </button>
-                            )}
+                    <div className="w-full" style={{ maxWidth: "600px", marginTop: "24px", paddingLeft: "16px", paddingRight: "16px" }}>
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-0"
+                            style={{ background: "rgba(255,255,255,0.1)", backdropFilter: "blur(20px)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.2)", padding: "8px", boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}>
+                            <div className="flex items-center flex-1" style={{ paddingLeft: "16px" }}>
+                                <input 
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Search by name, SKU or category..."
+                                    className="w-full"
+                                    style={{ background: "transparent", border: "none", outline: "none", color: "white", padding: "12px 8px", fontSize: "15px", fontFamily: "var(--font-body)", fontWeight: 500 }}
+                                />
+                                {searchQuery && (
+                                    <button onClick={() => setSearchQuery("")} style={{ background: "none", border: "none", color: "white", opacity: 0.5, cursor: "pointer", paddingRight: "8px", flexShrink: 0 }}>
+                                        <X size={18} />
+                                    </button>
+                                )}
+                            </div>
                             <button 
-                                onClick={() => window.scrollTo({ top: 400, behavior: 'smooth' })}
-                                style={{ background: "#155DFC", color: "white", border: "none", borderRadius: "100px", padding: "14px 32px", fontSize: "13px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "var(--font-heading)", cursor: "pointer" }}
+                                onClick={() => window.scrollTo({ top: 460, behavior: 'smooth' })}
+                                className="w-full sm:w-auto"
+                                style={{ background: "#155DFC", color: "white", border: "none", borderRadius: "10px", padding: "14px 28px", fontSize: "13px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", fontFamily: "var(--font-heading)", cursor: "pointer", whiteSpace: "nowrap" }}
                             >
                                 Find Spares
                             </button>
