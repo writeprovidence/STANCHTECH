@@ -392,12 +392,20 @@ export default function AdminDashboard() {
             <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '24px' }}>
               The account <strong style={{ color: '#9ca3af' }}>{user?.emailAddresses?.[0]?.emailAddress}</strong> is not authorized for admin access. Contact your system administrator.
             </p>
-            <a
-              href="/"
-              style={{ display: 'inline-block', width: '100%', padding: '14px', background: '#2a2a32', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', textDecoration: 'none', letterSpacing: '0.05em' }}
-            >
-              RETURN TO WEBSITE
-            </a>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <button
+                onClick={() => signOut({ redirectUrl: '/admin' })}
+                style={{ width: '100%', padding: '14px', background: BRAND_BLUE, color: '#fff', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', letterSpacing: '0.05em' }}
+              >
+                SWITCH ACCOUNT
+              </button>
+              <a
+                href="/"
+                style={{ display: 'inline-block', width: '100%', padding: '14px', background: '#2a2a32', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', textDecoration: 'none', letterSpacing: '0.05em' }}
+              >
+                RETURN TO WEBSITE
+              </a>
+            </div>
           </div>
         </div>
       </div>
