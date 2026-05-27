@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 export function Footer() {
     const pathname = usePathname();
     const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
-    const isSparesArea = pathname.startsWith('/spares') || pathname === '/cart' || pathname === '/checkout' || pathname === '/orders';
+    const isSparesArea = pathname.startsWith('/spares');
 
     if (isAuthPage) return null;
 
