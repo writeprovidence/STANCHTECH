@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Facebook, Instagram, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Instagram, MessageCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export function Footer() {
@@ -31,10 +31,7 @@ export function Footer() {
                  Nigeria's premier partner for marine engine salvaging, diagnostic precision, and technical maintenance solutions. Committed to engineering excellence since 2018.
               </p>
               <div style={{ display: "flex", gap: 16 }}>
-                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ color: "#1877F2" }}>
-                    <Facebook size={20} />
-                 </a>
-                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ color: "#E1306C" }}>
+                 <a href="https://www.instagram.com/stanchtech/" target="_blank" rel="noopener noreferrer" style={{ color: "#E1306C" }}>
                     <Instagram size={20} />
                  </a>
                  <a href="https://wa.me/2348037340959" target="_blank" rel="noopener noreferrer" style={{ color: "#25D366" }}>

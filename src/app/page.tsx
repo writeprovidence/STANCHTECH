@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Facebook, Instagram, MessageCircle, MapPin, Package, Search } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, ArrowUpRight, Star, Instagram, MessageCircle, MapPin, Package, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 
