@@ -321,7 +321,8 @@ export default function AdminDashboard() {
 
   // Condition totals for mini chart
   const conditionTotals = products.reduce((acc, p) => {
-    acc[p.condition] = (acc[p.condition] || 0) + 1;
+    const cond = p.condition === 'Genuine Part' ? 'Cummins' : p.condition;
+    acc[cond] = (acc[cond] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
   const maxCat = Math.max(0, ...Object.values(conditionTotals));
@@ -760,11 +761,11 @@ export default function AdminDashboard() {
                               )}
                             </div>
                           </td>
-                          <td style={{ padding: '10px 12px', fontSize: '12px', color: '#6b7280' }}>{p.condition}</td>
+                          <td style={{ padding: '10px 12px', fontSize: '12px', color: '#6b7280' }}>{p.condition === 'Genuine Part' ? 'Cummins' : p.condition}</td>
                           <td style={{ padding: '10px 16px' }}>
                             <div style={{ display: 'flex', gap: '6px' }}>
                               <button
-                                onClick={() => setEditingProduct({ ...p })}
+                                onClick={() => setEditingProduct({ ...p, condition: p.condition === 'Genuine Part' ? 'Cummins' : p.condition })}
                                 style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '6px 10px', border: '1px solid #e5e7eb', borderRadius: '5px', background: '#fff', cursor: 'pointer', fontSize: '12px', color: '#374151', fontWeight: 600 }}
                               >
                                 <Edit2 size={12} /> Edit
