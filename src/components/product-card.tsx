@@ -21,7 +21,7 @@ export function ProductCard({ product }: { product: any }) {
                     className="object-contain group-hover:scale-105 transition-transform duration-700 ease-out p-4"
                 />
                 <span className="absolute top-4 left-4 bg-[#155DFC] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 transparent-blur rounded-full">
-                    {product.condition || "Genuine Part"}
+                    {product.condition === 'Genuine Part' ? 'Cummins' : (product.condition || "Cummins")}
                 </span>
             </div>
 

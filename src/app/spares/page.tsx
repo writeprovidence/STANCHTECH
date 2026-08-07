@@ -221,7 +221,7 @@ function SparesContent() {
                                 >
                                     {/* Condition Badge */}
                                     <div className="absolute top-6 left-6 text-blue-600 text-[12px] font-900 uppercase tracking-widest z-10" style={{ fontFamily: "var(--font-body)" }}>
-                                        {product.condition}
+                                        {product.condition === 'Genuine Part' ? 'Cummins' : (product.condition || 'Cummins')}
                                     </div>
 
                                     <div className="w-full aspect-square mb-6 flex items-center justify-center p-8 relative">
