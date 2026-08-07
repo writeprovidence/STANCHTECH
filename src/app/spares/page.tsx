@@ -38,7 +38,7 @@ function SparesContent() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
 
-    const conditionFilters = ["Genuine Part", "OEM", "Rerun/Reman", "Used"];
+    const conditionFilters = ["Cummins", "OEM", "Rerun/Reman", "Used"];
 
     const toggleFilter = (filter: string) => {
         setSelectedFilters(prev =>
@@ -56,7 +56,9 @@ function SparesContent() {
                                 (product.sku || "").toLowerCase().includes(query);
             
             const activeConditionFilters = selectedFilters.filter(f => conditionFilters.includes(f));
-            const matchesCondition = activeConditionFilters.length === 0 || activeConditionFilters.includes(product.condition);
+            const matchesCondition = activeConditionFilters.length === 0 || 
+                activeConditionFilters.includes(product.condition) || 
+                (activeConditionFilters.includes("Cummins") && product.condition === "Genuine Part");
 
             return matchesSearch && matchesCondition;
         })

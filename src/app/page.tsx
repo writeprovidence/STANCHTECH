@@ -41,7 +41,7 @@ const PROJECT_SLIDES = [
     category: "Marine Engineering",
     title: "Propulsion System Upgrade",
     image: "/asset/Landing_page_image/marine_spares.png",
-    detail: "Sourcing and integration of OEM genuine parts for an overarching propulsion system refit, maximizing vessel efficiency and reducing future downtime."
+    detail: "Sourcing and integration of OEM Cummins parts for an overarching propulsion system refit, maximizing vessel efficiency and reducing future downtime."
   }
 ];
 

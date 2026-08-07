@@ -93,7 +93,7 @@ export default function ServicesPage() {
                             <span className="italic font-serif text-blue-400">UNMATCHED.</span>
                         </h1>
                         <p className="text-xl md:text-2xl font-medium text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                            Delivering comprehensive technical support, maintenance, and genuine parts for marine and industrial operations.
+                            Delivering comprehensive technical support, maintenance, and Cummins parts for marine and industrial operations.
                         </p>
                     </div>
                 </div>

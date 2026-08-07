@@ -695,7 +695,7 @@ export default function AdminDashboard() {
                         description: '',
                         sku: `SS${String(Math.max(0, ...products.map(p => p.id)) + 1).padStart(3, '0')}`,
                         weight: '',
-                        condition: 'Genuine Part',
+                        condition: 'Cummins',
                         stock: 0,
                         is_featured: false,
                         is_hidden: false,
@@ -854,7 +854,7 @@ export default function AdminDashboard() {
                         onChange={e => setEditingProduct({ ...editingProduct, condition: e.target.value })}
                         style={{ width: '100%', padding: '8px 10px', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '13px', outline: 'none', color: '#111', background: '#fff' }}
                       >
-                        {['Genuine Part', 'OEM', 'Rerun/Reman', 'Used'].map(c => <option key={c}>{c}</option>)}
+                        {['Cummins', 'OEM', 'Rerun/Reman', 'Used'].map(c => <option key={c}>{c}</option>)}
                       </select>
                     </div>
 
