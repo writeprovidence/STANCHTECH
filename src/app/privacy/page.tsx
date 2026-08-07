@@ -142,7 +142,7 @@ export default function PrivacyPage() {
       {/* --- INTRO BANNER --- */}
       <div style={{ backgroundColor: "#f0f4ff", borderLeft: "4px solid #1e40af", padding: "20px 8%", margin: "0" }}>
         <p style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "#374151", lineHeight: "1.7" }}>
-          <strong style={{ fontFamily: "var(--font-heading)" }}>Effective Date: {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</strong>
+          <strong style={{ fontFamily: "var(--font-heading)" }}>Effective Date: 1st of June 2026</strong>
           &nbsp;— Stanch Tech Limited is committed to protecting your personal information and your right to privacy. Please read this policy carefully to understand how we collect, use, and safeguard your data.
         </p>
       </div>
