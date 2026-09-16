@@ -7,7 +7,7 @@ import Link from "next/link";
 
 function LoginContent() {
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("next") || "/admin";
+  const redirectTo = searchParams.get("next") || searchParams.get("redirect_url") || "/admin";
 
   return (
     <div style={{ width: "100%", minHeight: "100vh", backgroundColor: "#ffffff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 16px" }}>

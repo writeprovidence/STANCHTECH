@@ -76,10 +76,12 @@ export function Navbar() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [helpMenuOpen]);
 
+    const SHOW_PORTFOLIO = false;
+
     const navLinks = [
         { name: "HOME", href: "/" },
         { name: "ABOUT", href: "/about" },
-        { name: "PORTFOLIO", href: "/projects" },
+        ...(SHOW_PORTFOLIO ? [{ name: "PORTFOLIO", href: "/projects" }] : []),
         { name: "SPARES", href: "/spares" },
         { name: "CONTACT", href: "/contact" },
     ];

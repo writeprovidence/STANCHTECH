@@ -17,7 +17,7 @@ import {
   ChevronRight, Search, Eye, EyeOff, Edit2, Trash2, X,
   ArrowUpRight, ArrowDownRight, BarChart3,
   Shield, Lock, RefreshCcw, Plus, Save,
-  ExternalLink, Circle, Settings
+  ExternalLink, Circle, Settings, Warehouse
 } from 'lucide-react';
 
 // ─── Colors ─────────────────────────────────────────────────────────────────
@@ -521,6 +521,14 @@ export default function AdminDashboard() {
             <ChevronRight size={18} style={{ transform: sidebarCollapsed ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.25s', flexShrink: 0 }} />
             {!sidebarCollapsed && <span style={{ fontSize: '13px', fontWeight: 600 }}>Collapse</span>}
           </button>
+
+          <a href="/inventory" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: sidebarCollapsed ? '12px' : '10px 16px', borderRadius: '8px', textDecoration: 'none', color: '#4b5563', justifyContent: sidebarCollapsed ? 'center' : 'flex-start' }}
+            onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#1a1a1f'}
+            onMouseOut={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
+          >
+            <Warehouse size={17} style={{ flexShrink: 0 }} />
+            {!sidebarCollapsed && <span style={{ fontSize: '13px', fontWeight: 600 }}>Inventory</span>}
+          </a>
 
           <a href="/spares" target="_blank" rel="noreferrer" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '12px', padding: sidebarCollapsed ? '12px' : '10px 16px', borderRadius: '8px', textDecoration: 'none', color: '#4b5563', justifyContent: sidebarCollapsed ? 'center' : 'flex-start' }}
             onMouseOver={e => (e.currentTarget as HTMLElement).style.background = '#1a1a1f'}

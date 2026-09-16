@@ -46,6 +46,7 @@ const PROJECT_SLIDES = [
 ];
 
 export default function HomePage() {
+  const SHOW_PORTFOLIO = false;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentProjectSlide, setCurrentProjectSlide] = useState(0);
   const [products, setProducts] = useState<any[]>([]);
@@ -185,21 +186,23 @@ export default function HomePage() {
             <Link href="/spares" className="hero-btn-primary" style={{ width: "min(100%, 220px)" }}>
               Explore Spares
             </Link>
-            <Link href="/projects" className="hero-btn-secondary" style={{ backdropFilter: "blur(10px)", background: "rgba(255,255,255,0.1)", width: "min(100%, 220px)" }}>
-              View Our Portfolio
-            </Link>
+            {SHOW_PORTFOLIO && (
+              <Link href="/projects" className="hero-btn-secondary" style={{ backdropFilter: "blur(10px)", background: "rgba(255,255,255,0.1)", width: "min(100%, 220px)" }}>
+                View Our Portfolio
+              </Link>
+            )}
           </motion.div>
         </div>
       </section>
 
       {/* ─── 02. STATS BAR ─── */}
-      <section style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "40px 5%" }}>
+      <section style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "64px 5%" }}>
         <div style={{ 
           maxWidth: 1400, 
           margin: "0 auto", 
           display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", 
-          gap: 32 
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", 
+          gap: 48 
         }}>
            {[
              { label: "Technical Support", icon: <MessageCircle size={24} /> },
@@ -216,21 +219,21 @@ export default function HomePage() {
       </section>
 
       {/* ─── 03. INTRO / STATS ─── */}
-      <section className="section-pad" style={{ background: "#fff", paddingBottom: 60 }}>
-        <div className="two-col-grid">
-          <div style={{ borderLeft: "4px solid var(--accent)", paddingLeft: 40 }}>
+      <section className="section-pad" style={{ background: "#fff" }}>
+        <div className="two-col-grid" style={{ gap: "96px" }}>
+          <div style={{ borderLeft: "4px solid var(--accent)", paddingLeft: "44px" }}>
              <span className="section-label">First Class Service</span>
-             <h2 className="responsive-title" style={{ marginBottom: 24, fontSize: "clamp(32px, 5vw, 42px)" }}>
+             <h2 className="responsive-title" style={{ marginBottom: 32, fontSize: "clamp(32px, 5vw, 44px)" }}>
                 A leading <span style={{ color: "var(--accent)" }}>CUMMINS</span> engine part supplier in West Africa.
              </h2>
-             <p className="responsive-subtitle">
+             <p className="responsive-subtitle" style={{ marginBottom: 48 }}>
                 We are regarded as a reliable source of quality replacement parts in Nigeria. We provide our services to the highest standards, assuring that our premium quality results in an affordable delivery without compromising on reliability.
              </p>
-             <Link href="/about" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 40, color: "var(--navy)", fontWeight: 700, textDecoration: "none" }}>
+             <Link href="/about" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--navy)", fontWeight: 700, textDecoration: "none", fontSize: 15, letterSpacing: "0.05em" }}>
                 LEARN MORE ABOUT OUR MISSION <ArrowUpRight size={18} color="var(--accent)" />
              </Link>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 48 }}>
              {[
                { val: "8+", label: "Years Experience" },
                { val: "100+", label: "Projects Completed" },
@@ -238,8 +241,8 @@ export default function HomePage() {
                { val: "98%", label: "Repeat Business" },
              ].map((stat, i) => (
                <div key={i}>
-                  <h3 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700, color: "var(--navy)", marginBottom: 8, letterSpacing: "-0.04em", fontFamily: "var(--font-heading)" }}>{stat.val}</h3>
-                  <p style={{ color: "#6b7280", fontWeight: 500, fontSize: 16 }}>{stat.label}</p>
+                  <h3 style={{ fontSize: "clamp(36px, 5vw, 52px)", fontWeight: 700, color: "var(--navy)", marginBottom: 12, letterSpacing: "-0.04em", fontFamily: "var(--font-heading)" }}>{stat.val}</h3>
+                  <p style={{ color: "#6b7280", fontWeight: 500, fontSize: 16, lineHeight: 1.5 }}>{stat.label}</p>
                </div>
              ))}
           </div>
@@ -247,22 +250,22 @@ export default function HomePage() {
       </section>
 
       {/* ─── 04. REDESIGNED SERVICES GRID ─── */}
-      <section className="section-pad" style={{ background: "#fff", paddingTop: 60 }}>
-        <div style={{ textAlign: "center", marginBottom: 60 }}>
+      <section className="section-pad" style={{ background: "#fff", paddingTop: 80 }}>
+        <div style={{ textAlign: "center", marginBottom: 80 }}>
            <span className="section-label">What We Do</span>
            <h2 className="responsive-title">Premium Cummins <br /> Engine Service Experts</h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: 48, maxWidth: 1400, margin: "0 auto" }}>
            {[
              { num: "01", title: "Premium Parts for Construction, Industrial & Marine Equipment", img: "/asset/Landing_page_image/cummin_engine.png", desc: "With extensive knowledge of all CUMMINS engine models and a commitment to providing only the highest quality, affordable, replacement parts and services." },
              { num: "02", title: "Vessel Inspection, Maintenance & Repairs.", img: "/asset/Landing_page_image/vessel.png", desc: "Ensure vessel safety and performance through thorough inspection, routine maintenance, and reliable repairs. We prevent breakdowns and keep operations running smoothly." },
              { num: "03", title: "Expert Technical Support for Marine and Industrial Operations", img: "/asset/Landing_page_image/marine_spares.png", desc: "We Provide quality spares and expert technical support for marine and industrial operations. We ensure fast delivery, reliable solutions, and minimal downtime across all systems." }
            ].map((service, i) => (
-             <div key={i} className="premium-card" style={{ display: "flex", flexDirection: "column" }}>
+             <div key={i} className="premium-card" style={{ display: "flex", flexDirection: "column", padding: "48px 40px" }}>
                 <span className="card-number">{service.num}/</span>
-                <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 20, fontFamily: "var(--font-heading)" }}>{service.title}</h3>
-                <p style={{ color: "#4b5563", lineHeight: 1.6, marginBottom: 32 }}>{service.desc}</p>
-                <div style={{ height: 260, position: "relative", marginBottom: -40, marginLeft: -40, marginRight: -40, marginTop: "auto", overflow: "hidden" }}>
+                <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 24, fontFamily: "var(--font-heading)", lineHeight: 1.25 }}>{service.title}</h3>
+                <p style={{ color: "#4b5563", lineHeight: 1.7, marginBottom: 40, fontSize: 16 }}>{service.desc}</p>
+                <div style={{ height: 260, position: "relative", marginBottom: -48, marginLeft: -40, marginRight: -40, marginTop: "auto", overflow: "hidden" }}>
                    <Image 
                      src={service.img} 
                      alt={service.title} 
@@ -277,135 +280,112 @@ export default function HomePage() {
 
       {/* ─── 05. WHY STANCHTECH? ─── */}
       <section className="section-pad" style={{ background: "#F8F9FE" }}>
-         <div style={{ textAlign: "center", marginBottom: "clamp(60px, 10vw, 120px)" }}>
+         <div style={{ textAlign: "center", marginBottom: "clamp(60px, 10vw, 100px)" }}>
             <span className="section-label">Excellence Guaranteed</span>
             <h2 className="responsive-title">Why StanchTech?</h2>
          </div>
-         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 56, maxWidth: 1400, margin: "0 auto" }}>
             {[
               { title: "Quality & Precision", desc: "We have built a strong reputation across Nigeria for providing high-quality parts, backed by an industry-leading 12-month warranty on our services." },
               { title: "Unmatched Expertise", desc: "Our technicians are certified specialists for high-power marine diesel systems." },
               { title: "24/7 Deployment", desc: "Breakdowns don't wait. Our support teams are ready for rapid onsite response." },
               { title: "Genuine Guarantee", desc: "We exclusively utilize and supply OEM-certified parts for total reliability." }
             ].map((item, i) => (
-              <div key={i} style={{ borderLeft: "2px solid var(--accent)", paddingLeft: 24 }}>
-                 <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16, fontFamily: "var(--font-heading)" }}>{item.title}</h3>
-                 <p style={{ color: "#4b5563", lineHeight: 1.6 }}>{item.desc}</p>
+              <div key={i} style={{ borderLeft: "3px solid var(--accent)", paddingLeft: 28 }}>
+                 <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 20, fontFamily: "var(--font-heading)" }}>{item.title}</h3>
+                 <p style={{ color: "#4b5563", lineHeight: 1.75, fontSize: 16 }}>{item.desc}</p>
               </div>
             ))}
          </div>
       </section>
 
       {/* ─── 06. CASE STUDIES ─── */}
-      <section style={{ background: "#0b1a2e", color: "#fff", padding: "180px 5%" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 80 }}>
-              <div>
-                 <span className="section-label" style={{ color: "var(--accent)" }}>Proven Performance</span>
-                 <h2 className="responsive-title" style={{ color: "#fff" }}>Featured Projects</h2>
-              </div>
+      {SHOW_PORTFOLIO && (
+        <section style={{ background: "#0b1a2e", color: "#fff", padding: "180px 5%" }}>
+          <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 80 }}>
+                <div>
+                   <span className="section-label" style={{ color: "var(--accent)" }}>Proven Performance</span>
+                   <h2 className="responsive-title" style={{ color: "#fff" }}>Featured Projects</h2>
+                </div>
+             </div>
+             <div style={{ display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 72, alignItems: "stretch", overflow: "hidden", borderRadius: 0, maxWidth: 1400, margin: "0 auto" }}>
+                <Link href={`/projects/${PROJECT_SLIDES[currentProjectSlide].id}`} style={{ display: "block", height: "clamp(300px, 60vw, 420px)", overflow: "hidden", position: "relative", borderRadius: 0 }}>
+                    <AnimatePresence mode="wait">
+                       <motion.div
+                          key={currentProjectSlide}
+                          initial={{ opacity: 0, x: -50 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 50 }}
+                          transition={{ duration: 0.5 }}
+                          style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
+                       >
+                          <Image 
+                            src={PROJECT_SLIDES[currentProjectSlide].image} 
+                            alt={PROJECT_SLIDES[currentProjectSlide].title} 
+                            fill 
+                            style={{ objectFit: "cover" }} 
+                          />
+                          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "clamp(24px, 5vw, 60px)", background: "linear-gradient(to top, rgba(11,26,46,0.9) 0%, transparent 100%)" }}>
+                             <span className="section-label" style={{ color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].category}</span>
+                             <h3 style={{ fontSize: "clamp(22px, 4vw, 32px)", fontWeight: 700, fontFamily: "var(--font-heading)", color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].title}</h3>
+                          </div>
+                       </motion.div>
+                    </AnimatePresence>
+                </Link>
+                <div style={{ display: "flex", flexDirection: "column", gap: 32, justifyContent: "space-between" }}>
+                    <AnimatePresence mode="wait">
+                       <motion.div
+                          key={currentProjectSlide}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.5 }}
+                       >
+                          <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16 }}>Technical Detail</h3>
+                          <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
+                             {PROJECT_SLIDES[currentProjectSlide].detail}
+                          </p>
+                       </motion.div>
+                    </AnimatePresence>
+
+                    {/* Rectangular Slider controls */}
+                    <div style={{ display: "flex", gap: "clamp(12px, 3vw, 32px)", marginTop: 40, flexWrap: "wrap", justifyContent: "flex-start" }}>
+                       {PROJECT_SLIDES.map((_, idx) => (
+                          <div key={idx} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                             <button 
+                                onClick={() => setCurrentProjectSlide(idx)}
+                                style={{ 
+                                   width: "clamp(40px, 8vw, 64px)", 
+                                   height: 4, 
+                                   background: currentProjectSlide === idx ? "var(--accent)" : "rgba(255,255,255,0.3)",
+                                   border: "none",
+                                   cursor: "pointer",
+                                   padding: 0,
+                                   transition: "background 0.3s"
+                                }}
+                                aria-label={`Go to slide ${idx + 1}`}
+                             />
+                             <span style={{ fontSize: 15, fontWeight: 600, color: currentProjectSlide === idx ? "#fff" : "rgba(255,255,255,0.4)", fontFamily: "var(--font-heading)", whiteSpace: "nowrap" }}>
+                                0{idx + 1}
+                             </span>
+                          </div>
+                       ))}
+                    </div>
+                </div>
            </div>
-           <div style={{ display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: 72, alignItems: "stretch", overflow: "hidden", borderRadius: 0, maxWidth: 1400, margin: "0 auto" }}>
-              <Link href={`/projects/${PROJECT_SLIDES[currentProjectSlide].id}`} style={{ display: "block", height: "clamp(300px, 60vw, 420px)", overflow: "hidden", position: "relative", borderRadius: 0 }}>
-                  <AnimatePresence mode="wait">
-                     <motion.div
-                        key={currentProjectSlide}
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 50 }}
-                        transition={{ duration: 0.5 }}
-                        style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
-                     >
-                        <Image 
-                          src={PROJECT_SLIDES[currentProjectSlide].image} 
-                          alt={PROJECT_SLIDES[currentProjectSlide].title} 
-                          fill 
-                          style={{ objectFit: "cover" }} 
-                        />
-                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "clamp(24px, 5vw, 60px)", background: "linear-gradient(to top, rgba(11,26,46,0.9) 0%, transparent 100%)" }}>
-                           <span className="section-label" style={{ color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].category}</span>
-                           <h3 style={{ fontSize: "clamp(22px, 4vw, 32px)", fontWeight: 700, fontFamily: "var(--font-heading)", color: "#fff" }}>{PROJECT_SLIDES[currentProjectSlide].title}</h3>
-                        </div>
-                     </motion.div>
-                  </AnimatePresence>
-              </Link>
-              <div style={{ display: "flex", flexDirection: "column", gap: 32, justifyContent: "space-between" }}>
-                  <AnimatePresence mode="wait">
-                     <motion.div
-                        key={currentProjectSlide}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5 }}
-                     >
-                        <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16 }}>Technical Detail</h3>
-                        <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
-                           {PROJECT_SLIDES[currentProjectSlide].detail}
-                        </p>
-                     </motion.div>
-                  </AnimatePresence>
-
-                  {/* Rectangular Slider controls */}
-                  <div style={{ display: "flex", gap: "clamp(12px, 3vw, 32px)", marginTop: 40, flexWrap: "wrap", justifyContent: "flex-start" }}>
-                     {PROJECT_SLIDES.map((_, idx) => (
-                        <div key={idx} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                           <button 
-                              onClick={() => setCurrentProjectSlide(idx)}
-                              style={{ 
-                                 width: "clamp(40px, 8vw, 64px)", 
-                                 height: 4, 
-                                 background: currentProjectSlide === idx ? "var(--accent)" : "rgba(255,255,255,0.3)",
-                                 border: "none",
-                                 cursor: "pointer",
-                                 padding: 0,
-                                 transition: "background 0.3s"
-                              }}
-                              aria-label={`Go to slide ${idx + 1}`}
-                           />
-                           <span style={{ fontSize: 15, fontWeight: 600, color: currentProjectSlide === idx ? "#fff" : "rgba(255,255,255,0.4)", fontFamily: "var(--font-heading)", whiteSpace: "nowrap" }}>
-                              0{idx + 1}
-                           </span>
-                        </div>
-                     ))}
-                  </div>
-              </div>
-         </div>
-        </div>
-      </section>
-
-      {/* ─── 07. WORK PROCESS ─── */}
-      <section className="section-pad" style={{ background: "#fff" }}>
-         <div style={{ maxWidth: 800 }}>
-            <span className="section-label">The Blueprint</span>
-            <h2 className="responsive-title" style={{ marginBottom: 40 }}>Our Technical Process</h2>
-            <p className="responsive-subtitle" style={{ marginBottom: "clamp(40px, 8vw, 80px)" }}>
-               We follow a rigorous, documented workflow to ensure every job meets international marine safety standards.
-            </p>
-         </div>
-         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40 }}>
-            {[
-              { step: "01", title: "Site Audit", desc: "Comprehensive onsite diagnostic using advanced thermal imaging and fluid analysis." },
-              { step: "02", title: "Strategy", desc: "Detailed engineering proposal with transparent lead times and spare parts verification." },
-              { step: "03", title: "Execution", desc: "Clean-room standard mechanical assembly and precision tuning by certified engineers." },
-              { step: "04", title: "Validation", desc: "Sea-trial performance testing and full system calibration before documentation handover." }
-            ].map((p, i) => (
-              <div key={i} style={{ borderTop: "1px solid #eee", paddingTop: 40 }}>
-                 <span style={{ fontSize: 15, fontWeight: 700, color: "var(--accent)", display: "block", marginBottom: 20 }}>PHASE {p.step}</span>
-                 <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 16, fontFamily: "var(--font-heading)" }}>{p.title}</h3>
-                 <p style={{ color: "#6b7280", lineHeight: 1.6 }}>{p.desc}</p>
-              </div>
-            ))}
-         </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* ─── 07.5 FEATURED SPARES ─── */}
       {dbLoaded && featuredProducts.length > 0 && (
-        <section className="section-pad" style={{ background: "#fff", color: "#0b1a2e", paddingTop: 60, marginTop: "-40px" }}>
+        <section className="section-pad" style={{ background: "#fff", color: "#0b1a2e" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: 60, position: "relative" }}>
+            <div style={{ textAlign: "center", marginBottom: 80, position: "relative" }}>
               <span className="section-label" style={{ color: "var(--accent)" }}>SPARE CATALOG</span>
-              <h2 className="responsive-title" style={{ marginBottom: 16 }}>Featured Spares</h2>
-              <p style={{ color: "rgba(11,26,46,0.68)", fontSize: 20, maxWidth: 560, margin: "0 auto", fontFamily: "var(--font-body)" }}>
+              <h2 className="responsive-title" style={{ marginBottom: 20 }}>Featured Spares</h2>
+              <p style={{ color: "rgba(11,26,46,0.68)", fontSize: 20, maxWidth: 560, margin: "0 auto", fontFamily: "var(--font-body)", lineHeight: 1.6 }}>
                 Our spares help to reduce downtime and ensure operations run smoothly.
               </p>
 
@@ -437,7 +417,7 @@ export default function HomePage() {
             <div style={{ 
               display: "grid", 
               gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
-              gap: 32 
+              gap: 40 
             }}>
               {featuredProducts.map((product, idx) => (
                 <div 
@@ -445,7 +425,7 @@ export default function HomePage() {
                   className="featured-product-card"
                   style={{ 
                     background: "#fff", 
-                    padding: 24, 
+                    padding: 32, 
                     display: "flex", 
                     flexDirection: "column",
                     border: "1px solid #eee",
@@ -453,13 +433,13 @@ export default function HomePage() {
                 >
                   <div style={{ 
                     width: "100%",
-                    minHeight: 220,
+                    minHeight: 240,
                     background: "#f8fafc",
-                    marginBottom: 20,
+                    marginBottom: 24,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    padding: "24px 32px",
+                    padding: "28px 36px",
                     overflow: "hidden"
                   }}>
                     <img 
@@ -470,14 +450,14 @@ export default function HomePage() {
                   </div>
 
                   <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                    <h3 style={{ fontSize: 22, fontWeight: 800, marginBottom: 12, color: "#0b1a2e", fontFamily: "var(--font-heading)" }}>
+                    <h3 style={{ fontSize: 22, fontWeight: 800, marginBottom: 16, color: "#0b1a2e", fontFamily: "var(--font-heading)" }}>
                       {product.name}
                     </h3>
                     <p style={{ 
                       fontSize: 15, 
                       color: "#64748b", 
-                      lineHeight: 1.6, 
-                      marginBottom: 32
+                      lineHeight: 1.65, 
+                      marginBottom: 36
                     }}>
                       {product.description}
                     </p>
@@ -487,7 +467,7 @@ export default function HomePage() {
                       style={{ 
                         background: "#0b1a2e",
                         color: "#fff",
-                        padding: "14px 28px",
+                        padding: "16px 28px",
                         textAlign: "center",
                         fontWeight: 700,
                         textTransform: "uppercase",
@@ -510,11 +490,11 @@ export default function HomePage() {
 
       {/* ─── 08. TESTIMONIALS ─── */}
       <section className="section-pad" style={{ background: "#F8F9FE" }}>
-         <div style={{ textAlign: "center", marginBottom: "clamp(40px, 8vw, 80px)" }}>
-            <span className="section-label" style={{ color: "var(--accent)" }}>Client Success</span>
-            <h2 className="responsive-title">Voice of Excellence</h2>
+         <div style={{ textAlign: "center", marginBottom: 80 }}>
+            <span className="section-label" style={{ color: "var(--accent)" }}>CLIENT TESTIMONIALS</span>
+            <h2 className="responsive-title">What Our Partners Say</h2>
          </div>
-         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap: 32, maxWidth: 1400, margin: "0 auto" }}>
+         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
             {[
               {
                 quote: "Stanch Tech has consistently delivered high-fidelity spares even in the most demanding timelines. Their expertise in marine engine salvaging is unmatched.",
@@ -535,11 +515,11 @@ export default function HomePage() {
                 initial: "A"
               }
             ].map((t, i) => (
-              <div key={i} className="premium-card" style={{ padding: "clamp(32px, 5vw, 60px) clamp(24px, 5vw, 48px)", background: "#fff", display: "flex", flexDirection: "column" }}>
+              <div key={i} className="premium-card" style={{ padding: "48px 40px", background: "#fff", display: "flex", flexDirection: "column" }}>
                  <div style={{ display: "flex", gap: 4, marginBottom: 32, color: "#FFB800" }}>
                     {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="currentColor" />)}
                  </div>
-                 <p style={{ fontSize: 18, lineHeight: 1.8, color: "var(--navy)", fontStyle: "italic", marginBottom: 48, flex: 1 }}>
+                 <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--navy)", fontStyle: "italic", marginBottom: 48, flex: 1 }}>
                     "{t.quote}"
                  </p>
                  <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
@@ -548,7 +528,7 @@ export default function HomePage() {
                     </div>
                     <div>
                        <h4 style={{ fontSize: 18, fontWeight: 700, margin: 0, fontFamily: "var(--font-heading)" }}>{t.author}</h4>
-                       <span style={{ fontSize: 14, fontWeight: 700, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.05em", display: "block", marginTop: 4 }}>{t.role}</span>
+                       <span style={{ fontSize: 13, fontWeight: 700, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.05em", display: "block", marginTop: 4 }}>{t.role}</span>
                     </div>
                  </div>
               </div>
@@ -564,7 +544,7 @@ export default function HomePage() {
         backgroundImage: 'linear-gradient(rgba(11,26,46,0.9), rgba(11,26,46,0.9)), url("/asset/Landing_page_image/support.png")',
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
-        paddingBottom: "60px"
+        padding: "160px 5%"
       }}>
          <motion.div
            initial={{ opacity: 0, scale: 0.95 }}
@@ -572,7 +552,7 @@ export default function HomePage() {
            viewport={{ once: true }}
          >
            <h2 className="responsive-title" style={{ fontSize: 56, marginBottom: 32, color: "#fff" }}>Ready to Optimize Your Fleet?</h2>
-           <p className="responsive-subtitle" style={{ color: "rgba(255,255,255,0.7)", maxWidth: 640, margin: "0 auto 48px" }}>
+           <p className="responsive-subtitle" style={{ color: "rgba(255,255,255,0.7)", maxWidth: 640, margin: "0 auto 56px" }}>
               Join hundreds of marine operators who trust StanchTech for precision engineering and mission-critical support.
            </p>
            <Link href="/contact" className="hero-btn-primary" style={{ border: "none", width: 240, height: 56, fontSize: 16 }}>

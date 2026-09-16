@@ -48,7 +48,7 @@ export function Footer() {
                <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: 16 }}>
                   {[
                     { label: "About", href: "/about" },
-                    { label: "Portfolio", href: "/projects" },
+                    ...(false ? [{ label: "Portfolio", href: "/projects" }] : []),
                     { label: "Spares", href: "/spares" },
                     { label: "Contact", href: "/contact" }
                   ].map((link, i) => (
